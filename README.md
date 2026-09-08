@@ -28,6 +28,7 @@
 - [Cobbleventure Battle AI 독립 모드·웹 실험실](projects/cobbleventure-battle-ai/README.md)
 - [Cobbleventure Adventure](projects/cobbleventure-adventure/README.md)
 - [Cobbleventure Player Menu](projects/cobbleventure-player-menu/README.md)
+- [Cobbleventure Experience](projects/cobbleventure-experience/README.md)
 - [트레이너 JSON 예제 데이터](trainer-data/README.md)
 
 ## 개발 환경
@@ -56,9 +57,8 @@ cd E:\Source\repos\Buizz\cobbleverse-overhaul
 build.bat validate
 ```
 
-현재 Cobblemon 1.8과 외부 모드 버전이 확정되지 않았으므로 `draft` 경고 1개가
-나오는 것이 정상입니다. `검증 성공: 오류 0개`가 표시되면 콘텐츠 개발을 계속할
-수 있습니다.
+Cobblemon 1.8은 별도 시험 프로필로 관리합니다. `검증 성공: 오류 0개`가 표시되면
+콘텐츠 개발을 계속할 수 있습니다.
 
 ### CurseForge 임포트 스모크 팩 생성
 
@@ -120,8 +120,13 @@ dist/cobbleventure-development-0.1.1-curseforge.zip
 dist/cobbleventure-development-0.1.1-curseforge.zip.sha256
 ```
 
-현재 개발 팩에는 Cobblemon 1.7.3, BCA 실행 호환 계층과 CobbleDollars,
-Cobblemon Additions 4.2.1 원본 JAR이 포함됩니다. `build.bat pack`은 먼저
+정식 Cobblemon 1.8은 자체 모드의 소스 호환성 검사만 지원합니다. TBCS와 Radical
+Cobblemon Trainers가 아직 1.8을 거부하므로 전체 게임팩을 억지로 패키징하지 않으며,
+1.8 대상으로 `build.bat pack`을 실행하면 지원 대기 사유를 출력하고 중단합니다.
+
+현재 개발 팩에는 Cobblemon 1.7.3과 CobbleDollars가 포함됩니다. 포켓몬센터와
+포켓몬상점은 출처를 기록한 수정본을 자체 리소스로 패키징하고, 백화점은 자체 제작
+구조물과 상점 카탈로그를 사용합니다. `build.bat pack`은 먼저
 무지하 전용 시작 바이옴·세대 차원을 생성하는 부트스트랩 Java 모드와
 인벤토리 키 기반 원형 플레이어 메뉴 모드를 빌드하고 함께 넣습니다. RCT와
 정식 Cobbleventure NeoForge 게임 어댑터의 나머지 기능은 아직 포함하지 않으며 ZIP 안의 팩
@@ -266,9 +271,9 @@ CurseForge ZIP을 한 번에 만드는 전체 빌드 스크립트는 아닙니�
 참고합니다.
 
 Web의 **빌드 작업** 화면에서는 Cobblemon 빌드 대상을 `1.7.3 안정 버전`과
-`1.8 스냅샷` 중에서 선택할 수 있습니다. 기본값은 계속 1.7.3이며, 선택값은
-해당 실행에만 전달됩니다. 1.8 전체 개발 팩은 아직 지원하지 않으므로 1.8은
-`test`와 `mod-*` 호환성 빌드에 사용합니다.
+`1.8 시험 버전` 중에서 선택할 수 있습니다. 기본값은 계속 1.7.3이며, 선택값은
+해당 실행에만 전달됩니다. 1.8은 `test`와 `mod-*` 소스 호환성 검사에만 사용하며,
+클라이언트·서버 전체 패키징은 아직 1.7.3만 지원합니다.
 
 `pack-server` 결과에는 `server.properties`, JVM 메모리 기본값, EULA 확인 파일,
 서버 시작 스크립트와 `setup-server.ps1`이 포함됩니다. 설치 스크립트는 Java 21과

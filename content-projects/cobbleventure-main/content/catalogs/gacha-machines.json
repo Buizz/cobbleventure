@@ -416,7 +416,18 @@
                   "id": "protect",
                   "display_name": "방어 기술머신",
                   "kind": "item",
-                  "value": "tmcraft:tm_protect",
+                  "value": "cobblemon:technical_machine",
+                  "move": "protect",
+                  "count": 1,
+                  "weight": 1.0,
+                  "selectable": false
+                },
+                {
+                  "id": "safeguard",
+                  "display_name": "신비의부적 기술머신",
+                  "kind": "item",
+                  "value": "cobblemon:technical_machine",
+                  "move": "safeguard",
                   "count": 1,
                   "weight": 1.0,
                   "selectable": false
@@ -429,10 +440,21 @@
               "weight": 25.0,
               "rewards": [
                 {
-                  "id": "thunder",
-                  "display_name": "번개 기술머신",
+                  "id": "reflect",
+                  "display_name": "리플렉터 기술머신",
                   "kind": "item",
-                  "value": "tmcraft:tm_thunder",
+                  "value": "cobblemon:technical_machine",
+                  "move": "reflect",
+                  "count": 1,
+                  "weight": 1.0,
+                  "selectable": true
+                },
+                {
+                  "id": "light_screen",
+                  "display_name": "빛의장막 기술머신",
+                  "kind": "item",
+                  "value": "cobblemon:technical_machine",
+                  "move": "lightscreen",
                   "count": 1,
                   "weight": 1.0,
                   "selectable": true
@@ -448,7 +470,38 @@
                   "id": "fire_blast",
                   "display_name": "불대문자 기술머신",
                   "kind": "item",
-                  "value": "tmcraft:tm_fireblast",
+                  "value": "cobblemon:technical_machine",
+                  "move": "fireblast",
+                  "count": 1,
+                  "weight": 1.0,
+                  "selectable": true
+                },
+                {
+                  "id": "thunder",
+                  "display_name": "번개 기술머신",
+                  "kind": "item",
+                  "value": "cobblemon:technical_machine",
+                  "move": "thunder",
+                  "count": 1,
+                  "weight": 1.0,
+                  "selectable": true
+                },
+                {
+                  "id": "blizzard",
+                  "display_name": "눈보라 기술머신",
+                  "kind": "item",
+                  "value": "cobblemon:technical_machine",
+                  "move": "blizzard",
+                  "count": 1,
+                  "weight": 1.0,
+                  "selectable": true
+                },
+                {
+                  "id": "hyper_beam",
+                  "display_name": "파괴광선 기술머신",
+                  "kind": "item",
+                  "value": "cobblemon:technical_machine",
+                  "move": "hyperbeam",
                   "count": 1,
                   "weight": 1.0,
                   "selectable": true
@@ -491,7 +544,8 @@
                   "id": "thunder",
                   "display_name": "번개 기술머신",
                   "kind": "item",
-                  "value": "tmcraft:tm_thunder",
+                  "value": "cobblemon:technical_machine",
+                  "move": "thunder",
                   "count": 1,
                   "weight": 1.0,
                   "selectable": false
@@ -500,7 +554,28 @@
                   "id": "fire_blast",
                   "display_name": "불대문자 기술머신",
                   "kind": "item",
-                  "value": "tmcraft:tm_fireblast",
+                  "value": "cobblemon:technical_machine",
+                  "move": "fireblast",
+                  "count": 1,
+                  "weight": 1.0,
+                  "selectable": false
+                },
+                {
+                  "id": "blizzard",
+                  "display_name": "눈보라 기술머신",
+                  "kind": "item",
+                  "value": "cobblemon:technical_machine",
+                  "move": "blizzard",
+                  "count": 1,
+                  "weight": 1.0,
+                  "selectable": false
+                },
+                {
+                  "id": "hyper_beam",
+                  "display_name": "파괴광선 기술머신",
+                  "kind": "item",
+                  "value": "cobblemon:technical_machine",
+                  "move": "hyperbeam",
                   "count": 1,
                   "weight": 1.0,
                   "selectable": false

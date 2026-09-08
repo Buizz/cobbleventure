@@ -417,7 +417,8 @@ public final class CobbleventureCasino {
             true, "screen.cobbleventure_casino.gacha.received",
             GachaTickets.count(player, machine), theme.id, theme.ticket_cost,
             rarity.id, rarity.display_name,
-            reward.id, reward.kind, reward.value, reward.count,
+            reward.id, reward.kind, reward.value,
+            reward.move == null ? "" : reward.move, reward.count,
             progress.pullsSinceTarget,
             theme.pity.hard.enabled ? theme.pity.hard.count : 0,
             progress.selectionPoints,
@@ -517,9 +518,9 @@ public final class CobbleventureCasino {
                 }
                 return true;
             }
-            Item rewardItem = item(reward.value);
-            if (rewardItem == null) return false;
-            ItemStack stack = new ItemStack(rewardItem, reward.count);
+            ItemStack stack = TechnicalMachineStacks.create(reward.value, reward.move);
+            if (stack.isEmpty()) return false;
+            stack.setCount(reward.count);
             if (!player.getInventory().add(stack)) player.drop(stack, false);
             return true;
         } catch (RuntimeException error) {
@@ -578,14 +579,14 @@ public final class CobbleventureCasino {
     record PullOutcome(
         boolean success, String messageKey, int tickets, String themeId, int ticketCost,
         String rarityId, String rarityName,
-        String rewardId, String rewardKind, String rewardValue, int rewardCount,
+        String rewardId, String rewardKind, String rewardValue, String rewardMove, int rewardCount,
         int pullsSinceTarget, int hardPityCount,
         int selectionPoints, int selectionRequired
     ) {
         static PullOutcome failure(String messageKey, int tickets, String themeId, int ticketCost) {
             return new PullOutcome(
                 false, messageKey, tickets, themeId, ticketCost,
-                "", "", "", "", "", 0,
+                "", "", "", "", "", "", 0,
                 0, 0, 0, 0
             );
         }

@@ -6,6 +6,7 @@ import com.cobblemon.mod.common.pokemon.RenderablePokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import dev.buizz.cobbleventure.casino.CasinoItems;
 import dev.buizz.cobbleventure.casino.GachaMachineNetwork;
+import dev.buizz.cobbleventure.casino.TechnicalMachineStacks;
 import dev.buizz.cobbleventure.playermenu.client.MenuBackButton;
 import dev.buizz.cobbleventure.playermenu.client.MenuTheme;
 import java.util.ArrayList;
@@ -275,9 +276,9 @@ public final class GachaMachineScreen extends Screen {
             if ("pokemon".equals(reward.kind())) {
                 showRewardPokemon(row, reward.value(), listLeft + 9, y + 1);
             } else {
-                graphics.renderItem(rewardIcon(reward.kind(), reward.value()), listLeft + 11, y + 4);
+                graphics.renderItem(rewardIcon(reward.kind(), reward.value(), reward.move()), listLeft + 11, y + 4);
             }
-            Component name = rewardName(reward.kind(), reward.value(), reward.rewardId());
+            Component name = rewardName(reward.kind(), reward.value(), reward.move(), reward.rewardId());
             graphics.drawString(font,
                 font.plainSubstrByWidth(name.getString(), Math.max(30, listRight - listLeft - 145)),
                 listLeft + 32, y + 5, menuTheme.textColor, false);
@@ -342,9 +343,9 @@ public final class GachaMachineScreen extends Screen {
             GachaMachineNetwork.RewardView preview = rewards.isEmpty() ? null
                 : rewards.get((animationTicks / 3) % rewards.size());
             if (preview != null) {
-                renderFeaturedReward(graphics, preview.kind(), preview.value(), centerX, frameTop, frameSize);
+                renderFeaturedReward(graphics, preview.kind(), preview.value(), preview.move(), centerX, frameTop, frameSize);
                 drawCenteredNoShadow(graphics,
-                    font.plainSubstrByWidth(rewardName(preview.kind(), preview.value(), preview.rewardId()).getString(), right - left - 20),
+                    font.plainSubstrByWidth(rewardName(preview.kind(), preview.value(), preview.move(), preview.rewardId()).getString(), right - left - 20),
                     centerX, firstTextY, rarityColor(preview.rarityId()));
             }
             if (firstTextY + 12 <= bottom - font.lineHeight) {
@@ -361,11 +362,11 @@ public final class GachaMachineScreen extends Screen {
                 centerX + half - 4, frameBottom - 4,
                 menuTheme.rowRadius, menuTheme.background
             );
-            renderFeaturedReward(graphics, pendingResult.kind(), pendingResult.value(), centerX, frameTop, frameSize);
+            renderFeaturedReward(graphics, pendingResult.kind(), pendingResult.value(), pendingResult.move(), centerX, frameTop, frameSize);
             drawCenteredNoShadow(graphics, pendingResult.rarityName(), centerX, firstTextY, color);
             if (firstTextY + 12 <= bottom - font.lineHeight) {
                 drawCenteredNoShadow(graphics,
-                    font.plainSubstrByWidth(rewardName(pendingResult.kind(), pendingResult.value(), pendingResult.rewardId()).getString(), right - left - 18),
+                    font.plainSubstrByWidth(rewardName(pendingResult.kind(), pendingResult.value(), pendingResult.move(), pendingResult.rewardId()).getString(), right - left - 18),
                     centerX, firstTextY + 12, menuTheme.textColor);
             }
             if (!compact && firstTextY + 24 <= bottom - font.lineHeight) {
@@ -376,7 +377,7 @@ public final class GachaMachineScreen extends Screen {
         } else {
             if ("pokemon".equals(payload.machineType()) && !rewards.isEmpty()) {
                 GachaMachineNetwork.RewardView preview = rewards.getFirst();
-                renderFeaturedReward(graphics, preview.kind(), preview.value(), centerX, frameTop, frameSize);
+                renderFeaturedReward(graphics, preview.kind(), preview.value(), preview.move(), centerX, frameTop, frameSize);
             } else {
                 graphics.renderItem(ticketIcon(), centerX - 8, frameTop + (frameSize - 16) / 2);
             }
@@ -566,12 +567,12 @@ public final class GachaMachineScreen extends Screen {
     }
 
     private void renderFeaturedReward(
-        GuiGraphics graphics, String kind, String value,
+        GuiGraphics graphics, String kind, String value, String move,
         int centerX, int frameTop, int frameSize
     ) {
         if (!"pokemon".equals(kind)) {
             graphics.renderItem(
-                rewardIcon(kind, value), centerX - 8,
+                rewardIcon(kind, value, move), centerX - 8,
                 frameTop + (frameSize - 16) / 2
             );
             return;
@@ -602,24 +603,24 @@ public final class GachaMachineScreen extends Screen {
         }
     }
 
-    private Component rewardName(String kind, String value, String fallback) {
+    private Component rewardName(String kind, String value, String move, String fallback) {
         try {
             if ("pokemon".equals(kind)) {
                 String speciesName = value.strip().split("\\s+", 2)[0];
                 Species species = PokemonSpecies.getByName(speciesName);
                 if (species != null) return species.getTranslatedName();
             } else {
-                Item item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.parse(value)).orElse(Items.AIR);
-                if (item != Items.AIR) return item.getDefaultInstance().getHoverName();
+                ItemStack stack = TechnicalMachineStacks.create(value, move);
+                if (!stack.isEmpty()) return stack.getHoverName();
             }
         } catch (RuntimeException ignored) {}
         return Component.literal(fallback.replace('_', ' '));
     }
 
-    private ItemStack rewardIcon(String kind, String value) {
+    private ItemStack rewardIcon(String kind, String value, String move) {
         try {
-            Item item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.parse(value)).orElse(Items.PAPER);
-            return new ItemStack(item);
+            ItemStack stack = TechnicalMachineStacks.create(value, move);
+            return stack.isEmpty() ? new ItemStack(Items.PAPER) : stack;
         } catch (RuntimeException ignored) {
             return new ItemStack(Items.PAPER);
         }

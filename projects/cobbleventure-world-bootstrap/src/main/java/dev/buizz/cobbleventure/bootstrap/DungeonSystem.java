@@ -1453,23 +1453,19 @@ final class DungeonSystem {
         Map<String, BlockPos> positions = new HashMap<>();
         for (DungeonDefinition.Encounter encounter : definition.encounters()) {
             String markerKind = encounter.boss() ? "boss" : "encounter";
-            BlockPos authoredPosition = origin.offset(featurePosition(
+            BlockPos requestedPosition = origin.offset(featurePosition(
                 terrain, markerKind, encounter.id(), encounter.position()
             ));
-            positions.put(encounter.id(), authoredPosition);
             if (encounter.kind().equals("wild_pokemon")) {
                 Entity pokemon = DungeonWildEncounterSupport.spawn(
-                    level, encounter.pokemon(), authoredPosition, encounter.yaw()
+                    level, encounter.pokemon(), requestedPosition, encounter.yaw()
                 );
+                positions.put(encounter.id(), requestedPosition);
                 spawned.put(
                     pokemon.getUUID(), new EncounterEntityRef(encounter.id(), 0)
                 );
                 continue;
             }
-            DungeonEncounterFormation.Formation formation =
-                DungeonEncounterFormation.create(
-                    authoredPosition, encounter.yaw(), encounter.actorCount()
-                );
             List<BlockPos> opponentPositions = new ArrayList<>();
             for (int index = 0; index < encounter.actorCount(); index++) {
                 BlockPos relativeNpcSlot = featurePosition(
@@ -1478,8 +1474,32 @@ final class DungeonSystem {
                     null
                 );
                 opponentPositions.add(relativeNpcSlot == null
-                    ? formation.opponents().get(index)
+                    ? DungeonEncounterFormation.create(
+                        requestedPosition, encounter.yaw(), encounter.actorCount()
+                    ).opponents().get(index)
                     : origin.offset(relativeNpcSlot));
+            }
+            BlockPos authoredPosition = requestedPosition;
+            if (definition.multiplayer().mode().equals("cooperative")) {
+                BlockPos safeAnchor = DungeonEncounterFormation.resolveSafePlayerAnchor(
+                    requestedPosition, encounter.yaw(), encounter.actorCount(),
+                    position -> safeEncounterStandPosition(
+                        level, position, origin, terrain.size()
+                    )
+                );
+                if (safeAnchor != null) authoredPosition = safeAnchor;
+            }
+            DungeonEncounterFormation.Formation formation =
+                DungeonEncounterFormation.create(
+                    authoredPosition, encounter.yaw(), encounter.actorCount()
+                );
+            positions.put(encounter.id(), authoredPosition);
+            if (!authoredPosition.equals(requestedPosition)) {
+                LOGGER.debug(
+                    "Adjusted dungeon encounter anchor for safe cooperative formation: "
+                        + "dungeon={}, encounter={}, from={}, to={}",
+                    definition.id(), encounter.id(), requestedPosition, authoredPosition
+                );
             }
             validateEncounterFormation(
                 level, definition, encounter, formation, opponentPositions,
@@ -1532,14 +1552,8 @@ final class DungeonSystem {
         BlockPos position,
         float yaw
     ) {
-        Set<UUID> existing = level.getEntitiesOfClass(
-            Entity.class, new AABB(position).inflate(4.0D, 8.0D, 4.0D),
-            DungeonSystem::isEasyNpc
-        ).stream().map(Entity::getUUID).collect(Collectors.toSet());
-        String slug = dungeonActorPresetPath(trainer);
-        String command = "easy_npc preset import_new data easy_npc:preset/dungeon_actor/"
-            + slug + ".npc.snbt " + position.getX() + " " + position.getY()
-            + " " + position.getZ();
+        UUID createdId = UUID.randomUUID();
+        String command = dungeonActorImportCommand(trainer, position, createdId);
         try {
             int result = level.getServer().getCommands().getDispatcher().execute(
                 command,
@@ -1550,17 +1564,20 @@ final class DungeonSystem {
                     .withPermission(4)
                     .withSuppressedOutput()
             );
-            Entity created = level.getEntitiesOfClass(
-                Entity.class, new AABB(position).inflate(4.0D, 8.0D, 4.0D),
-                candidate -> isEasyNpc(candidate) && !existing.contains(candidate.getUUID())
-            ).stream().min(java.util.Comparator.comparingDouble(
-                candidate -> candidate.distanceToSqr(Vec3.atCenterOf(position))
-            )).orElse(null);
-            if (result == 0 || created == null) return false;
-            created.setCustomName(Component.literal(trainer.displayName()));
-            created.setCustomNameVisible(true);
-            created.setYRot(yaw);
-            created.addTag("cobbleventure_dungeon_actor/" + trainer.id());
+            if (result == 0) {
+                LOGGER.error(
+                    "Dungeon actor import command returned no result: trainer={}, "
+                        + "preset={}, position={}",
+                    trainer.id(), dungeonActorPresetPath(trainer), position
+                );
+                return false;
+            }
+            Entity created = level.getEntity(createdId);
+            if (created != null) configureDungeonActor(created, trainer, yaw);
+            else LOGGER.debug(
+                "Dungeon actor entity indexing is pending: trainer={}, uuid={}, position={}",
+                trainer.id(), createdId, position
+            );
             return true;
         } catch (CommandSyntaxException error) {
             LOGGER.error(
@@ -1569,6 +1586,24 @@ final class DungeonSystem {
             );
             return false;
         }
+    }
+
+    static String dungeonActorImportCommand(
+        DungeonDefinition.TrainerActor trainer, BlockPos position, UUID entityId
+    ) {
+        return "easy_npc preset import data easy_npc:preset/dungeon_actor/"
+            + dungeonActorPresetPath(trainer) + ".npc.snbt "
+            + position.getX() + " " + position.getY() + " " + position.getZ()
+            + " " + entityId;
+    }
+
+    private static void configureDungeonActor(
+        Entity entity, DungeonDefinition.TrainerActor trainer, float yaw
+    ) {
+        entity.setCustomName(Component.literal(trainer.displayName()));
+        entity.setCustomNameVisible(true);
+        entity.setYRot(yaw);
+        entity.addTag("cobbleventure_dungeon_actor/" + trainer.id());
     }
 
     static String dungeonActorPresetPath(

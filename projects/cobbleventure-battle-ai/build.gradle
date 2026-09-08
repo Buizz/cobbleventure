@@ -137,16 +137,14 @@ processResources {
 }
 
 tasks.register('cleanInstalledDevelopmentJars', Delete) {
-    delete fileTree(rootProject.file('../../pack/overrides/development-placeholder/mods')) {
+    delete fileTree(cobbleventureDevelopmentModsDir) {
         include 'cobbleventure-battle-ai-*.jar'
     }
 }
 
 tasks.register('installDevelopmentJar') {
     dependsOn jar
-    def destinationDirectoryPath = rootProject.file(
-        '../../pack/overrides/development-placeholder/mods'
-    ).absolutePath
+    def destinationDirectoryPath = cobbleventureDevelopmentModsDir.absolutePath
     inputs.file(tasks.named('jar').flatMap { it.archiveFile })
     doLast {
         def destinationDirectory = new File(destinationDirectoryPath)

@@ -22,6 +22,7 @@ set "BATTLE_AI_PROJECT=%REPO_ROOT%projects\cobbleventure-battle-ai"
 set "ADVENTURE_PROJECT=%REPO_ROOT%projects\cobbleventure-adventure"
 set "WORLD_BOOTSTRAP_PROJECT=%REPO_ROOT%projects\cobbleventure-world-bootstrap"
 set "PLAYER_MENU_PROJECT=%REPO_ROOT%projects\cobbleventure-player-menu"
+set "EXPERIENCE_PROJECT=%REPO_ROOT%projects\cobbleventure-experience"
 set "CASINO_PROJECT=%REPO_ROOT%projects\cobbleventure-casino"
 set "POKEFINDER_PROJECT=%REPO_ROOT%projects\cobbleventure-pokefinder"
 set "STRUCTURE_BUILDER_PROJECT=%REPO_ROOT%projects\cobbleventure-structure-builder"
@@ -32,11 +33,13 @@ set "MUSIC_PACK_BUILDER=%REPO_ROOT%tools\music-catalog\music_catalog.py"
 set "PAINTING_PACK_BUILDER=%REPO_ROOT%tools\painting-pack\build_painting_pack.py"
 set "SMOKE_PROFILE=pack\profiles\import-smoke.json"
 set "DEVELOPMENT_PROFILE=pack\profiles\development-placeholder.json"
+set "DEVELOPMENT_PROFILE_1_8=pack\profiles\development-1.8.json"
 set "STRUCTURE_BUILDER_PROFILE=pack\profiles\structure-builder.json"
 set "LIVE_NBT_EDITOR_PROFILE=pack\profiles\live-nbt-editor.json"
 
 call :configure_cobblemon
 if errorlevel 1 exit /b %errorlevel%
+if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" set "DEVELOPMENT_PROFILE=%DEVELOPMENT_PROFILE_1_8%"
 
 set "EXPORT_LANGUAGE=%COBBLEVENTURE_EXPORT_LANGUAGE%"
 if not defined EXPORT_LANGUAGE set "EXPORT_LANGUAGE=ko_kr"
@@ -74,6 +77,7 @@ if /I "%~1"=="mod-ai" goto mod_ai
 if /I "%~1"=="mod-adventure" goto mod_adventure
 if /I "%~1"=="mod-bootstrap" goto mod_bootstrap
 if /I "%~1"=="mod-menu" goto mod_menu
+if /I "%~1"=="mod-experience" goto mod_experience
 if /I "%~1"=="mod-casino" goto mod_casino
 if /I "%~1"=="mod-pokefinder" goto mod_pokefinder
 if /I "%~1"=="mod-theme-blocks" goto mod_theme_blocks
@@ -132,13 +136,17 @@ call "%GRADLEW%" -p "%ADVENTURE_PROJECT%" test
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%WORLD_BOOTSTRAP_PROJECT%" test
 if errorlevel 1 exit /b %errorlevel%
-call "%GRADLEW%" -p "%PLAYER_MENU_PROJECT%" test
+call "%GRADLEW%" -p "%PLAYER_MENU_PROJECT%" build
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%EXPERIENCE_PROJECT%" test
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%CASINO_PROJECT%" test
 if errorlevel 1 exit /b %errorlevel%
+if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" goto test_skip_pokefinder
 call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" test
 if errorlevel 1 exit /b %errorlevel%
-call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" test
+:test_skip_pokefinder
+call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" test --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% -m unittest discover -s "%REPO_ROOT%tools\structure-builder\tests" -p "test_*.py"
 if errorlevel 1 exit /b %errorlevel%
@@ -176,7 +184,7 @@ call "%GRADLEW%" -p "%ADVENTURE_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_bootstrap
-call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build
+call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% "%CONTENT_MANAGER%" generate --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%"
 if errorlevel 1 exit /b %errorlevel%
@@ -195,16 +203,26 @@ exit /b %errorlevel%
 call "%GRADLEW%" -p "%PLAYER_MENU_PROJECT%" build
 exit /b %errorlevel%
 
+:mod_experience
+call "%GRADLEW%" -p "%PLAYER_MENU_PROJECT%" build
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%EXPERIENCE_PROJECT%" build
+exit /b %errorlevel%
+
 :mod_casino
 call "%GRADLEW%" -p "%CASINO_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_pokefinder
+if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" (
+    echo [ERROR] Cobbleventure Pokefinder requires the discontinued CobbleNav 2.3.3 and is excluded from the 1.8 test pack.
+    exit /b 1
+)
 call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_theme_blocks
-call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build
+call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 exit /b %errorlevel%
 
 :pack_smoke
@@ -212,12 +230,6 @@ exit /b %errorlevel%
 exit /b %errorlevel%
 
 :pack
-if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" (
-    echo [ERROR] The full development pack profile is still locked to Cobblemon 1.7.3 dependencies.
-    echo Use test or mod-* commands for 1.8 compatibility builds until the snapshot pack profile is ready.
-    exit /b 1
-)
-
 call "%GRADLEW%" -p "%ADVENTURE_PROJECT%" syncCobbreedingDevelopmentJar
 if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% "%CONTENT_MANAGER%" validate --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%"
@@ -242,11 +254,15 @@ call "%GRADLEW%" -p "%WORLD_BOOTSTRAP_PROJECT%" build
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%PLAYER_MENU_PROJECT%" build
 if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%EXPERIENCE_PROJECT%" build
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%CASINO_PROJECT%" build
 if errorlevel 1 exit /b %errorlevel%
-call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" build
-if errorlevel 1 exit /b %errorlevel%
-call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build
+if /I not "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" (
+    call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" build
+    if errorlevel 1 exit /b %errorlevel%
+)
+call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% "%PAINTING_PACK_BUILDER%"
 if errorlevel 1 exit /b %errorlevel%
@@ -280,7 +296,7 @@ exit /b %errorlevel%
 :builder_jar
 %PYTHON_CMD% "%STRUCTURE_BUILDER_TOOL%" --root "%REPO_ROOT%." generate
 if errorlevel 1 exit /b %errorlevel%
-call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build
+call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%STRUCTURE_BUILDER_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
@@ -296,7 +312,7 @@ if "%~2"=="" (
 )
 %PYTHON_CMD% "%STRUCTURE_BUILDER_TOOL%" --root "%REPO_ROOT%." generate
 if errorlevel 1 exit /b %errorlevel%
-call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build
+call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%STRUCTURE_BUILDER_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
@@ -316,7 +332,7 @@ if errorlevel 1 exit /b %errorlevel%
 exit /b %errorlevel%
 
 :live_editor_jar
-call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build
+call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%LIVE_NBT_EDITOR_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
@@ -330,7 +346,7 @@ if "%~2"=="" (
     echo Usage: build.bat live-editor-sync "^<CurseForge instance^>"
     exit /b 1
 )
-call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build
+call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%LIVE_NBT_EDITOR_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
@@ -390,6 +406,7 @@ echo   mod-ai         Build the standalone Battle AI NeoForge mod JAR
 echo   mod-adventure  Build the gameplay rules NeoForge Java mod JAR
 echo   mod-bootstrap  Build the starter-town NeoForge Java mod JAR
 echo   mod-menu       Build the radial player menu NeoForge Java mod JAR
+echo   mod-experience Build the standalone experience rewards and HUD mod JAR
 echo   mod-casino     Build the custom gacha machine NeoForge addon JAR
 echo   mod-pokefinder Build the CobbleNav Pokefinder radar extension JAR
 echo   mod-theme-blocks Build the standalone themed building blocks JAR
@@ -404,8 +421,8 @@ echo   builder-sync   Replace the builder world in an existing CurseForge instan
 echo   builder-import Import exported NBT and refresh in-game generated resources
 echo.
 echo Export language defaults to ko_kr and can also be set with COBBLEVENTURE_EXPORT_LANGUAGE.
-echo Cobblemon defaults to 1.7.3. Set COBBLEVENTURE_COBBLEMON_TARGET=1.8 for the snapshot.
-echo The 1.8 build auto-detects .tmp\cobblemon-1.8-snapshot\Cobblemon-neoforge-1.8*.jar.
+echo Cobblemon defaults to 1.7.3. Set COBBLEVENTURE_COBBLEMON_TARGET=1.8 for the separate 1.8 pack.
+echo The 1.8 build auto-detects the official JAR under .tmp\cobblemon-1.8-release\ first.
 exit /b 1
 
 :configure_cobblemon
@@ -424,20 +441,21 @@ if /I not "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" (
     exit /b 1
 )
 if defined COBBLEVENTURE_COBBLEMON_JAR goto validate_cobblemon_jar
+for /f "delims=" %%F in ('dir /b /a-d /o-d "%REPO_ROOT%.tmp\cobblemon-1.8-release\Cobblemon-neoforge-1.8*.jar" 2^>nul') do if not defined COBBLEVENTURE_COBBLEMON_JAR set "COBBLEVENTURE_COBBLEMON_JAR=%REPO_ROOT%.tmp\cobblemon-1.8-release\%%F"
 for /f "delims=" %%F in ('dir /b /a-d /o-d "%REPO_ROOT%.tmp\cobblemon-1.8-snapshot\Cobblemon-neoforge-1.8*.jar" 2^>nul') do if not defined COBBLEVENTURE_COBBLEMON_JAR set "COBBLEVENTURE_COBBLEMON_JAR=%REPO_ROOT%.tmp\cobblemon-1.8-snapshot\%%F"
 
 :validate_cobblemon_jar
 if not defined COBBLEVENTURE_COBBLEMON_JAR (
-    echo [ERROR] Cobblemon 1.8 snapshot JAR was not found.
+    echo [ERROR] Cobblemon 1.8 NeoForge JAR was not found.
     echo Set COBBLEVENTURE_COBBLEMON_JAR or place the NeoForge JAR under:
-    echo   .tmp\cobblemon-1.8-snapshot\
+    echo   .tmp\cobblemon-1.8-release\
     exit /b 1
 )
 if not exist "%COBBLEVENTURE_COBBLEMON_JAR%" (
-    echo [ERROR] Cobblemon 1.8 snapshot JAR does not exist:
+    echo [ERROR] Cobblemon 1.8 NeoForge JAR does not exist:
     echo   %COBBLEVENTURE_COBBLEMON_JAR%
     exit /b 1
 )
 echo [INFO] Cobblemon build target: 1.8
-echo [INFO] Cobblemon snapshot JAR: %COBBLEVENTURE_COBBLEMON_JAR%
+echo [INFO] Cobblemon JAR: %COBBLEVENTURE_COBBLEMON_JAR%
 exit /b 0

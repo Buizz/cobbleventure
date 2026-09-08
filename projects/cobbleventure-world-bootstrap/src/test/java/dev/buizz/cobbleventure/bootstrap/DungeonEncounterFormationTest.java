@@ -37,4 +37,31 @@ final class DungeonEncounterFormationTest {
         );
         assertEquals(270.0F, formation.playerYaw());
     }
+
+    @Test
+    void keepsRequestedAnchorWhenCooperativePlayerSlotsAreSafe() {
+        BlockPos requested = new BlockPos(10, 4, 20);
+
+        BlockPos resolved = DungeonEncounterFormation.resolveSafePlayerAnchor(
+            requested, 0.0F, 2, position -> true
+        );
+
+        assertEquals(requested, resolved);
+    }
+
+    @Test
+    void movesAnchorToNearestSafeCooperativePlayerSlots() {
+        BlockPos requested = new BlockPos(10, 4, 20);
+
+        BlockPos resolved = DungeonEncounterFormation.resolveSafePlayerAnchor(
+            requested, 0.0F, 2,
+            position -> position.getZ() == 24
+        );
+
+        assertEquals(new BlockPos(10, 4, 19), resolved);
+        assertEquals(
+            java.util.List.of(new BlockPos(11, 4, 24), new BlockPos(9, 4, 24)),
+            DungeonEncounterFormation.create(resolved, 0.0F, 2).players()
+        );
+    }
 }

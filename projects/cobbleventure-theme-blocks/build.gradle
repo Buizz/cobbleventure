@@ -6,6 +6,8 @@ plugins {
 version = mod_version
 group = mod_group_id
 
+apply from: rootProject.file('../../gradle/cobblemon-target.gradle')
+
 base {
     archivesName = 'cobbleventure-theme-blocks'
 }
@@ -53,7 +55,11 @@ processResources {
         exclude 'assets/cobbleventure_theme_blocks/textures/block/research_device.png'
         exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/**/*_complete.json'
         exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/**/*.pack-report.json'
+        exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/02_double_display_case/double_display_case.json'
+        exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/white_connecting_bookshelf.json'
+        exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/13_green_connecting_bookshelf/green_connecting_bookshelf.json'
     }
+    from(layout.buildDirectory.dir('generated/tall-furniture'))
 }
 
 def pythonExecutable = providers.environmentVariable('PYTHON').orElse(
@@ -67,11 +73,17 @@ tasks.register('syncEditableBbModels', Exec) {
 
 tasks.named('processResources') {
     dependsOn 'syncEditableBbModels'
+    dependsOn 'exportTallFurniture'
+}
+
+tasks.register('exportTallFurniture', Exec) {
+    workingDir projectDir
+    commandLine pythonExecutable.get(), 'object-workspace/export-tall-furniture.py'
 }
 
 tasks.register('cleanInstalledThemeBlockJars', Delete) {
     [
-        rootProject.file('../../pack/overrides/development-placeholder/mods'),
+        cobbleventureDevelopmentModsDir,
         rootProject.file('../../pack/overrides/structure-builder/mods'),
         rootProject.file('../../pack/overrides/live-nbt-editor/mods'),
     ].each { directory ->
@@ -85,7 +97,7 @@ tasks.register('installDevelopmentPackJar', Copy) {
     dependsOn jar
     dependsOn 'cleanInstalledThemeBlockJars'
     from jar
-    into rootProject.file('../../pack/overrides/development-placeholder/mods')
+    into cobbleventureDevelopmentModsDir
 }
 
 tasks.register('installStructureBuilderJar', Copy) {

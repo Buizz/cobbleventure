@@ -144,9 +144,7 @@ public final class ShopNetwork {
         String error;
         if (payload.selling()) {
             ItemStack prototype = payload.stack().copyWithCount(1);
-            BigInteger unitPrice = definition.salePrices().getOrDefault(
-                prototype.getItem(), BigInteger.ZERO
-            );
+            BigInteger unitPrice = salePrice(definition, prototype);
             error = sell(player, prototype, unitPrice, payload.quantity());
         } else {
             if (payload.offerIndex() < 0
@@ -179,14 +177,14 @@ public final class ShopNetwork {
         if (requested > Integer.MAX_VALUE) {
             return "screen.cobbleventure_player_menu.shop.error.quantity";
         }
-        List<ItemStack> stacks = splitStacks(offer.item(), (int) requested);
+        List<ItemStack> stacks = splitStacks(offer.stack(), (int) requested);
         if (!BagApi.insertAll(player, stacks).complete()) {
             return "screen.cobbleventure_player_menu.shop.error.bag_full";
         }
         try {
             PlayerExtensionKt.setCobbleDollars(player, before.subtract(total));
         } catch (RuntimeException error) {
-            BagApi.remove(player, new ItemStack(offer.item()), (int) requested);
+            BagApi.remove(player, offer.stack(), (int) requested);
             return "screen.cobbleventure_player_menu.shop.error.transaction";
         }
         return "screen.cobbleventure_player_menu.shop.success.buy";
@@ -219,13 +217,13 @@ public final class ShopNetwork {
         return "screen.cobbleventure_player_menu.shop.success.sell";
     }
 
-    private static List<ItemStack> splitStacks(Item item, int count) {
+    private static List<ItemStack> splitStacks(ItemStack prototype, int count) {
         List<ItemStack> result = new ArrayList<>();
         int remaining = count;
-        int maxStackSize = new ItemStack(item).getMaxStackSize();
+        int maxStackSize = prototype.getMaxStackSize();
         while (remaining > 0) {
             int amount = Math.min(remaining, maxStackSize);
-            result.add(new ItemStack(item, amount));
+            result.add(prototype.copyWithCount(amount));
             remaining -= amount;
         }
         return result;
@@ -298,7 +296,7 @@ public final class ShopNetwork {
         List<ClientOffer> offers = new ArrayList<>();
         for (int index = 0; index < definition.offers().size(); index++) {
             Offer offer = definition.offers().get(index);
-            ItemStack prototype = new ItemStack(offer.item());
+            ItemStack prototype = offer.stack().copyWithCount(1);
             offers.add(new ClientOffer(
                 index,
                 offer.category(),
@@ -335,9 +333,7 @@ public final class ShopNetwork {
         }
         for (SellCandidate candidate : candidates) {
             ItemStack prototype = candidate.stack();
-            BigInteger price = definition.salePrices().getOrDefault(
-                prototype.getItem(), BigInteger.ZERO
-            );
+            BigInteger price = salePrice(definition, prototype);
             offers.add(new ClientOffer(
                 offers.size(), "", prototype, 1, "0", price.toString(), candidate.count(), true
             ));
@@ -379,10 +375,14 @@ public final class ShopNetwork {
                     String categoryName = localized(category.get("name"), language);
                     for (JsonElement offerElement : category.getAsJsonArray("offers")) {
                         JsonObject offer = offerElement.getAsJsonObject();
-                        ResourceLocation itemId = ResourceLocation.tryParse(requiredString(offer, "item"));
+                        String itemValue = requiredString(offer, "item");
+                        ResourceLocation itemId = ResourceLocation.tryParse(itemValue);
                         if (itemId == null || !BuiltInRegistries.ITEM.containsKey(itemId)) continue;
                         BigInteger buyPrice = positiveMoney(requiredString(offer, "price"));
                         Item item = BuiltInRegistries.ITEM.get(itemId);
+                        String move = offer.has("move") ? requiredString(offer, "move") : "";
+                        ItemStack prototype = TechnicalMachineStacks.create(itemValue, move);
+                        if (prototype.isEmpty()) continue;
                         StandardPrice standardPrice = standardPrices.get(item);
                         BigInteger sellPrice;
                         if (offer.has("sell_price")) {
@@ -397,7 +397,7 @@ public final class ShopNetwork {
                         resolvedSalePrices.put(item, sellPrice);
                         offers.add(new Offer(
                             categoryName,
-                            item,
+                            prototype,
                             Math.max(1, offer.get("count").getAsInt()),
                             buyPrice,
                             sellPrice
@@ -450,6 +450,15 @@ public final class ShopNetwork {
         return price.multiply(BigInteger.valueOf(percentage)).divide(BigInteger.valueOf(100));
     }
 
+    private static BigInteger salePrice(ShopDefinition definition, ItemStack prototype) {
+        for (Offer offer : definition.offers()) {
+            if (ItemStack.isSameItemSameComponents(offer.stack(), prototype)) {
+                return offer.sellPrice();
+            }
+        }
+        return definition.salePrices().getOrDefault(prototype.getItem(), BigInteger.ZERO);
+    }
+
     private static BigInteger positiveMoney(String value) {
         BigInteger parsed = new BigInteger(value);
         if (parsed.signum() < 0) throw new IllegalArgumentException("Negative price");
@@ -484,7 +493,7 @@ public final class ShopNetwork {
         }
     }
     private record Offer(
-        String category, Item item, int count, BigInteger buyPrice, BigInteger sellPrice
+        String category, ItemStack stack, int count, BigInteger buyPrice, BigInteger sellPrice
     ) {}
     private record SellCandidate(ItemStack stack, int count) {}
 

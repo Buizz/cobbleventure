@@ -204,5 +204,38 @@ class PackBuilderTests(unittest.TestCase):
             self.assertIn("api.curseforge.com", setup)
             self.assertTrue(output.with_name(output.name + ".sha256").is_file())
 
+    def test_uses_profile_specific_lock_and_replaces_base_mods_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            profile_path = self._fixture(root)
+            profile_file = root / profile_path
+            profile = json.loads(profile_file.read_text(encoding="utf-8"))
+            profile["dependency_lock"] = "pack/dependencies-1.8.lock.json"
+            profile["mods_directory"] = "pack/overrides/development-1.8/mods"
+            profile_file.write_text(json.dumps(profile), encoding="utf-8")
+
+            base_mods = root / "pack" / "overrides" / "smoke" / "mods"
+            base_mods.mkdir()
+            (base_mods / "stable.jar").write_bytes(b"stable")
+            target_mods = root / "pack" / "overrides" / "development-1.8" / "mods"
+            target_mods.mkdir(parents=True)
+            (target_mods / "next.jar").write_bytes(b"next")
+            self._write_dependency_lock(root)
+            (root / "pack" / "dependencies.lock.json").replace(
+                root / "pack" / "dependencies-1.8.lock.json"
+            )
+
+            client_output = pack_builder.build_pack(root, profile_path)
+            with zipfile.ZipFile(client_output) as archive:
+                names = set(archive.namelist())
+            self.assertIn("overrides/mods/next.jar", names)
+            self.assertNotIn("overrides/mods/stable.jar", names)
+
+            server_output = pack_builder.build_server_pack(root, profile_path)
+            manifest = pack_builder.validate_server_pack(
+                server_output, root=root, profile_path=profile_path,
+            )
+            self.assertEqual(["next.jar"], manifest["vendored_mods"])
+
 if __name__ == "__main__":
     unittest.main()

@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
@@ -46,6 +47,10 @@ final class GachaCatalog {
                     if (machine == null || machine.id == null || machine.id.isBlank() || !machine.enabled) continue;
                     machine.machine_type = machine.machine_type == null || machine.machine_type.isBlank()
                         ? "item" : machine.machine_type;
+                    if ("technical_machine".equals(machine.machine_type)
+                        && !BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath(
+                            "cobblemon", "technical_machine"
+                        ))) continue;
                     Ticket ticket = document.tickets.get(machine.machine_type);
                     if (ticket == null) throw new JsonParseException("티켓 종류가 없습니다: " + machine.machine_type);
                     normalize(machine, ticket, rewards, document.schema_version);
@@ -107,6 +112,7 @@ final class GachaCatalog {
                     reward.display_name = template.display_name;
                     reward.kind = template.kind;
                     reward.value = template.value;
+                    reward.move = template.move;
                     reward.count = Math.max(1, template.count);
                 }
                 if (reward.id == null || reward.id.isBlank() || reward.value == null || reward.value.isBlank()) {
@@ -163,10 +169,10 @@ final class GachaCatalog {
     static final class Ticket { String display_name; long price; int purchase_min; int purchase_max; }
     static final class Rarity { String id; String display_name; double weight; List<Reward> rewards; }
     static final class RewardTemplate {
-        String id; String display_name; String machine_type; String kind; String value; int count;
+        String id; String display_name; String machine_type; String kind; String value; String move; int count;
     }
     static final class Reward {
-        String catalog_id; String id; String display_name; String kind; String value; int count;
+        String catalog_id; String id; String display_name; String kind; String value; String move; int count;
         double weight; boolean selectable;
     }
     static final class Pity { Soft soft; Hard hard; Selection selection; }

@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.tutorial.TutorialSteps;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import com.cobblemon.mod.common.client.gui.startselection.StarterSelectionScreen;
@@ -157,7 +158,20 @@ public final class PlayerMenuClient {
         disableLegacyIrisShaderPackSelectionKey(minecraft);
         disableLegacyCobblemonSummaryKey(minecraft);
         disableLegacyCobblemonHidePartyKey(minecraft);
+        suppressVanillaTutorial(minecraft);
         suppressCobblemonStarterPrompt(minecraft);
+    }
+
+    /**
+     * Cobbleventure replaces Minecraft's early-game flow, so the vanilla movement,
+     * tree, inventory, and plank hints are never relevant. Publishing an integrated
+     * server to LAN can restart the tutorial instance, so keep its persisted step at
+     * NONE while a world is active. Tutorial#setStep also clears the current toast.
+     */
+    private static void suppressVanillaTutorial(Minecraft minecraft) {
+        if (minecraft.player != null && minecraft.options.tutorialStep != TutorialSteps.NONE) {
+            minecraft.getTutorial().setStep(TutorialSteps.NONE);
+        }
     }
 
     /**

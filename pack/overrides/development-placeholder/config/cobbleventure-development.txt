@@ -1,5 +1,5 @@
 Cobbleventure development test pack
 
-This pack contains Cobblemon 1.7.3, the Cobblemon Additions compatibility stack,
+This pack contains Cobblemon 1.7.3, Cobbleventure's self-contained facility assets,
 and a temporary starter-town bootstrap data mod. RCT and the production
 Cobbleventure NeoForge gameplay adapter are not included yet.

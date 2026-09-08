@@ -308,7 +308,7 @@ EXPORT_LANGUAGES = {
 }
 COBBLEMON_BUILD_TARGETS = {
     "1.7.3": "1.7.3 안정 버전",
-    "1.8": "1.8 스냅샷",
+    "1.8": "1.8 시험 버전",
 }
 STRUCTURE_BUILDER_WORLD_NAME = "Cobbleventure Structure Builder"
 LIVE_NBT_EDITOR_WORLD_NAME = "Cobbleventure Live NBT Editor"
@@ -5089,7 +5089,7 @@ def _default_gacha_reward(machine_type: str) -> dict[str, Any]:
     if machine_type == "pokemon":
         return {"id": "pikachu", "display_name": "피카츄", "kind": "pokemon", "value": "pikachu level=15", "count": 1, "weight": 1.0, "selectable": False}
     if machine_type == "technical_machine":
-        return {"id": "protect", "display_name": "방어 기술머신", "kind": "item", "value": "tmcraft:tm_protect", "count": 1, "weight": 1.0, "selectable": False}
+        return {"id": "protect", "display_name": "방어 기술머신", "kind": "item", "value": "cobblemon:technical_machine", "move": "protect", "count": 1, "weight": 1.0, "selectable": False}
     return {"id": "poke_ball", "display_name": "몬스터볼", "kind": "item", "value": "cobblemon:poke_ball", "count": 5, "weight": 1.0, "selectable": False}
 
 
@@ -5183,6 +5183,7 @@ def gacha_machine_catalog_payload(root: Path) -> dict[str, Any]:
                             "display_name": template.get("display_name", reward.get("catalog_id", "보상")),
                             "kind": template.get("kind", "pokemon" if machine.get("machine_type") == "pokemon" else "item"),
                             "value": template.get("value", "pikachu level=15" if machine.get("machine_type") == "pokemon" else "minecraft:stone"),
+                            **({"move": template["move"]} if isinstance(template.get("move"), str) else {}),
                             "count": 1 if machine.get("machine_type") == "pokemon" else max(1, int(template.get("count", 1))),
                             "weight": reward.get("weight", 1.0),
                             "selectable": reward.get("selectable", False),
@@ -5249,6 +5250,14 @@ def _validate_gacha_theme(
             value = reward.get("value")
             if not isinstance(value, str) or not value.strip() or (kind == "item" and RESOURCE_ID.fullmatch(value) is None):
                 _issue(issues, "error", path, f"{reward_path}.value", "아이템 ID 또는 PokemonProperties 문자열이 필요합니다.")
+            move = reward.get("move")
+            if machine_type == "technical_machine":
+                if value != "cobblemon:technical_machine":
+                    _issue(issues, "error", path, f"{reward_path}.value", "Cobblemon 1.8 기본 기술머신 아이템을 사용해야 합니다.")
+                if not isinstance(move, str) or re.fullmatch(r"[a-z0-9]+", move) is None:
+                    _issue(issues, "error", path, f"{reward_path}.move", "Cobblemon 기술 ID가 필요합니다. 예: protect")
+            elif move is not None:
+                _issue(issues, "error", path, f"{reward_path}.move", "기술머신 보상에만 기술 ID를 지정할 수 있습니다.")
             count = reward.get("count")
             if machine_type == "pokemon" and count != 1:
                 _issue(issues, "error", path, f"{reward_path}.count", "포켓몬 보상 수량은 항상 1이어야 합니다.")
@@ -6182,113 +6191,6 @@ def validate_music_references(root: Path) -> list[Issue]:
     return issues
 
 
-ECONOMY_VENDOR_ROLES = {
-    "pokemart_shopkeeper": "프렌들리숍 판매원",
-    "shopkeeper_ds_apricorns": "규토리·씨앗 판매원",
-    "shopkeeper_ds_battle_items": "배틀 아이템 판매원",
-    "shopkeeper_ds_ev-stone": "진화의 돌 판매원",
-    "shopkeeper_ds_ev-stone_2": "진화 아이템 판매원",
-    "shopkeeper_ds_food": "식품 판매원",
-    "shopkeeper_ds_general": "종합 판매원",
-    "shopkeeper_ds_held_items": "지닌물건 판매원",
-    "shopkeeper_ds_held_items_2": "전략 아이템 판매원",
-    "shopkeeper_ds_mulch": "비료 판매원",
-    "shopkeeper_ds_special_balls": "특수 볼 판매원",
-    "shopkeeper_ds_tech": "포켓몬 기기 판매원",
-    "shopkeeper_ds_vitamins": "영양제 판매원",
-    "shopkeeper_ds_xp": "경험치 아이템 판매원",
-    "shopkeeper_potions": "포션 판매원",
-    "store_worker_currency-exchange": "환전상",
-}
-ECONOMY_CATEGORY_NAMES_KO = {
-    "Pokeballs": "몬스터볼", "Pokéballs": "몬스터볼", "Combat": "배틀 도구",
-    "Healing": "회복", "Treatments": "회복약", "Remedies": "상태 회복",
-    "Apricorns": "규토리", "Seeds": "씨앗", "Boosts": "능력 강화",
-    "Evolution Stones": "진화의 돌", "Evo Items": "진화 아이템", "Food": "식품",
-    "Held Items": "지닌물건", "Security": "전략 아이템", "Mulch": "비료",
-    "Pokédex": "포켓몬 도감", "PokeFinder": "포켓파인더", "PokéNav": "포켓내비",
-    "Vitamins": "영양제", "Experience": "경험치", "Ingredients": "재료",
-    "Potions": "포션", "Drinks": "음료", "Relic Coins": "유물 주화", "Minecraft": "마인크래프트",
-}
-
-DEFAULT_DEPARTMENT_STORE_VENDOR_IDS = [
-    "bca:shopkeeper_ds_vitamins", "bca:shopkeeper_ds_battle_items",
-    "bca:shopkeeper_ds_tech", "bca:shopkeeper_ds_general",
-    "bca:shopkeeper_ds_special_balls", "bca:shopkeeper_ds_food",
-    "bca:store_worker_currency-exchange", "bca:shopkeeper_ds_held_items_2",
-    "bca:shopkeeper_ds_ev-stone", "bca:shopkeeper_ds_ev-stone_2",
-    "bca:shopkeeper_ds_held_items", "bca:shopkeeper_ds_xp",
-    "bca:shopkeeper_ds_apricorns", "bca:shopkeeper_ds_mulch",
-]
-DEFAULT_DEPARTMENT_STORE_SLOTS = [
-    ("1f_left_a", "1층 왼쪽 A"), ("1f_left_b", "1층 왼쪽 B"),
-    ("1f_center_a", "1층 중앙 A"), ("1f_center_b", "1층 중앙 B"),
-    ("1f_center_c", "1층 중앙 C"), ("1f_right", "1층 오른쪽"),
-    ("2f_left", "2층 왼쪽"), ("2f_center_a", "2층 중앙 A"),
-    ("2f_center_b", "2층 중앙 B"), ("2f_center_c", "2층 중앙 C"),
-    ("2f_right_a", "2층 오른쪽 A"), ("2f_right_b", "2층 오른쪽 B"),
-    ("3f_left", "3층 왼쪽"), ("3f_center", "3층 중앙"),
-]
-
-
-@functools.lru_cache(maxsize=8)
-def _economy_vendor_units_from_bca(
-    root: Path, core_root: Path | None = None
-) -> list[dict[str, Any]]:
-    source_root = (core_root or root).resolve()
-    mods = source_root / "pack" / "overrides" / "development-placeholder" / "mods"
-    jars = sorted(mods.glob("cobblemon-additions-*.jar")) if mods.exists() else []
-    if not jars:
-        return []
-    vendors: list[dict[str, Any]] = []
-    prefix = "data/bca/structure/stores/store_workers/"
-    with zipfile.ZipFile(jars[-1]) as archive:
-        for member in sorted(archive.namelist()):
-            if not member.startswith(prefix) or not member.endswith(".nbt"):
-                continue
-            stem = Path(member).stem
-            if stem == "nurse_joy":
-                continue
-            structure = _read_minecraft_structure_root(archive.read(member))
-            merchant = next((
-                entity.get("nbt", {}) for entity in structure.get("entities", [])
-                if isinstance(entity, dict)
-                and isinstance(entity.get("nbt"), dict)
-                and isinstance(entity["nbt"].get("CobbleMerchantShop"), list)
-            ), None)
-            if not merchant:
-                continue
-            categories: list[dict[str, Any]] = []
-            for category in merchant.get("CobbleMerchantShop", []):
-                if not isinstance(category, dict) or not isinstance(category.get("Offers"), list):
-                    continue
-                offers = []
-                for offer in category["Offers"]:
-                    stack = offer.get("Item", {}) if isinstance(offer, dict) else {}
-                    if not isinstance(stack, dict) or not isinstance(stack.get("id"), str):
-                        continue
-                    offers.append({
-                        "item": stack["id"],
-                        "count": int(stack.get("count", 1)),
-                        "price": str(offer.get("Price", "0")),
-                    })
-                category_name = str(category.get("Category", "Other"))
-                categories.append({"name": {"ko_kr": ECONOMY_CATEGORY_NAMES_KO.get(category_name, category_name), "en_us": category_name}, "offers": offers})
-            english_name = str(merchant.get("CustomName", stem)).strip('"')
-            korean_name = ECONOMY_VENDOR_ROLES.get(stem, english_name)
-            vendors.append({
-                "id": f"bca:{stem}",
-                "facility_scope": "pokemart" if stem == "pokemart_shopkeeper" else "department_store",
-                "role": {"ko_kr": korean_name, "en_us": english_name},
-                "display_name": {"ko_kr": korean_name, "en_us": english_name},
-                "npc_template": f"bca:{stem}",
-                "categories": categories,
-                "origin": "cobblemon_additions",
-                "source": member,
-            })
-    return vendors
-
-
 def _cobblemon_species_root(root: Path) -> Path | None:
     candidates = [
         root / ".tmp" / "cobblemon-1.7.3-source" / "common" / "src" / "main" / "resources" / "data" / "cobblemon" / "species",
@@ -6409,7 +6311,7 @@ def _economy_fallback_product_group(item_id: str, tags: set[str] | list[str] | N
         "pokedex", "pokenav", "pokefinder", "fishingnav",
     )):
         return "technology"
-    if namespace == "tmcraft" or path.startswith(("tm_", "tr_")) or any("technical_machine" in tag or "tm_moves" in tag for tag in tags):
+    if namespace == "tmcraft" or path == "technical_machine" or path.startswith(("tm_", "tr_")) or any("technical_machine" in tag or "tm_moves" in tag for tag in tags):
         return "machines"
     if path.startswith("relic_coin") or item_id == "minecraft:emerald":
         return "currency"
@@ -6444,6 +6346,72 @@ def _economy_fallback_product_group(item_id: str, tags: set[str] | list[str] | N
     }):
         return "materials"
     return "other"
+
+
+@functools.lru_cache(maxsize=4)
+def _cobblemon_technical_machine_catalog(root: Path) -> list[dict[str, Any]]:
+    """Load Cobblemon 1.8's data-driven TM registry for item/reward pickers."""
+    candidate_groups = [
+        root / ".tmp" / "cobblemon-1.8-release",
+        root / ".tmp" / "cobblemon-1.8-snapshot",
+        root / "pack" / "overrides" / "development-1.8" / "mods",
+    ]
+    candidates: list[Path] = []
+    for directory in candidate_groups:
+        if directory.is_dir():
+            candidates.extend(sorted(directory.glob("Cobblemon*.jar"), reverse=True))
+
+    for jar in candidates:
+        try:
+            with zipfile.ZipFile(jar) as archive:
+                members = archive.namelist()
+                tm_members = sorted(
+                    member for member in members
+                    if re.fullmatch(r"data/cobblemon/tms/[a-z0-9_./-]+\.json", member)
+                )
+                if not tm_members:
+                    continue
+                languages: dict[str, dict[str, str]] = {}
+                for locale in ("ko_kr", "en_us"):
+                    member = f"assets/cobblemon/lang/{locale}.json"
+                    try:
+                        document = json.loads(archive.read(member).decode("utf-8"))
+                    except (KeyError, UnicodeDecodeError, json.JSONDecodeError):
+                        document = {}
+                    languages[locale] = {
+                        key: value for key, value in document.items() if isinstance(value, str)
+                    } if isinstance(document, dict) else {}
+
+                catalog: dict[str, dict[str, Any]] = {}
+                for member in tm_members:
+                    try:
+                        document = json.loads(archive.read(member).decode("utf-8"))
+                    except (UnicodeDecodeError, json.JSONDecodeError):
+                        continue
+                    if not isinstance(document, dict):
+                        continue
+                    move = document.get("moveName")
+                    if not isinstance(move, str) or not move:
+                        move = Path(member).stem
+                    move = move.removeprefix("cobblemon:").lower()
+                    translation_key = f"cobblemon.move.{move}"
+                    en_name = languages["en_us"].get(translation_key, move)
+                    ko_name = languages["ko_kr"].get(translation_key, en_name)
+                    catalog[move] = {
+                        "id": "cobblemon:technical_machine",
+                        "key": f"cobblemon:technical_machine#{move}",
+                        "move": move,
+                        "ko_kr": f"{ko_name} 기술머신",
+                        "en_us": f"TM: {en_name}",
+                        "move_ko_kr": ko_name,
+                        "move_en_us": en_name,
+                        "type": document.get("type", "normal"),
+                        "product_group": "machines",
+                    }
+                return sorted(catalog.values(), key=lambda entry: (entry["ko_kr"], entry["move"]))
+        except (OSError, zipfile.BadZipFile):
+            continue
+    return []
 
 
 def _economy_editor_catalog(root: Path, species: list[dict[str, Any]]) -> dict[str, Any]:
@@ -6577,6 +6545,7 @@ def _economy_editor_catalog(root: Path, species: list[dict[str, Any]]) -> dict[s
         localized_species.append({**entry, "ko_kr": ko.get(key, entry.get("display_name", slug)), "en_us": en.get(key, entry.get("display_name", slug))})
     return {
         "items": sorted(items.values(), key=lambda entry: (entry["ko_kr"], entry["id"])),
+        "technical_machines": _cobblemon_technical_machine_catalog(root),
         "species": localized_species,
         "filters": {
             "types": sorted({value for entry in species for value in entry.get("types", [])}),
@@ -6592,9 +6561,8 @@ def load_economy_workspace(
     root: Path, core_root: Path | None = None
 ) -> dict[str, Any]:
     catalog = load_json(root / "content" / "catalogs" / "economy.json")
-    built_in_vendors = _economy_vendor_units_from_bca(root, core_root)
     custom_vendors = catalog.get("vendor_units", []) if isinstance(catalog, dict) else []
-    vendor_by_id = {vendor["id"]: vendor for vendor in built_in_vendors}
+    vendor_by_id: dict[str, dict[str, Any]] = {}
     for vendor in custom_vendors:
         if isinstance(vendor, dict) and isinstance(vendor.get("id"), str):
             vendor_by_id[vendor["id"]] = {**copy.deepcopy(vendor), "origin": "custom"}
@@ -6610,20 +6578,6 @@ def load_economy_workspace(
         default_percentage = 50
     default_percentage = max(0, min(100, default_percentage))
     standard_price_by_item: dict[str, dict[str, Any]] = {}
-    for vendor in built_in_vendors:
-        for category in vendor.get("categories", []):
-            for offer in category.get("offers", []):
-                item_id = offer.get("item")
-                price = offer.get("price")
-                if isinstance(item_id, str) and isinstance(price, str) and price.strip():
-                    buy_price = int(price)
-                    standard_price_by_item.setdefault(item_id, {
-                        "item": item_id,
-                        "buy_price": price,
-                        "sell_price": str(buy_price * default_percentage // 100),
-                        "use_default_sell_price": True,
-                        "no_sell_penalty": False,
-                    })
     for standard_price in catalog.get("standard_prices", []):
         if isinstance(standard_price, dict) and isinstance(standard_price.get("item"), str):
             standard_price_by_item[standard_price["item"]] = copy.deepcopy(standard_price)
@@ -6634,17 +6588,6 @@ def load_economy_workspace(
             "facility_scope": "pokemart",
             "vendor_units": ["bca:pokemart_shopkeeper"],
             "assignments": [{"slot_id": "counter", "display_name": {"ko_kr": "카운터", "en_us": "Counter"}, "vendor_unit": "bca:pokemart_shopkeeper"}],
-            "origin": "built_in",
-        },
-        {
-            "id": "cobbleventure:shop_catalog/department_store_default",
-            "display_name": {"ko_kr": "기본 백화점", "en_us": "Default Department Store"},
-            "facility_scope": "department_store",
-            "vendor_units": DEFAULT_DEPARTMENT_STORE_VENDOR_IDS,
-            "assignments": [
-                {"slot_id": slot_id, "display_name": {"ko_kr": display_name, "en_us": slot_id.replace("_", " ").upper()}, "vendor_unit": vendor_id}
-                for (slot_id, display_name), vendor_id in zip(DEFAULT_DEPARTMENT_STORE_SLOTS, DEFAULT_DEPARTMENT_STORE_VENDOR_IDS)
-            ],
             "origin": "built_in",
         },
     ]
@@ -6720,10 +6663,7 @@ def load_economy_workspace(
         "resolved_standard_prices": sorted(standard_price_by_item.values(), key=lambda entry: entry["item"]),
         "resolved_pokemon_drops": sorted(drop_by_species.values(), key=lambda entry: entry.get("species", "")),
         "editor_catalog": editor_catalog,
-        "source_status": {
-            "cobblemon_additions_vendors": len(built_in_vendors),
-            "cobblemon_species_drops": len(base_drops),
-        },
+        "source_status": {"cobblemon_species_drops": len(base_drops)},
     }
 
 
@@ -6921,7 +6861,7 @@ def validate_economy_catalog_file(path: Path, known_drop_items: set[str] | None 
         require_localized(vendor.get("role"), f"{entry_path}.role", "판매원 역할")
         require_localized(vendor.get("display_name"), f"{entry_path}.display_name", "판매 NPC")
         categories = _require_list(vendor.get("categories"), issues, path, f"{entry_path}.categories")
-        seen_items: set[str] = set()
+        seen_items: set[tuple[str, str]] = set()
         for category_index, category_value in enumerate(categories or []):
             category_path = f"{entry_path}.categories[{category_index}]"
             category = _require_object(category_value, issues, path, category_path)
@@ -6935,10 +6875,17 @@ def validate_economy_catalog_file(path: Path, known_drop_items: set[str] | None 
                 if offer is None:
                     continue
                 item_id = _resource_id(offer.get("item"), issues, path, f"{offer_path}.item")
-                if item_id and item_id in seen_items:
+                move = offer.get("move")
+                if item_id == "cobblemon:technical_machine":
+                    if not isinstance(move, str) or re.fullmatch(r"[a-z0-9]+", move) is None:
+                        _issue(issues, "error", path, f"{offer_path}.move", "Cobblemon 기술 ID가 필요합니다. 예: protect")
+                elif move is not None:
+                    _issue(issues, "error", path, f"{offer_path}.move", "기술머신 상품에만 기술 ID를 지정할 수 있습니다.")
+                item_key = (item_id, move or "") if item_id else None
+                if item_key and item_key in seen_items:
                     _issue(issues, "error", path, f"{offer_path}.item", f"같은 판매원 단위의 중복 판매 아이템: {item_id}")
-                if item_id:
-                    seen_items.add(item_id)
+                if item_key:
+                    seen_items.add(item_key)
                 count = offer.get("count")
                 if not isinstance(count, int) or isinstance(count, bool) or count < 1:
                     _issue(issues, "error", path, f"{offer_path}.count", "판매 수량은 1 이상 정수여야 합니다.")
@@ -7671,8 +7618,14 @@ def validate_repository(
 ) -> ValidationResult:
     root = root.resolve()
     dependency_root = (dependency_root or root).resolve()
+    cobblemon_target = os.environ.get("COBBLEVENTURE_COBBLEMON_TARGET", "1.7.3").strip().lower()
+    dependency_lock_name = (
+        "dependencies-1.8.lock.json"
+        if cobblemon_target in {"1.8", "1.8.0", "snapshot"}
+        else "dependencies.lock.json"
+    )
     issues = validate_dependency_lock(
-        dependency_root / "pack" / "dependencies.lock.json", strict_pack
+        dependency_root / "pack" / dependency_lock_name, strict_pack
     )
     issues.extend(_validate_cves_project(root, dependency_root))
     quest_ids: dict[str, Path] = {}

@@ -21,13 +21,13 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/** A complete bookshelf occupying two blocks of width and two blocks of height. */
+/** A complete bookshelf occupying two blocks of width and three blocks of height. */
 final class WideTallBookshelfBlock extends HorizontalDirectionalBlock {
     private static final MapCodec<WideTallBookshelfBlock> CODEC =
         simpleCodec(WideTallBookshelfBlock::new);
     static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     static final IntegerProperty WIDTH = IntegerProperty.create("width", 0, 1);
-    static final IntegerProperty HEIGHT = IntegerProperty.create("height", 0, 1);
+    static final IntegerProperty HEIGHT = IntegerProperty.create("height", 0, 2);
 
     private static final VoxelShape NORTH_SHAPE = box(0.0D, 0.0D, 2.0D, 16.0D, 16.0D, 16.0D);
     private static final VoxelShape EAST_SHAPE = box(0.0D, 0.0D, 0.0D, 14.0D, 16.0D, 16.0D);
@@ -73,7 +73,7 @@ final class WideTallBookshelfBlock extends HorizontalDirectionalBlock {
         }
         Direction facing = state.getValue(FACING);
         List<BlockPos> positions = positions(position, facing);
-        for (int height = 0; height < 2; height++) {
+        for (int height = 0; height < 3; height++) {
             for (int width = 0; width < 2; width++) {
                 level.setBlock(
                     positions.get(height * 2 + width),
@@ -134,7 +134,7 @@ final class WideTallBookshelfBlock extends HorizontalDirectionalBlock {
 
     private static List<BlockPos> positions(BlockPos core, Direction facing) {
         BlockPos right = core.relative(facing.getClockWise());
-        return List.of(core, right, core.above(), right.above());
+        return List.of(core, right, core.above(), right.above(), core.above(2), right.above(2));
     }
 
     private static BlockPos corePosition(BlockPos position, BlockState state) {

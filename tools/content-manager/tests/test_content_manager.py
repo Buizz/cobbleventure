@@ -5989,7 +5989,13 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn("상품 · 확률 설정", script)
         self.assertIn("data-gacha-add-pokemon", script)
         self.assertIn("data-gacha-add-item", script)
+        self.assertIn("editor_catalog?.technical_machines", script)
+        self.assertIn("data-gacha-add-item-key", script)
+        self.assertIn("entry.move ? {move:entry.move}", script)
+        self.assertNotIn('isTm ? {move:"protect"}', script)
         self.assertIn("data-gacha-reward=\"level\"", script)
+        self.assertIn("data-gacha-reward=\"move\"", script)
+        self.assertIn("cobblemon:technical_machine", script)
         self.assertIn("Cobblemon Casino의 실제 2블록 가챠머신 모델", script)
         self.assertIn("appearance/model_block", script)
         self.assertIn("appearance/facing", script)
@@ -6029,6 +6035,27 @@ class ContentManagerTests(unittest.TestCase):
             self.assertEqual("pikachu", reward["id"])
             self.assertEqual("pikachu level=15", reward["value"])
             self.assertEqual(1, reward["count"])
+
+    def test_technical_machine_gacha_uses_native_cobblemon_move_data(self) -> None:
+        catalog = content_manager.load_json(
+            PROJECT_ROOT / "content/catalogs/gacha-machines.json"
+        )
+        machine = next(
+            entry for entry in catalog["machines"]
+            if entry["machine_type"] == "technical_machine"
+        )
+        rewards = [
+            reward
+            for theme in machine["themes"]
+            for rarity in theme["rarities"]
+            for reward in rarity["rewards"]
+        ]
+
+        self.assertTrue(rewards)
+        self.assertTrue(all(reward["value"] == "cobblemon:technical_machine" for reward in rewards))
+        self.assertTrue(all(reward.get("move") for reward in rewards))
+        self.assertFalse(any(reward["value"].startswith("tmcraft:") for reward in rewards))
+        self.assertEqual([], content_manager.validate_gacha_machine_catalog(PROJECT_ROOT, catalog))
 
     def test_gacha_machine_catalog_migrates_legacy_product_catalog_to_direct_rewards(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -6302,23 +6329,50 @@ class ContentManagerTests(unittest.TestCase):
         )
         self.assertTrue(any("draft" in issue.message for issue in issues))
 
-    def test_cobblemon_additions_content_pack_is_registered(self) -> None:
-        root = PROJECT_ROOT
+    def test_cobblemon_additions_runtime_dependency_is_removed(self) -> None:
         dependency_lock = content_manager.load_json(
             CORE_ROOT / "pack" / "dependencies.lock.json"
         )
-        content_pack = next(
-            item
-            for item in dependency_lock["content_packs"]
-            if item["id"] == "cobblemon_additions"
+        self.assertNotIn("cobblemon_additions", {
+            item["id"] for item in dependency_lock["content_packs"]
+        })
+        mod_ids = {item["id"] for item in dependency_lock["mods"]}
+        self.assertNotIn("sinytra_connector", mod_ids)
+        self.assertNotIn("fabric_language_kotlin", mod_ids)
+        self.assertIn("forgified_fabric_api", mod_ids)
+
+    def test_cobblemon_1_8_profile_pins_updated_trainer_stack(self) -> None:
+        dependency_lock = content_manager.load_json(
+            CORE_ROOT / "pack" / "dependencies-1.8.lock.json"
         )
-        self.assertTrue(content_pack["selected"])
-        self.assertEqual("4.2.1", content_pack["version"])
-        self.assertEqual("fabric_mod", content_pack["artifact_format"])
-        self.assertEqual("ready", content_pack["packaging_status"])
-        self.assertEqual("ready", content_pack["runtime_status"])
-        self.assertEqual("W2pr9jyL", content_pack["modrinth"]["project_id"])
-        self.assertEqual("9PMzbD4o", content_pack["modrinth"]["version_id"])
+        mods = {item["id"]: item for item in dependency_lock["mods"]}
+        expected = {
+            "cobblemon": ("1.8.0", 687131, 8818732),
+            "rctapi": ("0.16.0-beta", 1152792, 8826267),
+            "rctmod": ("0.19.0-beta", 1009534, 8827140),
+            "tbcs": ("0.15.0-beta", 1172731, 8833923),
+            "mega_showdown": ("1.0+1.8+1.21.1-beta2", 1189523, 8820597),
+        }
+        for mod_id, (version, project_id, file_id) in expected.items():
+            with self.subTest(mod_id=mod_id):
+                mod = mods[mod_id]
+                self.assertEqual(version, mod["version"])
+                self.assertEqual(project_id, mod["curseforge"]["project_id"])
+                self.assertEqual(file_id, mod["curseforge"]["file_id"])
+
+        self.assertNotIn("cobblenav", mods)
+        profile = content_manager.load_json(
+            CORE_ROOT / "pack" / "profiles" / "development-1.8.json"
+        )
+        self.assertEqual("pack/dependencies-1.8.lock.json", profile["dependency_lock"])
+        self.assertEqual(
+            "pack/overrides/development-1.8/mods", profile["mods_directory"]
+        )
+        profile_files = {
+            (entry["projectID"], entry["fileID"]) for entry in profile["files"]
+        }
+        self.assertNotIn((976014, 7940651), profile_files)
+        self.assertTrue({(item[1], item[2]) for item in expected.values()}.issubset(profile_files))
 
     def test_server_full_dex_and_mega_addons_are_pinned_in_development_pack(self) -> None:
         root = CORE_ROOT
@@ -7293,6 +7347,19 @@ class ContentManagerTests(unittest.TestCase):
             script.index('py -3 -c "import sys"'),
         )
         self.assertIn('if /I not "%~1"=="builder-sync"', script)
+
+    def test_theme_blocks_builds_without_configuration_cache(self) -> None:
+        script = (CORE_ROOT / "build.bat").read_text(encoding="utf-8")
+        invocations = [
+            line.strip()
+            for line in script.splitlines()
+            if line.startswith('call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%"')
+        ]
+        self.assertGreater(len(invocations), 0)
+        self.assertTrue(
+            all(line.endswith(" --no-configuration-cache") for line in invocations),
+            invocations,
+        )
 
     def test_structure_builder_settings_api(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

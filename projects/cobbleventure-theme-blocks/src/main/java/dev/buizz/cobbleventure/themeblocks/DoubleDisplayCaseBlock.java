@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 final class DoubleDisplayCaseBlock extends HorizontalDirectionalBlock {
     private static final MapCodec<DoubleDisplayCaseBlock> CODEC = simpleCodec(DoubleDisplayCaseBlock::new);
     static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    static final IntegerProperty PART = IntegerProperty.create("part", 0, 3);
+    static final IntegerProperty PART = IntegerProperty.create("part", 0, 5);
 
     private static final VoxelShape NORTH_SHAPE = box(0.0D, 0.0D, 3.0D, 16.0D, 16.0D, 16.0D);
     private static final VoxelShape EAST_SHAPE = box(0.0D, 0.0D, 0.0D, 13.0D, 16.0D, 16.0D);
@@ -124,12 +124,13 @@ final class DoubleDisplayCaseBlock extends HorizontalDirectionalBlock {
         // The complete north-facing model occupies local X 0..32, so the
         // second column is clockwise (the viewer's right) from the core.
         Direction right = facing.getClockWise();
-        return List.of(core, core.relative(right), core.above(), core.relative(right).above());
+        return List.of(core, core.relative(right), core.above(), core.relative(right).above(),
+            core.above(2), core.relative(right).above(2));
     }
 
     private static BlockPos corePosition(BlockPos position, BlockState state) {
         int part = state.getValue(PART);
-        BlockPos core = part >= 2 ? position.below() : position;
+        BlockPos core = position.below(part / 2);
         return (part & 1) == 1
             ? core.relative(state.getValue(FACING).getCounterClockWise())
             : core;

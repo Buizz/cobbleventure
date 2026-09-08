@@ -95,7 +95,7 @@ processResources {
 }
 
 tasks.register('cleanInstalledDevelopmentJars', Delete) {
-    delete fileTree(rootProject.file('../../pack/overrides/development-placeholder/mods')) {
+    delete fileTree(cobbleventureDevelopmentModsDir) {
         include 'cobbleventure-pokefinder-*.jar'
     }
 }
@@ -104,7 +104,7 @@ tasks.register('installDevelopmentJar', Copy) {
     dependsOn jar
     dependsOn 'cleanInstalledDevelopmentJars'
     from jar
-    into rootProject.file('../../pack/overrides/development-placeholder/mods')
+    into cobbleventureDevelopmentModsDir
 }
 
 tasks.named('build') {

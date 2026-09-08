@@ -22,7 +22,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 /** Server-authoritative machine preview and pull protocol. */
 public final class GachaMachineNetwork {
-    private static final String VERSION = "2";
+    private static final String VERSION = "3";
     private static final long SESSION_TICKS = 20L * 60L * 2L;
     private static final double MAX_DISTANCE_SQUARED = 64.0D;
     private static final int MAX_REWARDS = 512;
@@ -77,7 +77,8 @@ public final class GachaMachineNetwork {
                     : rarityChance * Math.max(0.0D, reward.weight) / rewardTotal;
                 result.add(new RewardView(
                     rarity.id, rarity.display_name,
-                    reward.id, reward.kind, reward.value, reward.count,
+                    reward.id, reward.kind, reward.value,
+                    reward.move == null ? "" : reward.move, reward.count,
                     chance, reward.selectable
                 ));
             }
@@ -137,17 +138,17 @@ public final class GachaMachineNetwork {
 
     public record RewardView(
         String rarityId, String rarityName,
-        String rewardId, String kind, String value, int count,
+        String rewardId, String kind, String value, String move, int count,
         double chance, boolean selectable
     ) {
         private void write(RegistryFriendlyByteBuf buffer) {
             buffer.writeUtf(rarityId); buffer.writeUtf(rarityName);
-            buffer.writeUtf(rewardId); buffer.writeUtf(kind); buffer.writeUtf(value);
+            buffer.writeUtf(rewardId); buffer.writeUtf(kind); buffer.writeUtf(value); buffer.writeUtf(move);
             buffer.writeVarInt(count); buffer.writeDouble(chance); buffer.writeBoolean(selectable);
         }
         private static RewardView read(RegistryFriendlyByteBuf buffer) {
             return new RewardView(
-                buffer.readUtf(), buffer.readUtf(), buffer.readUtf(), buffer.readUtf(), buffer.readUtf(),
+                buffer.readUtf(), buffer.readUtf(), buffer.readUtf(), buffer.readUtf(), buffer.readUtf(), buffer.readUtf(),
                 buffer.readVarInt(), buffer.readDouble(), buffer.readBoolean()
             );
         }
@@ -214,7 +215,7 @@ public final class GachaMachineNetwork {
         UUID token, boolean success, String messageKey, int tickets,
         String themeId, int ticketCost,
         String rarityId, String rarityName,
-        String rewardId, String kind, String value, int count,
+        String rewardId, String kind, String value, String move, int count,
         int pullsSinceTarget, int hardPityCount,
         int selectionPoints, int selectionRequired,
         List<RewardView> rewards
@@ -229,18 +230,18 @@ public final class GachaMachineNetwork {
                 token, outcome.success(), outcome.messageKey(), outcome.tickets(),
                 outcome.themeId(), outcome.ticketCost(),
                 outcome.rarityId(), outcome.rarityName(), outcome.rewardId(),
-                outcome.rewardKind(), outcome.rewardValue(), outcome.rewardCount(),
+                outcome.rewardKind(), outcome.rewardValue(), outcome.rewardMove(), outcome.rewardCount(),
                 outcome.pullsSinceTarget(), outcome.hardPityCount(),
                 outcome.selectionPoints(), outcome.selectionRequired(), rewards
             );
         }
         static ResultPayload failure(UUID token, String themeId, String key, int tickets, int ticketCost) {
-            return new ResultPayload(token, false, key, tickets, themeId, ticketCost, "", "", "", "", "", 0, 0, 0, 0, 0, List.of());
+            return new ResultPayload(token, false, key, tickets, themeId, ticketCost, "", "", "", "", "", "", 0, 0, 0, 0, 0, List.of());
         }
         private void write(RegistryFriendlyByteBuf buffer) {
             buffer.writeUUID(token); buffer.writeBoolean(success); buffer.writeUtf(messageKey); buffer.writeVarInt(tickets);
             buffer.writeUtf(themeId); buffer.writeVarInt(ticketCost);
-            buffer.writeUtf(rarityId); buffer.writeUtf(rarityName); buffer.writeUtf(rewardId); buffer.writeUtf(kind); buffer.writeUtf(value);
+            buffer.writeUtf(rarityId); buffer.writeUtf(rarityName); buffer.writeUtf(rewardId); buffer.writeUtf(kind); buffer.writeUtf(value); buffer.writeUtf(move);
             buffer.writeVarInt(count); buffer.writeVarInt(pullsSinceTarget); buffer.writeVarInt(hardPityCount);
             buffer.writeVarInt(selectionPoints); buffer.writeVarInt(selectionRequired);
             buffer.writeVarInt(rewards.size());
@@ -251,7 +252,7 @@ public final class GachaMachineNetwork {
             String message = buffer.readUtf(); int tickets = buffer.readVarInt();
             String themeId = buffer.readUtf(); int ticketCost = buffer.readVarInt();
             String rarityId = buffer.readUtf(); String rarityName = buffer.readUtf();
-            String rewardId = buffer.readUtf(); String kind = buffer.readUtf(); String value = buffer.readUtf();
+            String rewardId = buffer.readUtf(); String kind = buffer.readUtf(); String value = buffer.readUtf(); String move = buffer.readUtf();
             int count = buffer.readVarInt(); int pulls = buffer.readVarInt(); int hard = buffer.readVarInt();
             int points = buffer.readVarInt(); int required = buffer.readVarInt();
             int size = Math.clamp(buffer.readVarInt(), 0, MAX_REWARDS);
@@ -259,7 +260,7 @@ public final class GachaMachineNetwork {
             for (int index = 0; index < size; index++) rewards.add(RewardView.read(buffer));
             return new ResultPayload(
                 token, success, message, tickets, themeId, ticketCost, rarityId, rarityName,
-                rewardId, kind, value, count, pulls, hard, points, required,
+                rewardId, kind, value, move, count, pulls, hard, points, required,
                 List.copyOf(rewards)
             );
         }

@@ -14,8 +14,7 @@
     "DungeonBagItemActionResponseMixin",
     "DungeonForfeitActionResponseMixin",
     "DungeonHealItemActionResponseMixin",
-    "DungeonPokeBallItemMixin",
-    "XpBarRegistrationMixin"
+    "DungeonPokeBallItemMixin"
   ],
   "client": [
     "BiomePrecipitationMixin",

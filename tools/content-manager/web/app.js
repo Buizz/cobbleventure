@@ -81,7 +81,7 @@ const state = {
   dialogueTheme: null,
   casinoConfig: { loaded: false, root: "", files: [], selectedPath: "", poolByPath: {}, query: "" },
   gachaMachines: { loaded: false, schema_version: 6, tickets: {}, casino_sets: [], machines: [], selectedId: "", selectedTheme: "", selectedRarity: "", rewardQuery: "", dirty: false },
-  gachaRewardChoices: { items: [] },
+  gachaRewardChoices: { items: [], technicalMachines: [] },
   starterSettings: { initialized: false, loaded: false, selectedGeneration: 1, defaultGeneration: 1, configs: [], settlementDocuments: new Map(), requestId: 0 }
 };
 const lazyDataLoaded = { trainers: false, biomes: false, structures: false, buildingSettings: false, definitions: false, economy: false };
@@ -1031,7 +1031,7 @@ async function loadDashboard() {
   showIssues("#dashboard-issues", data.validation);
   state.buildCommands = data.build_commands;
   state.exportLanguages = data.export_languages || [{ id: "ko_kr", name: "한국어" }, { id: "en_us", name: "English (US)" }];
-  state.cobblemonBuildTargets = data.cobblemon_build_targets || [{ id: "1.7.3", name: "1.7.3 안정 버전" }, { id: "1.8", name: "1.8 스냅샷" }];
+  state.cobblemonBuildTargets = data.cobblemon_build_targets || [{ id: "1.7.3", name: "1.7.3 안정 버전" }, { id: "1.8", name: "1.8 시험 버전" }];
   renderBuildCommands();
 }
 
@@ -1760,14 +1760,15 @@ function gachaRewardPicker(machine, theme) {
   const query=(state.gachaMachines.rewardQuery || "").trim().toLowerCase();
   const rewards=(theme?.rarities || []).flatMap((pool)=>pool.rewards || []);
   const usedPokemon=new Set(rewards.filter((reward)=>reward.kind === "pokemon").map(gachaRewardSpecies));
-  const usedItems=new Set(rewards.filter((reward)=>reward.kind === "item").map((reward)=>reward.value));
+  const usedItems=new Set(rewards.filter((reward)=>reward.kind === "item").map((reward)=>`${reward.value}\u0000${reward.move || ""}`));
   if (machine.machine_type === "pokemon") {
     const matches=worldPokemonCatalog().filter((entry)=>!query || pokemonSearchText(entry).includes(query)).slice(0,80);
     return `<div class="gacha-direct-picker"><header><div><strong>포켓몬 선택</strong><small>서식지 편집기와 같은 목록에서 선택합니다. 수량은 항상 1마리입니다.</small></div><label><span>검색</span><input data-gacha-reward-query value="${escapeHtml(state.gachaMachines.rewardQuery || "")}" placeholder="피카츄, Pikachu, pikachu"></label></header><div class="gacha-direct-picker-grid">${matches.map((entry)=>{const id=String(entry.slug || entry.id).replace(/^cobblemon:/,""); const added=usedPokemon.has(id); return `<button type="button" class="route-pokemon-picker-card${added ? " is-added" : ""}" data-gacha-add-pokemon="${escapeHtml(entry.id)}" ${added ? "disabled" : ""}><img loading="lazy" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${entry.dex_number}.png" alt="">${routePokemonCardCopy(entry)}<em>${added ? "추가됨" : "선택"}</em></button>`;}).join("")}</div>${matches.length ? "" : '<div class="issues empty">검색된 포켓몬이 없습니다.</div>'}</div>`;
   }
-  const all=(state.gachaRewardChoices.items || []).filter((entry)=>machine.machine_type !== "technical_machine" || entry.id.startsWith("tmcraft:") || entry.category === "machines");
-  const matches=all.filter((entry)=>!query || `${entry.id} ${entry.shortId} ${entry.name} ${entry.englishName}`.toLowerCase().includes(query)).slice(0,100);
-  return `<div class="gacha-direct-picker"><header><div><strong>${machine.machine_type === "technical_machine" ? "기술머신" : "아이템"} 선택</strong><small>클릭하면 현재 희귀도 풀에 바로 추가됩니다.</small></div><label><span>검색</span><input data-gacha-reward-query value="${escapeHtml(state.gachaMachines.rewardQuery || "")}" placeholder="이름 또는 아이템 ID"></label></header><div class="gacha-item-picker-grid">${matches.map((entry)=>{const added=usedItems.has(entry.id); return `<button type="button" class="gacha-item-picker-card${added ? " is-added" : ""}" data-gacha-add-item="${escapeHtml(entry.id)}" ${added ? "disabled" : ""}><strong>${escapeHtml(entry.name || entry.shortId || entry.id)}</strong><code>${escapeHtml(entry.id)}</code><small>${escapeHtml(entry.category || entry.namespace || "item")}</small><em>${added ? "추가됨" : "선택"}</em></button>`;}).join("")}</div>${matches.length ? "" : '<div class="issues empty">검색된 아이템이 없습니다.</div>'}</div>`;
+  const all=machine.machine_type === "technical_machine" ? (state.gachaRewardChoices.technicalMachines || []) : (state.gachaRewardChoices.items || []);
+  const filtered=all.filter((entry)=>!query || `${entry.id} ${entry.shortId} ${entry.move || ""} ${entry.name} ${entry.englishName}`.toLowerCase().includes(query));
+  const matches=machine.machine_type === "technical_machine" ? filtered : filtered.slice(0,100);
+  return `<div class="gacha-direct-picker"><header><div><strong>${machine.machine_type === "technical_machine" ? "기술머신" : "아이템"} 선택</strong><small>클릭하면 현재 희귀도 풀에 바로 추가됩니다.</small></div><label><span>검색</span><input data-gacha-reward-query value="${escapeHtml(state.gachaMachines.rewardQuery || "")}" placeholder="이름, 기술 ID 또는 아이템 ID"></label></header><div class="gacha-item-picker-grid">${matches.map((entry)=>{const added=usedItems.has(`${entry.id}\u0000${entry.move || ""}`); return `<button type="button" class="gacha-item-picker-card${added ? " is-added" : ""}" data-gacha-add-item-key="${escapeHtml(entry.key || entry.id)}" ${added ? "disabled" : ""}><strong>${escapeHtml(entry.name || entry.shortId || entry.id)}</strong><code>${escapeHtml(entry.move ? `${entry.id} · ${entry.move}` : entry.id)}</code><small>${escapeHtml(entry.type || entry.category || entry.namespace || "item")}</small><em>${added ? "추가됨" : "선택"}</em></button>`;}).join("")}</div>${matches.length ? "" : '<div class="issues empty">검색된 아이템이 없습니다.</div>'}</div>`;
 }
 
 function renderGachaMachines() {
@@ -1815,7 +1816,7 @@ function renderGachaMachines() {
     <section class="gacha-editor-section"><header><div><h4>상품 · 확률 설정</h4><small>현재 테마의 희귀도를 고른 뒤 포켓몬 또는 아이템을 바로 선택합니다.</small></div><button class="button secondary" type="button" data-gacha-add-rarity>＋ 희귀도</button></header>
       <div class="gacha-rarity-tabs">${(theme?.rarities || []).map((entry) => {const chance=gachaRarityChance(theme,entry); return `<button type="button" class="${entry.id === workspace.selectedRarity ? "is-active" : ""}" data-gacha-rarity="${escapeHtml(entry.id)}">${escapeHtml(entry.display_name)} · ${chance.toFixed(chance < 1 ? 2 : 1)}%</button>`;}).join("")}</div>
       ${rarity ? `<div class="gacha-field-grid">${gachaField("희귀도 ID", "rarity/id", rarity.id, {readonly:true})}${gachaField("표시 이름", "rarity/display_name", rarity.display_name)}${gachaField("등급 확률 비중", "rarity/weight", rarity.weight, {type:"number",min:.01,step:.01})}</div>
-      <div class="gacha-direct-reward-list">${rewards.map((reward,index)=>{const pokemon=reward.kind === "pokemon" ? pokemonBySlug.get(gachaRewardSpecies(reward)) : null; const chance=gachaRewardBaseChance(theme,rarity,reward); const poolChance=gachaRewardPoolChance(rarity,reward); return `<article class="gacha-direct-reward" data-gacha-reward-index="${index}">${pokemon ? `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.dex_number}.png" alt="">` : `<span class="gacha-reward-item-icon">◆</span>`}<div class="gacha-direct-reward-name"><strong>${escapeHtml(reward.display_name || reward.id)}</strong><code>${escapeHtml(reward.kind === "pokemon" ? gachaRewardSpecies(reward) : reward.value)}</code><small>전체 기본 확률 ${chance.toFixed(chance < 1 ? 2 : 1)}%</small></div>${reward.kind === "pokemon" ? `<label><span>레벨</span><input type="number" min="1" max="100" data-gacha-reward="level" value="${gachaRewardLevel(reward)}"></label>` : `<label><span>수량</span><input type="number" min="1" max="6400" data-gacha-reward="count" value="${reward.count}"></label>`}<label><span>등급 내 확률 (%)</span><input type="number" min=".01" max="99.99" step=".01" data-gacha-reward="probability" value="${poolChance.toFixed(2)}" ${rewards.length <= 1 ? "disabled" : ""}></label><label class="gacha-check"><input type="checkbox" data-gacha-reward="selectable" ${reward.selectable ? "checked" : ""}> 천장 선택</label><button type="button" class="casino-row-remove" data-gacha-delete-reward="${index}">×</button></article>`;}).join("")}</div>
+      <div class="gacha-direct-reward-list">${rewards.map((reward,index)=>{const pokemon=reward.kind === "pokemon" ? pokemonBySlug.get(gachaRewardSpecies(reward)) : null; const chance=gachaRewardBaseChance(theme,rarity,reward); const poolChance=gachaRewardPoolChance(rarity,reward); return `<article class="gacha-direct-reward" data-gacha-reward-index="${index}">${pokemon ? `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.dex_number}.png" alt="">` : `<span class="gacha-reward-item-icon">◆</span>`}<div class="gacha-direct-reward-name"><strong>${escapeHtml(reward.display_name || reward.id)}</strong><code>${escapeHtml(reward.kind === "pokemon" ? gachaRewardSpecies(reward) : `${reward.value}${reward.move ? ` · ${reward.move}` : ""}`)}</code><small>전체 기본 확률 ${chance.toFixed(chance < 1 ? 2 : 1)}%</small></div>${reward.kind === "pokemon" ? `<label><span>레벨</span><input type="number" min="1" max="100" data-gacha-reward="level" value="${gachaRewardLevel(reward)}"></label>` : `${machine.machine_type === "technical_machine" ? `<label><span>기술 ID</span><input data-gacha-reward="move" value="${escapeHtml(reward.move || "protect")}"></label>` : ""}<label><span>수량</span><input type="number" min="1" max="6400" data-gacha-reward="count" value="${reward.count}"></label>`}<label><span>등급 내 확률 (%)</span><input type="number" min=".01" max="99.99" step=".01" data-gacha-reward="probability" value="${poolChance.toFixed(2)}" ${rewards.length <= 1 ? "disabled" : ""}></label><label class="gacha-check"><input type="checkbox" data-gacha-reward="selectable" ${reward.selectable ? "checked" : ""}> 천장 선택</label><button type="button" class="casino-row-remove" data-gacha-delete-reward="${index}">×</button></article>`;}).join("")}</div>
       ${gachaRewardPicker(machine,theme)}
       <div><small>표시 확률은 천장 보정 전 기본값입니다. 등급 가중치와 상품 가중치를 함께 계산합니다.</small> <button class="button secondary gacha-machine-delete" type="button" data-gacha-delete-rarity>희귀도 삭제</button></div>` : '<div class="issues empty">희귀도를 추가하세요.</div>'}
     </section>
@@ -1841,13 +1842,18 @@ async function loadGachaMachines(force = false) {
 }
 
 async function loadGachaRewardChoices(force = false) {
-  if (state.gachaRewardChoices.items.length && !force) return;
+  if (state.gachaRewardChoices.items.length && state.gachaRewardChoices.technicalMachines.length && !force) return;
   const result=await request("/api/economy");
   if (!result.ok) throw new Error(result.data.error || "아이템 선택 목록을 불러오지 못했습니다.");
   state.gachaRewardChoices.items=(result.data.editor_catalog?.items || []).map((entry)=>({
     id:entry.id, shortId:String(entry.id || "").split(":").at(-1),
     name:entry.ko_kr || entry.en_us || entry.id, englishName:entry.en_us || "",
     category:entry.product_group || "other", namespace:String(entry.id || "").split(":",1)[0]
+  }));
+  state.gachaRewardChoices.technicalMachines=(result.data.editor_catalog?.technical_machines || []).map((entry)=>({
+    id:entry.id, key:entry.key, move:entry.move, shortId:entry.move,
+    name:entry.ko_kr || entry.en_us || entry.move, englishName:entry.en_us || "",
+    category:"machines", namespace:"cobblemon", type:entry.type || "normal"
   }));
   if (state.gachaMachines.loaded) renderGachaMachines();
 }
@@ -1904,7 +1910,7 @@ function newCasinoGachaMachine(id, type, setSlug) {
 }
 
 function newGachaTheme(id, name, ticketCost, pityGroup, machineType) {
-  const reward=machineType === "pokemon" ? {id:"pikachu",display_name:"피카츄",kind:"pokemon",value:"pikachu level=15",count:1,weight:1,selectable:false} : machineType === "technical_machine" ? {id:"protect",display_name:"방어 기술머신",kind:"item",value:"tmcraft:tm_protect",count:1,weight:1,selectable:false} : {id:"poke_ball",display_name:"몬스터볼",kind:"item",value:"cobblemon:poke_ball",count:1,weight:1,selectable:false};
+  const reward=machineType === "pokemon" ? {id:"pikachu",display_name:"피카츄",kind:"pokemon",value:"pikachu level=15",count:1,weight:1,selectable:false} : machineType === "technical_machine" ? {id:"protect",display_name:"방어 기술머신",kind:"item",value:"cobblemon:technical_machine",move:"protect",count:1,weight:1,selectable:false} : {id:"poke_ball",display_name:"몬스터볼",kind:"item",value:"cobblemon:poke_ball",count:1,weight:1,selectable:false};
   return {id,display_name:name,ticket_cost:ticketCost,pity_group:pityGroup,rarities:[{id:"common",display_name:"일반",weight:100,rewards:[reward]}],pity:{soft:{enabled:false,start:30,max_at:60,target_rarity:"common",max_chance:.25},hard:{enabled:false,count:80,target_rarity:"common"},selection:{enabled:false,points_per_pull:1,required_points:100}}};
 }
 
@@ -1930,7 +1936,7 @@ function handleGachaMachineClick(event) {
   if (event.target.closest("[data-gacha-add-rarity]")) { if(!theme) return; let n=1,id; do id=`rarity_${n++}`; while (theme.rarities.some((entry)=>entry.id===id)); const fallback=newGachaTheme("temp","temp",1,"temp",machine.machine_type).rarities[0].rewards[0]; fallback.id=gachaRewardId(fallback.id,theme); theme.rarities.push({id,display_name:"새 희귀도",weight:1,rewards:[fallback]}); state.gachaMachines.selectedRarity=id; state.gachaMachines.rewardQuery=""; state.gachaMachines.dirty=true; renderGachaMachines(); return; }
   const rarity = selectedGachaRarity(theme); if (!rarity) return;
   const pokemonButton=event.target.closest("[data-gacha-add-pokemon]"); if (pokemonButton) { const entry=worldPokemonCatalog().find((item)=>item.id===pokemonButton.dataset.gachaAddPokemon); if(!entry) return; const species=String(entry.slug || entry.id).replace(/^cobblemon:/,""); const id=gachaRewardId(species,theme); rarity.rewards.push({id,display_name:entry.display_name?.ko_kr || entry.display_name?.en_us || species,kind:"pokemon",value:`${species} level=15`,count:1,weight:1,selectable:false}); state.gachaMachines.dirty=true; renderGachaMachines(); return; }
-  const itemButton=event.target.closest("[data-gacha-add-item]"); if (itemButton) { const entry=(state.gachaRewardChoices.items || []).find((item)=>item.id===itemButton.dataset.gachaAddItem); if(!entry) return; const id=gachaRewardId(entry.shortId || entry.id,theme); rarity.rewards.push({id,display_name:entry.name || entry.englishName || entry.shortId || entry.id,kind:"item",value:entry.id,count:1,weight:1,selectable:false}); state.gachaMachines.dirty=true; renderGachaMachines(); return; }
+  const itemButton=event.target.closest("[data-gacha-add-item-key]"); if (itemButton) { const isTm=machine.machine_type === "technical_machine"; const choices=isTm ? state.gachaRewardChoices.technicalMachines : state.gachaRewardChoices.items; const entry=(choices || []).find((item)=>(item.key || item.id)===itemButton.dataset.gachaAddItemKey); if(!entry) return; const id=gachaRewardId(entry.move || entry.shortId || entry.id,theme); rarity.rewards.push({id,display_name:entry.name || entry.englishName || entry.shortId || entry.id,kind:"item",value:entry.id,...(entry.move ? {move:entry.move} : {}),count:1,weight:1,selectable:false}); state.gachaMachines.dirty=true; renderGachaMachines(); return; }
   if (event.target.closest("[data-gacha-delete-rarity]")) { if (theme.rarities.length <= 1) return toast("희귀도는 하나 이상 필요합니다."); theme.rarities = theme.rarities.filter((entry)=>entry!==rarity); state.gachaMachines.selectedRarity=theme.rarities[0].id; state.gachaMachines.dirty=true; renderGachaMachines(); return; }
   const remove = event.target.closest("[data-gacha-delete-reward]"); if (remove) { if (rarity.rewards.length <= 1) return toast("각 희귀도에는 보상이 하나 이상 필요합니다."); rarity.rewards.splice(Number(remove.dataset.gachaDeleteReward),1); state.gachaMachines.dirty=true; renderGachaMachines(); }
 }
@@ -1970,6 +1976,7 @@ function updateGachaMachineField(event) {
   const reward = rarity?.rewards[Number(row?.dataset.gachaRewardIndex)]; if (!reward) return;
   const field=input.dataset.gachaReward;
   if (field === "level") reward.value=`${gachaRewardSpecies(reward)} level=${Math.max(1,Math.min(100,Number(input.value)||1))}`;
+  if (field === "move") reward.move=String(input.value || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
   else if (field === "probability") {
     const others=rarity.rewards.filter((entry)=>entry!==reward).reduce((sum,entry)=>sum+Math.max(.01,Number(entry.weight)||0),0);
     const probability=Math.max(.01,Math.min(99.99,Number(input.value)||.01));
@@ -18767,28 +18774,37 @@ function economyProductGroup(itemOrId) {
   return (state.economy.editor_catalog?.items || []).find((item) => item.id === itemOrId)?.product_group || "other";
 }
 
+function economyOfferVariantKey(item, move = "") { return `${item}\u0000${move || ""}`; }
+
 function economyProductLibrary(vendor, itemName) {
-  const selected = new Map(economyVendorOfferRows(vendor).map((row) => [row.offer.item, row]));
+  const offerRows = economyVendorOfferRows(vendor);
+  const selected = new Map(offerRows.map((row) => [economyOfferVariantKey(row.offer.item, row.offer.move), row]));
   const query = String(state.economyView.vendorProductSearch || "").trim().toLocaleLowerCase("ko");
   const groupId = state.economyView.vendorProductGroup || "balls";
-  const items = (state.economy.editor_catalog?.items || []).filter((item) => {
+  const baseItems = state.economy.editor_catalog?.items || [];
+  const technicalMachines = state.economy.editor_catalog?.technical_machines || [];
+  const sourceItems = technicalMachines.length
+    ? [...baseItems.filter((item) => item.id !== "cobblemon:technical_machine"), ...technicalMachines]
+    : baseItems;
+  const items = sourceItems.filter((item) => {
     const group = economyProductGroup(item);
-    const matchesGroup = groupId === "all" || (groupId === "sold" ? selected.has(item.id) : group === groupId);
+    const matchesGroup = groupId === "all" || (groupId === "sold" ? selected.has(economyOfferVariantKey(item.id, item.move)) : group === groupId);
     return matchesGroup;
   });
-  const matchesProductQuery = (item) => !query || `${item.id} ${item.ko_kr} ${item.en_us}`.toLocaleLowerCase("ko").includes(query);
+  const matchesProductQuery = (item) => !query || `${item.id} ${item.move || ""} ${item.ko_kr} ${item.en_us}`.toLocaleLowerCase("ko").includes(query);
   const groupButtons = ECONOMY_PRODUCT_GROUPS.map((group) => {
-    const count = group.id === "sold" ? selected.size : (state.economy.editor_catalog?.items || []).filter((item) => group.id === "all" || economyProductGroup(item) === group.id).length;
+    const count = group.id === "sold" ? selected.size : sourceItems.filter((item) => group.id === "all" || economyProductGroup(item) === group.id).length;
     return `<button type="button" class="${group.id === groupId ? "is-active" : ""}" data-product-group="${group.id}"><span>${escapeHtml(group.ko)}</span><small>${escapeHtml(group.en)} · ${count}</small></button>`;
   }).join("");
   const cards = items.map((item) => {
-    const active = selected.get(item.id);
+    const move = item.move || "";
+    const active = selected.get(economyOfferVariantKey(item.id, move));
     const standard = economyStandardPrice(item.id);
-    return `<article class="economy-product-toggle ${active ? "is-active" : ""}" data-product-item="${escapeHtml(item.id)}" ${matchesProductQuery(item) ? "" : "hidden"}><button type="button" data-toggle-vendor-product="${escapeHtml(item.id)}" aria-pressed="${active ? "true" : "false"}"><i></i><span><strong>${escapeHtml(item.ko_kr || itemName(item.id))}</strong><small>${escapeHtml(item.en_us || item.id)}</small><code>${escapeHtml(item.id)}</code></span><b>${active ? "판매 중" : "판매 안 함"}</b></button><footer><span>표준가 <strong>${escapeHtml(standard || "미정")}</strong></span>${active ? `<label>수량 <input data-toggle-product-count data-item="${escapeHtml(item.id)}" type="number" min="1" value="${Number(active.offer.count || 1)}"></label><label>판매가 <input data-toggle-product-price data-item="${escapeHtml(item.id)}" type="number" min="0" value="${Number(active.offer.price || 0)}"></label><button type="button" data-toggle-set-standard="${escapeHtml(item.id)}">표준 지정</button>` : ""}</footer></article>`;
+    return `<article class="economy-product-toggle ${active ? "is-active" : ""}" data-product-item="${escapeHtml(item.id)}" ${matchesProductQuery(item) ? "" : "hidden"}><button type="button" data-toggle-vendor-product="${escapeHtml(item.id)}" data-move="${escapeHtml(move)}" aria-pressed="${active ? "true" : "false"}"><i></i><span><strong>${escapeHtml(item.ko_kr || itemName(item.id))}</strong><small>${escapeHtml(item.en_us || item.id)}</small><code>${escapeHtml(item.id)}${move ? ` · ${escapeHtml(move)}` : ""}</code></span><b>${active ? "판매 중" : "판매 안 함"}</b></button><footer><span>표준가 <strong>${escapeHtml(standard || "미정")}</strong></span>${active ? `<label>수량 <input data-toggle-product-count data-item="${escapeHtml(item.id)}" data-move="${escapeHtml(move)}" type="number" min="1" value="${Number(active.offer.count || 1)}"></label><label>판매가 <input data-toggle-product-price data-item="${escapeHtml(item.id)}" data-move="${escapeHtml(move)}" type="number" min="0" value="${Number(active.offer.price || 0)}"></label>${move ? "" : `<button type="button" data-toggle-set-standard="${escapeHtml(item.id)}">표준 지정</button>`}` : ""}</footer></article>`;
   }).join("");
   const visibleCount = items.filter(matchesProductQuery).length;
   const emptyMessage = groupId === "machines" && !items.length
-    ? "Cobblemon 1.7.3 기본 아이템에는 기술머신이 없습니다. 기술머신을 제공하는 모드를 추가하면 이 탭에 표시됩니다."
+    ? "Cobblemon 1.8 기술머신 데이터를 찾지 못했습니다. 1.8 JAR 배치를 확인하세요."
     : "조건에 맞는 상품이 없습니다.";
   return `<div class="economy-product-browser"><div class="economy-product-controls"><label><span>상품 검색</span><input id="economy-product-search" value="${escapeHtml(state.economyView.vendorProductSearch || "")}" placeholder="한글명, 영문명 또는 아이템 ID"></label><div><strong>상품 종류</strong><small>종류를 선택한 뒤 상품을 켜거나 끄세요.</small></div></div><nav class="economy-product-groups">${groupButtons}</nav><div class="economy-product-result-head"><span data-product-visible-count>${visibleCount}개 상품</span><b>${selected.size}개 판매 중</b></div><div class="economy-product-toggle-grid">${cards || `<div class="economy-empty">${emptyMessage}</div>`}</div></div>`;
 }
@@ -19165,8 +19181,9 @@ function handleEconomyClick(event) {
     const productScroll = $(".economy-product-toggle-grid")?.scrollTop || 0;
     const vendorId = state.economyView.selectedVendorId;
     const itemId = productToggle.dataset.toggleVendorProduct;
+    const move = productToggle.dataset.move || "";
     const editable = editableEconomyEntry("shop", vendorId); if (!editable) return;
-    const existing = economyVendorOfferRows(editable.entry).find((row) => row.offer.item === itemId);
+    const existing = economyVendorOfferRows(editable.entry).find((row) => economyOfferVariantKey(row.offer.item, row.offer.move) === economyOfferVariantKey(itemId, move));
     if (existing) {
       existing.category.offers.splice(existing.offerIndex, 1);
       editable.entry.categories = (editable.entry.categories || []).filter((category) => (category.offers || []).length);
@@ -19175,7 +19192,7 @@ function handleEconomyClick(event) {
       const group = ECONOMY_PRODUCT_GROUPS.find((entry) => entry.id === groupId) || ECONOMY_PRODUCT_GROUPS.at(-1);
       let category = (editable.entry.categories || []).find((entry) => economyText(entry.name) === group.ko);
       if (!category) { category = { name: economyLocalized(group.ko, group.en), offers: [] }; editable.entry.categories ||= []; editable.entry.categories.push(category); }
-      category.offers.push({ item: itemId, count: 1, price: economyStandardPrice(itemId) || "0" });
+      category.offers.push({ item: itemId, ...(move ? { move } : {}), count: 1, price: economyStandardPrice(itemId) || "0" });
     }
     syncResolvedEconomyEntry("shop", editable.entry); renderEconomy();
     window.scrollTo(pageScroll.x, pageScroll.y);
@@ -19291,14 +19308,14 @@ function handleEconomyInlineChange(event) {
   const toggleCount = event.target.closest("[data-toggle-product-count]");
   if (toggleCount) {
     const editable = editableEconomyEntry("shop", state.economyView.selectedVendorId); if (!editable) return;
-    const offer = economyVendorOfferRows(editable.entry).find((row) => row.offer.item === toggleCount.dataset.item)?.offer;
+    const offer = economyVendorOfferRows(editable.entry).find((row) => economyOfferVariantKey(row.offer.item, row.offer.move) === economyOfferVariantKey(toggleCount.dataset.item, toggleCount.dataset.move))?.offer;
     if (offer) { offer.count = Math.max(1, Number(toggleCount.value || 1)); syncResolvedEconomyEntry("shop", editable.entry); }
     return;
   }
   const togglePrice = event.target.closest("[data-toggle-product-price]");
   if (togglePrice) {
     const editable = editableEconomyEntry("shop", state.economyView.selectedVendorId); if (!editable) return;
-    const offer = economyVendorOfferRows(editable.entry).find((row) => row.offer.item === togglePrice.dataset.item)?.offer;
+    const offer = economyVendorOfferRows(editable.entry).find((row) => economyOfferVariantKey(row.offer.item, row.offer.move) === economyOfferVariantKey(togglePrice.dataset.item, togglePrice.dataset.move))?.offer;
     if (offer) { offer.price = String(togglePrice.value || "0"); syncResolvedEconomyEntry("shop", editable.entry); }
     return;
   }

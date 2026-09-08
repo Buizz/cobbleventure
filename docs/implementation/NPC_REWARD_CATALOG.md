@@ -64,19 +64,19 @@ Cobblemon의 실제 낚싯대 3종을 사용한다. Adventure의 낚시 풀 판�
 
 ## 4 기술머신 지급 NPC
 
-현재 경제·가챠 데이터에서 사용하는 TM Craft 아이템 8종부터 분산한다. 상인이 아니라 자신의
+현재 경제·가챠 데이터에서 사용하는 Cobblemon 1.8 기본 기술머신 8종부터 분산한다. 상인이 아니라 자신의
 전투 방식이나 연구 결과를 한 번 전수하는 트레이너로 만든다.
 
 | 보상 ID | 등급 | NPC 콘셉트 | 권장 장소 | 지급 기술머신 | 상태 |
 |---------|------|------------|-----------|-----------------|------|
-| `tm/protect` | 초반 | 포켓몬 학교 방어 수업 교사 | 학교·초반 마을 | `tmcraft:tm_protect` | 기획 |
-| `tm/reflect` | 중반 | 에스퍼 트레이너 | 에스퍼 시설·도시 | `tmcraft:tm_reflect` | 기획 |
-| `tm/lightscreen` | 중반 | 에스퍼 연구원·더블배틀 트레이너 | 연구실·도시 | `tmcraft:tm_lightscreen` | 기획 |
-| `tm/safeguard` | 중반 | 브리더·치료 연구원 | 목장·포켓몬센터 인근 | `tmcraft:tm_safeguard` | 기획 |
-| `tm/fireblast` | 후반 | 불놀이꾼·불꽃 전문 트레이너 | 화산·온천 지역 | `tmcraft:tm_fireblast` | 기획 |
-| `tm/thunder` | 후반 | 전기 전문 트레이너 | 발전 시설·뇌우 지역 | `tmcraft:tm_thunder` | 기획 |
-| `tm/blizzard` | 후반 | 스키선수·얼음 전문 트레이너 | 설원·빙설 동굴 | `tmcraft:tm_blizzard` | 기획 |
-| `tm/hyperbeam` | 후반 | 베테랑·엘리트 트레이너 | 후반 관문·배틀 시설 | `tmcraft:tm_hyperbeam` | 기획 |
+| `tm/protect` | 초반 | 포켓몬 학교 방어 수업 교사 | 학교·초반 마을 | `cobblemon:technical_machine` + `move: protect` | 기획 |
+| `tm/reflect` | 중반 | 에스퍼 트레이너 | 에스퍼 시설·도시 | `cobblemon:technical_machine` + `move: reflect` | 기획 |
+| `tm/lightscreen` | 중반 | 에스퍼 연구원·더블배틀 트레이너 | 연구실·도시 | `cobblemon:technical_machine` + `move: lightscreen` | 기획 |
+| `tm/safeguard` | 중반 | 브리더·치료 연구원 | 목장·포켓몬센터 인근 | `cobblemon:technical_machine` + `move: safeguard` | 기획 |
+| `tm/fireblast` | 후반 | 불놀이꾼·불꽃 전문 트레이너 | 화산·온천 지역 | `cobblemon:technical_machine` + `move: fireblast` | 기획 |
+| `tm/thunder` | 후반 | 전기 전문 트레이너 | 발전 시설·뇌우 지역 | `cobblemon:technical_machine` + `move: thunder` | 기획 |
+| `tm/blizzard` | 후반 | 스키선수·얼음 전문 트레이너 | 설원·빙설 동굴 | `cobblemon:technical_machine` + `move: blizzard` | 기획 |
+| `tm/hyperbeam` | 후반 | 베테랑·엘리트 트레이너 | 후반 관문·배틀 시설 | `cobblemon:technical_machine` + `move: hyperbeam` | 기획 |
 
 - 초반에는 범용 방어 기술머신 1개만 둔다.
 - 중반 기술머신은 서로 다른 마을·시설에 분산한다.

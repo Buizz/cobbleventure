@@ -182,6 +182,18 @@ def load_profile(root: Path, profile_path: Path) -> dict[str, Any]:
     overrides = _inside(root, root / profile["overrides_directory"], "overrides")
     if not overrides.is_dir():
         raise PackError(f"overrides 디렉터리가 없습니다: {overrides}")
+    mods_directory_value = profile.get("mods_directory")
+    if mods_directory_value is None:
+        mods_directory = overrides / "mods"
+    else:
+        if not isinstance(mods_directory_value, str) or not mods_directory_value.strip():
+            raise PackError("$.mods_directory는 비어 있지 않은 문자열이어야 합니다.")
+        mods_directory = _inside(root, root / mods_directory_value, "로컬 모드")
+
+    dependency_lock_value = profile.get("dependency_lock", "pack/dependencies.lock.json")
+    if not isinstance(dependency_lock_value, str) or not dependency_lock_value.strip():
+        raise PackError("$.dependency_lock은 비어 있지 않은 문자열이어야 합니다.")
+    dependency_lock = _inside(root, root / dependency_lock_value, "의존성 Lock")
     output = _inside(root, root / profile["output"], "출력")
     expected_dist = (root / "dist").resolve()
     try:
@@ -233,6 +245,8 @@ def load_profile(root: Path, profile_path: Path) -> dict[str, Any]:
 
     profile["_profile_path"] = path
     profile["_overrides_path"] = overrides
+    profile["_mods_path"] = mods_directory
+    profile["_dependency_lock_path"] = dependency_lock
     profile["_output_path"] = output
     profile["_icon_path"] = icon
     profile["_local_resourcepacks"] = local_resourcepacks
@@ -310,7 +324,7 @@ def _is_server_override(relative: Path) -> bool:
 
 
 def _load_server_dependencies(root: Path, profile: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    path = _inside(root, root / "pack" / "dependencies.lock.json", "의존성 Lock")
+    path: Path = profile["_dependency_lock_path"]
     lock = load_json(path)
     if not isinstance(lock, dict) or lock.get("schema_version") != 1:
         raise PackError("서버 팩에는 schema_version 1 의존성 Lock이 필요합니다.")
@@ -356,6 +370,39 @@ def _load_server_dependencies(root: Path, profile: dict[str, Any]) -> tuple[dict
             "file_id": file_id,
         })
     return lock, selected
+
+
+def _profile_override_files(profile: dict[str, Any]) -> list[tuple[Path, Path]]:
+    overrides: Path = profile["_overrides_path"]
+    mods: Path = profile["_mods_path"]
+    separate_mods = mods.resolve() != overrides.joinpath("mods").resolve()
+    selected: list[tuple[Path, Path]] = []
+    seen: set[str] = set()
+
+    for source in sorted(overrides.rglob("*")):
+        if source.is_symlink():
+            raise PackError(f"overrides에 심볼릭 링크를 사용할 수 없습니다: {source}")
+        if not source.is_file():
+            continue
+        relative = source.relative_to(overrides)
+        if separate_mods and relative.parts and relative.parts[0].casefold() == "mods":
+            continue
+        seen.add(relative.as_posix().casefold())
+        selected.append((source, relative))
+
+    if separate_mods:
+        for source in sorted(mods.rglob("*")):
+            if source.is_symlink():
+                raise PackError(f"로컬 모드에 심볼릭 링크를 사용할 수 없습니다: {source}")
+            if not source.is_file():
+                continue
+            relative = Path("mods") / source.relative_to(mods)
+            key = relative.as_posix().casefold()
+            if key in seen:
+                raise PackError(f"중복 overrides 경로입니다: {relative.as_posix()}")
+            seen.add(key)
+            selected.append((source, relative))
+    return selected
 
 
 def server_manifest_for(
@@ -525,16 +572,12 @@ def build_pack(root: Path, profile_path: Path) -> Path:
                     f"overrides/config/paxi/resourcepacks/{target}",
                     _normalized_resource_pack(source, pack_format),
                 )
-            for source in sorted(overrides.rglob("*")):
-                if source.is_symlink():
-                    raise PackError(f"overrides에 심볼릭 링크를 사용할 수 없습니다: {source}")
-                if source.is_file():
-                    relative = source.relative_to(overrides)
-                    if relative.as_posix().casefold() == "icon.png":
-                        raise PackError(
-                            "overrides 최상위 icon.png는 프로필 icon과 충돌합니다."
-                        )
-                    _write_bytes(archive, _archive_name(relative), source.read_bytes())
+            for source, relative in _profile_override_files(profile):
+                if relative.as_posix().casefold() == "icon.png":
+                    raise PackError(
+                        "overrides 최상위 icon.png는 프로필 icon과 충돌합니다."
+                    )
+                _write_bytes(archive, _archive_name(relative), source.read_bytes())
         validate_pack(output=temporary, profile=profile)
         os.replace(temporary, output)
     except Exception:
@@ -560,11 +603,10 @@ def build_server_pack(root: Path, profile_path: Path) -> Path:
     root = root.resolve()
     profile = load_profile(root, profile_path)
     _, external_mods = _load_server_dependencies(root, profile)
-    overrides: Path = profile["_overrides_path"]
     vendored_mods = sorted(
-        source.name
-        for source in overrides.joinpath("mods").glob("*.jar")
-        if source.is_file() and not source.is_symlink()
+        relative.name
+        for source, relative in _profile_override_files(profile)
+        if relative.parent == Path("mods") and relative.suffix.lower() == ".jar"
     )
     manifest = server_manifest_for(profile, external_mods, vendored_mods)
     generated = _server_generated_files(profile)
@@ -579,12 +621,7 @@ def build_server_pack(root: Path, profile_path: Path) -> Path:
         with zipfile.ZipFile(temporary, "w", allowZip64=True) as archive:
             for name, data in generated.items():
                 _write_bytes(archive, name, data)
-            for source in sorted(overrides.rglob("*")):
-                if source.is_symlink():
-                    raise PackError(f"overrides에 심볼릭 링크를 사용할 수 없습니다: {source}")
-                if not source.is_file():
-                    continue
-                relative = source.relative_to(overrides)
+            for source, relative in _profile_override_files(profile):
                 if not _is_server_override(relative):
                     continue
                 name = _server_archive_name(relative)
@@ -618,9 +655,9 @@ def validate_server_pack(
     profile_root = profile["_profile_path"].parents[2]
     _, external_mods = _load_server_dependencies(profile_root, profile)
     expected_vendored = sorted(
-        source.name
-        for source in profile["_overrides_path"].joinpath("mods").glob("*.jar")
-        if source.is_file() and not source.is_symlink()
+        relative.name
+        for source, relative in _profile_override_files(profile)
+        if relative.parent == Path("mods") and relative.suffix.lower() == ".jar"
     )
     expected_manifest = server_manifest_for(profile, external_mods, expected_vendored)
     if not output.is_file():

@@ -162,14 +162,15 @@ processResources {
 }
 
 tasks.register('cleanInstalledDevelopmentJars', Delete) {
-    delete fileTree(rootProject.file('../../pack/overrides/development-placeholder/mods')) {
+    delete fileTree(cobbleventureDevelopmentModsDir) {
         include 'cobbleventure-adventure-*.jar'
     }
 }
 
 tasks.register('syncCobbreedingDevelopmentJar') {
-    def destination = rootProject.file(
-        '../../pack/overrides/development-placeholder/mods/Cobbreeding-neoforge-2.2.2.jar'
+    def destination = new File(
+        cobbleventureDevelopmentModsDir,
+        'Cobbreeding-neoforge-2.2.2.jar'
     )
     inputs.files(configurations.cobbreedingDistribution)
     outputs.file(destination)
@@ -197,9 +198,7 @@ tasks.register('syncCobbreedingDevelopmentJar') {
 
 tasks.register('installDevelopmentJar') {
     dependsOn jar
-    def destinationDirectoryPath = rootProject.file(
-        '../../pack/overrides/development-placeholder/mods'
-    ).absolutePath
+    def destinationDirectoryPath = cobbleventureDevelopmentModsDir.absolutePath
     inputs.file(tasks.named('jar').flatMap { it.archiveFile })
     doLast {
         def destinationDirectory = new File(destinationDirectoryPath)

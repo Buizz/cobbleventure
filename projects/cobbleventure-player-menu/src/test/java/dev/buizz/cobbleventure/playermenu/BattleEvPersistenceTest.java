@@ -26,6 +26,17 @@ final class BattleEvPersistenceTest {
     }
 
     @Test
+    void evsArePaidAtFaintAndDeferredDuplicatesAreSuppressed() throws IOException {
+        String bytecode = bytecode(BattleLevelCap.class);
+        assertTrue(bytecode.contains("BATTLE_FAINTED"));
+        assertTrue(bytecode.contains("awardEvsOnFaint"));
+        assertTrue(bytecode.contains("getEvYieldCalculator"));
+        assertTrue(bytecode.contains("EV_GAINED_EVENT_PRE"));
+        assertTrue(bytecode.contains("suppressDeferredBattleEvGain"));
+        assertTrue(bytecode.contains("cancel"));
+    }
+
+    @Test
     void preexistingBattleCopiesAlsoReceiveBattleEndPersistence() throws IOException {
         String bytecode = bytecode(BattleLevelCap.class);
         assertTrue(bytecode.contains("adjustPokemon"));

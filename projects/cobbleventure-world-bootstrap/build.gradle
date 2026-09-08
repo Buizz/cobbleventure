@@ -68,14 +68,10 @@ dependencies {
     localRuntime "maven.modrinth:YsFycamt:xf3H2eJV"
 }
 
-def integrationBcaJar = null
 def integrationInstanceDirectory = null
 if (project.hasProperty('integration_mods_dir')) {
     def integrationModsDirectory = file(project.property('integration_mods_dir'))
     integrationInstanceDirectory = integrationModsDirectory.parentFile
-    integrationBcaJar = fileTree(integrationModsDirectory) {
-        include 'cobblemon-additions-*.jar'
-    }.files.find()
     dependencies {
         localRuntime fileTree(integrationModsDirectory) {
             include '*.jar'
@@ -271,25 +267,17 @@ processResources {
     from(new File(contentDir, 'catalogs/starter-settings.json')) {
         into 'data/cobbleventure/catalogs'
     }
-    if (integrationBcaJar != null) {
-        inputs.file integrationBcaJar
-        from(zipTree(integrationBcaJar)) {
-            include 'data/bca/**'
-        }
-    }
 }
 
 tasks.register('cleanInstalledDevelopmentJars', Delete) {
-    delete fileTree(rootProject.file('../../pack/overrides/development-placeholder/mods')) {
+    delete fileTree(cobbleventureDevelopmentModsDir) {
         include 'cobbleventure-world-bootstrap-*.jar'
     }
 }
 
 tasks.register('installDevelopmentJar') {
     dependsOn jar
-    def destinationDirectoryPath = rootProject.file(
-        '../../pack/overrides/development-placeholder/mods'
-    ).absolutePath
+    def destinationDirectoryPath = cobbleventureDevelopmentModsDir.absolutePath
     inputs.file(tasks.named('jar').flatMap { it.archiveFile })
     doLast {
         def destinationDirectory = new File(destinationDirectoryPath)

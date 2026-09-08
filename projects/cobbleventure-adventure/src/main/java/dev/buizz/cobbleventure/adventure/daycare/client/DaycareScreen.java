@@ -2,6 +2,7 @@ package dev.buizz.cobbleventure.adventure.daycare.client;
 
 import com.cobblemon.mod.common.client.gui.summary.widgets.ModelWidget;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.cobblemon.mod.common.pokemon.RenderablePokemon;
 import dev.buizz.cobbleventure.adventure.daycare.DaycareNetwork;
 import dev.buizz.cobbleventure.playermenu.client.MenuBackButton;
 import dev.buizz.cobbleventure.playermenu.client.MenuTheme;
@@ -203,14 +204,33 @@ final class DaycareScreen extends Screen {
             Pokemon pokemon = new Pokemon().loadFromNBT(
                 minecraft.level.registryAccess(), view.data().copy()
             );
-            ModelWidget model = new ModelWidget(
-                x, y, size, size, pokemon.asRenderablePokemon(),
-                Math.max(.65F, size / 42F), 25F, 0D, false, false
+            ModelWidget model = createModelWidget(
+                x, y, size, pokemon.asRenderablePokemon(), Math.max(.65F, size / 42F)
             );
             model.active = false;
             models.add(addRenderableWidget(model));
-        } catch (RuntimeException ignored) {
+        } catch (ReflectiveOperationException | RuntimeException ignored) {
             // The text card remains usable if a resource pack removes a rendered form.
+        }
+    }
+
+    private static ModelWidget createModelWidget(
+        int x, int y, int size, RenderablePokemon pokemon, float scale
+    ) throws ReflectiveOperationException {
+        try {
+            return ModelWidget.class.getConstructor(
+                int.class, int.class, int.class, int.class, RenderablePokemon.class,
+                float.class, float.class, double.class, boolean.class, boolean.class, int.class
+            ).newInstance(
+                x, y, size, size, pokemon, scale, 25F, 0D, false, false, 13
+            );
+        } catch (NoSuchMethodException ignored) {
+            return ModelWidget.class.getConstructor(
+                int.class, int.class, int.class, int.class, RenderablePokemon.class,
+                float.class, float.class, double.class, boolean.class, boolean.class
+            ).newInstance(
+                x, y, size, size, pokemon, scale, 25F, 0D, false, false
+            );
         }
     }
 

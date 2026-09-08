@@ -1,12 +1,14 @@
 package dev.buizz.cobbleventure.bootstrap;
 
 import java.util.List;
+import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
 /** Defines a symmetric two-trainer formation around an authored encounter marker. */
 final class DungeonEncounterFormation {
     static final int PLAYER_DISTANCE = 5;
+    static final int ANCHOR_SEARCH_RADIUS = PLAYER_DISTANCE + 1;
 
     private DungeonEncounterFormation() {}
 
@@ -34,6 +36,38 @@ final class DungeonEncounterFormation {
             ),
             facing
         );
+    }
+
+    static BlockPos resolveSafePlayerAnchor(
+        BlockPos requestedCenter,
+        float opponentYaw,
+        int actorCount,
+        Predicate<BlockPos> safePosition
+    ) {
+        if (playersAreSafe(
+            create(requestedCenter, opponentYaw, actorCount), safePosition
+        )) return requestedCenter;
+        for (int distance = 1; distance <= ANCHOR_SEARCH_RADIUS; distance++) {
+            for (int xOffset = -distance; xOffset <= distance; xOffset++) {
+                int zDistance = distance - Math.abs(xOffset);
+                BlockPos first = requestedCenter.offset(xOffset, 0, -zDistance);
+                if (playersAreSafe(
+                    create(first, opponentYaw, actorCount), safePosition
+                )) return first;
+                if (zDistance == 0) continue;
+                BlockPos second = requestedCenter.offset(xOffset, 0, zDistance);
+                if (playersAreSafe(
+                    create(second, opponentYaw, actorCount), safePosition
+                )) return second;
+            }
+        }
+        return null;
+    }
+
+    private static boolean playersAreSafe(
+        Formation formation, Predicate<BlockPos> safePosition
+    ) {
+        return formation.players().stream().allMatch(safePosition);
     }
 
     record Formation(

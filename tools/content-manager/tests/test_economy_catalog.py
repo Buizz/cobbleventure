@@ -84,6 +84,23 @@ class EconomyCatalogTests(unittest.TestCase):
         vendor["categories"][0]["name"] = {"ko_kr": "기술머신", "en_us": "Technical Machines"}
         self.assertEqual([], self.validate(payload))
 
+    def test_native_cobblemon_tms_are_distinguished_by_move(self):
+        payload = self.valid_catalog()
+        payload["vendor_units"][0]["categories"][0]["offers"] = [
+            {"item": "cobblemon:technical_machine", "move": "protect", "count": 1, "price": "3000"},
+            {"item": "cobblemon:technical_machine", "move": "reflect", "count": 1, "price": "3000"},
+        ]
+
+        self.assertEqual([], self.validate(payload))
+
+    def test_native_cobblemon_tm_requires_a_move(self):
+        payload = self.valid_catalog()
+        payload["vendor_units"][0]["categories"][0]["offers"] = [
+            {"item": "cobblemon:technical_machine", "count": 1, "price": "3000"},
+        ]
+
+        self.assertTrue(any(issue.path.endswith(".move") for issue in self.validate(payload)))
+
     def test_department_store_assignment_without_nbt_anchor_is_a_warning(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -170,22 +187,17 @@ class EconomyCatalogTests(unittest.TestCase):
         payload["pokemon_drop_overrides"] = []
         self.assertEqual([], self.validate(payload, {"cobblemon:oran_berry"}))
 
-    def test_real_bca_vendor_units_are_loaded(self):
-        vendors = content_manager._economy_vendor_units_from_bca(ROOT)
-        by_id = {vendor["id"]: vendor for vendor in vendors}
-        self.assertIn("bca:shopkeeper_ds_special_balls", by_id)
-        self.assertEqual("특수 볼 판매원", by_id["bca:shopkeeper_ds_special_balls"]["role"]["ko_kr"])
-        self.assertEqual("Pokeball Specialist", by_id["bca:shopkeeper_ds_special_balls"]["role"]["en_us"])
-        self.assertTrue(by_id["bca:shopkeeper_ds_special_balls"]["categories"])
-
-    def test_project_workspace_loads_shared_bca_vendor_units(self):
+    def test_project_workspace_loads_self_contained_vendor_units(self):
         project_root = ROOT / "content-projects" / "cobbleventure-main"
         workspace = content_manager.load_economy_workspace(project_root, ROOT)
         by_id = {vendor["id"]: vendor for vendor in workspace["resolved_vendor_units"]}
-        self.assertGreaterEqual(len(by_id), 16)
-        self.assertIn("bca:shopkeeper_ds_special_balls", by_id)
+        self.assertGreaterEqual(len(by_id), 12)
         self.assertIn("bca:pokemart_shopkeeper", by_id)
         self.assertEqual("custom", by_id["bca:pokemart_shopkeeper"]["origin"])
+        self.assertIn("cobbleventure:vendor/lilycove_vitamins_jiho", by_id)
+        self.assertNotIn("cobbleventure:shop_catalog/department_store_default", {
+            entry["id"] for entry in workspace["resolved_shop_catalogs"]
+        })
 
     def test_project_workspace_can_search_unsold_player_menu_items(self):
         project_root = ROOT / "content-projects" / "cobbleventure-main"
@@ -205,7 +217,7 @@ class EconomyCatalogTests(unittest.TestCase):
             {entry["item"] for entry in workspace["resolved_standard_prices"]},
         )
 
-    def test_shop_products_use_semantic_groups_and_include_external_offers(self):
+    def test_shop_products_use_semantic_groups(self):
         project_root = ROOT / "content-projects" / "cobbleventure-main"
         workspace = content_manager.load_economy_workspace(project_root, ROOT)
         items = {entry["id"]: entry for entry in workspace["editor_catalog"]["items"]}
@@ -217,10 +229,9 @@ class EconomyCatalogTests(unittest.TestCase):
             "cobblemon:growth_mulch": "materials",
             "minecraft:apple": "food",
             "minecraft:emerald": "currency",
-            "tmcraft:tm_fireblast": "machines",
+            "cobblemon:technical_machine": "machines",
             "handcrafted:oak_chair": "decor",
             "pokeblocks:pokedoll_treecko": "decor",
-            "cobblenav:pokenav_item_red": "technology",
         }
         for item_id, expected_group in expected_groups.items():
             self.assertIn(item_id, items)
@@ -248,6 +259,12 @@ class EconomyCatalogTests(unittest.TestCase):
         self.assertEqual("gems", next(entry for entry in editor["items"] if entry["id"] == "cobblemon:normal_gem")["product_group"])
         self.assertEqual("medicine", next(entry for entry in editor["items"] if entry["id"] == "cobblemon:ether")["product_group"])
         self.assertEqual("other", next(entry for entry in editor["items"] if entry["id"] == "minecraft:netherite_pickaxe")["product_group"])
+        technical_machines = {entry["move"]: entry for entry in editor["technical_machines"]}
+        self.assertGreater(len(technical_machines), 100)
+        self.assertEqual("방어 기술머신", technical_machines["protect"]["ko_kr"])
+        self.assertEqual("TM: Protect", technical_machines["protect"]["en_us"])
+        self.assertEqual("fire", technical_machines["fireblast"]["type"])
+        self.assertEqual("cobblemon:technical_machine#fireblast", technical_machines["fireblast"]["key"])
 
     def test_drop_rule_generates_cobblemon_species_override(self):
         with tempfile.TemporaryDirectory() as directory:

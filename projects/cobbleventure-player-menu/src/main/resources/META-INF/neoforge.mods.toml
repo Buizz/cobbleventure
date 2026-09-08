@@ -43,13 +43,6 @@ ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
-modId="cobblemonxpbar"
-type="optional"
-versionRange="[1.0.5,1.1)"
-ordering="AFTER"
-side="CLIENT"
-
-[[dependencies.${mod_id}]]
 modId="cobblenav"
 type="optional"
 versionRange="[2.3.3,2.4)"

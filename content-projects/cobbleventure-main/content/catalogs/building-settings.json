@@ -864,6 +864,38 @@
       "citizen_placement_allowed": false,
       "interiors": [],
       "door_routes": {}
+    },
+    "cobbleventure:placeholder/round_laboratory": {
+      "placement_y_offset": 0,
+      "structure_category": "building",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [
+        {
+          "key": "room_1",
+          "structure": "cobbleventure:interiors/laboratory"
+        }
+      ],
+      "door_routes": {
+        "exterior:door": {
+          "space": "room_1",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        }
+      },
+      "town_placement": {
+        "enabled": true,
+        "id": "round_laboratory",
+        "label": "포켓몬 연구소(라운드형)",
+        "note": "둥근 크림색 외벽과 붉은 중앙 지붕의 포켓몬 연구소",
+        "color": "#ce7763"
+      }
     }
   }
 }

@@ -22,10 +22,6 @@
 | ID | 모드 | 구분 | 설치면 | 역할 | 현재 상태 |
 |----|------|------|--------|------|-----------|
 | `cobblemon` | Cobblemon | 필수 | 양쪽 | 포켓몬, 기술, 파티와 실제 배틀 | 1.7.3 / CF `687131:7553231` |
-| `cobblemon_exp_bar` | Cobblemon EXP Bar | 필수 | 양쪽 | 포켓몬 게임 스타일 경험치 바와 전투 중 경험치·레벨업 로그; 자체 클라이언트 패치로 이름과 체력 바 사이에 배치 | 1.0.5 / CF `1418364:8397752` |
-| `fix_cobblemon_pokemon_experience` | Fix Cobblemon Pokemon Experience | 필수 | 서버 | RCT 트레이너전에서 상대 포켓몬 KO 직후 경험치 지급 | 1.1.1 / CF `1435842:7533327` |
-| `cobblemon_tim_core` | Cobblemon Tim Core | 필수 | 양쪽 | Capture XP 공용 이벤트·경험치 처리 라이브러리 | 1.7.3-1.32.0 / CF `1295910:7938283` |
-| `cobblemon_capture_xp` | Cobblemon Capture XP | 필수 | 양쪽 | 야생 포켓몬 포획 시 파티 경험치 지급 | 1.7.3-1.3.0 / CF `901059:7568508` |
 | `more_cobblemon_tweaks` | MoreCobblemonTweaks | 필수 | 클라이언트 | Cobblemon 도구 설명과 UI 편의 기능 개선 | 1.3.3 / CF `1082538:7593359` |
 | `sodium` | Sodium | 필수 | 클라이언트 | 청크·월드 렌더링과 마이크로 스터터 최적화 | 0.6.13 / CF `394468:6382651` |
 | `iris` | Iris Shaders | 필수 | 클라이언트 | Sodium 기반 셰이더팩 로딩 | 1.8.8 / CF `455508:6213632` |
@@ -39,10 +35,8 @@
 | `cobblenav` | Cobblemon Pokenav | 필수 | 양쪽 | 포켓네비와 현재 지역 포켓몬 출현 정보 | 2.3.3 / CF `976014:7940651` |
 | `cloth_config` | Cloth Config API | 필수 | 양쪽 | Cobblemon Casino 설정 화면 API | 15.0.140 / CF `348521:5729127` |
 | `kotlin_for_forge` | Kotlin for Forge | 필수 | 양쪽 | Cobblemon NeoForge의 Kotlin 런타임 | 5.12.0 / CF `351264:8335665` |
-| `sinytra_connector` | Sinytra Connector | 필수 | 양쪽 | NeoForge에서 BCA Fabric JAR 로딩 | 2.0.0 beta 16 / CF `890127:8546239` |
-| `forgified_fabric_api` | Forgified Fabric API | 필수 | 양쪽 | Fabric API의 NeoForge 호환 구현 | 0.116.15+2.3.1 / CF `889079:8539754` |
-| `fabric_language_kotlin` | Fabric Language Kotlin | 필수 | 양쪽 | BCA의 Fabric Kotlin 진입점 실행 | 1.13.8 / CF `308769:7340876` |
-| `cobbledollars` | CobbleDollars | 필수 | 양쪽 | BCA 상점과 백화점 화폐·상인 기능 | 2.0.0 Beta-6.1 / CF `859232:8484919` |
+| `forgified_fabric_api` | Forgified Fabric API | 필수 | 양쪽 | Mega Showdown용 Fabric API의 NeoForge 호환 구현 | 0.116.15+2.3.1 / CF `889079:8539754` |
+| `cobbledollars` | CobbleDollars | 필수 | 양쪽 | 자체 포켓몬상점과 백화점의 화폐·상인 기능 | 2.0.0 Beta-6.1 / CF `859232:8484919` |
 | `cobblemon_casino` | Cobblemon Casino | 필수 | 양쪽 | 슬롯머신, 블랙잭, 가챠와 카지노 칩 경제 | 2.0.0 / CF `1572769:8235485` |
 | `playingcards` | Playing Cards & Chips | 필수 | 양쪽 | 블랙잭 테이블의 연결식 마인크래프트 외형 | 2.0.1-neoforge / CF `1162591:7219926` |
 | `architectury_api` | Architectury API | 필수 | 양쪽 | CobbleFurnies 공용 API | 13.0.11 / CF `419699:8492726` |
@@ -103,7 +97,6 @@ Iris의 기본 `R` 셰이더 새로고침 및 `O` 셰이더 선택 단축키는 
 
 | ID | 콘텐츠팩 | 구분 | 선택 버전 | 배포 형식 | 패키징 상태 |
 |----|----------|------|-----------|-----------|-------------|
-| `cobblemon_additions` | Cobblemon Additions | 필수 | 4.2.1 / Modrinth `W2pr9jyL:9PMzbD4o` | Fabric JAR로 포장된 데이터팩·모드 | ZIP 포함 및 NeoForge 호환 구성 완료 |
 | `complete_cobblemon_collection` | Complete Cobblemon Collection: Myths and Legends Compat | 필수 로컬 콘텐츠 | CCCC 1.7.2 / SHA-1 `b37e878f7e5539bfd145ca0fe9d63bcfef0a128c` | ZIP 데이터팩·리소스팩 | 실제 NeoForge 서버 파일을 저장소 Paxi 양쪽 경로에 포함 |
 | `za_mega_staraptor_contrary_fix` | ZA Mega Staraptor Contrary Fix | 필수 로컬 보정 | SHA-1 `9d20719aea859c9f20dfffccf3c30b756a419581` | ZIP 데이터팩·리소스팩 | 저장소 Paxi 양쪽 경로에 직접 포함 |
 
@@ -142,6 +135,7 @@ owo-lib를 함께 포함한다. NeoForge에서는 기존 Forgified Fabric API를
 | Cobbleventure Adventure | 전투 보상·패배 경제·센터 귀환·야생 레벨·필드 기술 | 월드 구현을 직접 참조하지 않고 `AdventureWorldContext`로 지역 정보 조회 |
 | Cobbleventure World Bootstrap | 세대 월드·마을·동굴·구조물과 지역 환경 | Adventure에 월드 조회 구현을 등록하고 Player Menu에는 위치 판정 값만 전달 |
 | Cobbleventure Player Menu | 공통 메뉴·가방·지도·도감과 음악·전투 인트로·지역 안내 | 플레이어에게 보이는 화면·소리·전환 연출을 소유 |
+| Cobbleventure Experience | KO 즉시 경험치·포획 경험치·반응형 경험치 HUD | Cobblemon 1.7.3 이벤트/API와 Player Menu 공통 테마만 사용하며 XP Bar·Fix Experience·Capture XP·Tim Core를 대체 |
 | Cobbleventure NPC | NPC, 대화창, 조건과 행동 | NeoForge 어댑터에서만 게임 API 사용 |
 | Cobbleventure RCT Bridge | 대화 행동을 RCT 전투 시작으로 변환 | RCT 관련 코드를 별도 모듈로 격리 |
 | Cobbleventure Battle AI | RCT JSON의 `ai` 선택값으로 실행되는 독립 NeoForge 모드 | Adventure와 분리 배포하고 공통 KMP 코어를 JAR 내부에 포함하며 RCT 기본 AI를 대체하지 않음 |
@@ -172,20 +166,15 @@ CreateMon에 들어 있던 해당 파일과 `COBBLEVERSE-DP`의 `bca` 네임스�
 `COBBLEVERSE-DP`에 함께 포장될 수 있으므로, 이를 별도의 BCA 모드가 시설을
 생성한다고 표현하지 않는다.
 
-CreateMon에서 확인한 4.2.1 JAR의 메타데이터는 Fabric Loader, Fabric API와
-Fabric Language Kotlin을 요구한다. 이 포장본을 NeoForge에서 그대로 사용하려면
-Connector 계열 호환층이 필요하다. 우리 프로젝트는 NeoForge 네이티브 구성을
-우선하므로 다음 원칙을 적용한다.
+4.2.1 원본 JAR 내부에는 `CC0-1.0` 라이선스 전문이 포함되어 있다. 여기서 가져와
+수정한 포켓몬센터와 포켓몬상점은 `cobbleventure:facilities/*` 구조물로 패키징하며,
+백화점은 자체 제작 구조물과 자체 판매원 카탈로그를 사용한다. 원본 프로젝트,
+저자, 버전, 원본 리소스 ID와 해시는 각 구조물 sidecar와
+`docs/asset-permissions`에 보존한다.
 
-4.2.1 원본 JAR 내부에는 `CC0-1.0` 라이선스 전문이 포함되어 있다. 저장소에는
-Modrinth 원본을 변경하지 않고 보관하며 SHA-1과 SHA-512를 Lock에서 검증한다.
-현재 개발용 CurseForge ZIP에는 `overrides/mods/cobblemon-additions-4.2.1.jar`로
-포함된다.
-
-1. BCA를 외부 모드 목록이 아니라 콘텐츠팩 의존성으로 등록한다.
-2. BCA의 마을 직소 풀과 센터·마트·백화점 구성은 자체 월드 생성 구현의 참고로 쓴다.
-3. 원본 파일, 출처, 라이선스와 해시를 함께 고정한다.
-4. Fabric JAR은 Sinytra Connector, Forgified Fabric API와 Fabric Language Kotlin을 통해 실행한다.
+따라서 Cobblemon Additions 원본 JAR은 배포·런타임 의존성에 포함하지 않는다.
+이를 위해서만 사용하던 Sinytra Connector와 Fabric Language Kotlin도 제거한다.
+Forgified Fabric API는 Mega Showdown이 별도로 요구하므로 유지한다.
 
 `CobbleTowns: Continued`도 포켓몬 본가 마을을 바탕으로 센터와 마트를 추가하는
 대안이지만, 백화점까지 포함해 기존 팩과 같은 구성을 만든 직접 항목은 BCA다.

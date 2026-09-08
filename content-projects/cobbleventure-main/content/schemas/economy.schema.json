@@ -167,6 +167,7 @@
       "required": ["item", "count", "price"],
       "properties": {
         "item": { "$ref": "#/$defs/resourceId" },
+        "move": { "type": "string", "pattern": "^[a-z0-9]+$" },
         "count": { "type": "integer", "minimum": 1 },
         "price": { "type": "string", "minLength": 1 },
         "sell_price": { "type": "string", "pattern": "^[0-9]+$" }

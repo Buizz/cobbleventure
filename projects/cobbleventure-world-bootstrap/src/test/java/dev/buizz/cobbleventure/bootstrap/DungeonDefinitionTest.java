@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import net.minecraft.core.BlockPos;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -351,7 +352,11 @@ final class DungeonDefinitionTest {
                 assertEquals(
                     name.equals("zapdos_storm_chamber")
                         ? "cobbleventure_bootstrap:textures/gui/dungeons/storm_cavern.png"
-                        : "cobbleventure_bootstrap:textures/gui/dungeons/rocket_facility.png",
+                        : name.equals("rocket_pokemon_tower")
+                            ? "cobbleventure_bootstrap:textures/gui/dungeons/pokemon_tower.png"
+                            : name.equals("rocket_silph_company")
+                                ? "cobbleventure_bootstrap:textures/gui/dungeons/silph_company.png"
+                                : "cobbleventure_bootstrap:textures/gui/dungeons/rocket_facility.png",
                     definition.entryUi().backgroundTexture(),
                     name
                 );
@@ -394,6 +399,17 @@ final class DungeonDefinitionTest {
             "character/cobbleventure/giovanni",
             DungeonSystem.dungeonActorPresetPath(
                 casino.encounters().getLast().trainers().getFirst()
+            )
+        );
+        assertEquals(
+            "easy_npc preset import data "
+                + "easy_npc:preset/dungeon_actor/character/cobbleventure/"
+                + "giovanni.npc.snbt 12 34 56 "
+                + "00000000-0000-0000-0000-000000000517",
+            DungeonSystem.dungeonActorImportCommand(
+                casino.encounters().getLast().trainers().getFirst(),
+                new BlockPos(12, 34, 56),
+                UUID.fromString("00000000-0000-0000-0000-000000000517")
             )
         );
         assertEquals(

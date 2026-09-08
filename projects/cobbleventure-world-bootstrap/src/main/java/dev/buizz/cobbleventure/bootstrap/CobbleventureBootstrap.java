@@ -115,7 +115,6 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
@@ -347,7 +346,6 @@ public final class CobbleventureBootstrap {
             ResourceLocation.fromNamespaceAndPath("cobbleventure", "sealed_forest_edge")
         );
     public CobbleventureBootstrap(IEventBus modBus) {
-        modBus.addListener(CobbleventureBootstrap::onCommonSetup);
         EventLocationResolverRegistry.register(
             EventLocationRef.Resource.Kind.SETTLEMENT,
             CobbleventureBootstrap::resolveEventSettlement
@@ -470,10 +468,6 @@ public final class CobbleventureBootstrap {
         NeoForge.EVENT_BUS.addListener(CobbleventureBootstrap::onServerStarted);
         NeoForge.EVENT_BUS.addListener(CobbleventureBootstrap::onServerTick);
         NeoForge.EVENT_BUS.addListener(CobbleventureBootstrap::onRegisterCommands);
-    }
-
-    private static void onCommonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(DeferredXpBarRegistration::register);
     }
 
     /**

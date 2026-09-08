@@ -213,6 +213,10 @@
           "type": "string",
           "minLength": 1
         },
+        "move": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+$"
+        },
         "count": {
           "type": "integer",
           "minimum": 1

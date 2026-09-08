@@ -45,6 +45,12 @@ ext.cobblemonVersionRange = normalizedTarget == '1.8'
 ext.cobblemonBuildDependency = normalizedTarget == '1.8'
     ? files(localJar)
     : "maven.modrinth:cobblemon:${cobblemon_maven_version}"
+ext.cobbleventureDevelopmentProfileId = normalizedTarget == '1.8'
+    ? 'development-1.8'
+    : 'development-placeholder'
+ext.cobbleventureDevelopmentModsDir = rootProject.file(
+    "../../pack/overrides/${cobbleventureDevelopmentProfileId}/mods"
+)
 
 logger.lifecycle(
     "Cobblemon target: ${cobblemonTarget}"

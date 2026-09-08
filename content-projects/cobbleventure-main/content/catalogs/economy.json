@@ -3163,22 +3163,26 @@
           },
           "offers": [
             {
-              "item": "tmcraft:tm_fireblast",
+              "item": "cobblemon:technical_machine",
+              "move": "fireblast",
               "count": 1,
               "price": "5500"
             },
             {
-              "item": "tmcraft:tm_thunder",
+              "item": "cobblemon:technical_machine",
+              "move": "thunder",
               "count": 1,
               "price": "5500"
             },
             {
-              "item": "tmcraft:tm_blizzard",
+              "item": "cobblemon:technical_machine",
+              "move": "blizzard",
               "count": 1,
               "price": "5500"
             },
             {
-              "item": "tmcraft:tm_hyperbeam",
+              "item": "cobblemon:technical_machine",
+              "move": "hyperbeam",
               "count": 1,
               "price": "7500"
             }
@@ -3206,22 +3210,26 @@
           },
           "offers": [
             {
-              "item": "tmcraft:tm_protect",
+              "item": "cobblemon:technical_machine",
+              "move": "protect",
               "count": 1,
               "price": "3000"
             },
             {
-              "item": "tmcraft:tm_safeguard",
+              "item": "cobblemon:technical_machine",
+              "move": "safeguard",
               "count": 1,
               "price": "3000"
             },
             {
-              "item": "tmcraft:tm_reflect",
+              "item": "cobblemon:technical_machine",
+              "move": "reflect",
               "count": 1,
               "price": "3000"
             },
             {
-              "item": "tmcraft:tm_lightscreen",
+              "item": "cobblemon:technical_machine",
+              "move": "lightscreen",
               "count": 1,
               "price": "3000"
             }
