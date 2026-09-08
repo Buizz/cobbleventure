@@ -566,6 +566,8 @@ record DungeonPieceLayout(
             .map(ResolvedMarker::placementIndex)
             .distinct()
             .filter(index -> preferredPlacement < 0 || index == preferredPlacement)
+            // A placement hosts one encounter group, even when extra slots remain.
+            .filter(index -> occupancy.getOrDefault(index, 0) == 0)
             .sorted(java.util.Comparator
                 .comparingInt((Integer index) -> floorOccupancy.getOrDefault(
                     floorY(index), 0

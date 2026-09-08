@@ -2250,18 +2250,10 @@ final class DungeonSystem {
             definition.battleRules().allowItems()
         );
         try {
-            initiator.getServer().getCommands().getDispatcher().execute(
-                command,
-                opponent.createCommandSourceStack()
-                    .withPermission(4).withSuppressedOutput()
+            dev.buizz.cobbleventure.playermenu.BattleIntro.startGroup(
+                players, opponent, triggeredPreset.battleId(), command
             );
-            if (players.stream().anyMatch(player ->
-                BattleRegistry.getBattleByParticipatingPlayerId(player.getUUID()) == null)) {
-                throw new IllegalStateException(
-                    "TBCS command completed without registering both players"
-                );
-            }
-        } catch (CommandSyntaxException | RuntimeException error) {
+        } catch (RuntimeException error) {
             runtime.statusById.put(encounter.id(), EncounterStatus.AVAILABLE);
             runtime.pendingEncounterId = null;
             runtime.pendingPlayers = Set.of();
@@ -2426,18 +2418,10 @@ final class DungeonSystem {
                 + (definition.battleRules().allowItems()
                     ? "" : " rules {maxItemUses:0}");
         try {
-            initiator.getServer().getCommands().getDispatcher().execute(
-                command,
-                interactedEntity.createCommandSourceStack()
-                    .withPermission(4).withSuppressedOutput()
+            dev.buizz.cobbleventure.playermenu.BattleIntro.startGroup(
+                players, interactedEntity, runtime.generatedBattleIds.get(encounter.id()), command
             );
-            if (players.stream().anyMatch(player ->
-                BattleRegistry.getBattleByParticipatingPlayerId(player.getUUID()) == null)) {
-                throw new IllegalStateException(
-                    "TBCS command completed without registering dungeon players"
-                );
-            }
-        } catch (CommandSyntaxException | RuntimeException error) {
+        } catch (RuntimeException error) {
             cleanupGeneratedEncounter(runtime, encounter.id());
             runtime.statusById.put(encounter.id(), EncounterStatus.AVAILABLE);
             runtime.pendingEncounterId = null;

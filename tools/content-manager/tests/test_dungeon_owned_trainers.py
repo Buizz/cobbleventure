@@ -62,7 +62,7 @@ class DungeonOwnedTrainerTests(unittest.TestCase):
         partner = json.loads(json.dumps(encounter["trainers"][0]))
         partner["id"] = "hideout_partner"
         partner["display_name"] = {"ko_kr": "로켓단 지원 간부"}
-        encounter["trainers"].append(partner)
+        encounter["trainers"] = [encounter["trainers"][0], partner]
 
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory) / "dungeon.json"
@@ -83,7 +83,7 @@ class DungeonOwnedTrainerTests(unittest.TestCase):
         expected = {
             "rocket_power_plant": {"fixed": 4, "generated": 0},
             "rocket_pokemon_tower": {"fixed": 1, "generated": 5},
-            "rocket_casino_hideout": {"fixed": 1, "generated": 5},
+            "rocket_casino_hideout": {"fixed": 2, "generated": 5},
             "rocket_silph_company": {"fixed": 1, "generated": 8},
         }
         original_layout = {

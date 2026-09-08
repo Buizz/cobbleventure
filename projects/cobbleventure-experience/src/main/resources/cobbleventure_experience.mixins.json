@@ -6,6 +6,9 @@
   "mixins": [
     "PokemonBattleExperienceMixin"
   ],
+  "client": [
+    "BattleExperienceOverlayMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

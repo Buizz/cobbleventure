@@ -19,7 +19,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public final class ExperienceNetwork {
-    private static final String VERSION = "1";
+    private static final String VERSION = "2";
 
     private ExperienceNetwork() {}
 
@@ -40,7 +40,7 @@ public final class ExperienceNetwork {
         int nextLevel = event.getCurrentLevel() >= Cobblemon.INSTANCE.getConfig().getMaxPokemonLevel()
             ? levelStart : pokemon.getExperienceGroup().getExperience(event.getCurrentLevel() + 1);
         PacketDistributor.sendToPlayer(owner, new ExperiencePayload(
-            pokemon.getDisplayName(false), event.getExperience(), previousExperience,
+            pokemon.getUuid(), pokemon.getDisplayName(false), event.getExperience(), previousExperience,
             currentExperience, event.getPreviousLevel(), event.getCurrentLevel(),
             levelStart, nextLevel
         ));
@@ -58,7 +58,7 @@ public final class ExperienceNetwork {
     }
 
     public record ExperiencePayload(
-        Component pokemonName, int gained, int previousExperience, int currentExperience,
+        java.util.UUID pokemonId, Component pokemonName, int gained, int previousExperience, int currentExperience,
         int previousLevel, int currentLevel, int levelStart, int nextLevel
     ) implements CustomPacketPayload {
         private static final Type<ExperiencePayload> TYPE = new Type<>(
@@ -68,6 +68,7 @@ public final class ExperienceNetwork {
             StreamCodec.of(ExperiencePayload::write, ExperiencePayload::read);
 
         private static void write(RegistryFriendlyByteBuf buffer, ExperiencePayload payload) {
+            buffer.writeUUID(payload.pokemonId());
             ComponentSerialization.TRUSTED_STREAM_CODEC.encode(buffer, payload.pokemonName());
             buffer.writeVarInt(payload.gained());
             buffer.writeVarInt(payload.previousExperience());
@@ -80,6 +81,7 @@ public final class ExperienceNetwork {
 
         private static ExperiencePayload read(RegistryFriendlyByteBuf buffer) {
             return new ExperiencePayload(
+                buffer.readUUID(),
                 ComponentSerialization.TRUSTED_STREAM_CODEC.decode(buffer),
                 buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt(),
                 buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt()

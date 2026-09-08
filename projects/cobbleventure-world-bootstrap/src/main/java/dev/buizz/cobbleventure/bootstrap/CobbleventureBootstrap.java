@@ -730,6 +730,14 @@ public final class CobbleventureBootstrap {
         // Only suppress unmanaged wild Pokemon. Cobblemon also owns capture
         // projectiles such as empty_pokeball; canceling those consumes the item
         // while preventing the ball from ever reaching the battle target.
+        // NPC teams and level-adjusted battle copies can have no storage owner,
+        // so isWild() does not distinguish them from natural spawns. Cobblemon
+        // assigns battleId before addFreshEntity; let their send-out finish even
+        // inside pursuit zones or just outside the authored terrain boundary.
+        if (event.getEntity() instanceof PokemonEntity pokemonEntity
+            && pokemonEntity.getBattleId() != null) {
+            return;
+        }
         if (event.getEntity() instanceof PokemonEntity pokemonEntity
             && pokemonEntity.getPokemon().isWild()
             && !event.getEntity().getTags().contains(PursuitEncounterSystem.ENTITY_TAG)
@@ -793,9 +801,10 @@ public final class CobbleventureBootstrap {
             ? (pokemonEntity.getPokemon().isWild() ? "wild" : "owned")
             : "unknown";
         LOGGER.warn(
-            "[Spawn diagnosis] Cobblemon entity blocked #{}: reason={}, species={}, ownership={}, dimension={}, position=({}, {}, {})",
+            "[Spawn diagnosis] Cobblemon entity blocked #{}: reason={}, species={}, ownership={}, dimension={}, position=({}, {}, {}), battleId={}",
             count, reason, species, ownership, entity.level().dimension().location(),
-            entity.getBlockX(), entity.getBlockY(), entity.getBlockZ()
+            entity.getBlockX(), entity.getBlockY(), entity.getBlockZ(),
+            entity instanceof PokemonEntity pokemonEntity ? pokemonEntity.getBattleId() : null
         );
     }
 

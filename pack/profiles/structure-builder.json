@@ -6,7 +6,7 @@
   "author": "Buizz",
   "purpose": "standalone-structure-authoring-world",
   "production_ready": false,
-  "notice": "독립 평지 월드에서 Cobbleventure 건축 NBT를 편집하고 다시 내보내는 경량 제작 팩입니다. Create 6.0.10, Create: Copycats+ 3.0.4, Night Lights 1.4.0과 Copycat WE Fix 1.0.0, Playing Cards & Chips 2.0.1 블록을 원형 그대로 보존합니다.",
+  "notice": "Cobblemon 1.8 기준 독립 평지 월드에서 Cobbleventure 건축 NBT를 편집하고 다시 내보내는 경량 제작 팩입니다. Create 6.0.10, Create: Copycats+ 3.0.4, Night Lights 1.4.0과 Copycat WE Fix 1.0.0, Playing Cards & Chips 2.0.1 블록을 원형 그대로 보존합니다.",
   "icon": "pack/assets/cobbleventure-import-test-icon.png",
   "minecraft": {
     "version": "1.21.1",
@@ -18,7 +18,7 @@
   "files": [
     {
       "projectID": 687131,
-      "fileID": 7553231,
+      "fileID": 8818732,
       "required": true
     },
     {

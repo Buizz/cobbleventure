@@ -145,6 +145,36 @@ final class DungeonPiecePlannerTest {
     }
 
     @Test
+    void casinoEncounterGroupsNeverShareASpawnPlacement() throws Exception {
+        List<DungeonPieceDefinition> pieces = packagedRocketPieces();
+        DungeonDefinition dungeon = packagedDungeon("rocket_casino_hideout");
+        for (long seed = 1; seed <= 24; seed++) {
+            DungeonDefinition run = dungeon.materializeGeneratedTrainers(seed);
+            DungeonPieceLayout layout = DungeonPieceLayout.generate(run, pieces, seed);
+            Map<DungeonPieceLayout.MarkerKey, BlockPos> assigned = layout.featureMarkers(run, seed);
+            Map<Integer, String> owners = new java.util.HashMap<>();
+            for (DungeonDefinition.Encounter encounter : run.encounters()) {
+                if (!encounter.kind().equals("trainer")) continue;
+                Set<Integer> groupPlacements = new java.util.HashSet<>();
+                for (int actor = 0; actor < encounter.actorCount(); actor++) {
+                    BlockPos position = assigned.get(new DungeonPieceLayout.MarkerKey(
+                        "npc_spawn", DungeonPieceLayout.npcMarkerReference(encounter.id(), actor)
+                    ));
+                    int placement = layout.markers().stream()
+                        .filter(marker -> marker.kind().equals("npc_spawn")
+                            && marker.position().equals(position))
+                        .findFirst().orElseThrow().placementIndex();
+                    groupPlacements.add(placement);
+                    String previous = owners.putIfAbsent(placement, encounter.id());
+                    assertTrue(previous == null || previous.equals(encounter.id()),
+                        "seed=" + seed + ": encounter groups share placement " + placement);
+                }
+                assertEquals(1, groupPlacements.size(), "A cooperative pair must stay together");
+            }
+        }
+    }
+
+    @Test
     void assignsEveryRuntimeDungeonTrainerActorToAConfiguredNpcSlot() throws Exception {
         List<DungeonPieceDefinition> pieces = packagedRocketPieces();
         for (String name : List.of(
@@ -156,8 +186,14 @@ final class DungeonPiecePlannerTest {
                 .plannerSettings(runDungeon, pieces.stream().filter(piece ->
                     piece.tags().contains(runDungeon.terrain().piecePool())
                 ).toList(), false);
-            assertTrue(plannerSettings.chamberCount()
-                <= runDungeon.vertical().floorCount().maximum(), name);
+            if (runDungeon.multiplayer().mode().equals("cooperative")) {
+                long groups = runDungeon.encounters().stream()
+                    .filter(encounter -> !encounter.boss() && encounter.actorCount() == 2).count();
+                assertTrue(plannerSettings.chamberCount() >= groups, name);
+            } else {
+                assertTrue(plannerSettings.chamberCount()
+                    <= runDungeon.vertical().floorCount().maximum(), name);
+            }
             DungeonPieceLayout generated;
             try {
                 generated = DungeonPieceLayout.generate(runDungeon, pieces, 517L);

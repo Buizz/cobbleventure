@@ -6373,6 +6373,7 @@ class ContentManagerTests(unittest.TestCase):
         }
         self.assertNotIn((976014, 7940651), profile_files)
         self.assertTrue({(item[1], item[2]) for item in expected.values()}.issubset(profile_files))
+        self.assertIn("Cobbleventure Pokefinder", profile["notice"])
 
     def test_server_full_dex_and_mega_addons_are_pinned_in_development_pack(self) -> None:
         root = CORE_ROOT
@@ -6601,6 +6602,8 @@ class ContentManagerTests(unittest.TestCase):
                 (entry["projectID"], entry["fileID"])
                 for entry in authoring_profile["files"]
             }
+            self.assertIn((687131, 8818732), authoring_files)
+            self.assertNotIn((687131, 7553231), authoring_files)
             self.assertIn((1199355, 8555615), authoring_files)
 
         builder_profile = content_manager.load_json(
@@ -7101,12 +7104,12 @@ class ContentManagerTests(unittest.TestCase):
 
         music_sync.assert_called_once_with(PROJECT_ROOT.resolve(), CORE_ROOT.resolve())
         self.assertEqual(
-            "1.7.3",
+            "1.8",
             runner.call_args.kwargs["env"]["COBBLEVENTURE_COBBLEMON_TARGET"],
         )
         self.assertEqual("1", runner.call_args.kwargs["env"]["PYTHONUTF8"])
         self.assertEqual("utf-8", runner.call_args.kwargs["env"]["PYTHONIOENCODING"])
-        self.assertEqual("1.7.3", result["cobblemon_target"])
+        self.assertEqual("1.8", result["cobblemon_target"])
         self.assertIn("로컬 음원 자동 갱신", result["output"])
 
     def test_build_log_decoder_supports_mixed_utf8_and_cp949_lines(self) -> None:
@@ -7445,7 +7448,7 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn('"pack-server": "NeoForge 전용 서버 준비 ZIP 생성"', (
             Path(__file__).parents[1] / "content_manager.py"
         ).read_text(encoding="utf-8"))
-        self.assertIn('value="1.7.3"', markup)
+        self.assertNotIn('value="1.7.3"', markup)
         self.assertIn('value="1.8"', markup)
         self.assertIn('JSON.stringify({ command, language, cobblemon_target: cobblemonTarget })', script)
         live_page = markup.index('<section class="page" id="live-nbt-editor">')

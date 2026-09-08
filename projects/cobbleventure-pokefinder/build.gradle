@@ -3,6 +3,8 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.143'
 }
 
+apply from: rootProject.file('../../gradle/cobblemon-target.gradle')
+
 version = mod_version
 group = mod_group_id
 
@@ -23,8 +25,8 @@ repositories {
 
 dependencies {
     compileOnly "dev.buizz.cobbleventure:cobbleventure-player-menu:1.6.0"
-    compileOnly "curse.maven:cobblemon-687131:7553231"
-    compileOnly "curse.maven:cobblenav-976014:7940651"
+    compileOnly cobblemonBuildDependency
+    compileOnly "curse.maven:cobblenav-976014:8823427"
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20"
 
     testImplementation platform('org.junit:junit-bom:5.11.4')

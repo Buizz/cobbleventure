@@ -116,15 +116,15 @@ build.bat pack
 이 명령은 일반 콘텐츠 검증을 먼저 통과한 뒤 다음 파일을 생성합니다.
 
 ```text
-dist/cobbleventure-development-0.1.1-curseforge.zip
-dist/cobbleventure-development-0.1.1-curseforge.zip.sha256
+dist/cobbleventure-development-1.8-curseforge.zip
+dist/cobbleventure-development-1.8-curseforge.zip.sha256
 ```
 
-정식 Cobblemon 1.8은 자체 모드의 소스 호환성 검사만 지원합니다. TBCS와 Radical
-Cobblemon Trainers가 아직 1.8을 거부하므로 전체 게임팩을 억지로 패키징하지 않으며,
-1.8 대상으로 `build.bat pack`을 실행하면 지원 대기 사유를 출력하고 중단합니다.
+현재 개발 팩은 Cobblemon 1.8을 유일한 활성 빌드 기준으로 사용합니다. RCT API,
+Radical Cobblemon Trainers, TBCS, Mega Showdown과 CobbleNav의 1.8 대응 버전을
+고정하며 자체 Pokefinder 확장도 CobbleNav 2.4.0 기준으로 함께 빌드합니다.
 
-현재 개발 팩에는 Cobblemon 1.7.3과 CobbleDollars가 포함됩니다. 포켓몬센터와
+개발 팩에는 Cobblemon 1.8과 CobbleDollars가 포함됩니다. 포켓몬센터와
 포켓몬상점은 출처를 기록한 수정본을 자체 리소스로 패키징하고, 백화점은 자체 제작
 구조물과 상점 카탈로그를 사용합니다. `build.bat pack`은 먼저
 무지하 전용 시작 바이옴·세대 차원을 생성하는 부트스트랩 Java 모드와
@@ -270,10 +270,9 @@ CurseForge ZIP을 한 번에 만드는 전체 빌드 스크립트는 아닙니�
 규칙과 종료 코드는 [Content Manager 사용법](tools/content-manager/README.md)을
 참고합니다.
 
-Web의 **빌드 작업** 화면에서는 Cobblemon 빌드 대상을 `1.7.3 안정 버전`과
-`1.8 시험 버전` 중에서 선택할 수 있습니다. 기본값은 계속 1.7.3이며, 선택값은
-해당 실행에만 전달됩니다. 1.8은 `test`와 `mod-*` 소스 호환성 검사에만 사용하며,
-클라이언트·서버 전체 패키징은 아직 1.7.3만 지원합니다.
+Web의 **빌드 작업** 화면과 `build.bat`은 모두 Cobblemon 1.8 정식 버전을 기준으로
+자체 모드, 클라이언트 개발 팩과 서버 준비 ZIP을 생성합니다. 이전 1.7.3 프로필은
+과거 결과 재현을 위한 참고 파일로만 보관하며 활성 빌드 선택지로 제공하지 않습니다.
 
 `pack-server` 결과에는 `server.properties`, JVM 메모리 기본값, EULA 확인 파일,
 서버 시작 스크립트와 `setup-server.ps1`이 포함됩니다. 설치 스크립트는 Java 21과

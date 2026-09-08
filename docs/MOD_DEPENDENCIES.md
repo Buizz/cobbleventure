@@ -2,11 +2,11 @@
 
 > 상태: 기본 실행 의존성 확정, 애드온 후보 검토 중
 >
-> 버전 기준: Minecraft 1.21.1 / NeoForge 21.1.248 / Cobblemon 1.7.3
+> 버전 기준: Minecraft 1.21.1 / NeoForge 21.1.248 / Cobblemon 1.8.0
 
 이 문서는 Cobbleventure 테스트팩과 공개 모드팩에 포함할 외부 모드의 역할과
 선정 근거를 관리한다. 빌드가 사용하는 실제 버전과 CurseForge 식별자는
-[`pack/dependencies.lock.json`](../pack/dependencies.lock.json)에 기록한다.
+[`pack/dependencies-1.8.lock.json`](../pack/dependencies-1.8.lock.json)에 기록한다.
 
 ## 관리 규칙
 
@@ -21,7 +21,7 @@
 
 | ID | 모드 | 구분 | 설치면 | 역할 | 현재 상태 |
 |----|------|------|--------|------|-----------|
-| `cobblemon` | Cobblemon | 필수 | 양쪽 | 포켓몬, 기술, 파티와 실제 배틀 | 1.7.3 / CF `687131:7553231` |
+| `cobblemon` | Cobblemon | 필수 | 양쪽 | 포켓몬, 기술, 파티와 실제 배틀 | 1.8.0 / CF `687131:8818732` |
 | `more_cobblemon_tweaks` | MoreCobblemonTweaks | 필수 | 클라이언트 | Cobblemon 도구 설명과 UI 편의 기능 개선 | 1.3.3 / CF `1082538:7593359` |
 | `sodium` | Sodium | 필수 | 클라이언트 | 청크·월드 렌더링과 마이크로 스터터 최적화 | 0.6.13 / CF `394468:6382651` |
 | `iris` | Iris Shaders | 필수 | 클라이언트 | Sodium 기반 셰이더팩 로딩 | 1.8.8 / CF `455508:6213632` |
@@ -32,7 +32,7 @@
 | `complementary_reimagined` | Complementary Shaders - Reimagined | 필수 | 클라이언트 | Iris용 기본 셰이더 및 Euphoria 기반팩 | r5.3 / CF `627557:5874236` |
 | `euphoria_patches` | Euphoria Patches | 필수 | 클라이언트 | Complementary r5.3 확장 그래픽 설정 패처 | 1.4.3-r5.3 / CF `915902:5876050` |
 | `badmobs` | Bad Mobs | 필수 | 양쪽 | 바닐라 동물·몬스터의 모든 소환 경로 차단 | 21.1.1 / CF `233258:7055133` |
-| `cobblenav` | Cobblemon Pokenav | 필수 | 양쪽 | 포켓네비와 현재 지역 포켓몬 출현 정보 | 1.7.3: 2.3.3 / CF `976014:7940651`; 1.8: 2.4.0 / CF `976014:8823427` |
+| `cobblenav` | Cobblemon Pokenav | 필수 | 양쪽 | 포켓네비와 현재 지역 포켓몬 출현 정보 | 2.4.0 / CF `976014:8823427` |
 | `cloth_config` | Cloth Config API | 필수 | 양쪽 | Cobblemon Casino 설정 화면 API | 15.0.140 / CF `348521:5729127` |
 | `kotlin_for_forge` | Kotlin for Forge | 필수 | 양쪽 | Cobblemon NeoForge의 Kotlin 런타임 | 5.12.0 / CF `351264:8335665` |
 | `forgified_fabric_api` | Forgified Fabric API | 필수 | 양쪽 | Mega Showdown용 Fabric API의 NeoForge 호환 구현 | 0.116.15+2.3.1 / CF `889079:8539754` |
@@ -42,19 +42,19 @@
 | `architectury_api` | Architectury API | 필수 | 양쪽 | CobbleFurnies 공용 API | 13.0.11 / CF `419699:8492726` |
 | `create` | Create | 필수 | 양쪽 | 체육관 벨트·선풍기·이동 장치와 기계 장식 | 6.0.10 / CF `328085:7963363` |
 | `copycats` | Create: Copycats+ | 필수 | 양쪽 | 재질을 입힐 수 있는 카피캣 블록과 문·패널·계단 확장 | 3.0.4 / CF `968398:7251823` |
-| `rctapi` | Radical Cobblemon Trainers API | 필수 | 양쪽 | 트레이너 데이터와 전투 연동 계약 | 0.15.2-beta / CF `1152792:7952419` |
-| `rctmod` | Radical Cobblemon Trainers | 필수 | 양쪽 | RCT JSON 로딩과 트레이너전 관리 | 0.18.1-beta / CF `1009534:7913180` |
+| `rctapi` | Radical Cobblemon Trainers API | 필수 | 양쪽 | 트레이너 데이터와 전투 연동 계약 | 0.16.0-beta / CF `1152792:8826267` |
+| `rctmod` | Radical Cobblemon Trainers | 필수 | 양쪽 | RCT JSON 로딩과 트레이너전 관리 | 0.19.0-beta / CF `1009534:8827140` |
 | `cobblefurnies` | CobbleFurnies | 필수 | 양쪽 | 프로젝트 체육관·리그 NBT의 가구 블록 | 1.2 / CF `1188698:8340192` |
 | `athena` | Athena | 필수 | 클라이언트 | CobbleFurnies 포켓볼 양탄자·연결 텍스처 렌더링 | 4.0.6 / CF `841890:8061947` |
 | `accessories` | Accessories | 필수 | 양쪽 | Mega Showdown 장신구 슬롯과 렌더링 | 1.1.0-beta.53 / CF `938917:7583320` |
 | `owo_lib` | oωo (owo-lib) | 필수 | 양쪽 | Mega Showdown GUI·설정·네트워크 라이브러리 | 0.12.15.5-beta.1 / CF `532610:6785734` |
-| `mega_showdown` | Cobblemon: Mega Showdown | 필수 | 양쪽 | 메가진화·Z기술·테라스탈·다이맥스·울트라버스트 | 1.9.3 / CF `1189523:8519042` |
+| `mega_showdown` | Cobblemon: Mega Showdown | 필수 | 양쪽 | 메가진화·Z기술·테라스탈·다이맥스·울트라버스트 | 1.0+1.8+1.21.1-beta2 / CF `1189523:8820597` |
 | `paxi_neoforge` | Paxi (NeoForge) | 필수 | 양쪽 | CCCC와 ZA 보정팩을 모든 월드에서 자동 로드 | 5.1.3 / CF `1015157:6485740` |
 | `yungs_api_neoforge` | YUNG's API (NeoForge) | 필수 | 양쪽 | Paxi 필수 공용 API | 5.1.6 / CF `1015100:6715463` |
 | `easy_npc_bundle` | Easy NPC Bundle | 필수 | 양쪽 | Core와 Config UI 의존성을 선언하는 런처용 번들 | 7.0.1 / CF `559312:8420470` |
 | `easy_npc` | Easy NPC Core | 필수 | 양쪽 | NPC 외형, 대화와 상호작용 | 7.0.1 / CF `1308987:8420476` |
 | `easy_npc_config_ui` | Easy NPC Config UI | 필수 | 양쪽 | Easy NPC 게임 내 설정과 네트워크 | 7.0.1 / CF `1214728:8420458` |
-| `tbcs` | Cobblemon Trainer Battle Commands | 필수 | 양쪽 | EasyNPC와 RCT API의 명령 기반 전투 연결 | 0.14.1-beta / CF `1172731:7858400` |
+| `tbcs` | Cobblemon Trainer Battle Commands | 필수 | 양쪽 | EasyNPC와 RCT API의 명령 기반 전투 연결 | 0.15.0-beta / CF `1172731:8833923` |
 
 Easy NPC 7.6.0 계열은 `easy_model_entities`라는 새 필수 의존성을 추가하고
 업그레이드 절차를 안내하고 있어 자동 업데이트에서 제외한다. NPC 프리셋과 TBCS
@@ -102,7 +102,7 @@ Iris의 기본 `R` 셰이더 새로고침 및 `O` 셰이더 선택 단축키는 
 
 ## 전국도감과 전투 기믹
 
-기본 Cobblemon 1.7.3은 1~9세대 종 데이터와 전투는 제공하지만, 모델이 없는 종은
+기본 Cobblemon 1.8은 1~9세대 종 데이터와 전투는 제공하지만, 모델이 없는 종은
 대체 인형으로 표시된다. 전국도감 보완은 추정한 Modrinth판 구성이 아니라 실제
 `G:\2026 MineCraft\Cobbleverse Server\Server\datapacks`에서 확인한
 **Complete Cobblemon Collection `CCCC-1.7.2.zip`**을 기준으로 한다. 모델 자산과
@@ -122,7 +122,7 @@ Contrary 특성과 보정 능력치를 적용한다. 데이터 정의와 한국�
 로드된다. ZIP 안에는 별도 라이선스 문서가 없으므로 외부 공개 배포 전에는
 제공자에게 재배포 권한을 확인한다.
 
-전투 기믹은 Cobblemon 1.7.3용 **Mega Showdown 1.9.3**으로 고정한다. 공식
+전투 기믹은 Cobblemon 1.8용 **Mega Showdown 1.0+1.8+1.21.1-beta2**로 고정한다. 공식
 의존 관계에 따라 Accessories, Architectury API, Cobblemon, Fabric API 계층과
 owo-lib를 함께 포함한다. NeoForge에서는 기존 Forgified Fabric API를 Fabric API
 호환 계층으로 사용한다.
@@ -135,7 +135,7 @@ owo-lib를 함께 포함한다. NeoForge에서는 기존 Forgified Fabric API를
 | Cobbleventure Adventure | 전투 보상·패배 경제·센터 귀환·야생 레벨·필드 기술 | 월드 구현을 직접 참조하지 않고 `AdventureWorldContext`로 지역 정보 조회 |
 | Cobbleventure World Bootstrap | 세대 월드·마을·동굴·구조물과 지역 환경 | Adventure에 월드 조회 구현을 등록하고 Player Menu에는 위치 판정 값만 전달 |
 | Cobbleventure Player Menu | 공통 메뉴·가방·지도·도감과 음악·전투 인트로·지역 안내 | 플레이어에게 보이는 화면·소리·전환 연출을 소유 |
-| Cobbleventure Experience | KO 즉시 경험치·포획 경험치·반응형 경험치 HUD | Cobblemon 1.7.3 이벤트/API와 Player Menu 공통 테마만 사용하며 XP Bar·Fix Experience·Capture XP·Tim Core를 대체 |
+| Cobbleventure Experience | KO 즉시 경험치·포획 경험치·반응형 경험치 HUD | Cobblemon 1.8 이벤트/API와 Player Menu 공통 테마만 사용하며 XP Bar·Fix Experience·Capture XP·Tim Core를 대체 |
 | Cobbleventure NPC | NPC, 대화창, 조건과 행동 | NeoForge 어댑터에서만 게임 API 사용 |
 | Cobbleventure RCT Bridge | 대화 행동을 RCT 전투 시작으로 변환 | RCT 관련 코드를 별도 모듈로 격리 |
 | Cobbleventure Battle AI | RCT JSON의 `ai` 선택값으로 실행되는 독립 NeoForge 모드 | Adventure와 분리 배포하고 공통 KMP 코어를 JAR 내부에 포함하며 RCT 기본 AI를 대체하지 않음 |

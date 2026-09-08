@@ -1031,7 +1031,7 @@ async function loadDashboard() {
   showIssues("#dashboard-issues", data.validation);
   state.buildCommands = data.build_commands;
   state.exportLanguages = data.export_languages || [{ id: "ko_kr", name: "한국어" }, { id: "en_us", name: "English (US)" }];
-  state.cobblemonBuildTargets = data.cobblemon_build_targets || [{ id: "1.7.3", name: "1.7.3 안정 버전" }, { id: "1.8", name: "1.8 시험 버전" }];
+  state.cobblemonBuildTargets = data.cobblemon_build_targets || [{ id: "1.8", name: "1.8 정식 버전" }];
   renderBuildCommands();
 }
 
@@ -19422,13 +19422,13 @@ function renderBuildCommands() {
     "validate-pack": "실제 모드 파일과 버전이 모두 확정됐는지 검사합니다."
   };
   const targetSelect = $("#build-cobblemon-target");
-  const selectedTarget = targetSelect?.value || "1.7.3";
+  const selectedTarget = targetSelect?.value || "1.8";
   if (targetSelect) {
     targetSelect.innerHTML = state.cobblemonBuildTargets.map((target) =>
       `<option value="${escapeHtml(target.id)}">${escapeHtml(target.name)}</option>`
     ).join("");
     targetSelect.value = state.cobblemonBuildTargets.some((target) => target.id === selectedTarget)
-      ? selectedTarget : "1.7.3";
+      ? selectedTarget : "1.8";
   }
   const languageSelect = $("#build-export-language");
   const selectedLanguage = languageSelect?.value || "ko_kr";
@@ -19751,7 +19751,7 @@ async function syncStructureBuilder() {
 
 async function runBuild(command, targets = {}) {
   const language = $("#build-export-language")?.value || "ko_kr";
-  const cobblemonTarget = $("#build-cobblemon-target")?.value || "1.7.3";
+  const cobblemonTarget = $("#build-cobblemon-target")?.value || "1.8";
   const stateTarget = targets.state || "#build-state";
   const outputTarget = targets.output || "#build-output";
   const buttons = $$("#builds button, #live-nbt-editor button");

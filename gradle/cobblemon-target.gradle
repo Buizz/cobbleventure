@@ -1,12 +1,12 @@
 def requestedTarget = providers.gradleProperty('cobblemon_target')
     .orElse(providers.environmentVariable('COBBLEVENTURE_COBBLEMON_TARGET'))
-    .getOrElse('1.7.3')
+    .getOrElse('1.8')
     .trim()
 
 def targetAliases = [
     '1.7': '1.7.3',
     '1.7.3': '1.7.3',
-    'stable': '1.7.3',
+    'stable': '1.8',
     '1.8': '1.8',
     '1.8.0': '1.8',
     'snapshot': '1.8',
@@ -27,9 +27,24 @@ def localJar = localJarValue == null || localJarValue.isBlank()
 
 if (normalizedTarget == '1.8') {
     if (localJar == null) {
+        for (directory in [
+            rootProject.file('../../.tmp/cobblemon-1.8-release'),
+            rootProject.file('../../.tmp/cobblemon-1.8-snapshot'),
+        ]) {
+            def matches = directory.isDirectory()
+                ? directory.listFiles().findAll { it.isFile() && it.name ==~ /Cobblemon-neoforge-1\.8.*\.jar/ }
+                    .sort { left, right -> right.lastModified() <=> left.lastModified() }
+                : []
+            if (!matches.isEmpty()) {
+                localJar = matches.first()
+                break
+            }
+        }
+    }
+    if (localJar == null) {
         throw new GradleException(
-            'Cobblemon 1.8 빌드에는 -Pcobblemon_local_jar 또는 '
-                + 'COBBLEVENTURE_COBBLEMON_JAR가 필요합니다.'
+            'Cobblemon 1.8 JAR을 .tmp/cobblemon-1.8-release에 두거나 '
+                + '-Pcobblemon_local_jar 또는 COBBLEVENTURE_COBBLEMON_JAR를 지정하세요.'
         )
     }
     if (!localJar.isFile()) {

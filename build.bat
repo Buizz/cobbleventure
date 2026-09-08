@@ -32,14 +32,12 @@ set "STRUCTURE_BUILDER_TOOL=%REPO_ROOT%tools\structure-builder\structure_builder
 set "MUSIC_PACK_BUILDER=%REPO_ROOT%tools\music-catalog\music_catalog.py"
 set "PAINTING_PACK_BUILDER=%REPO_ROOT%tools\painting-pack\build_painting_pack.py"
 set "SMOKE_PROFILE=pack\profiles\import-smoke.json"
-set "DEVELOPMENT_PROFILE=pack\profiles\development-placeholder.json"
-set "DEVELOPMENT_PROFILE_1_8=pack\profiles\development-1.8.json"
+set "DEVELOPMENT_PROFILE=pack\profiles\development-1.8.json"
 set "STRUCTURE_BUILDER_PROFILE=pack\profiles\structure-builder.json"
 set "LIVE_NBT_EDITOR_PROFILE=pack\profiles\live-nbt-editor.json"
 
 call :configure_cobblemon
 if errorlevel 1 exit /b %errorlevel%
-if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" set "DEVELOPMENT_PROFILE=%DEVELOPMENT_PROFILE_1_8%"
 
 set "EXPORT_LANGUAGE=%COBBLEVENTURE_EXPORT_LANGUAGE%"
 if not defined EXPORT_LANGUAGE set "EXPORT_LANGUAGE=ko_kr"
@@ -142,10 +140,8 @@ call "%GRADLEW%" -p "%EXPERIENCE_PROJECT%" test
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%CASINO_PROJECT%" test
 if errorlevel 1 exit /b %errorlevel%
-if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" goto test_skip_pokefinder
 call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" test
 if errorlevel 1 exit /b %errorlevel%
-:test_skip_pokefinder
 call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" test --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% -m unittest discover -s "%REPO_ROOT%tools\structure-builder\tests" -p "test_*.py"
@@ -214,10 +210,6 @@ call "%GRADLEW%" -p "%CASINO_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_pokefinder
-if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" (
-    echo [ERROR] Cobbleventure Pokefinder has not been validated with CobbleNav 2.4.0 and is excluded from the 1.8 test pack.
-    exit /b 1
-)
 call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" build
 exit /b %errorlevel%
 
@@ -258,10 +250,8 @@ call "%GRADLEW%" -p "%EXPERIENCE_PROJECT%" build
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%CASINO_PROJECT%" build
 if errorlevel 1 exit /b %errorlevel%
-if /I not "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" (
-    call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" build
-    if errorlevel 1 exit /b %errorlevel%
-)
+call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" build
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% "%PAINTING_PACK_BUILDER%"
@@ -421,23 +411,18 @@ echo   builder-sync   Replace the builder world in an existing CurseForge instan
 echo   builder-import Import exported NBT and refresh in-game generated resources
 echo.
 echo Export language defaults to ko_kr and can also be set with COBBLEVENTURE_EXPORT_LANGUAGE.
-echo Cobblemon defaults to 1.7.3. Set COBBLEVENTURE_COBBLEMON_TARGET=1.8 for the separate 1.8 pack.
-echo The 1.8 build auto-detects the official JAR under .tmp\cobblemon-1.8-release\ first.
+echo Cobblemon 1.8 is the active build target. The old 1.7.3 profile is retained only as an archive reference.
+echo The build auto-detects the official 1.8 JAR under .tmp\cobblemon-1.8-release\ first.
 exit /b 1
 
 :configure_cobblemon
-if not defined COBBLEVENTURE_COBBLEMON_TARGET set "COBBLEVENTURE_COBBLEMON_TARGET=1.7.3"
-if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="stable" set "COBBLEVENTURE_COBBLEMON_TARGET=1.7.3"
-if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.7" set "COBBLEVENTURE_COBBLEMON_TARGET=1.7.3"
-if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.7.3" (
-    echo [INFO] Cobblemon build target: 1.7.3
-    exit /b 0
-)
+if not defined COBBLEVENTURE_COBBLEMON_TARGET set "COBBLEVENTURE_COBBLEMON_TARGET=1.8"
+if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="stable" set "COBBLEVENTURE_COBBLEMON_TARGET=1.8"
 if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="snapshot" set "COBBLEVENTURE_COBBLEMON_TARGET=1.8"
 if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8.0" set "COBBLEVENTURE_COBBLEMON_TARGET=1.8"
 if /I not "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" (
     echo [ERROR] Unsupported Cobblemon build target: %COBBLEVENTURE_COBBLEMON_TARGET%
-    echo Supported targets: 1.7.3, 1.8
+    echo Supported target: 1.8
     exit /b 1
 )
 if defined COBBLEVENTURE_COBBLEMON_JAR goto validate_cobblemon_jar

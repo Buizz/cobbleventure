@@ -63,6 +63,9 @@ public final class FossilScreen extends Screen {
         PacketDistributor.sendToServer(new FossilNetwork.Action(view.npc(), kind, recipe));
     }
     @Override public void render(GuiGraphics graphics, int mouseX, int mouseY, float tick) {
+        // Blur the world before drawing the panel; Screen.render calls our
+        // renderBackground override again while rendering the widgets.
+        super.renderBackground(graphics, mouseX, mouseY, tick);
         ThemedOverlayPanel.draw(graphics, theme, x, y, panelWidth, panelHeight);
         theme.drawText(graphics, font, title, x + 14, y + 12, MenuTheme.TextRole.TITLE);
         theme.drawWrappedText(graphics, font, view.status(), x + 14, y + 34, panelWidth - 28,
@@ -84,6 +87,9 @@ public final class FossilScreen extends Screen {
             : selected >= 0 ? text("result", view.entries().get(selected).name()) : text("included");
         theme.drawWrappedText(graphics, font, detail, x + 14, y + panelHeight - 60, panelWidth - 28,
             MenuTheme.TextRole.CAPTION, theme.secondaryTextColor, 2);
+    }
+    @Override public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float tick) {
+        // Already rendered before the panel, so never blur the UI itself.
     }
     @Override public boolean isPauseScreen() { return false; }
 }

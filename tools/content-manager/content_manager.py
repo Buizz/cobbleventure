@@ -307,8 +307,7 @@ EXPORT_LANGUAGES = {
     "en_us": "English (US)",
 }
 COBBLEMON_BUILD_TARGETS = {
-    "1.7.3": "1.7.3 안정 버전",
-    "1.8": "1.8 시험 버전",
+    "1.8": "1.8 정식 버전",
 }
 STRUCTURE_BUILDER_WORLD_NAME = "Cobbleventure Structure Builder"
 LIVE_NBT_EDITOR_WORLD_NAME = "Cobbleventure Live NBT Editor"
@@ -7618,7 +7617,7 @@ def validate_repository(
 ) -> ValidationResult:
     root = root.resolve()
     dependency_root = (dependency_root or root).resolve()
-    cobblemon_target = os.environ.get("COBBLEVENTURE_COBBLEMON_TARGET", "1.7.3").strip().lower()
+    cobblemon_target = os.environ.get("COBBLEVENTURE_COBBLEMON_TARGET", "1.8").strip().lower()
     dependency_lock_name = (
         "dependencies-1.8.lock.json"
         if cobblemon_target in {"1.8", "1.8.0", "snapshot"}
@@ -11892,7 +11891,7 @@ def _build_process_environment(project_root: Path) -> dict[str, str]:
 
 def _run_build(
     core_root: Path, project_root: Path, command: str, language: str = "ko_kr",
-    cobblemon_target: str = "1.7.3",
+    cobblemon_target: str = "1.8",
 ) -> dict[str, Any]:
     if command not in BUILD_COMMANDS:
         raise ValueError("허용되지 않은 빌드 명령입니다.")
@@ -16815,7 +16814,7 @@ def create_handler(
                     return
                 command = payload.get("command") if isinstance(payload, dict) else None
                 language = payload.get("language", "ko_kr") if isinstance(payload, dict) else "ko_kr"
-                cobblemon_target = payload.get("cobblemon_target", "1.7.3") if isinstance(payload, dict) else "1.7.3"
+                cobblemon_target = payload.get("cobblemon_target", "1.8") if isinstance(payload, dict) else "1.8"
                 if not isinstance(command, str) or command not in BUILD_COMMANDS:
                     self._json(400, {"error": "허용된 빌드 명령을 선택해야 합니다."})
                     return

@@ -6,14 +6,14 @@
   "author": "Buizz",
   "purpose": "single-slot-live-nbt-authoring-world",
   "production_ready": false,
-  "notice": "기존 Structure Builder와 분리된 단일 NBT 라이브 편집 팩입니다. Content Studio와 연결해 게임을 끄지 않고 NBT를 교체, 저장, 크기 변경 및 외부 NBT 추가할 수 있으며 Night Lights 1.4.0 조명과 Copycat WE Fix 1.0.0의 Copycats+ 재질을 보존합니다.",
+  "notice": "Cobblemon 1.8 기준 단일 NBT 라이브 편집 팩입니다. Content Studio와 연결해 게임을 끄지 않고 NBT를 교체, 저장, 크기 변경 및 외부 NBT 추가할 수 있으며 Night Lights 1.4.0 조명과 Copycat WE Fix 1.0.0의 Copycats+ 재질을 보존합니다.",
   "icon": "pack/assets/cobbleventure-import-test-icon.png",
   "minecraft": {
     "version": "1.21.1",
     "mod_loader": { "id": "neoforge-21.1.248", "primary": true }
   },
   "files": [
-    { "projectID": 687131, "fileID": 7553231, "required": true },
+    { "projectID": 687131, "fileID": 8818732, "required": true },
     { "projectID": 351264, "fileID": 8335665, "required": true },
     { "projectID": 1572769, "fileID": 8235485, "required": true },
     { "projectID": 1162591, "fileID": 7219926, "required": true },

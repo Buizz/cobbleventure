@@ -36,13 +36,18 @@ record DungeonGenerationRequirements(
             .filter(encounter -> encounter.kind().equals("trainer")
                 && !encounter.boss())
             .mapToInt(DungeonDefinition.Encounter::actorCount).sum();
+        int cooperativeGroups = (int) definition.encounters().stream()
+            .filter(encounter -> encounter.kind().equals("trainer")
+                && !encounter.boss() && encounter.actorCount() == 2).count();
         boolean generatedPopulationMaterialized = definition.encounters().stream()
             .anyMatch(encounter -> encounter.generatedTrainer() != null);
         if (definition.generatedTrainers().enabled()
             && !generatedPopulationMaterialized) {
             int generated = definition.generatedTrainers().count().maximum();
-            actorDemand += generated;
-            ordinaryActorDemand += generated;
+            boolean cooperative = definition.multiplayer().mode().equals("cooperative");
+            actorDemand += generated * (cooperative ? 2 : 1);
+            ordinaryActorDemand += generated * (cooperative ? 2 : 1);
+            if (cooperative) cooperativeGroups += generated;
         }
 
         int requestedCapacity = definition.npcPlacement().enabled()
@@ -55,10 +60,11 @@ record DungeonGenerationRequirements(
         List<DungeonPieceDefinition> selectedChambers = pieces.stream()
             .filter(piece -> selected.contains(piece.id()))
             .toList();
+        int requiredGroupCapacity = cooperativeGroups > 0 ? 2 : 1;
         List<DungeonPieceDefinition> usableChambers = definition.npcPlacement().enabled()
             ? selectedChambers.stream().filter(piece -> safeNpcCapacity(
                 piece, definition.npcPlacement().minimumSpacing()
-            ) > 0).toList()
+            ) >= requiredGroupCapacity).toList()
             : selectedChambers;
         int chamberCapacity = usableChambers.stream()
             .mapToInt(piece -> safeNpcCapacity(
@@ -76,6 +82,9 @@ record DungeonGenerationRequirements(
             );
             chamberCount = Math.min(chamberCount, ordinaryActorDemand);
         }
+
+        // Passage slots can host singles, but each cooperative pair needs its own chamber.
+        chamberCount = Math.max(chamberCount, cooperativeGroups);
 
         DungeonDefinition.Topology topology = definition.topology();
         int floorStructureMinimum = definition.vertical().mode().equals("discrete_floors")

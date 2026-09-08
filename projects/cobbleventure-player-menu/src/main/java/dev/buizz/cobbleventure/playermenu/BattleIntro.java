@@ -6,6 +6,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.logging.LogUtils;
 import dev.buizz.cobbleventure.playermenu.client.BattleIntroOverlay;
 import dev.buizz.cobbleventure.playermenu.client.BattleWarningOverlay;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -294,6 +296,27 @@ public final class BattleIntro {
         return completed > 0;
     }
 
+    /** Shows the shared intro to every participant and schedules exactly one battle. */
+    public static void startGroup(
+        List<ServerPlayer> players, Entity opponent, String battleId, String battleCommand
+    ) {
+        List<ServerPlayer> participants = List.copyOf(players);
+        if (participants.isEmpty() || !battleCommand.startsWith("tbcs battle ")) {
+            throw new IllegalArgumentException("Invalid group battle intro request");
+        }
+        for (ServerPlayer player : participants) {
+            if (PENDING.containsKey(player.getUUID())) {
+                throw new IllegalStateException("Player already has a pending battle intro");
+            }
+        }
+        for (ServerPlayer player : participants) {
+            start(opponent.createCommandSourceStack(), player, opponent, battleId, battleCommand);
+            PendingBattle pending = PENDING.get(player.getUUID());
+            pending.participants = participants;
+            pending.launchOwner = player == participants.getFirst();
+        }
+    }
+
     private static int start(
         CommandSourceStack source, ServerPlayer player, Entity opponent,
         String battleId, String battleCommand
@@ -519,19 +542,28 @@ public final class BattleIntro {
             );
         }
 
+        List<PendingBattle> ready = new ArrayList<>();
         Iterator<Map.Entry<UUID, PendingBattle>> iterator = PENDING.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<UUID, PendingBattle> entry = iterator.next();
             PendingBattle pending = entry.getValue();
             ServerPlayer player = event.getServer().getPlayerList().getPlayer(entry.getKey());
             if (player == null || !pending.opponent.isAlive()
-                || player.level() != pending.opponent.level()) {
+                || player.level() != pending.opponent.level()
+                || pending.participants.stream().anyMatch(participant ->
+                    event.getServer().getPlayerList().getPlayer(participant.getUUID()) != participant
+                        || !participant.isAlive()
+                        || participant.level() != pending.opponent.level())) {
                 iterator.remove();
                 continue;
             }
             freezeForIntro(player, pending);
             if (pending.executeAt > gameTime) continue;
             iterator.remove();
+            if (pending.launchOwner) ready.add(pending);
+        }
+        // Finish all camera locks before TBCS moves participants into the battle.
+        for (PendingBattle pending : ready) {
             event.getServer().getCommands().performPrefixedCommand(
                 pending.source, pending.battleCommand
             );
@@ -604,6 +636,8 @@ public final class BattleIntro {
     }
 
     private static final class PendingBattle {
+        private List<ServerPlayer> participants = List.of();
+        private boolean launchOwner = true;
         private final CommandSourceStack source;
         private final String battleCommand;
         private final long executeAt;

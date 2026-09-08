@@ -6,7 +6,7 @@
   "author": "Buizz",
   "purpose": "cobblemon-1.8-development-pack",
   "production_ready": false,
-  "notice": "Cobblemon 1.8.0과 NeoForge 21.1.248을 대상으로 최신 RCT API 0.16.0-beta, RCT 0.19.0-beta, TBCS 0.15.0-beta, Mega Showdown 1.8 빌드 및 Cobbleventure 자체 모듈을 검증하는 개발팩입니다. CobbleNav 2.4.0을 포함하며, 별도 호환성 검증이 필요한 Cobbleventure Pokefinder 확장은 제외합니다.",
+  "notice": "Cobblemon 1.8.0과 NeoForge 21.1.248을 기준으로 RCT API 0.16.0-beta, RCT 0.19.0-beta, TBCS 0.15.0-beta, Mega Showdown 1.8, CobbleNav 2.4.0과 Cobbleventure Pokefinder를 포함한 기본 개발팩입니다.",
   "icon": "pack/assets/cobbleventure-import-test-icon.png",
   "minecraft": {
     "version": "1.21.1",
