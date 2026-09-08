@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.buizz.cobbleventure.experience.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PokemonBattleExperienceMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

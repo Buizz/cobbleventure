@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "profile_id": "development-1-8",
+  "name": "Cobbleventure 1.8 Development Test Pack",
+  "version": "0.1.8-dev",
+  "author": "Buizz",
+  "purpose": "cobblemon-1.8-development-pack",
+  "production_ready": false,
+  "notice": "Cobblemon 1.8.0과 NeoForge 21.1.248을 대상으로 최신 RCT API 0.16.0-beta, RCT 0.19.0-beta, TBCS 0.15.0-beta, Mega Showdown 1.8 빌드 및 Cobbleventure 자체 모듈을 검증하는 개발팩입니다. 중단된 CobbleNav와 이에 의존하는 Cobbleventure Pokefinder는 제외합니다.",
+  "icon": "pack/assets/cobbleventure-import-test-icon.png",
+  "minecraft": {
+    "version": "1.21.1",
+    "mod_loader": {
+      "id": "neoforge-21.1.248",
+      "primary": true
+    }
+  },
+  "files": [
+    {
+      "projectID": 687131,
+      "fileID": 8818732,
+      "required": true
+    },
+    {
+      "projectID": 1396525,
+      "fileID": 7968869,
+      "required": true
+    },
+    {
+      "projectID": 1082538,
+      "fileID": 7593359,
+      "required": true
+    },
+    {
+      "projectID": 394468,
+      "fileID": 6382651,
+      "required": true
+    },
+    {
+      "projectID": 455508,
+      "fileID": 6213632,
+      "required": true
+    },
+    {
+      "projectID": 360438,
+      "fileID": 7740400,
+      "required": true
+    },
+    {
+      "projectID": 429235,
+      "fileID": 7524151,
+      "required": true
+    },
+    {
+      "projectID": 686911,
+      "fileID": 7537795,
+      "required": true
+    },
+    {
+      "projectID": 448233,
+      "fileID": 7396695,
+      "required": true
+    },
+    {
+      "projectID": 844662,
+      "fileID": 8063559,
+      "required": true
+    },
+    {
+      "projectID": 568563,
+      "fileID": 7930620,
+      "required": true
+    },
+    {
+      "projectID": 832644,
+      "fileID": 5733968,
+      "required": true
+    },
+    {
+      "projectID": 977287,
+      "fileID": 8193419,
+      "required": true
+    },
+    {
+      "projectID": 521480,
+      "fileID": 8274824,
+      "required": true
+    },
+    {
+      "projectID": 627557,
+      "fileID": 5874236,
+      "required": true
+    },
+    {
+      "projectID": 915902,
+      "fileID": 5876050,
+      "required": true
+    },
+    {
+      "projectID": 233258,
+      "fileID": 7055133,
+      "required": true
+    },
+    {
+      "projectID": 351264,
+      "fileID": 8335665,
+      "required": true
+    },
+    {
+      "projectID": 889079,
+      "fileID": 8539754,
+      "required": true
+    },
+    {
+      "projectID": 859232,
+      "fileID": 8484919,
+      "required": true
+    },
+    {
+      "projectID": 419699,
+      "fileID": 8492726,
+      "required": true
+    },
+    {
+      "projectID": 1152792,
+      "fileID": 8826267,
+      "required": true
+    },
+    {
+      "projectID": 1009534,
+      "fileID": 8827140,
+      "required": true
+    },
+    {
+      "projectID": 1188698,
+      "fileID": 8340192,
+      "required": true
+    },
+    {
+      "projectID": 841890,
+      "fileID": 8061947,
+      "required": true
+    },
+    {
+      "projectID": 938917,
+      "fileID": 7583320,
+      "required": true
+    },
+    {
+      "projectID": 532610,
+      "fileID": 6785734,
+      "required": true
+    },
+    {
+      "projectID": 1189523,
+      "fileID": 8820597,
+      "required": true
+    },
+    {
+      "projectID": 1015157,
+      "fileID": 6485740,
+      "required": true
+    },
+    {
+      "projectID": 1015100,
+      "fileID": 6715463,
+      "required": true
+    },
+    {
+      "projectID": 559312,
+      "fileID": 8420470,
+      "required": true
+    },
+    {
+      "projectID": 1308987,
+      "fileID": 8420476,
+      "required": true
+    },
+    {
+      "projectID": 1214728,
+      "fileID": 8420458,
+      "required": true
+    },
+    {
+      "projectID": 348521,
+      "fileID": 5729127,
+      "required": true
+    },
+    {
+      "projectID": 1572769,
+      "fileID": 8235485,
+      "required": true
+    },
+    {
+      "projectID": 1162591,
+      "fileID": 7219926,
+      "required": true
+    },
+    {
+      "projectID": 1172731,
+      "fileID": 8833923,
+      "required": true
+    },
+    {
+      "projectID": 328085,
+      "fileID": 7963363,
+      "required": true
+    },
+    {
+      "projectID": 968398,
+      "fileID": 7251823,
+      "required": true
+    },
+    {
+      "projectID": 1199355,
+      "fileID": 8555615,
+      "required": true
+    },
+    {
+      "projectID": 1320863,
+      "fileID": 7937774,
+      "required": true
+    }
+  ],
+  "local_resourcepacks": [
+    {
+      "source": "local-assets/PokemonBW-Caxton.zip",
+      "target": "PokemonBW-Caxton.zip",
+      "pack_format": 34
+    },
+    {
+      "source": "local-assets/Cobbleventure-Pokemon-Paintings.zip",
+      "target": "Cobbleventure-Pokemon-Paintings.zip",
+      "pack_format": 34
+    }
+  ],
+  "overrides_directory": "pack/overrides/development-placeholder",
+  "output": "dist/cobbleventure-development-1.8-curseforge.zip",
+  "dependency_lock": "pack/dependencies-1.8.lock.json",
+  "mods_directory": "pack/overrides/development-1.8/mods"
+}

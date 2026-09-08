@@ -1,0 +1,585 @@
+{
+  "schema_version": 1,
+  "status": "locked",
+  "profile": "cobbleventure-1.8-dev",
+  "minecraft": {
+    "version": "1.21.1",
+    "loader": {
+      "type": "neoforge",
+      "version": "21.1.248"
+    }
+  },
+  "mods": [
+    {
+      "id": "cobblemon",
+      "display_name": "Cobblemon",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "1.8.0",
+      "curseforge": {
+        "project_id": 687131,
+        "file_id": 8818732
+      },
+      "reason": "Cobblemon 1.8의 포켓몬, 파티와 실제 배틀 시스템"
+    },
+    {
+      "id": "cobblemon_battle_extras",
+      "display_name": "Cobblemon Battle Extras",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "1.13.45",
+      "curseforge": {
+        "project_id": 1396525,
+        "file_id": 7968869
+      },
+      "reason": "강화 전투 로그와 상태 정보 UI, 야생 배틀 즉시 도망 기능"
+    },
+    {
+      "id": "more_cobblemon_tweaks",
+      "display_name": "MoreCobblemonTweaks",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "1.3.3",
+      "curseforge": {
+        "project_id": 1082538,
+        "file_id": 7593359
+      },
+      "reason": "Cobblemon 도구 설명과 UI 편의 기능 개선"
+    },
+    {
+      "id": "sodium",
+      "display_name": "Sodium",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "0.6.13+mc1.21.1",
+      "curseforge": {
+        "project_id": 394468,
+        "file_id": 6382651
+      },
+      "reason": "청크와 월드 렌더링 최적화로 프레임과 마이크로 스터터 개선"
+    },
+    {
+      "id": "iris",
+      "display_name": "Iris Shaders",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "1.8.8+mc1.21.1",
+      "curseforge": {
+        "project_id": 455508,
+        "file_id": 6213632
+      },
+      "reason": "Sodium 기반 셰이더팩 로딩과 Complementary 셰이더 호환"
+    },
+    {
+      "id": "lithium",
+      "display_name": "Lithium",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "0.15.3+mc1.21.1",
+      "curseforge": {
+        "project_id": 360438,
+        "file_id": 7740400
+      },
+      "reason": "게임 틱과 엔티티·블록 처리 최적화로 클라이언트와 서버 부하 감소"
+    },
+    {
+      "id": "ferritecore",
+      "display_name": "FerriteCore",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "7.0.3",
+      "curseforge": {
+        "project_id": 429235,
+        "file_id": 7524151
+      },
+      "reason": "블록 상태와 데이터 컴포넌트의 메모리 사용량 최적화"
+    },
+    {
+      "id": "immediatelyfast",
+      "display_name": "ImmediatelyFast",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "1.6.10+1.21.1",
+      "curseforge": {
+        "project_id": 686911,
+        "file_id": 7537795
+      },
+      "reason": "GUI·텍스트·엔티티 등 즉시 모드 렌더링 성능 개선"
+    },
+    {
+      "id": "entity_culling",
+      "display_name": "Entity Culling",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "1.9.5+mc1.21.1",
+      "curseforge": {
+        "project_id": 448233,
+        "file_id": 7396695
+      },
+      "reason": "가려진 엔티티와 블록 엔티티 렌더링을 생략해 복잡한 마을의 프레임 개선"
+    },
+    {
+      "id": "entity_model_features",
+      "display_name": "Entity Model Features",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "3.2.4-1.21-neoforge",
+      "curseforge": {
+        "project_id": 844662,
+        "file_id": 8063559
+      },
+      "reason": "Melody 주민 리소스팩의 OptiFine CEM 커스텀 모델을 NeoForge에서 렌더링"
+    },
+    {
+      "id": "entity_texture_features",
+      "display_name": "Entity Texture Features",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "7.1-1.21-neoforge",
+      "curseforge": {
+        "project_id": 568563,
+        "file_id": 7930620
+      },
+      "reason": "Melody 주민 리소스팩의 바이옴·개체별 랜덤 텍스처와 발광 텍스처 지원"
+    },
+    {
+      "id": "resource_pack_overrides",
+      "display_name": "Resource Pack Overrides",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "21.1.0-1.21.1-neoforge",
+      "curseforge": {
+        "project_id": 832644,
+        "file_id": 5733968
+      },
+      "reason": "CurseForge가 별도로 내려받는 Melody 주민 리소스팩을 첫 실행부터 기본 활성화"
+    },
+    {
+      "id": "skin_layers_3d",
+      "display_name": "Skin Layers 3D",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "1.11.2-1.21.1",
+      "curseforge": {
+        "project_id": 521480,
+        "file_id": 8274824
+      },
+      "reason": "플레이어 스킨의 모자·재킷·소매 등 두 번째 레이어를 입체적으로 렌더링"
+    },
+    {
+      "id": "complementary_reimagined",
+      "display_name": "Complementary Shaders - Reimagined",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "r5.3",
+      "curseforge": {
+        "project_id": 627557,
+        "file_id": 5874236
+      },
+      "reason": "Iris에서 사용할 기본 셰이더팩이자 Euphoria Patches의 필수 기반 셰이더"
+    },
+    {
+      "id": "euphoria_patches",
+      "display_name": "Euphoria Patches",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "1.4.3-r5.3",
+      "curseforge": {
+        "project_id": 915902,
+        "file_id": 5876050
+      },
+      "reason": "Complementary Reimagined r5.3에 확장 그래픽 설정을 적용하는 NeoForge 패처"
+    },
+    {
+      "id": "badmobs",
+      "display_name": "Bad Mobs",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "21.1.1",
+      "curseforge": {
+        "project_id": 233258,
+        "file_id": 7055133
+      },
+      "reason": "바닐라 동물과 몬스터의 일반·스포너·알·변환 소환 차단"
+    },
+    {
+      "id": "cloth_config",
+      "display_name": "Cloth Config API",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "15.0.140",
+      "curseforge": {
+        "project_id": 348521,
+        "file_id": 5729127
+      },
+      "reason": "Cobblemon Casino 2.0.0의 필수 설정 화면 API"
+    },
+    {
+      "id": "kotlin_for_forge",
+      "display_name": "Kotlin for Forge",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "5.12.0",
+      "curseforge": {
+        "project_id": 351264,
+        "file_id": 8335665
+      },
+      "reason": "Cobblemon NeoForge의 필수 Kotlin 런타임"
+    },
+    {
+      "id": "forgified_fabric_api",
+      "display_name": "Forgified Fabric API",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "0.116.15+2.3.1+1.21.1",
+      "curseforge": {
+        "project_id": 889079,
+        "file_id": 8539754
+      },
+      "reason": "Mega Showdown이 요구하는 Fabric API의 NeoForge 호환 구현"
+    },
+    {
+      "id": "cobbledollars",
+      "display_name": "CobbleDollars",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "2.0.0+Beta-6.1+1.21.1",
+      "curseforge": {
+        "project_id": 859232,
+        "file_id": 8484919
+      },
+      "reason": "Cobbleventure 자체 포켓몬상점과 백화점의 화폐 및 상인 기능"
+    },
+    {
+      "id": "cobblemon_casino",
+      "display_name": "Cobblemon Casino",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "2.0.0",
+      "curseforge": {
+        "project_id": 1572769,
+        "file_id": 8235485
+      },
+      "reason": "슬롯머신, 블랙잭, 가챠와 카지노 칩 경제를 제공하는 기본 카지노 시설"
+    },
+    {
+      "id": "playingcards",
+      "display_name": "Playing Cards & Chips",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "2.0.1-neoforge",
+      "curseforge": {
+        "project_id": 1162591,
+        "file_id": 7219926
+      },
+      "reason": "블랙잭 게임은 Cobblemon Casino에 유지하고 마인크래프트형 연결식 테이블 외형을 제공"
+    },
+    {
+      "id": "architectury_api",
+      "display_name": "Architectury API",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "13.0.11",
+      "curseforge": {
+        "project_id": 419699,
+        "file_id": 8492726
+      },
+      "reason": "CobbleFurnies 1.2의 필수 공용 API"
+    },
+    {
+      "id": "create",
+      "display_name": "Create",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "6.0.10",
+      "curseforge": {
+        "project_id": 328085,
+        "file_id": 7963363
+      },
+      "reason": "체육관 퍼즐의 벨트·선풍기·이동 장치와 월드 기계 장식 구현"
+    },
+    {
+      "id": "copycats",
+      "display_name": "Create: Copycats+",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "3.0.4+mc.1.21.1-neoforge",
+      "curseforge": {
+        "project_id": 968398,
+        "file_id": 7251823
+      },
+      "reason": "Create 건축물에 재질을 입힐 수 있는 카피캣 블록과 문·패널·계단 확장"
+    },
+    {
+      "id": "night-lights",
+      "display_name": "Night Lights",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "1.4.0",
+      "curseforge": {
+        "project_id": 1199355,
+        "file_id": 8555615
+      },
+      "reason": "포켓몬센터·체육관·상점·도시에서 사용할 현대식 천장등·벽등·가로등과 스마트 조명 제공"
+    },
+    {
+      "id": "geckolib",
+      "display_name": "GeckoLib",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "4.9.2",
+      "curseforge": {
+        "project_id": 388172,
+        "file_id": 8350073
+      },
+      "reason": "Pokeblocks 포켓몬 인형의 3D 모델과 애니메이션을 구동하는 필수 라이브러리"
+    },
+    {
+      "id": "pokeblocks",
+      "display_name": "Pokeblocks (NeoForge Unofficial)",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "1.5.0-1.21.1",
+      "curseforge": {
+        "project_id": 1572805,
+        "file_id": 8235473
+      },
+      "reason": "일반·이로치·애니메이션 포켓몬 인형과 피규어를 배치해 건물과 전시 공간을 꾸미는 기능 제공"
+    },
+    {
+      "id": "copycat-we-fix",
+      "display_name": "Copycat WE Fix",
+      "classification": "development",
+      "side": "server",
+      "enabled": true,
+      "version": "1.0.0",
+      "curseforge": {
+        "project_id": 1581357,
+        "file_id": 8283427
+      },
+      "reason": "WorldEdit 회전·반전·붙여넣기에서 Copycats+ 재질과 멀티파트 방향을 보존하는 건축 제작용 보정"
+    },
+    {
+      "id": "rctapi",
+      "display_name": "Radical Cobblemon Trainers API",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "0.16.0-beta",
+      "curseforge": {
+        "project_id": 1152792,
+        "file_id": 8826267
+      },
+      "reason": "Cobblemon 1.8용 트레이너 데이터와 전투 연동 계약"
+    },
+    {
+      "id": "rctmod",
+      "display_name": "Radical Cobblemon Trainers",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "0.19.0-beta",
+      "curseforge": {
+        "project_id": 1009534,
+        "file_id": 8827140
+      },
+      "reason": "Cobblemon 1.8용 RCT 트레이너 JSON 로딩과 트레이너전 관리"
+    },
+    {
+      "id": "cobblefurnies",
+      "display_name": "CobbleFurnies",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "1.2",
+      "curseforge": {
+        "project_id": 1188698,
+        "file_id": 8340192
+      },
+      "reason": "Radical Gyms & Structures 체육관과 리그가 사용하는 가구 블록"
+    },
+    {
+      "id": "athena",
+      "display_name": "Athena",
+      "classification": "required",
+      "side": "client",
+      "enabled": true,
+      "version": "4.0.6",
+      "curseforge": {
+        "project_id": 841890,
+        "file_id": 8061947
+      },
+      "reason": "CobbleFurnies 포켓볼 양탄자와 연결 텍스처 모델 렌더링"
+    },
+    {
+      "id": "mega_showdown",
+      "display_name": "Cobblemon: Mega Showdown",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "1.0+1.8+1.21.1-beta2",
+      "curseforge": {
+        "project_id": 1189523,
+        "file_id": 8820597
+      },
+      "reason": "Cobblemon 1.8용 메가진화, Z기술, 테라스탈, 다이맥스와 울트라버스트"
+    },
+    {
+      "id": "accessories",
+      "display_name": "Accessories",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "1.1.0-beta.53+1.21.1",
+      "curseforge": {
+        "project_id": 938917,
+        "file_id": 7583320
+      },
+      "reason": "Mega Showdown 장신구 슬롯과 장착 렌더링 필수 의존성"
+    },
+    {
+      "id": "owo_lib",
+      "display_name": "oωo (owo-lib)",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "0.12.15.5-beta.1+1.21",
+      "curseforge": {
+        "project_id": 532610,
+        "file_id": 6785734
+      },
+      "reason": "Mega Showdown과 Accessories의 GUI·설정·네트워크 필수 라이브러리"
+    },
+    {
+      "id": "paxi_neoforge",
+      "display_name": "Paxi (NeoForge)",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "5.1.3",
+      "curseforge": {
+        "project_id": 1015157,
+        "file_id": 6485740
+      },
+      "reason": "Complete Cobblemon Collection과 ZA 보정팩을 모든 월드의 데이터팩 및 클라이언트 리소스팩으로 자동 로드"
+    },
+    {
+      "id": "yungs_api_neoforge",
+      "display_name": "YUNG's API (NeoForge)",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "5.1.6",
+      "curseforge": {
+        "project_id": 1015100,
+        "file_id": 6715463
+      },
+      "reason": "Paxi 5.1.3이 요구하는 YUNG 공용 API 5.1.4 이상"
+    },
+    {
+      "id": "easy_npc_bundle",
+      "display_name": "Easy NPC Bundle",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "7.0.1",
+      "curseforge": {
+        "project_id": 559312,
+        "file_id": 8420470
+      },
+      "reason": "Easy NPC Core와 Config UI 의존성을 선언하는 런처용 번들"
+    },
+    {
+      "id": "easy_npc",
+      "display_name": "Easy NPC Core",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "7.0.1",
+      "curseforge": {
+        "project_id": 1308987,
+        "file_id": 8420476
+      },
+      "reason": "트레이너 의상 프리셋, 장비, 어린이 체형 NPC"
+    },
+    {
+      "id": "easy_npc_config_ui",
+      "display_name": "Easy NPC Config UI",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "7.0.1",
+      "curseforge": {
+        "project_id": 1214728,
+        "file_id": 8420458
+      },
+      "reason": "Easy NPC 호환 프로필의 게임 내 설정과 네트워크"
+    },
+    {
+      "id": "tbcs",
+      "display_name": "Cobblemon Trainer Battle Commands",
+      "classification": "required",
+      "side": "both",
+      "enabled": true,
+      "version": "0.15.0-beta",
+      "curseforge": {
+        "project_id": 1172731,
+        "file_id": 8833923
+      },
+      "reason": "Cobblemon 1.8에서 EasyNPC와 RCT API 트레이너를 명령 기반 전투로 연결"
+    }
+  ],
+  "content_packs": [
+    {
+      "id": "cobbreeding",
+      "display_name": "Cobbreeding",
+      "kind": "mod",
+      "classification": "required",
+      "side": "both",
+      "selected": true,
+      "version": "2.2.2",
+      "artifact_format": "neoforge_mod",
+      "packaging_status": "ready",
+      "runtime_status": "ready",
+      "modrinth": {
+        "project_id": "ItmVb4zY",
+        "version_id": "9bPk2DC3"
+      },
+      "install_path": "mods",
+      "vendored_path": "pack/overrides/development-1.8/mods/Cobbreeding-neoforge-2.2.2.jar",
+      "source_url": "https://cdn.modrinth.com/data/ItmVb4zY/versions/9bPk2DC3/Cobbreeding-neoforge-2.2.2.jar",
+      "sha1": "5e031dde496b447b4aa9b51bd63c3f6f9a78be86",
+      "sha512": "4af4f23a294b641a1f4129c96e38dde048ef760108713d5b5a73ac61817bac20b5c39a03d340a42f1a5dc4beb92d7ec40d3e10b9e556ac744c835865ce96a7ca",
+      "license": "MIT",
+      "reason": "Cobblemon 1.8에서 NPC 키우미집 알 생성과 4배지 이후 개인 농장의 직접 교배 기능"
+    }
+  ]
+}

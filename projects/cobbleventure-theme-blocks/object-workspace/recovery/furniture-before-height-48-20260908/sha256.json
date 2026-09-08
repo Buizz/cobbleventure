@@ -1,0 +1,21 @@
+{
+  "assets/cobbleventure_theme_blocks/models/block/workshop/02_double_display_case/double_display_case.json": "2c332140ee0c87c679d4154a883b0c7c4bc7875bfee8b316aee5a6a69f239844",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/02_double_display_case/double_display_case.pack-report.json": "a741a8691ee81b1b68f095bd2ea6da20adda82283b90ad6dd69f1ae85e0d225f",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/02_double_display_case/generated_concept.png": "8e89028b2d89feec6b05980c76b1bf8e5062082d634400f8013ae9ccced76734",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/02_double_display_case/original_combined_sprite.png": "7ce9a4bf06acb4557e5a91f1562007d09c0e5801a33691c97df9a5f21ec228b8",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/02_double_display_case/original_lower_sprite.png": "0d233b4a946504facbed35893f5c0f6799a0b524d7deb4899dab52506bc568a2",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/02_double_display_case/original_upper_sprite.png": "8cadfdb296689f18d27ae2225491ca70b934df2042870ba1370c83a6aa535693",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/generated_concept.png": "5507036d26f3e4e133dd131f24ac95dd823c1544a38ea695e50c8f07cdc8bf17",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/original_sprite_1.png": "fa6ebc245122c399e2411d0fe5415623fa0fd3c5b3f2b6e34a6d95a19a2621bc",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/original_sprite_2.png": "964b445dae4c7b44df383f0bb2968fcb00b80041906f60589b59a97194e60b6d",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/reference_white_bookshelf.png": "7052ddd98eec0331bfe930558739311738be0b149152bcb7caca1348c2bd3a50",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/white_connecting_bookshelf.json": "6ee42e347ee930675adb3d1e41cc216f8fbe63c745e73067a8fac798c6c019d7",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/white_connecting_bookshelf_core.json": "cf2199354a7caeb639332a2f621b1bd27a706fdf2c9021e3d47f7cc08f92c023",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/white_connecting_bookshelf_left_end.json": "1184c57ff6666115fa75b19c34a25b762a6a49a00f48173178498a51a42e6b92",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/white_connecting_bookshelf_right_end.json": "47afe4545a82b20a16f3fa008ce089efc8a021cfc3c66afb6bfec8060a8c9c5c",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/13_green_connecting_bookshelf/green_connecting_bookshelf.json": "8350b1411595fd2fddf443441e35bd886337ce8ce77f0e548e37f6486a73850f",
+  "assets/cobbleventure_theme_blocks/models/block/workshop/13_green_connecting_bookshelf/reference_green_bookshelf.png": "a0393ba9eb41965b0b1fd949f2150f51608836d076813e51f444de4aa596846f",
+  "assets/cobbleventure_theme_blocks/textures/block/double_display_case.png": "596224a79a8e60cdcf650525accc47819f71f67b061e5ad49440a7355eed46ac",
+  "assets/cobbleventure_theme_blocks/textures/block/green_connecting_bookshelf.png": "7f5c8e1576423c4b411699121adbff67a53d9640eda50ccee33da9d724272fcd",
+  "assets/cobbleventure_theme_blocks/textures/block/white_connecting_bookshelf.png": "2bc3231d804010399b0fbb54272080de3d844695295511574a75262f3c60cc9e"
+}
