@@ -32,8 +32,8 @@ Gradle 빌드는 `COBBLEVENTURE_COBBLEMON_TARGET=1.8`일 때 위 로컬 JAR을 �
 | `cobbleventure-theme-blocks` | 통과 | 리소스 동기화와 1.8 전용 JAR 설치 포함 |
 
 `cobbleventure-pokefinder`는 CobbleNav 2.3.3의 HUD와 내부 레이아웃을 확장하는
-모듈이므로 독립 대체품이 아니다. CobbleNav가 지원 종료됐고 1.8 전용 파일이 없어
-1.8에서는 둘 다 아직 사용할 수 없다.
+모듈이므로 독립 대체품이 아니다. CobbleNav 2.4.0은 1.8 프로필에 포함하지만,
+이 확장 모듈은 2.4.0 HUD 호환성 검증 전까지 제외한다.
 
 ## 1.8 외부 모드 갱신
 
@@ -44,8 +44,17 @@ Gradle 빌드는 `COBBLEVENTURE_COBBLEMON_TARGET=1.8`일 때 위 로컬 JAR을 �
 - TBCS `0.15.0-beta`: CurseForge `1172731:8833923`
 - Mega Showdown `1.0+1.8+1.21.1-beta2`: CurseForge `1189523:8820597`
 
-지원 종료된 CobbleNav와 이에 의존하는 Cobbleventure Pokefinder만 1.8 프로필에서
-제외한다. 1.7.3 프로필과 의존성 Lock에는 두 모드를 그대로 보존한다.
+- CobbleNav `2.4.0`: CurseForge `976014:8823427`
+  ([공식 변경 내역](https://www.curseforge.com/minecraft/mc-mods/cobblemon-pokenav/files/8823427),
+  2026-09-06 배포, Cobblemon 1.8.0 지원)
+
+CobbleNav JAR의 Cobblemon 요구 범위 `[1.8.0,)`과 기존 포켓내비 아이템
+`cobblenav:pokenav_item_red`를 확인했다. Player Menu는 1.8 빌드에서 2.4.0을
+참조하고 허용하며, Kotlin 람다 이름 변경으로 연락처 버튼을 잘못 가로채지 않도록
+지도 화면 생성 지점을 기준으로 연결한다. 실제 클라이언트에서 민호의 지급과
+포켓내비 열기·지도·연락처 버튼 동작은 추가 확인이 필요하다.
+Cobbleventure Pokefinder 확장만 1.8 프로필에서 제외한다.
+1.7.3 프로필은 CobbleNav 2.3.3을 유지한다.
 
 경험치 HUD, KO 즉시 지급, 포획 경험치는 외부 세 모드와 Tim Core를 제거하고
 `cobbleventure-experience`로 대체했으며 1.7.3과 1.8 양쪽 빌드·테스트를 통과했다.

@@ -120,6 +120,7 @@ COMMANDS: dict[ast.CommandKind, CommandContract] = {
     ast.CommandKind.MAP_SELECTION: CommandContract(result=ast.ValueType.LOCATION_REF),
     ast.CommandKind.HEAL_PARTY: CommandContract(flags=frozenset({"fallback"}), result=ast.ValueType.HEALING_RESULT),
     ast.CommandKind.OPEN_DAYCARE: CommandContract(),
+    ast.CommandKind.OPEN_FOSSIL: CommandContract(),
     ast.CommandKind.NUMBER_INPUT: CommandContract(
         properties=(
             _p("min", INT), _p("max", INT),

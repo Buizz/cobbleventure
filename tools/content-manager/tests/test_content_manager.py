@@ -6352,6 +6352,7 @@ class ContentManagerTests(unittest.TestCase):
             "rctmod": ("0.19.0-beta", 1009534, 8827140),
             "tbcs": ("0.15.0-beta", 1172731, 8833923),
             "mega_showdown": ("1.0+1.8+1.21.1-beta2", 1189523, 8820597),
+            "cobblenav": ("2.4.0", 976014, 8823427),
         }
         for mod_id, (version, project_id, file_id) in expected.items():
             with self.subTest(mod_id=mod_id):
@@ -6360,7 +6361,6 @@ class ContentManagerTests(unittest.TestCase):
                 self.assertEqual(project_id, mod["curseforge"]["project_id"])
                 self.assertEqual(file_id, mod["curseforge"]["file_id"])
 
-        self.assertNotIn("cobblenav", mods)
         profile = content_manager.load_json(
             CORE_ROOT / "pack" / "profiles" / "development-1.8.json"
         )

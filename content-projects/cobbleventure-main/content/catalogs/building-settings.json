@@ -620,7 +620,11 @@
       "placement_y_offset": 0,
       "structure_category": "placeholder",
       "no_interior_space": false,
-      "fixed_npcs": {},
+      "fixed_npcs": {
+        "room_1:npc3": "cobbleventure:npc/facilities/fossil_researcher",
+        "room_1:npc1": "cobbleventure:npc/facilities/fossil_assistant",
+        "room_1:npc2": "cobbleventure:npc/facilities/fossil_scholar"
+      },
       "fixed_pokemon": {},
       "fixed_gacha_machines": {},
       "citizen_placement_allowed": false,
@@ -876,12 +880,72 @@
       "interiors": [
         {
           "key": "room_1",
-          "structure": "cobbleventure:interiors/laboratory"
+          "structure": "cobbleventure:interiors/round_laboratory_lobby"
+        },
+        {
+          "key": "tm",
+          "structure": "cobbleventure:interiors/round_laboratory_tm"
+        },
+        {
+          "key": "z_move",
+          "structure": "cobbleventure:interiors/round_laboratory_z_move"
+        },
+        {
+          "key": "mega",
+          "structure": "cobbleventure:interiors/round_laboratory_mega"
+        },
+        {
+          "key": "dynamax",
+          "structure": "cobbleventure:interiors/round_laboratory_dynamax"
+        },
+        {
+          "key": "stats",
+          "structure": "cobbleventure:interiors/round_laboratory_stats"
         }
       ],
       "door_routes": {
         "exterior:door": {
           "space": "room_1",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:tm": {
+          "space": "tm",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:z_move": {
+          "space": "z_move",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:mega": {
+          "space": "mega",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:dynamax": {
+          "space": "dynamax",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:stats": {
+          "space": "stats",
           "door": "door",
           "condition_mode": "all",
           "conditions": [],

@@ -53,6 +53,7 @@ class CommandKind(str, Enum):
     MAP_SELECTION = "map_selection"
     HEAL_PARTY = "heal_party"
     OPEN_DAYCARE = "open_daycare"
+    OPEN_FOSSIL = "open_fossil"
     NUMBER_INPUT = "number_input"
     SERVER_COMMAND = "server_command"
     MOVE = "move"

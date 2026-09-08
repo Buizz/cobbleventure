@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/npc-event-script.schema.json",
+  "schema_version": 4,
+  "id": "cobbleventure:npc/facilities/fossil_scholar",
+  "enabled": true,
+  "name": {
+    "ko_kr": "고생물 연구원",
+    "en_us": "Paleontology Researcher"
+  },
+  "description": {
+    "ko_kr": "고생물 연구원",
+    "en_us": "Paleontology Researcher"
+  },
+  "tags": [
+    "service",
+    "fossil",
+    "building_runtime"
+  ],
+  "placement_profile": {
+    "classification": "ambient",
+    "preferred_biomes": [],
+    "automatic_town_placement": false,
+    "automatic_route_placement": false
+  },
+  "npc": {
+    "display_name": {
+      "ko_kr": "고생물 연구원",
+      "en_us": "Paleontology Researcher"
+    },
+    "role": "default",
+    "trainer_class": "cobbleventure:trainer_class/scientist",
+    "appearance": {
+      "source": "rct_single",
+      "type": "skin",
+      "resource": "rctmod:trainers/single/scientist_ivan_015b",
+      "arm_model": "slim",
+      "implementation_status": "ready"
+    },
+    "behavior": {
+      "movement": "stationary",
+      "look_at_player": true,
+      "invulnerable": true,
+      "collision": true
+    }
+  },
+  "event_runtime": {
+    "engine": "cves_v5",
+    "authoring": "custom",
+    "script_id": "cobbleventure:event_script/facilities/fossil_scholar"
+  },
+  "event_design": {
+    "mode": "easy_npc_events"
+  },
+  "events": [
+    {
+      "id": "on_interact",
+      "trigger": {
+        "type": "interact",
+        "range": 4
+      },
+      "commands": [
+        {
+          "type": "dialogue",
+          "id": "fallback",
+          "speaker": "npc",
+          "text": {
+            "ko_kr": "어떤 화석은 하나만으로 복원할 수 있지만, 조각으로 발견되는 화석은 두 종류를 짝지어야 해요. 어떤 조각을 조합하는지에 따라 복원되는 포켓몬도 달라지죠.",
+            "en_us": "Some fossils can be restored alone, while fossil pieces need to be paired. Different combinations can restore different Pokemon."
+          }
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  ]
+}

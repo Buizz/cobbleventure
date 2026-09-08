@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/npc-event-script.schema.json",
+  "schema_version": 4,
+  "id": "cobbleventure:npc/facilities/fossil_researcher",
+  "enabled": true,
+  "name": {
+    "ko_kr": "화석 복원 연구원",
+    "en_us": "Fossil Researcher"
+  },
+  "description": {
+    "ko_kr": "화석 복원 연구원",
+    "en_us": "Fossil Researcher"
+  },
+  "tags": [
+    "service",
+    "fossil",
+    "building_runtime"
+  ],
+  "placement_profile": {
+    "classification": "ambient",
+    "preferred_biomes": [],
+    "automatic_town_placement": false,
+    "automatic_route_placement": false
+  },
+  "npc": {
+    "display_name": {
+      "ko_kr": "화석 복원 연구원",
+      "en_us": "Fossil Researcher"
+    },
+    "role": "default",
+    "trainer_class": "cobbleventure:trainer_class/scientist",
+    "appearance": {
+      "source": "rct_single",
+      "type": "skin",
+      "resource": "rctmod:trainers/single/scientist_ed_0158",
+      "arm_model": "slim",
+      "implementation_status": "ready"
+    },
+    "behavior": {
+      "movement": "stationary",
+      "look_at_player": true,
+      "invulnerable": true,
+      "collision": true
+    }
+  },
+  "event_runtime": {
+    "engine": "cves_v5",
+    "authoring": "custom",
+    "script_id": "cobbleventure:event_script/facilities/fossil_researcher"
+  },
+  "event_design": {
+    "mode": "easy_npc_events"
+  },
+  "events": [
+    {
+      "id": "on_interact",
+      "trigger": {
+        "type": "interact",
+        "range": 4
+      },
+      "commands": [
+        {
+          "type": "dialogue",
+          "id": "fallback",
+          "speaker": "npc",
+          "text": {
+            "ko_kr": "화석에 남아 있는 생체 정보를 이용하면 옛 포켓몬을 복원할 수 있어요. 가방에서 복원할 화석을 골라 주세요. 조각 화석은 알맞은 조합이 필요해요. 배양 재료와 몬스터볼은 연구소에서 준비하니, 약 30초 뒤 저에게 다시 말을 걸어 주세요.",
+            "en_us": "We can restore ancient Pokemon from fossils. Choose a fossil from your bag; fossil pieces require a matching pair. We supply the materials and Poke Ball. Talk to me again after about 30 seconds."
+          }
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  ]
+}

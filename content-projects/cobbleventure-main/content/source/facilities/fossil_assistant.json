@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/npc-event-script.schema.json",
+  "schema_version": 4,
+  "id": "cobbleventure:npc/facilities/fossil_assistant",
+  "enabled": true,
+  "name": {
+    "ko_kr": "화석 연구 조수",
+    "en_us": "Fossil Assistant"
+  },
+  "description": {
+    "ko_kr": "화석 연구 조수",
+    "en_us": "Fossil Assistant"
+  },
+  "tags": [
+    "service",
+    "fossil",
+    "building_runtime"
+  ],
+  "placement_profile": {
+    "classification": "ambient",
+    "preferred_biomes": [],
+    "automatic_town_placement": false,
+    "automatic_route_placement": false
+  },
+  "npc": {
+    "display_name": {
+      "ko_kr": "화석 연구 조수",
+      "en_us": "Fossil Assistant"
+    },
+    "role": "default",
+    "trainer_class": "cobbleventure:trainer_class/scientist",
+    "appearance": {
+      "source": "rct_single",
+      "type": "skin",
+      "resource": "rctmod:trainers/single/scientist_rodney_0153",
+      "arm_model": "slim",
+      "implementation_status": "ready"
+    },
+    "behavior": {
+      "movement": "stationary",
+      "look_at_player": true,
+      "invulnerable": true,
+      "collision": true
+    }
+  },
+  "event_runtime": {
+    "engine": "cves_v5",
+    "authoring": "custom",
+    "script_id": "cobbleventure:event_script/facilities/fossil_assistant"
+  },
+  "event_design": {
+    "mode": "easy_npc_events"
+  },
+  "events": [
+    {
+      "id": "on_interact",
+      "trigger": {
+        "type": "interact",
+        "range": 4
+      },
+      "commands": [
+        {
+          "type": "dialogue",
+          "id": "fallback",
+          "speaker": "npc",
+          "text": {
+            "ko_kr": "화석 복원은 남아 있는 생체 정보를 읽는 것부터 시작해요. 저 수조 안에서 작은 생명이 자라나는 모습을 관찰해 보세요!",
+            "en_us": "Restoration begins by reading the biological information preserved in a fossil. Watch a tiny life grow inside the tank!"
+          }
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  ]
+}

@@ -18,7 +18,5 @@ python -m unittest discover -s tools/structure-builder/tests -p test_pokemon_tow
 python tools/content-manager/content_manager.py validate --root .
 ```
 
-이미지는 내장 image_gen으로 생성했다. 사용자 제공 저각도 탑 그림과 보라타운
-탑 스크린샷을 시각 참고로 사용했다. 최종 생성 프롬프트:
-
-> Create a landscape 1536x1024 game dungeon entrance background illustration, stylized-concept pixel art. Both attached images are visual references only. Depict Pokemon Tower: imposing tall pale sage-green memorial tower, seven repeating stories of dark narrow rectangular windows separated by cream-green vertical pilasters and pale horizontal ledges, broad muted gray-lavender stone base with a single dark centered entrance, octagonal rounded green roof and small central finial. Dramatic low-angle upward view like reference 1, architectural appearance like reference 2. Tower dominates center, full base entrance visible near bottom center, rooftop visible against pale hazy blue daylight sky, lavender purple trees framing lower corners and subdued rocky slopes. Quiet solemn nostalgic GBA-era Pokemon pixel art atmosphere with carefully drawn crisp pixel clusters, limited soft pastel palette, no horror, no people, no Pokemon, no text, no logos, no UI, no border. This is a replacement game background asset; provide image file.
+입장 이미지는 기존 로켓단 배경과 같은 Minecraft풍 3D 추모탑 내부로 제작했다.
+생성 방식과 최종 프롬프트는 [던전 입장 배경 이미지](DUNGEON_ENTRY_ART.md)를 참고한다.

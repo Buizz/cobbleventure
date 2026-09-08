@@ -128,6 +128,7 @@ public final class EventDialogueClient {
         ))) {
             return true;
         }
+        if (className.equals("dev.buizz.cobbleventure.adventure.fossil.client.FossilScreen")) return kind.equals("transition");
         if (className.equals(
             "dev.buizz.cobbleventure.adventure.daycare.client.DaycareScreen"
         )) {

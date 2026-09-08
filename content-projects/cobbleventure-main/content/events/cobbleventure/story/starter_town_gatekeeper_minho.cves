@@ -17,7 +17,15 @@ event interact(range: 4) {
     }
     id "first/give_pokenav" give_item "cobblenav:pokenav_item_red" count 1 notify -> pokenav
     if pokenav.remaining_count > 0 {
-      narrate "가방에 빈 공간이 없어 포켓내비를 받을 수 없습니다."
+      if pokenav.failure_reason == "bag_full" {
+        narrate "가방에 빈 공간이 없어 포켓내비를 받을 수 없습니다."
+      } else {
+        if pokenav.failure_reason == "item_not_found" {
+          narrate "현재 모드 구성에 포켓내비 아이템이 없어 받을 수 없습니다. 모드 구성을 확인해 주세요."
+        } else {
+          narrate "포켓내비 지급 중 오류가 발생했습니다. 관리자에게 문의해 주세요."
+        }
+      }
       stop
     }
     id "first/set_pokenav_received" set_flag "cobbleventure:flag/story/pokenav_received" true

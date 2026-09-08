@@ -1,0 +1,8 @@
+event interact(range: 4) {
+  page default {
+    say npc {
+      ko_kr: "어떤 화석은 하나만으로 복원할 수 있지만, 조각으로 발견되는 화석은 두 종류를 짝지어야 해요. 어떤 조각을 조합하는지에 따라 복원되는 포켓몬도 달라지죠."
+      en_us: "Some fossils can be restored alone, while fossil pieces need to be paired. Different combinations can restore different Pokemon."
+    }
+  }
+}

@@ -32,7 +32,7 @@
 | `complementary_reimagined` | Complementary Shaders - Reimagined | 필수 | 클라이언트 | Iris용 기본 셰이더 및 Euphoria 기반팩 | r5.3 / CF `627557:5874236` |
 | `euphoria_patches` | Euphoria Patches | 필수 | 클라이언트 | Complementary r5.3 확장 그래픽 설정 패처 | 1.4.3-r5.3 / CF `915902:5876050` |
 | `badmobs` | Bad Mobs | 필수 | 양쪽 | 바닐라 동물·몬스터의 모든 소환 경로 차단 | 21.1.1 / CF `233258:7055133` |
-| `cobblenav` | Cobblemon Pokenav | 필수 | 양쪽 | 포켓네비와 현재 지역 포켓몬 출현 정보 | 2.3.3 / CF `976014:7940651` |
+| `cobblenav` | Cobblemon Pokenav | 필수 | 양쪽 | 포켓네비와 현재 지역 포켓몬 출현 정보 | 1.7.3: 2.3.3 / CF `976014:7940651`; 1.8: 2.4.0 / CF `976014:8823427` |
 | `cloth_config` | Cloth Config API | 필수 | 양쪽 | Cobblemon Casino 설정 화면 API | 15.0.140 / CF `348521:5729127` |
 | `kotlin_for_forge` | Kotlin for Forge | 필수 | 양쪽 | Cobblemon NeoForge의 Kotlin 런타임 | 5.12.0 / CF `351264:8335665` |
 | `forgified_fabric_api` | Forgified Fabric API | 필수 | 양쪽 | Mega Showdown용 Fabric API의 NeoForge 호환 구현 | 0.116.15+2.3.1 / CF `889079:8539754` |

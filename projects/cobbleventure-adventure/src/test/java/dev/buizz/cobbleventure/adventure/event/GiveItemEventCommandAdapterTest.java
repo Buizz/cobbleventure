@@ -14,6 +14,8 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -64,8 +66,9 @@ final class GiveItemEventCommandAdapterTest {
         assertTrue(session.completedOperationIds().contains(OPERATION_ID));
     }
 
-    @Test
-    void fullBagReturnsTypedFailureWithoutCompletingOperation() {
+    @ParameterizedTest
+    @ValueSource(strings = {"bag_full", "item_not_found", "operation_conflict"})
+    void rewardFailurePreservesReasonWithoutCompletingOperation(String failureReason) {
         GiveItemEventCommandAdapter adapter = adapter(
             new AtomicReference<>(), new AtomicInteger()
         );
@@ -74,12 +77,14 @@ final class GiveItemEventCommandAdapterTest {
         InMemoryEventSessionStore store = store(session);
         EventInterpreter.run(script, session, environment(), adapter, store, 10);
 
+        JsonObject result = counts(3, 0, 3);
+        result.addProperty("failure_reason", failureReason);
         EventAwaitCompletionService.Outcome outcome = EventAwaitCompletionService.completeAndRun(
             PLAYER_ID,
             session.key(),
             "item-token",
             new EventSession.AwaitCompletion(
-                EventSession.CompletionKind.FAILED, counts(3, 0, 3)
+                EventSession.CompletionKind.FAILED, result
             ),
             script,
             environment(),
@@ -91,6 +96,8 @@ final class GiveItemEventCommandAdapterTest {
         assertEquals(EventAwaitCompletionService.Status.RESUMED, outcome.status());
         assertEquals(3, session.locals().get("reward").getAsJsonObject()
             .get("remaining_count").getAsInt());
+        assertEquals(failureReason, session.locals().get("reward").getAsJsonObject()
+            .get("failure_reason").getAsString());
         assertFalse(session.completedOperationIds().contains(OPERATION_ID));
     }
 

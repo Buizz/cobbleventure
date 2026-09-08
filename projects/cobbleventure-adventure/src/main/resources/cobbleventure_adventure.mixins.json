@@ -10,7 +10,9 @@
     "ForfeitActionResponseMixin",
     "TrainerDoublesValidationMixin",
     "WildBattleDuringTrainerLaunchMixin",
-    "ShowdownEmptySlotsMixin"
+    "ShowdownEmptySlotsMixin",
+    "FossilMachineAccess",
+    "FossilLaboratoryTickMixin"
   ],
   "client": [
     "BattleTargetEmptySlotMixin"

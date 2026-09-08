@@ -64,7 +64,7 @@ public final class EventItemGrant {
         Item item = itemId == null ? null : BuiltInRegistries.ITEM.getOptional(itemId).orElse(null);
         if (item == null) {
             LOGGER.warn("CVES item reward uses an unknown item: {}", itemIdValue);
-            queue(player, token, count, 0, count, 1);
+            queue(player, token, count, 0, count, 1, "item_not_found");
             return 0;
         }
 
@@ -88,7 +88,12 @@ public final class EventItemGrant {
             result.requested(),
             result.granted(),
             result.remaining(),
-            newlyGranted && notify ? ItemAcquisition.NOTICE_DURATION_TICKS : 1
+            newlyGranted && notify ? ItemAcquisition.NOTICE_DURATION_TICKS : 1,
+            switch (result.status()) {
+                case FULL -> "bag_full";
+                case CONFLICT -> "operation_conflict";
+                default -> null;
+            }
         );
         return result.remaining() == 0 ? 1 : 0;
     }
@@ -99,14 +104,16 @@ public final class EventItemGrant {
         int requested,
         int granted,
         int remaining,
-        int delayTicks
+        int delayTicks,
+        String failureReason
     ) {
         CallbackKey key = new CallbackKey(player.getUUID(), token);
         PENDING.put(key, new PendingCallback(
             player.getServer().getTickCount() + delayTicks,
             requested,
             granted,
-            remaining
+            remaining,
+            failureReason
         ));
     }
 
@@ -123,6 +130,9 @@ public final class EventItemGrant {
             String command = "cobbleventure_event_item_result "
                 + key.token() + " " + pending.requested() + " " + pending.granted()
                 + " " + pending.remaining();
+            if (pending.failureReason() != null) {
+                command += " " + StringArgumentType.escapeIfRequired(pending.failureReason());
+            }
             event.getServer().getCommands().performPrefixedCommand(
                 player.createCommandSourceStack()
                     .withPermission(4)
@@ -133,5 +143,7 @@ public final class EventItemGrant {
     }
 
     private record CallbackKey(UUID playerId, String token) {}
-    private record PendingCallback(int atTick, int requested, int granted, int remaining) {}
+    private record PendingCallback(
+        int atTick, int requested, int granted, int remaining, String failureReason
+    ) {}
 }

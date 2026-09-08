@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/interiors/round_laboratory_tm.nbt",
+  "interior": {
+    "id": "round_laboratory_tm",
+    "width": 24,
+    "depth": 24,
+    "floor_height": 8,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "id": "door",
+      "label": "door",
+      "type": "door",
+      "position": [
+        12,
+        1,
+        23
+      ],
+      "safe_spawn": [
+        12,
+        1,
+        22
+      ],
+      "door_facing": "north",
+      "safe_side": "north"
+    },
+    {
+      "id": "tm_researcher",
+      "label": "tm_researcher",
+      "type": "npc_position",
+      "position": [
+        11,
+        1,
+        8
+      ],
+      "facing": "south"
+    }
+  ]
+}

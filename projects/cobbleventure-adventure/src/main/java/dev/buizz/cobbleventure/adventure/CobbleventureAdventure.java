@@ -95,6 +95,8 @@ public final class CobbleventureAdventure {
         DefaultPlayerMovementSpeed.register();
         DaycareService.register();
         DaycareNetwork.register(modBus);
+        dev.buizz.cobbleventure.adventure.fossil.FossilNetwork.register(modBus);
+        dev.buizz.cobbleventure.adventure.fossil.FossilLaboratoryService.register();
         DaycareProjectionService.register();
     }
 

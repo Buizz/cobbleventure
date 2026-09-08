@@ -215,7 +215,7 @@ exit /b %errorlevel%
 
 :mod_pokefinder
 if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" (
-    echo [ERROR] Cobbleventure Pokefinder requires the discontinued CobbleNav 2.3.3 and is excluded from the 1.8 test pack.
+    echo [ERROR] Cobbleventure Pokefinder has not been validated with CobbleNav 2.4.0 and is excluded from the 1.8 test pack.
     exit /b 1
 )
 call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" build

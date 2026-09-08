@@ -1,0 +1,8 @@
+event interact(range: 4) {
+  page default {
+    say npc {
+      ko_kr: "화석 복원은 남아 있는 생체 정보를 읽는 것부터 시작해요. 저 수조 안에서 작은 생명이 자라나는 모습을 관찰해 보세요!"
+      en_us: "Restoration begins by reading the biological information preserved in a fossil. Watch a tiny life grow inside the tank!"
+    }
+  }
+}
