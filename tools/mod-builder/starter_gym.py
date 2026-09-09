@@ -125,7 +125,7 @@ FACILITY_PLACEHOLDERS = {
     "radio_tower": {"label": "라디오 타워", "size": (48, 32, 48), "frame": "minecraft:blue_concrete"},
     "train_station": {"label": "기차역", "size": (48, 14, 64), "frame": "minecraft:gray_concrete"},
     "lighthouse": {"label": "등대", "size": (32, 48, 32), "frame": "minecraft:white_concrete"},
-    "power_plant": {"label": "파워플랜트", "size": (48, 24, 48), "frame": "minecraft:light_gray_concrete"},
+    "power_plant": {"label": "파워플랜트", "size": (27, 15, 23), "frame": "minecraft:light_gray_concrete"},
     "mansion": {"label": "멘션", "size": (48, 24, 48), "frame": "minecraft:dark_oak_planks"},
     "gym_site": {"label": "체육관 부지", "size": (64, 12, 64), "frame": "minecraft:red_concrete"},
 }
@@ -334,8 +334,8 @@ def power_plant_dungeon_layout() -> tuple[
         tuple[str, tuple[tuple[str, str], ...], dict[str, object] | None],
     ],
 ]:
-    """Return blocks for the first authored Team Rocket dungeon and exterior."""
-    width, height, depth = FACILITY_PLACEHOLDERS["power_plant"]["size"]  # type: ignore[misc]
+    """Return the independent interior; dimensions never follow the exterior."""
+    width, height, depth = (48, 10, 48)
     blocks: dict[
         tuple[int, int, int],
         tuple[str, tuple[tuple[str, str], ...], dict[str, object] | None],
@@ -357,12 +357,11 @@ def power_plant_dungeon_layout() -> tuple[
                 for z in range(z1, z2 + 1):
                     set_block(x, y, z, name, properties)
 
-    # Explicit air makes the same template safe both in an isolated slot and
-    # when used as the overworld entrance building.
+    # Explicit air clears the playable interior in its isolated dungeon slot.
     fill(0, 0, 0, width - 1, height - 1, depth - 1, "minecraft:air")
     fill(0, 0, 0, width - 1, 0, depth - 1, "minecraft:polished_andesite")
 
-    # Industrial shell, flat roof, facade bands, and two exhaust stacks.
+    # Industrial shell and ceiling around the independently authored rooms.
     for x in range(width):
         for z in (0, depth - 1):
             fill(x, 1, z, x, 8, z, "minecraft:light_gray_concrete")
@@ -385,12 +384,6 @@ def power_plant_dungeon_layout() -> tuple[
     fill(21, 1, 0, 21, 5, 0, "minecraft:yellow_concrete")
     fill(26, 1, 0, 26, 5, 0, "minecraft:yellow_concrete")
     fill(21, 5, 0, 26, 5, 0, "minecraft:black_concrete")
-    for stack_x in (7, 39):
-        fill(stack_x - 2, 9, 35, stack_x + 2, 11, 39, "minecraft:stone_bricks")
-        for y in range(12, 22):
-            fill(stack_x - 1, y, 36, stack_x + 1, y, 38, "minecraft:stone_bricks")
-            fill(stack_x, y, 37, stack_x, y, 37, "minecraft:air")
-        fill(stack_x - 2, 22, 35, stack_x + 2, 22, 39, "minecraft:deepslate_bricks")
 
     # Bright safety route from the entrance through the S-shaped dungeon path.
     fill(23, 0, 1, 24, 0, 23, "minecraft:yellow_concrete")
@@ -460,7 +453,7 @@ def power_plant_dungeon_layout() -> tuple[
 
 
 def build_power_plant_dungeon_nbt() -> bytes:
-    """Build the first authored Team Rocket power-plant dungeon and exterior."""
+    """Build only the playable interior, never the overworld facade."""
     size, blocks = power_plant_dungeon_layout()
     return _build_structure_nbt(size, blocks)
 

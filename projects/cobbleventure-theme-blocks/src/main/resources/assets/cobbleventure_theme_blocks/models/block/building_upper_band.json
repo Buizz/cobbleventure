@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "cobbleventure_theme_blocks:block/building_pale_wall",
+    "side": "cobbleventure_theme_blocks:block/building_upper_band"
+  }
+}

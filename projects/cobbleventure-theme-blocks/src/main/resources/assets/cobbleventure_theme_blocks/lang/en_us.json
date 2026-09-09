@@ -36,5 +36,8 @@
   "block.cobbleventure_theme_blocks.bright_double_glow_window": "Bright Double Glow Window",
   "block.cobbleventure_theme_blocks.blue_panel_glow_window": "Blue Panel Glow Window",
   "block.cobbleventure_theme_blocks.glass_storage_cabinet": "Glass Storage Cabinet",
-  "block.cobbleventure_theme_blocks.narrow_drawer_cabinet": "Narrow Drawer Cabinet"
+  "block.cobbleventure_theme_blocks.narrow_drawer_cabinet": "Narrow Drawer Cabinet",
+  "block.cobbleventure_theme_blocks.building_lower_band": "Building Lower Wall Band",
+  "block.cobbleventure_theme_blocks.building_upper_band": "Building Upper Wall Band",
+  "block.cobbleventure_theme_blocks.building_pale_wall": "Building Pale Wall"
 }

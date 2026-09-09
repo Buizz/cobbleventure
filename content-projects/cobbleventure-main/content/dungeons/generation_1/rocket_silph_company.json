@@ -23,17 +23,17 @@
   "battle": { "allow_flee": false, "allow_capture": true, "allow_items": true, "allow_escape_actions": false },
   "plan": { "mode": "runtime", "seed_policy": "random_per_run", "fallback": "use_fallback_plan", "generation_timeout_ms": 1000, "max_attempts": 48 },
   "progression": { "pattern": "branching", "encounter_order": "boss_only" },
-  "terrain": { "mode": "nbt_pieces", "piece_pool": "cobbleventure:dungeon_pool/rocket_test", "bounds": [192, 72, 192] },
+  "terrain": { "mode": "nbt_pieces", "piece_pool": "cobbleventure:dungeon_pool/building_test", "bounds": [192, 72, 192] },
   "layout": { "mode": "rooms_and_corridors", "critical_path_rooms": [15, 16], "branch_count": [1, 1], "branch_depth": [1, 1], "loop_chance": 0.0, "vertical_direction": "ascending", "floor_changes": [1, 2] },
   "topology": { "mode": "corridor_spine", "critical_path_rooms": [15, 16], "branch_count": [1, 1], "branch_depth": [1, 1], "loop_chance": 0.0 },
   "spatial_layout": {
     "algorithm": "corridor_halls",
     "chamber_pieces": [
-      "cobbleventure:dungeon_piece/rocket/room",
-      "cobbleventure:dungeon_piece/rocket/route_room",
-      "cobbleventure:dungeon_piece/rocket/encounter_room",
-      "cobbleventure:dungeon_piece/rocket/empty_chamber_1x2",
-      "cobbleventure:dungeon_piece/rocket/empty_chamber_2x2"
+      "cobbleventure:dungeon_piece/building/room",
+      "cobbleventure:dungeon_piece/building/route_room",
+      "cobbleventure:dungeon_piece/building/encounter_room",
+      "cobbleventure:dungeon_piece/building/empty_chamber_1x2",
+      "cobbleventure:dungeon_piece/building/empty_chamber_2x2"
     ]
   },
   "vertical": { "mode": "discrete_floors", "direction": "ascending", "floor_count": [2, 3], "floor_height": 8, "connections_per_floor": [1, 1] },

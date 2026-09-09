@@ -16,12 +16,32 @@
       "interior": {
         "modules": [
           {
-            "id": "main",
-            "structure": "cobbleventure:interiors/gyms/base_gym_interior",
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
             "position": [
               0,
               0,
               0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_rock",
+            "position": [
+              0,
+              0,
+              80
             ],
             "rotation": "none"
           }
@@ -29,7 +49,23 @@
         "connections": [
           {
             "from": "exterior:door",
-            "to": "main:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door",
             "condition_mode": "all",
             "conditions": [],
             "locked_dialogue": [],
@@ -90,12 +126,32 @@
       "interior": {
         "modules": [
           {
-            "id": "main",
-            "structure": "cobbleventure:interiors/gyms/base_gym_interior",
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
             "position": [
               0,
               0,
               0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_water",
+            "position": [
+              0,
+              0,
+              80
             ],
             "rotation": "none"
           }
@@ -103,7 +159,23 @@
         "connections": [
           {
             "from": "exterior:door",
-            "to": "main:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door",
             "condition_mode": "all",
             "conditions": [],
             "locked_dialogue": [],
@@ -157,12 +229,32 @@
       "interior": {
         "modules": [
           {
-            "id": "main",
-            "structure": "cobbleventure:interiors/gyms/base_gym_interior",
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
             "position": [
               0,
               0,
               0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_electric",
+            "position": [
+              0,
+              0,
+              80
             ],
             "rotation": "none"
           }
@@ -170,7 +262,23 @@
         "connections": [
           {
             "from": "exterior:door",
-            "to": "main:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door",
             "condition_mode": "all",
             "conditions": [],
             "locked_dialogue": [],
@@ -229,12 +337,32 @@
       "interior": {
         "modules": [
           {
-            "id": "main",
-            "structure": "cobbleventure:interiors/gyms/base_gym_interior",
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
             "position": [
               0,
               0,
               0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_grass",
+            "position": [
+              0,
+              0,
+              80
             ],
             "rotation": "none"
           }
@@ -242,7 +370,23 @@
         "connections": [
           {
             "from": "exterior:door",
-            "to": "main:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door",
             "condition_mode": "all",
             "conditions": [],
             "locked_dialogue": [],
@@ -321,12 +465,32 @@
       "interior": {
         "modules": [
           {
-            "id": "main",
-            "structure": "cobbleventure:interiors/gyms/base_gym_interior",
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
             "position": [
               0,
               0,
               0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_poison",
+            "position": [
+              0,
+              0,
+              80
             ],
             "rotation": "none"
           }
@@ -334,7 +498,23 @@
         "connections": [
           {
             "from": "exterior:door",
-            "to": "main:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door",
             "condition_mode": "all",
             "conditions": [],
             "locked_dialogue": [],
@@ -408,12 +588,32 @@
       "interior": {
         "modules": [
           {
-            "id": "main",
-            "structure": "cobbleventure:interiors/gyms/base_gym_interior",
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
             "position": [
               0,
               0,
               0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_psychic",
+            "position": [
+              0,
+              0,
+              80
             ],
             "rotation": "none"
           }
@@ -421,7 +621,23 @@
         "connections": [
           {
             "from": "exterior:door",
-            "to": "main:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door",
             "condition_mode": "all",
             "conditions": [],
             "locked_dialogue": [],
@@ -500,12 +716,32 @@
       "interior": {
         "modules": [
           {
-            "id": "main",
-            "structure": "cobbleventure:interiors/gyms/base_gym_interior",
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
             "position": [
               0,
               0,
               0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_fire",
+            "position": [
+              0,
+              0,
+              80
             ],
             "rotation": "none"
           }
@@ -513,7 +749,23 @@
         "connections": [
           {
             "from": "exterior:door",
-            "to": "main:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door",
             "condition_mode": "all",
             "conditions": [],
             "locked_dialogue": [],
@@ -592,12 +844,32 @@
       "interior": {
         "modules": [
           {
-            "id": "main",
-            "structure": "cobbleventure:interiors/gyms/base_gym_interior",
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
             "position": [
               0,
               0,
               0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_ground",
+            "position": [
+              0,
+              0,
+              80
             ],
             "rotation": "none"
           }
@@ -605,7 +877,23 @@
         "connections": [
           {
             "from": "exterior:door",
-            "to": "main:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door",
             "condition_mode": "all",
             "conditions": [],
             "locked_dialogue": [],

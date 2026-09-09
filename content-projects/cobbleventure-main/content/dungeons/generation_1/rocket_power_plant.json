@@ -68,7 +68,7 @@
   "progression": { "pattern": "branching", "encounter_order": "boss_only" },
   "terrain": {
     "mode": "fixed_template",
-    "template": "cobbleventure:placeholder/power_plant"
+    "template": "cobbleventure:dungeons/power_plant_interior"
   },
   "encounters": [
     {

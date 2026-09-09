@@ -219,14 +219,15 @@ class KantoGymLeaderTests(unittest.TestCase):
             ["base_gym.nbt"],
             sorted(path.name for path in (PROJECT_ROOT / "content/structures/gyms").glob("*.nbt")),
         )
-        self.assertEqual(
-            {"cobbleventure:interiors/gyms/base_gym_interior"},
-            {module["structure"] for gym in catalog["gyms"] for module in gym["interior"]["modules"]},
-        )
-        self.assertEqual(
-            ["base_gym_interior.nbt"],
-            sorted(path.name for path in (PROJECT_ROOT / "content/structures/interiors/gyms").glob("*.nbt")),
-        )
+        for gym in catalog["gyms"]:
+            self.assertEqual(
+                ["cobbleventure:interiors/gyms/shared_lobby",
+                 "cobbleventure:interiors/gyms/shared_gimmick",
+                 f"cobbleventure:interiors/gyms/arena_{gym['theme']}"],
+                [module["structure"] for module in gym["interior"]["modules"]],
+            )
+        arena_files = list((PROJECT_ROOT / "content/structures/interiors/gyms").glob("arena_*.nbt"))
+        self.assertEqual(18, len(arena_files))
 
     def test_each_gym_is_assigned_to_one_town_and_staff_belongs_to_gym(self) -> None:
         assignments = []

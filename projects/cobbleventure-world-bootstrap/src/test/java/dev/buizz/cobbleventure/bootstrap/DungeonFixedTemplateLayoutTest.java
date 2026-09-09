@@ -18,9 +18,9 @@ final class DungeonFixedTemplateLayoutTest {
             "data/cobbleventure/dungeons/generation_1/rocket_power_plant.json"
         ));
         DungeonFixedTemplateLayout layout = DungeonFixedTemplateLayout.parse(
-            dungeon, new BlockPos(48, 8, 48), resource(
-                "data/cobbleventure/structure_metadata/placeholder/"
-                    + "power_plant.structure.json"
+            dungeon, new BlockPos(48, 10, 48), resource(
+                "data/cobbleventure/structure_metadata/dungeons/"
+                    + "power_plant_interior.structure.json"
             )
         );
 
@@ -46,8 +46,8 @@ final class DungeonFixedTemplateLayoutTest {
             "data/cobbleventure/dungeons/generation_1/rocket_power_plant.json"
         ));
         JsonObject metadata = resource(
-            "data/cobbleventure/structure_metadata/placeholder/"
-                + "power_plant.structure.json"
+            "data/cobbleventure/structure_metadata/dungeons/"
+                + "power_plant_interior.structure.json"
         );
         for (int index = metadata.getAsJsonArray("anchors").size() - 1;
              index >= 0; index--) {
@@ -61,7 +61,7 @@ final class DungeonFixedTemplateLayoutTest {
 
         assertThrows(IllegalStateException.class, () ->
             DungeonFixedTemplateLayout.parse(
-                dungeon, new BlockPos(48, 8, 48), metadata
+                dungeon, new BlockPos(48, 10, 48), metadata
             )
         );
     }

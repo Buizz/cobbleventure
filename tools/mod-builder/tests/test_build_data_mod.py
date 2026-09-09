@@ -1991,7 +1991,7 @@ class DataModBuilderTests(unittest.TestCase):
             expected = {
                 "player_house": ((16, 13, 16), "플레이어 집"),
                 "lighthouse": ((32, 48, 32), "등대"),
-                "power_plant": ((48, 24, 48), "파워플랜트"),
+                "power_plant": ((27, 15, 23), "파워플랜트"),
                 "mansion": ((48, 24, 48), "멘션"),
             }
             for facility_id, (size, label) in expected.items():
@@ -2023,10 +2023,10 @@ class DataModBuilderTests(unittest.TestCase):
 
     def test_power_plant_dungeon_has_authored_route_and_combat_spaces(self) -> None:
         size, layout = build_data_mod.power_plant_dungeon_layout()
-        self.assertEqual((48, 24, 48), size)
+        self.assertEqual((48, 10, 48), size)
         blocks = {position: state[0] for position, state in layout.items()}
         event_positions = (
-            (24, 1, 4), (14, 1, 16), (34, 1, 27), (24, 1, 40),
+            (24, 1, 4), (14, 1, 16), (24, 1, 22), (34, 1, 27), (24, 1, 40),
             (18, 1, 35), (6, 1, 17), (43, 1, 25), (35, 1, 43),
             (23, 1, 33), (24, 1, 43),
         )

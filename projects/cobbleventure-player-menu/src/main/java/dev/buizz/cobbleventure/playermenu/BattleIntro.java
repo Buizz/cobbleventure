@@ -59,6 +59,10 @@ public final class BattleIntro {
 
     private BattleIntro() {}
 
+    public static boolean isPreparingBattle(ServerPlayer player) {
+        return PENDING.containsKey(player.getUUID());
+    }
+
     public static void register(IEventBus modBus) {
         modBus.addListener(BattleIntro::registerPayloads);
         NeoForge.EVENT_BUS.addListener(BattleIntro::registerCommands);
@@ -310,7 +314,13 @@ public final class BattleIntro {
             }
         }
         for (ServerPlayer player : participants) {
-            start(opponent.createCommandSourceStack(), player, opponent, battleId, battleCommand);
+            if (start(opponent.createCommandSourceStack(), player, opponent, battleId, battleCommand) == 0) {
+                for (ServerPlayer participant : participants) {
+                    PENDING.remove(participant.getUUID());
+                    MusicPlayback.cancelEncounter(participant);
+                }
+                throw new IllegalStateException("Group battle positioning was rejected");
+            }
             PendingBattle pending = PENDING.get(player.getUUID());
             pending.participants = participants;
             pending.launchOwner = player == participants.getFirst();
@@ -332,6 +342,10 @@ public final class BattleIntro {
             ? battleCommand.substring(1)
             : battleCommand;
         if (!normalized.startsWith("tbcs battle ")) return 0;
+
+        if (NeoForge.EVENT_BUS.post(new BattlePositioningEvent(player, displayOpponent)).isCanceled()) {
+            return 0;
+        }
 
         // Resolve the player macro now, but preserve the nested TBCS @s. TBCS
         // must resolve that selector from the living NPC command source; a UUID

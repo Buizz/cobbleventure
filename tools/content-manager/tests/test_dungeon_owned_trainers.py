@@ -159,7 +159,7 @@ class DungeonOwnedTrainerTests(unittest.TestCase):
             self.assertIn("cobbleventure:dungeon_pool/pokemon_tower_test", tower["tags"])
             self.assertEqual(rocket["connectors"], tower["connectors"])
             self.assertEqual(rocket["markers"], tower["markers"])
-            self.assertEqual(
+            self.assertNotEqual(
                 (rocket_structures / f"{shape}.nbt").read_bytes(),
                 (tower_structures / f"{shape}.nbt").read_bytes(),
             )

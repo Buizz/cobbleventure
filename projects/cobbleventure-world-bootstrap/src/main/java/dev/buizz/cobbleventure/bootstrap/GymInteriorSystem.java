@@ -10,6 +10,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.logging.LogUtils;
 import dev.buizz.cobbleventure.playermenu.PlayerConditions;
 import dev.buizz.cobbleventure.playermenu.BadgeProgressNetwork;
+import dev.buizz.cobbleventure.playermenu.BattlePositioningEvent;
 import dev.buizz.cobbleventure.adventure.event.ServerPlayerEventState;
 import java.io.IOException;
 import java.io.Reader;
@@ -89,6 +90,7 @@ final class GymInteriorSystem {
     }
 
     static void register() {
+        NeoForge.EVENT_BUS.addListener(GymInteriorSystem::onBattlePositioning);
         NeoForge.EVENT_BUS.addListener(GymInteriorSystem::onRightClickBlock);
         NeoForge.EVENT_BUS.addListener(GymInteriorSystem::onEntityInteract);
         NeoForge.EVENT_BUS.addListener(GymInteriorSystem::onEntityInteractSpecific);
@@ -574,7 +576,7 @@ final class GymInteriorSystem {
         int templateDepth = template.map(value -> value.getSize().getZ()).orElse(0);
         var resource = server.getResourceManager().getResource(metadataId);
         if (resource.isEmpty()) {
-            return new ModuleMetadata(templateWidth, templateDepth, Map.of(), Map.of());
+            return new ModuleMetadata(templateWidth, templateDepth, Map.of(), Map.of(), Map.of());
         }
         try (Reader reader = resource.orElseThrow().openAsReader()) {
             JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
@@ -583,6 +585,7 @@ final class GymInteriorSystem {
             int depth = interior == null ? templateDepth : interior.get("depth").getAsInt();
             Map<String, BlockPoint> npcAnchors = new LinkedHashMap<>();
             Map<String, DoorAnchor> doorAnchors = new LinkedHashMap<>();
+            Map<String, BlockPoint> battleAnchors = new LinkedHashMap<>();
             for (JsonElement element : root.getAsJsonArray("anchors")) {
                 JsonObject anchor = element.getAsJsonObject();
                 String type = optionalString(anchor, "type", "");
@@ -595,6 +598,11 @@ final class GymInteriorSystem {
                 if ("npc_position".equals(type) && npcAnchors.putIfAbsent(label, position) != null) {
                     throw new IllegalStateException("Duplicate NPC anchor in gym module: " + label);
                 }
+                if ("arrival".equals(type) && label.startsWith("battle_")) {
+                    if (battleAnchors.putIfAbsent(label, position) != null) {
+                        throw new IllegalStateException("Duplicate battle anchor in gym module: " + label);
+                    }
+                }
                 if ("door".equals(type)) {
                     BlockPoint safeSpawn = anchor.has("safe_spawn")
                         ? arrayPoint(anchor.getAsJsonArray("safe_spawn")) : position;
@@ -604,7 +612,7 @@ final class GymInteriorSystem {
                 }
             }
             return new ModuleMetadata(
-                width, depth, Map.copyOf(npcAnchors), Map.copyOf(doorAnchors)
+                width, depth, Map.copyOf(npcAnchors), Map.copyOf(doorAnchors), Map.copyOf(battleAnchors)
             );
         } catch (IOException | RuntimeException error) {
             throw new IllegalStateException("Invalid gym module metadata: " + metadataId, error);
@@ -879,6 +887,67 @@ final class GymInteriorSystem {
             }
         }
         return null;
+    }
+
+    private static void onBattlePositioning(BattlePositioningEvent event) {
+        ServerPlayer player = event.player();
+        Entity opponent = event.opponent();
+        ServerLevel level = player.serverLevel();
+        if (!isInteriorDimension(level) || opponent.level() != level) return;
+        for (GymConfig gym : GYMS.values()) {
+            boolean isLeader = gym.staff.stream().filter(staff -> staff.role.equals("leader"))
+                .anyMatch(staff -> opponent.getTags().contains(
+                    "cves_binding/cobbleventure/gym_leaders/"
+                        + staff.npcPreset.substring(staff.npcPreset.lastIndexOf('/') + 1)
+                            .replace("__v5.npc.snbt", "")
+                ));
+            if (!isLeader) continue;
+            for (InteriorModule module : gym.modules) {
+                BlockPoint playerPoint = module.metadata.battleAnchors.get("battle_player");
+                BlockPoint leaderPoint = module.metadata.battleAnchors.get("battle_leader");
+                if (playerPoint == null || leaderPoint == null) continue;
+                SpaceInstance space = new SpaceInstance(level,
+                    gym.instanceOrigin.offset(module.position.x, module.position.y, module.position.z),
+                    module.rotation, module.metadata);
+                BlockPos first = space.position(new BlockPoint(0, 0, 0));
+                BlockPos last = space.position(new BlockPoint(module.metadata.width - 1, 11, module.metadata.depth - 1));
+                AABB room = new AABB(Vec3.atLowerCornerOf(first), Vec3.atLowerCornerOf(last)).inflate(1);
+                if (!room.contains(opponent.position()) || !room.contains(player.position())) continue;
+                boolean occupied = level.players().stream().anyMatch(other -> other != player
+                    && room.contains(other.position())
+                    && (dev.buizz.cobbleventure.playermenu.BattleIntro.isPreparingBattle(other)
+                        || com.cobblemon.mod.common.battles.BattleRegistry
+                            .getBattleByParticipatingPlayerId(other.getUUID()) != null));
+                BlockPos playerSpot = space.position(playerPoint);
+                BlockPos leaderSpot = space.position(leaderPoint);
+                if (occupied || !safeBattleSpot(level, playerSpot) || !safeBattleSpot(level, leaderSpot)) {
+                    event.setCanceled(true);
+                    player.displayClientMessage(Component.literal("지금은 관장전을 준비할 수 없습니다."), true);
+                    return;
+                }
+                float yaw = (float) Math.toDegrees(Math.atan2(
+                    -(leaderSpot.getX() - playerSpot.getX()), leaderSpot.getZ() - playerSpot.getZ()));
+                player.teleportTo(level, playerSpot.getX() + 0.5D, playerSpot.getY(),
+                    playerSpot.getZ() + 0.5D, yaw, 0.0F);
+                if (opponent instanceof net.minecraft.world.entity.Mob mob) mob.getNavigation().stop();
+                opponent.teleportTo(leaderSpot.getX() + 0.5D, leaderSpot.getY(), leaderSpot.getZ() + 0.5D);
+                opponent.setYRot(yaw + 180.0F);
+                if (opponent instanceof net.minecraft.world.entity.LivingEntity living) {
+                    living.setYHeadRot(yaw + 180.0F);
+                    living.setYBodyRot(yaw + 180.0F);
+                }
+                opponent.setDeltaMovement(Vec3.ZERO);
+                player.setDeltaMovement(Vec3.ZERO);
+                return;
+            }
+        }
+    }
+
+    private static boolean safeBattleSpot(ServerLevel level, BlockPos spot) {
+        return level.getBlockState(spot.below()).isFaceSturdy(level, spot.below(), Direction.UP)
+            && level.getBlockState(spot).getCollisionShape(level, spot).isEmpty()
+            && level.getBlockState(spot.above()).getCollisionShape(level, spot.above()).isEmpty()
+            && level.getFluidState(spot).isEmpty();
     }
 
     private static void spawnNpc(ServerLevel level, GymConfig gym, GymStaffMember staff, BlockPos position) {
@@ -1193,7 +1262,7 @@ final class GymInteriorSystem {
 
     private record ModuleMetadata(
         int width, int depth, Map<String, BlockPoint> npcAnchors,
-        Map<String, DoorAnchor> doorAnchors
+        Map<String, DoorAnchor> doorAnchors, Map<String, BlockPoint> battleAnchors
     ) {}
 
     private record SpaceInstance(

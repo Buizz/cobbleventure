@@ -51,6 +51,8 @@ DUNGEON_SKIN_GENERATOR_SPEC.loader.exec_module(dungeon_piece_skin_generator)
 
 class StructureBuilderTests(unittest.TestCase):
     def test_standard_dungeon_structures_are_symmetric_on_their_shape_axes(self) -> None:
+        # Check base geometry with an unthemed palette; authored furnishings
+        # are deliberately asymmetric and have separate clearance tests.
         symmetry_axes = {
             "start": ("x", "z"), "corridor": ("x", "z"),
             "junction": ("x", "z"), "room": ("x", "z"),
@@ -67,7 +69,7 @@ class StructureBuilderTests(unittest.TestCase):
             payload = dungeon_piece_skin_generator._build_nbt(
                 shape_name,
                 dungeon_piece_skin_generator.SHAPES[shape_name],
-                dungeon_piece_skin_generator.SKINS["rocket"],
+                {key: 'minecraft:stone' for key in dungeon_piece_skin_generator.SKINS['pokemon_tower']},
             )
             size, palette, blocks = content_manager._minecraft_structure_parts(payload)
             states = {tuple(block["pos"]): palette[block["state"]] for block in blocks}

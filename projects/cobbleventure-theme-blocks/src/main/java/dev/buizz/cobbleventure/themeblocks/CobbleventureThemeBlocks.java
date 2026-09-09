@@ -26,6 +26,9 @@ public final class CobbleventureThemeBlocks {
     private static final List<DeferredItem<BlockItem>> CREATIVE_ITEMS = new ArrayList<>();
 
     static {
+        registerStoneBlock("building_lower_band", MapColor.SAND);
+        registerStoneBlock("building_upper_band", MapColor.SAND);
+        registerStoneBlock("building_pale_wall", MapColor.SAND);
         registerStoneBlock("underground_light_tiles", MapColor.SAND);
         registerDirectionalStoneBlock("underground_blue_band", MapColor.COLOR_LIGHT_BLUE);
         registerStoneBlock("underground_pale_wall", MapColor.COLOR_LIGHT_GREEN);

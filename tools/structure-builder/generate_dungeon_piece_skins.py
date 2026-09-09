@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -141,25 +142,31 @@ SHAPES = {
 
 
 SKINS = {
-    "rocket": {
-        "floor": "minecraft:polished_deepslate",
-        "floor_alt": "minecraft:deepslate_tiles",
-        "wall": "minecraft:light_gray_concrete",
-        "wall_alt": "minecraft:gray_concrete",
-        "ceiling": "minecraft:smooth_stone",
-        "accent": "minecraft:red_concrete",
+    "building": {
+        "floor": "minecraft:prismarine_bricks",
+        "floor_alt": "minecraft:prismarine_bricks",
+        "wall": "cobbleventure_theme_blocks:building_pale_wall",
+        "wall_alt": "cobbleventure_theme_blocks:building_upper_band",
+        "ceiling": "minecraft:smooth_quartz",
+        "accent": "cobbleventure_theme_blocks:building_lower_band",
         "lamp": "minecraft:sea_lantern",
     },
-    # Pokemon Tower currently shares the facility geometry and palette.  It is
-    # still emitted as a complete, independent skin so every shared chamber
-    # shape can be switched as one set and edited separately later.
-    "pokemon_tower": {
-        "floor": "minecraft:polished_deepslate",
-        "floor_alt": "minecraft:deepslate_tiles",
-        "wall": "minecraft:light_gray_concrete",
-        "wall_alt": "minecraft:gray_concrete",
+    "rocket": {
+        "floor": "cobbleventure_theme_blocks:rocket_base_olive_vent",
+        "floor_alt": "cobbleventure_theme_blocks:rocket_base_olive_vent",
+        "wall": "cobbleventure_theme_blocks:rocket_base_blue_wall",
+        "wall_alt": "cobbleventure_theme_blocks:rocket_base_cyan_conduit",
         "ceiling": "minecraft:smooth_stone",
-        "accent": "minecraft:red_concrete",
+        "accent": "cobbleventure_theme_blocks:rocket_base_blue_band",
+        "lamp": "minecraft:sea_lantern",
+    },
+    "pokemon_tower": {
+        "floor": "cobbleventure_theme_blocks:pokemon_tower_green_mosaic",
+        "floor_alt": "cobbleventure_theme_blocks:pokemon_tower_green_mosaic",
+        "wall": "cobbleventure_theme_blocks:pokemon_tower_purple_pillar",
+        "wall_alt": "cobbleventure_theme_blocks:pokemon_tower_purple_cornice",
+        "ceiling": "minecraft:polished_blackstone",
+        "accent": "cobbleventure_theme_blocks:pokemon_tower_purple_plinth",
         "lamp": "minecraft:sea_lantern",
     },
 }
@@ -224,6 +231,9 @@ def _connector_position(direction: str, y: int, size: tuple[int, int, int] = SIZ
 
 
 def _block(name: str):
+    if name in {"cobbleventure_theme_blocks:rocket_base_olive_vent",
+                "cobbleventure_theme_blocks:rocket_base_yellow_light_panel"}:
+        return name, (("facing", "north"),), None
     return name, (), None
 
 
@@ -240,6 +250,9 @@ def _build_nbt(shape_name: str, shape: Shape, skin: dict[str, str]) -> bytes:
     footprint = _footprint(shape)
     heights = dict(shape.connector_heights)
     stairs = shape_name in {"stairs_up", "stairs_down"}
+    building = skin == SKINS.get("building")
+    rocket = skin == SKINS.get("rocket")
+    tower = skin == SKINS.get("pokemon_tower")
     blocks = {}
     air = _block("minecraft:air")
     for x, z in footprint:
@@ -263,6 +276,12 @@ def _build_nbt(shape_name: str, shape: Shape, skin: dict[str, str]) -> bytes:
                 wall_x = min(wall[0], width - 1 - wall[0])
                 wall_z = min(wall[1], depth - 1 - wall[1])
                 material = skin["accent"] if y == 3 else skin["wall_alt"] if (wall_x + wall_z) % 9 == 0 else skin["wall"]
+                if building or tower:
+                    base_y = wall_top - CEILING_OFFSET
+                    material = skin["accent"] if y == base_y + 1 else skin["wall_alt"] if y == wall_top - 1 else skin["wall"]
+                elif rocket:
+                    base_y = wall_top - CEILING_OFFSET
+                    material = skin["accent"] if y == base_y + 1 else skin["wall_alt"] if y == wall_top - 1 else skin["wall"]
                 blocks[(wall[0], y, wall[1])] = _block(material)
 
     for direction in shape.directions:
@@ -295,13 +314,63 @@ def _build_nbt(shape_name: str, shape: Shape, skin: dict[str, str]) -> bytes:
                 ceiling_y = _stair_level(shape_name, x, width, heights) + CEILING_OFFSET \
                     if stairs else height - 1
                 blocks[(x, ceiling_y, z)] = _block(skin["lamp"])
-    if shape.room_margin is not None:
+    if shape.room_margin is not None and not building and not rocket and not tower:
         center_x = (width // 2 - 1, width // 2)
         center_z = (depth // 2 - 1, depth // 2)
         for x in center_x:
             for z in center_z:
                 blocks[(x, 0, z)] = _block(skin["accent"])
+    if building and shape.room_margin is not None:
+        _decorate_building(blocks, shape_name, shape)
+    if rocket and shape.room_margin is not None:
+        from rocket_dungeon_furniture import decorate_rocket
+        decorate_rocket(blocks, shape_name, shape)
+    if tower and shape.room_margin is not None:
+        from pokemon_tower_dungeon_furniture import decorate_tower
+        decorate_tower(blocks, shape_name, shape)
     return serialize_structure(shape.size, blocks)
+
+
+def _decorate_building(blocks: dict, shape_name: str, shape: Shape) -> None:
+    """Furnish offices around the six-wide circulation lanes and gameplay anchors."""
+    width, _, depth = shape.size
+    margin = shape.room_margin
+    protected = {(x, z) for _, _, (x, _, z), _ in shape.markers}
+
+    def put(x, y, z, name, **properties):
+        if x in _grid_lane_span(width) or z in _grid_lane_span(depth):
+            return
+        if any(abs(x - px) <= 1 and abs(z - pz) <= 1 for px, pz in protected):
+            return
+        if blocks.get((x, y, z)) != _block("minecraft:air"):
+            return
+        if y > 1 and blocks.get((x, y - 1, z), _block("minecraft:air"))[0] == "minecraft:air":
+            return
+        blocks[(x, y, z)] = (f"minecraft:{name}", tuple(sorted(properties.items())), None)
+
+    # Greenery softens the cream/pink walls, as in the Silph office reference.
+    for x in (margin, width - margin - 1):
+        for z in range(margin, depth - margin, 6):
+            put(x, 1, z, "smooth_quartz")
+            put(x, 2, z, "potted_bamboo")
+
+    if shape_name in {"start", "support", "exit", "dead_end"}:
+        for x in range(margin + 1, width - margin - 1):
+            put(x, 1, depth - margin - 1, "quartz_stairs", facing="north", half="bottom", shape="straight", waterlogged="false")
+        return
+
+    # Large chambers contain separated desk clusters; one quadrant of the
+    # largest chamber becomes a warehouse. Aisles remain open between clusters.
+    for x in range(11, width - margin - 1, 6):
+        for z in range(12, depth - margin, 6):
+            storage = shape_name == "treasure" or (width == 32 and x >= 17 and z >= 17)
+            for dx in range(2):
+                put(x + dx, 1, z, "bookshelf" if storage else "smooth_quartz")
+                if storage or dx == 1:
+                    put(x + dx, 2, z, "chiseled_bookshelf" if storage else "light_gray_carpet")
+            if not storage:
+                put(x, 2, z, "black_stained_glass_pane", north="false", south="false", east="true", west="true", waterlogged="false")
+                put(x + 1, 1, z - 1, "quartz_stairs", facing="south", half="bottom", shape="straight", waterlogged="false")
 
 
 def _definition(shape_name: str, shape: Shape, skin_name: str) -> dict[str, object]:
@@ -352,12 +421,14 @@ def _definition(shape_name: str, shape: Shape, skin_name: str) -> dict[str, obje
     }
 
 
-def generate(root: Path = ROOT) -> list[Path]:
+def generate(root: Path = ROOT, skin_names: tuple[str, ...] | None = None) -> list[Path]:
     project = root / PROJECT
     structure_root = project / "content/structures/dungeon_pieces"
     definition_root = project / "content/dungeon_pieces"
     written = []
     for skin_name, skin in SKINS.items():
+        if skin_names is not None and skin_name not in skin_names:
+            continue
         for shape_name, shape in SHAPES.items():
             nbt_path = structure_root / skin_name / f"{shape_name}.nbt"
             json_path = definition_root / skin_name / f"{shape_name}.json"
@@ -373,5 +444,9 @@ def generate(root: Path = ROOT) -> list[Path]:
 
 
 if __name__ == "__main__":
-    for generated in generate():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--skin", choices=tuple(SKINS), action="append",
+                        help="Regenerate only this theme, preserving other editable NBTs.")
+    args = parser.parse_args()
+    for generated in generate(skin_names=tuple(args.skin) if args.skin else None):
         print(generated.relative_to(ROOT).as_posix())
