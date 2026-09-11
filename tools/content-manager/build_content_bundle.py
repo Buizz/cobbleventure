@@ -13,6 +13,8 @@ import subprocess
 import tempfile
 import zipfile
 import engine_content_contract
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools import artifact_versions
 
 MODULES = ("world-bootstrap", "player-menu", "adventure", "casino", "pokefinder", "experience", "theme-blocks")
 
@@ -52,7 +54,7 @@ def compile_theme_resources(project: Path, working: Path, bundle: Path) -> None:
     copy_tree(working / "build/generated/tall-furniture/assets", bundle / "assets")
 
 
-def write_manifest(bundle: Path, project: Path, language: str) -> None:
+def write_manifest(bundle: Path, project: Path, language: str, version: str) -> None:
     write_json(bundle / "pack.mcmeta", {"pack": {"pack_format": 48,
         "supported_formats": {"min_inclusive": 34, "max_inclusive": 48},
         "description": "Cobbleventure external game content"}})
@@ -61,11 +63,12 @@ def write_manifest(bundle: Path, project: Path, language: str) -> None:
     digest = hashlib.sha256(json.dumps(entries, sort_keys=True).encode()).hexdigest()
     write_json(bundle / "content-manifest.json", {"schema_version": 1, "engine_contract": 2,
         "project": json.loads((project / "project.json").read_text(encoding="utf-8"))["id"],
-        "language": language, "sha256": digest, "files": entries})
+        "version": version, "language": language, "sha256": digest, "files": entries})
 
 
 def build_authoring_content(root: Path, project: Path, profile: str) -> Path:
     engine_content_contract.validate(project)
+    version = artifact_versions.load(root)["content_version"]
     staging = root / "staging"
     staging.mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="authoring-content-", dir=staging) as temporary:
@@ -88,7 +91,7 @@ def build_authoring_content(root: Path, project: Path, profile: str) -> Path:
         write_json(bundle / "data/cobbleventure/catalogs/theme-blocks.json",
             json.loads((project / "content/catalogs/theme-blocks.json").read_text(encoding="utf-8")))
         compile_theme_resources(project, working, bundle)
-        write_manifest(bundle, project, "ko_kr")
+        write_manifest(bundle, project, "ko_kr", version)
         destination = root / "pack/overrides" / profile / "config/cobbleventure/content"
         publish(bundle, destination, root)
         return destination
@@ -250,12 +253,13 @@ def publish(stage: Path, destination: Path, workspace: Path) -> None:
 def build(root: Path, project: Path, language: str = "ko_kr", *,
           install_root: Path | None = None, archive: Path | None = None) -> Path:
     root, project = root.resolve(), project.resolve()
+    versions = artifact_versions.load(root)
     engine_content_contract.validate(project)
     os.environ["COBBLEVENTURE_PROJECT_PATH"] = str(project)
     os.environ["COBBLEVENTURE_EXPORT_LANGUAGE"] = language
     manager = import_tool("content_manager", root / "tools/content-manager/content_manager.py")
     install_root = (install_root or root / "pack/overrides/development-placeholder").resolve()
-    archive = (archive or root / "dist/cobbleventure-content.zip").resolve()
+    archive = (archive or artifact_versions.content_archive(root, versions)).resolve()
     install_root.relative_to(root)
     archive.relative_to(root)
     staging = root / "staging"
@@ -306,7 +310,7 @@ def build(root: Path, project: Path, language: str = "ko_kr", *,
             bundle / "data/cobblemon/species")
         compile_theme_resources(project, working, bundle)
         compile_supplemental_resources(root, project, working, bundle)
-        write_manifest(bundle, project, language)
+        write_manifest(bundle, project, language, versions["content_version"])
         archive.parent.mkdir(parents=True, exist_ok=True)
         temporary_archive = working / "content.zip"
         with zipfile.ZipFile(temporary_archive, "w", zipfile.ZIP_DEFLATED) as package:

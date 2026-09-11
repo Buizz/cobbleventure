@@ -41,6 +41,7 @@ if str(CONTENT_MANAGER_ROOT) not in sys.path:
 import laboratory_research
 import league_facilities
 import content_deployment
+from tools import artifact_versions
 from tools.npc_event_presets import BATTLE_PRESETS, materialize_event_document
 from cves import (
     AstCodecError,
@@ -11927,6 +11928,7 @@ def _run_build(
         raise ValueError("지원하지 않는 내보내기 언어입니다.")
     if cobblemon_target not in COBBLEMON_BUILD_TARGETS:
         raise ValueError("지원하지 않는 Cobblemon 빌드 대상입니다.")
+    versions = artifact_versions.load(core_root, environment=False)
     if command == "content-install":
         try:
             project_id = load_json(project_root / "project.json")["id"]
@@ -11934,7 +11936,7 @@ def _run_build(
             return {"command": command, "description": BUILD_COMMANDS[command], "success": True,
                 "return_code": 0, "installation": installation,
                 "output": f"[OK] 콘텐츠 교체 완료\n경로: {installation['instance_path']}\n"
-                    f"파일: {installation['files']}개\n콘텐츠: {installation['sha256']}\n게임을 다시 실행하면 적용됩니다."}
+                    f"파일: {installation['files']}개\n콘텐츠 버전: {installation['version']}\n콘텐츠: {installation['sha256']}\n게임을 다시 실행하면 적용됩니다."}
         except (OSError, ValueError, RuntimeError, zipfile.BadZipFile) as error:
             return {"command": command, "description": BUILD_COMMANDS[command], "success": False,
                 "return_code": None, "output": f"[ERROR] 콘텐츠 교체 실패: {error}"}
@@ -11989,6 +11991,8 @@ def _run_build(
                 **_build_process_environment(project_root),
                 "COBBLEVENTURE_EXPORT_LANGUAGE": language,
                 "COBBLEVENTURE_COBBLEMON_TARGET": cobblemon_target,
+                "COBBLEVENTURE_JAR_VERSION": versions["jar_version"],
+                "COBBLEVENTURE_CONTENT_VERSION": versions["content_version"],
             },
             capture_output=True,
             timeout=1800 if command in {"pack", "mods-pack"} else 300,
@@ -11998,7 +12002,7 @@ def _run_build(
         stderr = _decode_build_output(completed.stderr)
         output = "\n".join(
             part.strip()
-            for part in (music_status, stdout, stderr)
+            for part in (f"[INFO] JAR 버전: {versions['jar_version']} / 콘텐츠 버전: {versions['content_version']}", music_status, stdout, stderr)
             if part.strip()
         )
         result = {
@@ -16116,6 +16120,13 @@ def create_handler(
                 result = validate_repository(root, strict_pack, core_root)
                 self._json(200 if result.valid else 422, result.as_json())
                 return
+            if request.path == "/api/artifact-versions":
+                try:
+                    versions = artifact_versions.load(core_root, environment=False)
+                    self._json(200, {"versions": versions, "artifact_names": artifact_versions.names(versions)})
+                except (OSError, ValueError) as error:
+                    self._json(400, {"error": str(error)})
+                return
             if request.path == "/api/content-deployment":
                 try:
                     self._json(200, content_deployment.status(core_root))
@@ -16583,6 +16594,18 @@ def create_handler(
                 payload = self._read_json()
             except ValueError as error:
                 self._json(400, {"error": str(error)})
+                return
+            if request.path == "/api/build/open-folder":
+                try:
+                    directory = (core_root / "dist").resolve()
+                    directory.relative_to(core_root.resolve())
+                    directory.mkdir(parents=True, exist_ok=True)
+                    if os.name != "nt":
+                        raise ValueError("폴더 열기는 Windows 관리 서버에서 지원합니다.")
+                    os.startfile(str(directory))
+                    self._json(200, {"opened": True, "path": str(directory)})
+                except (OSError, ValueError) as error:
+                    self._json(400, {"error": f"빌드 폴더를 열지 못했습니다: {error}"})
                 return
             if request.path == "/api/cves/preset-preview":
                 if not isinstance(payload, dict) or not isinstance(payload.get("document"), dict):
@@ -17126,6 +17149,20 @@ def create_handler(
                             "core_path": str(core_root),
                         },
                     )
+                except (OSError, ValueError) as error:
+                    self._json(400, {"error": str(error)})
+                return
+            if request.path == "/api/artifact-versions":
+                try:
+                    payload = self._read_json()
+                    if not build_lock.acquire(blocking=False):
+                        self._json(409, {"error": "빌드 실행 중에는 산출물 버전을 변경할 수 없습니다."})
+                        return
+                    try:
+                        versions = artifact_versions.save(core_root, payload)
+                    finally:
+                        build_lock.release()
+                    self._json(200, {"versions": versions, "artifact_names": artifact_versions.names(versions)})
                 except (OSError, ValueError) as error:
                     self._json(400, {"error": str(error)})
                 return

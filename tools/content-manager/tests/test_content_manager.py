@@ -5498,8 +5498,8 @@ class ContentManagerTests(unittest.TestCase):
         root = PROJECT_ROOT
         page = (CORE_ROOT / "tools" / "content-manager" / "web" / "index.html").read_text(encoding="utf-8")
         script = (CORE_ROOT / "tools" / "content-manager" / "web" / "app.js").read_text(encoding="utf-8")
-        self.assertIn('data-section="trainers">NPC', page)
-        self.assertIn('data-section="battles">배틀 프리셋', page)
+        self.assertIn('data-section="trainers">NPC 관리', page)
+        self.assertIn('data-section="battles">배틀 관리', page)
         self.assertIn('id="battle-list"', page)
         self.assertIn('id="battle-form"', page)
         self.assertIn('id="event-command-list"', page)
@@ -5886,21 +5886,39 @@ class ContentManagerTests(unittest.TestCase):
         styles = (web_root / "styles.css").read_text(encoding="utf-8")
 
         self.assertIn('class="nav-tree"', html)
-        self.assertEqual(7, html.count('data-nav-group='))
-        story = html.split('data-nav-group="story"', 1)[1].split('</section>', 1)[0]
+        self.assertEqual(6, html.count('data-nav-group='))
+        content = html.split('data-nav-group="content"', 1)[1].split('</section>', 1)[0]
         resources = html.split('data-nav-group="resources"', 1)[1].split('</section>', 1)[0]
-        self.assertIn('href="/cves.html"', story)
-        self.assertIn('href="/quests.html"', story)
+        self.assertIn('href="/cves.html"', content)
+        self.assertIn('href="/quests.html"', content)
         self.assertNotIn('href="/cves.html"', resources)
-        self.assertNotIn('href="/quest-global.html"', story)
+        self.assertNotIn('href="/quest-global.html"', content)
         self.assertIn('id="quest-workspace-tabs"', html)
-        self.assertIn('<strong>지형 설정</strong>', html)
-        terrain = html.split('data-nav-group="terrain"', 1)[1].split('</section>', 1)[0]
-        for section in ("worlds", "settlements", "routes", "caves", "forests", "biomes"):
-            self.assertIn(f'data-section="{section}"', terrain)
+        expected_groups = {
+            "overview": ("dashboard",),
+            "world": ("worlds", "biomes", "settlements", "routes", "forests", "caves", "underground-roads"),
+            "dungeon": ("dungeons", "dungeon-chambers", "dungeon-pieces"),
+            "characters": ("starter-settings", "trainers", "system-npcs", "battles", "league"),
+            "content": ("definitions", "economy", "casino-config"),
+            "resources": ("space-connections", "structures", "live-nbt-editor", "music", "global-resources", "pokefinder-icons", "builds"),
+        }
+        for group, sections in expected_groups.items():
+            group_markup = html.split(f'data-nav-group="{group}"', 1)[1].split('</section>', 1)[0]
+            positions = [group_markup.index(f'data-section="{section}"') for section in sections]
+            self.assertEqual(sorted(positions), positions)
+            for section in sections:
+                self.assertEqual(1, html.count(f'data-section="{section}"'))
+        self.assertIn('<strong>월드 · 지역</strong>', html)
+        self.assertIn('<strong>던전 제작</strong>', html)
+        self.assertIn('<strong>캐릭터 · 전투</strong>', html)
+        self.assertIn('<strong>스토리 · 시스템</strong>', html)
+        self.assertIn('<strong>리소스 · 빌드</strong>', html)
         self.assertIn("function openNavigationGroup", script)
         self.assertIn("function toggleNavigationGroup", script)
-        self.assertNotIn("openNavigationGroup(group, true)", script)
+        self.assertIn("function validateMainNavigation()", script)
+        self.assertIn("validateMainNavigation();", script)
+        self.assertIn("openNavigationGroup(group);", script)
+        self.assertNotIn('group.classList.remove("is-open")', script)
         self.assertIn('aria-expanded="false"', html)
         navigation = html.split('<nav class="nav-tree"', 1)[1].split('</nav>', 1)[0]
         self.assertNotIn("<span>", navigation)
@@ -6311,7 +6329,7 @@ class ContentManagerTests(unittest.TestCase):
 
     def test_world_authoring_navigation_groups_spatial_presets(self) -> None:
         html = (CORE_ROOT / "tools/content-manager/web/index.html").read_text(encoding="utf-8")
-        positions = [html.index(f'data-section="{section}"') for section in ("worlds", "settlements", "routes", "caves", "forests")]
+        positions = [html.index(f'data-section="{section}"') for section in ("worlds", "biomes", "settlements", "routes", "forests", "caves", "underground-roads")]
         self.assertEqual(sorted(positions), positions)
 
     def test_strict_pack_rejects_draft_lock(self) -> None:

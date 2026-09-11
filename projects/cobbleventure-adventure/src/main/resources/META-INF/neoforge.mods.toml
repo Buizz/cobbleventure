@@ -66,13 +66,13 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="cobbleventure_player_menu"
 type="required"
-versionRange="${player_menu_version_range}"
+versionRange="${artifact_version_range}"
 ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="cobbleventure_content_runtime"
 type="required"
-versionRange="[1.0.0,)"
+versionRange="${artifact_version_range}"
 ordering="AFTER"
 side="BOTH"

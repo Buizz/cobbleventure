@@ -4,6 +4,7 @@ plugins {
 }
 group = 'dev.buizz.cobbleventure'
 version = '1.0.0'
+apply from: rootProject.file('../../gradle/artifact-version.gradle')
 base { archivesName = 'cobbleventure-content-runtime' }
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 repositories { mavenCentral() }
@@ -14,7 +15,7 @@ neoForge {
 tasks.register('installDevelopmentJar') {
     dependsOn jar
     doLast {
-        ['development-placeholder', 'structure-builder', 'live-nbt-editor'].each { profile ->
+        ['development-placeholder', 'development-1.8', 'structure-builder', 'live-nbt-editor'].each { profile ->
             def destination = rootProject.file("../../pack/overrides/${profile}/mods")
             delete fileTree(destination) { include 'cobbleventure-content-runtime-*.jar' }
             copy { from tasks.jar; into destination }
@@ -22,3 +23,9 @@ tasks.register('installDevelopmentJar') {
     }
 }
 apply from: rootProject.file('../../gradle/external-content.gradle')
+
+processResources {
+    def properties = [artifact_jar_version: artifactJarVersion]
+    inputs.properties properties
+    filesMatching('META-INF/neoforge.mods.toml') { expand properties }
+}

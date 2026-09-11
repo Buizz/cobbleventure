@@ -3,7 +3,7 @@ loaderVersion="[4,)"
 license="All Rights Reserved"
 [[mods]]
 modId="cobbleventure_content_runtime"
-version="1.0.0"
+version="${artifact_jar_version}"
 displayName="Cobbleventure Content Runtime"
 description="External content loading and engine contract."
 [[dependencies.cobbleventure_content_runtime]]

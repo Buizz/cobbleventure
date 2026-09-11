@@ -26,9 +26,9 @@ class ContentDeploymentTests(unittest.TestCase):
     def archive(self, root, extra=None, tamper=False):
         files = {"pack.mcmeta": b'{"pack":{"pack_format":48}}', "data/test/trainer.json": b'{"level":43}'}
         hashes = {name: hashlib.sha256(data).hexdigest() for name, data in files.items()}
-        manifest = {"schema_version": 1, "engine_contract": 2, "project": "test", "language": "ko_kr",
+        manifest = {"schema_version": 1, "engine_contract": 2, "version": "1.0.0", "project": "test", "language": "ko_kr",
             "files": hashes, "sha256": hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()}
-        path = root / "dist/cobbleventure-content.zip"
+        path = root / "dist/cobbleventure-content-1.0.0.zip"
         path.parent.mkdir(exist_ok=True)
         with zipfile.ZipFile(path, "w") as archive:
             for name, data in files.items():
@@ -79,6 +79,18 @@ class ContentDeploymentTests(unittest.TestCase):
             next((instance / "mods").iterdir()).unlink()
             with self.assertRaisesRegex(ValueError, "엔진"):
                 deployment.install(root, "test")
+
+    def test_selected_content_version_cannot_install_a_different_archive(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            instance = self.fixture(root)
+            deployment.artifact_versions.save(root, {"jar_version": "1.0.0", "content_version": "2.0.0"})
+            self.assertFalse(deployment.status(root)["bundle_exists"])
+            (root / "dist/cobbleventure-content-2.0.0.zip").write_bytes(
+                (root / "dist/cobbleventure-content-1.0.0.zip").read_bytes())
+            with self.assertRaisesRegex(ValueError, "버전"):
+                deployment.install(root, "test")
+            self.assertFalse((instance / deployment.CONTENT).exists())
 
     def test_failed_skin_install_restores_previous_content(self):
         with tempfile.TemporaryDirectory() as temporary:

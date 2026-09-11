@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "profile_id": "development-1-8",
-  "name": "Cobbleventure 1.8 Development Test Pack",
-  "version": "0.1.8-dev",
+  "name": "Cobbleventure",
+  "version": "1.0.0",
   "author": "Buizz",
   "purpose": "cobblemon-1.8-development-pack",
   "production_ready": false,
@@ -235,7 +235,8 @@
     }
   ],
   "overrides_directory": "pack/overrides/development-placeholder",
-  "output": "dist/cobbleventure-development-1.8-curseforge.zip",
+  "output": "dist/cobbleventure-full-jar-1.0.0-content-1.0.0.zip",
   "dependency_lock": "pack/dependencies-1.8.lock.json",
-  "mods_directory": "pack/overrides/development-1.8/mods"
+  "mods_directory": "pack/overrides/development-1.8/mods",
+  "managed_artifact_versions": true
 }

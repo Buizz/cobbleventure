@@ -4,7 +4,7 @@ Python 표준 라이브러리만으로 실행되는 콘텐츠 제작·검증 도
 화면과 Web API는 같은 검증 코드를 사용한다.
 
 게임 콘텐츠만 갱신할 때는 `build.bat content`를 실행한다. 엔진 JAR을 재빌드하지
-않고 `dist/cobbleventure-content.zip`을 생성한다. `build.bat generate`도 같은
+않고 `dist/cobbleventure-content-<콘텐츠 버전>.zip`을 생성한다. `build.bat generate`도 같은
 경로를 사용한다. 최초 엔진 전환, 설치 위치와 재시작 범위는
 [콘텐츠·엔진 분리 계약](../../docs/implementation/CONTENT_ENGINE_SEPARATION.md)을 따른다.
 
@@ -17,12 +17,29 @@ Python 표준 라이브러리만으로 실행되는 콘텐츠 제작·검증 도
 
 웹의 `빌드 · 콘텐츠 교체` 화면은 다음 네 가지 작업을 제공한다.
 
+`JAR 버전`과 `콘텐츠 버전`을 각각 입력하고 저장한다. 기본값은 각각 `1.0.0`이며,
+`1.1.0-beta.1` 같은 사전 배포 버전도 사용할 수 있다. 빌드 버튼을 누르면 입력한
+버전이 먼저 저장된다. 설정은 `pack/artifact-versions.json`에 보관하며 CLI도 같은
+설정을 읽는다. 서로 다른 버전의 산출물은 유지하고 같은 버전으로 다시 빌드하면
+해당 파일을 갱신한다.
+
+| 산출물 | 파일명 예시 |
+|------|------|
+| 개별 JAR | `dist/jars/1.0.0/cobbleventure-player-menu-1.0.0.jar` |
+| 모드 전용 설치팩 | `dist/cobbleventure-mods-1.0.0.zip` |
+| 콘텐츠 | `dist/cobbleventure-content-1.0.0.zip` |
+| 전체 설치팩 | `dist/cobbleventure-full-jar-1.0.0-content-1.0.0.zip` |
+
+JAR 파일명과 NeoForge 모드 버전은 함께 바뀌며, 자체 모듈끼리는 동일 JAR 배포
+버전을 요구한다. 콘텐츠 버전은 별도 manifest에 기록하므로 콘텐츠 버전만 변경해도
+JAR은 바뀌지 않는다. Minecraft·Cobblemon 의존성 버전은 별도 호환 정보로 유지한다.
+
 | 작업 | 결과 |
 |------|------|
 | 전체 빌드 | 엔진 JAR과 콘텐츠를 모두 빌드하여 CurseForge 설치 ZIP에 포함한다. |
-| 모드팩 빌드 | JAR·모드만 빌드하여 별도 `-mods-only.zip`에 포함한다. 콘텐츠와 설정은 제외한다. |
+| 모드팩 빌드 | JAR·모드만 빌드하여 `cobbleventure-mods-<JAR 버전>.zip`에 포함한다. 콘텐츠와 설정은 제외한다. |
 | 콘텐츠 빌드 | 엔진 JAR을 재빌드하지 않고 콘텐츠 ZIP만 생성한다. |
-| 콘텐츠 교체 | 마지막으로 빌드한 콘텐츠 ZIP과 관련 스킨을 지정한 게임 인스턴스에 적용한다. |
+| 콘텐츠 교체 | 선택한 콘텐츠 버전의 ZIP과 관련 스킨을 지정한 게임 인스턴스에 적용한다. 해당 버전의 빌드가 없으면 먼저 빌드한다. |
 
 교체 대상은 인스턴스 경로 입력란에서 선택하고 저장한다. 외부 콘텐츠를 지원하는
 엔진을 최초 한 번 설치한 뒤, 게임을 종료한 상태에서 교체한다. 저장 월드·모드·
@@ -65,10 +82,10 @@ build.bat generate ko_kr
 | `build.bat web` | 콘텐츠 관리 화면과 외부 로컬 도구용 Web API를 함께 실행한다. | `127.0.0.1:8765`에서 서버가 시작됨 |
 | `build.bat api` | 기존 자동화 호환을 위한 `web` 명령의 별칭이다. | `web`과 동일하게 실행됨 |
 | `build.bat test` | 콘텐츠 검증기와 로컬 Web API의 회귀 테스트를 실행한다. | 모든 Python 단위 테스트가 통과함 |
-| `build.bat content` / `build.bat generate` | 트레이너·CVES·월드·지도 등 외부 콘텐츠 번들을 생성한다. | `dist/cobbleventure-content.zip` 생성, 엔진 JAR 변경 없음 |
+| `build.bat content` / `build.bat generate` | 트레이너·CVES·월드·지도 등 외부 콘텐츠 번들을 생성한다. | 버전이 포함된 콘텐츠 ZIP 생성, 엔진 JAR 변경 없음 |
 | `build.bat pack-smoke` | 별도 팩 빌더로 최소 CurseForge 임포트 ZIP을 생성하고 검증한다. | `dist`에 ZIP과 SHA-256이 생성됨 |
 | `build.bat pack` | 엔진 JAR과 콘텐츠를 모두 빌드하여 CurseForge 설치 ZIP을 생성한다. | `dist`에 개발 ZIP과 SHA-256이 생성됨 |
-| `build.bat mods-pack` | JAR·모드만 빌드하여 콘텐츠·설정을 제외한 설치 ZIP을 생성한다. | 별도 `-mods-only.zip` 생성, 전체 빌드 ZIP 유지 |
+| `build.bat mods-pack` | JAR·모드만 빌드하여 콘텐츠·설정을 제외한 설치 ZIP을 생성한다. | `cobbleventure-mods-<JAR 버전>.zip` 생성, 전체 빌드 ZIP 유지 |
 | `build.bat pack-release` | 정식 패키징 조건을 엄격 검증한다. | Lock이 `draft`인 현재는 실패하고 ZIP을 만들지 않음 |
 | `build.bat builder-world` | 독립 건축 평지 월드와 경량 CurseForge ZIP을 생성한다. | 월드, 자체 JAR과 건축용 외부 모드가 포함된 ZIP 생성 |
 

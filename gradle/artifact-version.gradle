@@ -1,0 +1,23 @@
+import groovy.json.JsonSlurper
+
+// Maven/composite coordinates keep their implementation versions. Distributed JARs
+// and NeoForge metadata use the independently managed engine release version.
+def versionFile = rootProject.file('../../pack/artifact-versions.json')
+def versionDocument = new JsonSlurper().parseText(providers.fileContents(
+    layout.file(providers.provider { versionFile })
+).asText.get())
+def releaseVersion = providers.environmentVariable('COBBLEVENTURE_JAR_VERSION')
+    .getOrElse(versionDocument.jar_version.toString())
+if (versionDocument.schema_version != 1 || releaseVersion.length() > 64 ||
+    !(releaseVersion ==~ /(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)(?:-[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)*)?/)) {
+    throw new GradleException('Invalid JAR artifact version: ' + releaseVersion)
+}
+ext.artifactJarVersion = releaseVersion
+ext.artifactVersionRange = "[${releaseVersion}]"
+tasks.withType(Jar).configureEach { archiveVersion.set(releaseVersion) }
+def distributionDirectory = rootProject.file("../../dist/jars/${releaseVersion}")
+tasks.register('exportArtifactJar', Copy) {
+    from tasks.named('jar').flatMap { it.archiveFile }
+    into distributionDirectory
+}
+tasks.named('jar') { finalizedBy 'exportArtifactJar' }

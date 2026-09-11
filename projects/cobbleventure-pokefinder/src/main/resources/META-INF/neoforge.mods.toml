@@ -38,20 +38,20 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="cobbleventure_bootstrap"
 type="required"
-versionRange="[0.66.0,0.67)"
+versionRange="${artifact_version_range}"
 ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="cobbleventure_player_menu"
 type="required"
-versionRange="[1.6.0,2)"
+versionRange="${artifact_version_range}"
 ordering="AFTER"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="cobbleventure_content_runtime"
 type="required"
-versionRange="[1.0.0,)"
+versionRange="${artifact_version_range}"
 ordering="AFTER"
 side="BOTH"

@@ -10,7 +10,10 @@ import tempfile
 import threading
 import uuid
 import zipfile
+import sys
 from contextlib import contextmanager
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools import artifact_versions
 
 SETTINGS = Path("tools/content-manager/settings.local.json")
 CONTENT = Path("config/cobbleventure/content")
@@ -149,7 +152,10 @@ def checked_path(instance: Path, relative: Path) -> Path:
 
 def install(root: Path, project_id: str) -> dict:
     instance = resolve_instance(saved_instance(root))
-    manifest, files = inspect_archive(root / "dist/cobbleventure-content.zip", project_id)
+    versions = artifact_versions.load(root, environment=False)
+    manifest, files = inspect_archive(artifact_versions.content_archive(root, versions), project_id)
+    if manifest.get("version") != versions["content_version"]:
+        raise ValueError("선택한 콘텐츠 버전과 ZIP 내부 버전이 다릅니다. 콘텐츠를 다시 빌드해 주세요.")
     loader = "dev/buizz/cobbleventure/content/ContentPacks.class"
     supported = False
     for jar in (instance / "mods").glob("cobbleventure-content-runtime-*.jar"):
@@ -180,7 +186,7 @@ def install(root: Path, project_id: str) -> dict:
             target.write_bytes(data)
         record = incoming / RECEIPT
         record.parent.mkdir(parents=True, exist_ok=True)
-        record.write_text(json.dumps({"schema_version": 1, "sha256": manifest["sha256"],
+        record.write_text(json.dumps({"schema_version": 1, "sha256": manifest["sha256"], "version": manifest["version"],
             "project": project_id, "managed_skins": skins}, indent=2) + "\n", encoding="utf-8")
         moved, installed = [], []
         try:
@@ -217,16 +223,18 @@ def install(root: Path, project_id: str) -> dict:
             if recovery_errors:
                 raise RuntimeError(f"교체 실패 후 자동 복구를 완료하지 못했습니다. 원본 보관 경로: {backup}") from error
             raise
-    return {"instance_path": str(instance), "sha256": manifest["sha256"],
+    return {"instance_path": str(instance), "sha256": manifest["sha256"], "version": manifest["version"],
         "files": len(files), "language": manifest.get("language"), "project": project_id}
 
 
 def status(root: Path) -> dict:
     found = candidates()
     saved = saved_instance(root)
-    preferred = [value for value in found if Path(value).name == "Cobbleventure 1.8 Development Test Pack"]
+    preferred = [value for value in found if Path(value).name in {"Cobbleventure", "Cobbleventure 1.8 Development Test Pack"}]
     suggested = preferred[0] if len(preferred) == 1 else ""
-    path = root / "dist/cobbleventure-content.zip"
+    versions = artifact_versions.load(root, environment=False)
+    path = artifact_versions.content_archive(root, versions)
     return {"instance_path": saved, "suggested_instance": suggested, "candidates": found,
-        "bundle_exists": path.is_file(), "bundle_path": str(path),
+        "versions": versions, "artifact_names": artifact_versions.names(versions),
+        "bundle_version": versions["content_version"], "bundle_exists": path.is_file(), "bundle_path": str(path),
         "bundle_modified": path.stat().st_mtime if path.is_file() else None}

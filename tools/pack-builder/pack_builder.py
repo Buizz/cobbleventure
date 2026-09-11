@@ -10,6 +10,8 @@ import sys
 import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from tools import artifact_versions
 
 
 PROFILE_ID = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
@@ -254,6 +256,13 @@ def load_profile(root: Path, profile_path: Path, *, mods_only: bool = False) -> 
     if mods_only:
         profile["_output_path"] = output.with_name(output.stem + "-mods-only.zip")
         profile["name"] += " - Mods Only"
+    if profile.get("managed_artifact_versions") is True:
+        versions = artifact_versions.load(root)
+        profile["_artifact_versions"] = versions
+        names = artifact_versions.names(versions)
+        profile["_output_path"] = root / "dist" / names["mods" if mods_only else "full"]
+        profile["version"] = versions["jar_version"] if mods_only else (
+            f"jar-{versions['jar_version']}-content-{versions['content_version']}")
     return profile
 
 
@@ -557,6 +566,16 @@ def build_pack(root: Path, profile_path: Path, *, mods_only: bool = False) -> Pa
     temporary = output.with_name(output.name + ".tmp")
 
     manifest = manifest_for(profile)
+    versions = profile.get("_artifact_versions")
+    if versions:
+        for source, relative in _profile_override_files(profile):
+            if relative.parent == Path("mods") and source.name.startswith("cobbleventure-") and source.suffix == ".jar":
+                if not source.name.endswith(f"-{versions['jar_version']}.jar"):
+                    raise PackError(f"선택한 JAR 버전과 설치된 모듈 버전이 다릅니다: {source.name}. JAR을 먼저 빌드하세요.")
+        if not mods_only:
+            content_manifest = overrides / "config/cobbleventure/content/content-manifest.json"
+            if not content_manifest.is_file() or load_json(content_manifest).get("version") != versions["content_version"]:
+                raise PackError("선택한 콘텐츠 버전의 빌드가 없습니다. 콘텐츠를 먼저 빌드하세요.")
     pack_info = {
         "schema_version": 1,
         "profile_id": profile["profile_id"],
@@ -567,6 +586,10 @@ def build_pack(root: Path, profile_path: Path, *, mods_only: bool = False) -> Pa
         "minecraft": manifest["minecraft"],
         "content_included": not mods_only,
     }
+    if versions:
+        pack_info["jar_version"] = versions["jar_version"]
+        if not mods_only:
+            pack_info["content_version"] = versions["content_version"]
 
     if temporary.exists():
         temporary.unlink()

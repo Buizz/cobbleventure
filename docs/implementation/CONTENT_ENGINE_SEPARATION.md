@@ -19,7 +19,7 @@ build.bat content en_us
 
 산출물:
 
-- `dist/cobbleventure-content.zip`: 게임 디렉터리에 설치하는 콘텐츠 배포본
+- `dist/cobbleventure-content-<버전>.zip`: 게임 디렉터리에 설치하는 콘텐츠 배포본
 - `pack/overrides/development-placeholder/config/cobbleventure/content/`:
   개발 실행과 전체 팩 패키징에서 사용하는 콘텐츠
 - `config/easy_npc/skin/`: EasyNPC가 별도 파일로 요구하는 스킨. ZIP에 함께 포함
@@ -94,7 +94,9 @@ Java에는 레지스트리 등록기, 블록 동작 구현, 월드 생성 알고
 웹의 빌드 화면에서는 전체 빌드(`pack`), 모드팩 빌드(`mods-pack`), 콘텐츠 빌드
 (`content`), 콘텐츠 교체(`content-install`)를 분리한다. 전체 빌드는 외부 콘텐츠를
 CurseForge ZIP에 함께 넣고, 모드팩 빌드는 JAR·모드만 다시 빌드하여 별도
-`-mods-only.zip`을 만든다. 콘텐츠를 엔진 JAR에 다시 삽입하지 않는다.
+`cobbleventure-mods-<JAR 버전>.zip`을 만든다. 콘텐츠를 엔진 JAR에 다시 삽입하지 않는다.
+웹에서 JAR 버전과 콘텐츠 버전을 독립적으로 저장하며, 전체 ZIP 이름에는 두 버전을
+함께 표시한다. 콘텐츠 교체는 저장한 콘텐츠 버전의 ZIP만 사용한다.
 
 콘텐츠 교체 대상은 `settings.local.json`의 `content_deployment.instance_path`에
 저장한다. 교체 전에 번들의 프로젝트·계약 버전·파일 체크섬과 대상 엔진의 외부

@@ -21,6 +21,28 @@ SPEC.loader.exec_module(pack_builder)
 
 
 class PackBuilderTests(unittest.TestCase):
+    def test_managed_artifact_names_and_versions_are_independent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            profile_path = self._fixture(root)
+            profile = json.loads((root / profile_path).read_text())
+            profile["managed_artifact_versions"] = True
+            (root / profile_path).write_text(json.dumps(profile))
+            pack_builder.artifact_versions.save(root, {"jar_version": "2.0.0", "content_version": "3.0.0"})
+            content = root / "pack/overrides/smoke/config/cobbleventure/content"
+            content.mkdir(parents=True)
+            (content / "content-manifest.json").write_text('{"version":"3.0.0"}')
+            full = pack_builder.build_pack(root, profile_path)
+            mods = pack_builder.build_pack(root, profile_path, mods_only=True)
+            self.assertEqual("cobbleventure-full-jar-2.0.0-content-3.0.0.zip", full.name)
+            self.assertEqual("cobbleventure-mods-2.0.0.zip", mods.name)
+            before = mods.read_bytes()
+            pack_builder.artifact_versions.save(root, {"jar_version": "2.0.0", "content_version": "4.0.0"})
+            self.assertEqual(before, pack_builder.build_pack(root, profile_path, mods_only=True).read_bytes())
+            with self.assertRaisesRegex(pack_builder.PackError, "콘텐츠"):
+                pack_builder.build_pack(root, profile_path)
+            self.assertTrue(full.is_file())
+
     def test_mods_only_pack_excludes_content_and_uses_a_separate_output(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

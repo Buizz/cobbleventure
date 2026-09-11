@@ -1009,7 +1009,7 @@ function openEmbeddedTool(link, eventPath = null, fromNpc = false) {
   frames.querySelectorAll("iframe").forEach((entry) => { entry.hidden = entry !== frame; });
   $$(".nav-item").forEach((button) => button.classList.remove("is-active"));
   $$(".nav-link").forEach((entry) => entry.classList.toggle("is-active", entry === link || questToolPaths.includes(key) && new URL(entry.href).pathname === "/quests.html"));
-  openNavigationGroup(link.closest(".nav-group") || $('.nav-group[data-nav-group="story"]'));
+  openNavigationGroup(link.closest(".nav-group") || $('.nav-group[data-nav-group="content"]'));
   $$(".page").forEach((page) => page.classList.toggle("is-active", page.id === "embedded-tool"));
   $("#page-title").textContent = link.dataset.toolTitle || frame.title;
 }
@@ -1044,15 +1044,20 @@ function openNavigationGroup(group) {
 
 function toggleNavigationGroup(group) {
   if (!group) return;
-  const shouldOpen = !group.classList.contains("is-open");
-  if (shouldOpen) {
-    openNavigationGroup(group);
-    return;
+  openNavigationGroup(group);
+}
+
+function validateMainNavigation() {
+  const internalSections = new Set(["embedded-tool", "league-facilities", "trainer-card", "gyms"]);
+  const navigationSections = $$(".nav-item[data-section]").map((item) => item.dataset.section);
+  const duplicateSections = [...new Set(navigationSections.filter((section, index) => navigationSections.indexOf(section) !== index))];
+  const classifiedSections = new Set(navigationSections);
+  const missingSections = $$('main > section.page[id]')
+    .map((page) => page.id)
+    .filter((section) => !internalSections.has(section) && !classifiedSections.has(section));
+  if (duplicateSections.length || missingSections.length) {
+    console.error("Main navigation classification error", { duplicateSections, missingSections });
   }
-  group.classList.remove("is-open");
-  group.querySelector(".nav-group-toggle")?.setAttribute("aria-expanded", "false");
-  const items = group.querySelector(".nav-group-items");
-  if (items) items.hidden = true;
 }
 
 async function loadDashboard() {
@@ -19666,8 +19671,14 @@ const buildActions = [
   { id: "pack", title: "전체 빌드", action: "전체 빌드", description: "엔진 JAR과 콘텐츠를 모두 빌드해 CurseForge 설치 ZIP으로 묶습니다." },
   { id: "mods-pack", title: "모드팩 빌드", action: "모드팩 빌드", description: "JAR·모드만 빌드하고 설치 ZIP에 담습니다. 콘텐츠와 설정은 포함하지 않습니다." },
   { id: "content", title: "콘텐츠 빌드", action: "콘텐츠 빌드", description: "트레이너·이벤트·월드 등 콘텐츠 ZIP을 생성합니다. 엔진 JAR은 재빌드하지 않습니다." },
-  { id: "content-install", title: "콘텐츠 교체", action: "인스턴스에 교체", description: "마지막으로 빌드한 콘텐츠와 관련 스킨을 아래 게임 인스턴스에 적용합니다." },
+  { id: "content-install", title: "콘텐츠 교체", action: "인스턴스에 교체", description: "선택한 버전의 콘텐츠와 관련 스킨을 아래 게임 인스턴스에 적용합니다." },
 ];
+function previewArtifactNames() {
+  const jar = $("#build-jar-version").value.trim() || state.contentDeployment?.versions?.jar_version || "1.0.0";
+  const content = $("#build-content-version").value.trim() || state.contentDeployment?.versions?.content_version || "1.0.0";
+  return { pack: `cobbleventure-full-jar-${jar}-content-${content}.zip`, "mods-pack": `cobbleventure-mods-${jar}.zip`,
+    content: `cobbleventure-content-${content}.zip`, "content-install": `cobbleventure-content-${content}.zip` };
+}
 function renderBuildCommands() {
   const languageSelect = $("#build-export-language");
   const selectedLanguage = languageSelect.value || "ko_kr";
@@ -19675,8 +19686,11 @@ function renderBuildCommands() {
     `<option value="${escapeHtml(language.id)}">${escapeHtml(language.name)}</option>`).join("");
   languageSelect.value = state.exportLanguages.some((language) => language.id === selectedLanguage) ? selectedLanguage : "ko_kr";
   const allowed = new Set(state.buildCommands.map((command) => command.id));
+  const names = previewArtifactNames();
+  const selectedContent = $("#build-content-version").value.trim();
+  const selectedContentBuilt = state.contentDeployment?.bundle_exists && selectedContent === state.contentDeployment?.bundle_version;
   $("#build-command-list").innerHTML = buildActions.filter((action) => allowed.has(action.id)).map((action) => `
-    <article class="build-command"><div><strong>${escapeHtml(action.title)}</strong><small>${escapeHtml(action.description)}</small></div><button class="button ${action.id === "pack" ? "primary" : "secondary"}" data-command="${action.id}" ${buildBusy || (action.id === "content-install" && !state.contentDeployment?.bundle_exists) ? "disabled" : ""}>${escapeHtml(action.action)}</button></article>`).join("");
+    <article class="build-command"><div><strong>${escapeHtml(action.title)}</strong><small>${escapeHtml(action.description)}</small><code class="artifact-file-name">${escapeHtml(names[action.id])}</code></div><button class="button ${action.id === "pack" ? "primary" : "secondary"}" data-command="${action.id}" ${buildBusy || (action.id === "content-install" && !selectedContentBuilt) ? "disabled" : ""}>${escapeHtml(action.action)}</button></article>`).join("");
   $$("#build-command-list [data-command]").forEach((button) => button.addEventListener("click", () => runBuild(button.dataset.command)));
 }
 
@@ -19684,13 +19698,34 @@ async function loadContentDeployment() {
   const result = await request("/api/content-deployment");
   if (!result.ok) throw new Error(result.data.error || "콘텐츠 설치 설정을 불러오지 못했습니다.");
   state.contentDeployment = result.data;
+  for (const [selector, key] of [["#build-jar-version", "jar_version"], ["#build-content-version", "content_version"]]) {
+    const field = $(selector);
+    if (field.dataset.dirty !== "true") field.value = result.data.versions[key];
+  }
+  $("#artifact-version-status").textContent = `저장된 버전: JAR ${result.data.versions.jar_version} · 콘텐츠 ${result.data.versions.content_version} / JAR 파일: dist/${result.data.artifact_names.jars}`;
   const input = $("#content-instance-path");
   if (document.activeElement !== input) input.value = result.data.instance_path || result.data.suggested_instance || "";
   $("#content-instance-candidates").innerHTML = result.data.candidates.map((path) => `<option value="${escapeHtml(path)}"></option>`).join("");
   $("#content-bundle-status").textContent = result.data.bundle_exists
-    ? `최근 콘텐츠 빌드: ${new Date(result.data.bundle_modified * 1000).toLocaleString()} · 교체 준비됨`
-    : "빌드한 콘텐츠가 없습니다. 콘텐츠 빌드를 먼저 실행하세요.";
+    ? `콘텐츠 ${result.data.bundle_version} · ${new Date(result.data.bundle_modified * 1000).toLocaleString()} 빌드 · 교체 준비됨`
+    : `콘텐츠 ${result.data.bundle_version} 빌드가 없습니다. 콘텐츠 빌드를 먼저 실행하세요.`;
   renderBuildCommands();
+}
+
+async function saveArtifactVersions() {
+  const fields = $$("#build-jar-version, #build-content-version, #save-artifact-versions");
+  fields.forEach((field) => field.disabled = true);
+  try {
+    const result = await request("/api/artifact-versions", { method: "PUT", body: JSON.stringify({
+      jar_version: $("#build-jar-version").value.trim(), content_version: $("#build-content-version").value.trim(),
+    }) });
+    if (!result.ok) throw new Error(result.data.error || "산출물 버전을 저장하지 못했습니다.");
+    $("#build-jar-version").dataset.dirty = "false";
+    $("#build-content-version").dataset.dirty = "false";
+    await loadContentDeployment();
+  } finally {
+    fields.forEach((field) => field.disabled = buildBusy);
+  }
 }
 
 async function saveContentInstance() {
@@ -20021,16 +20056,28 @@ async function syncStructureBuilder() {
 async function runBuild(command, targets = {}) {
   if (buildBusy) return;
   buildBusy = true;
+  if (buildActions.some((action) => action.id === command)) {
+    try { await saveArtifactVersions(); }
+    catch (error) {
+      buildBusy = false;
+      $$("#build-jar-version, #build-content-version, #save-artifact-versions").forEach((field) => field.disabled = false);
+      renderBuildCommands(); toast(error.message); return;
+    }
+  }
   if (command === "content-install") {
     try { await saveContentInstance(); }
-    catch (error) { buildBusy = false; renderBuildCommands(); toast(error.message); return; }
+    catch (error) {
+      buildBusy = false;
+      $$("#build-jar-version, #build-content-version, #save-artifact-versions").forEach((field) => field.disabled = false);
+      renderBuildCommands(); toast(error.message); return;
+    }
   }
   const actionName = buildActions.find((action) => action.id === command)?.title || command;
   const language = $("#build-export-language")?.value || "ko_kr";
   const cobblemonTarget = $("#build-cobblemon-target")?.value || "1.8";
   const stateTarget = targets.state || "#build-state";
   const outputTarget = targets.output || "#build-output";
-  const buttons = $$("#builds button, #live-nbt-editor button");
+  const buttons = $$("#builds button, #builds input, #builds select, #live-nbt-editor button");
   buttons.forEach((button) => button.disabled = true);
   $(stateTarget).textContent = `${actionName} 실행 중`;
   $(outputTarget).textContent = "작업이 끝날 때까지 잠시 기다려 주세요…";
@@ -20176,6 +20223,7 @@ $("#casino-config").addEventListener("change", updateGachaMachineField);
 $("#add-gacha-machine").addEventListener("click", addGachaSet);
 $("#save-gacha-machines").addEventListener("click", saveGachaMachines);
 
+validateMainNavigation();
 $$(".nav-item").forEach((button) => button.addEventListener("click", () => switchPage(button.dataset.section)));
 $$('.nav-link[data-tool-title]').forEach((link) => link.addEventListener("click", (event) => {
   event.preventDefault();
@@ -20791,6 +20839,25 @@ $("#refresh-structure-builder").addEventListener("click", () => loadStructureBui
 $("#refresh-live-editor").addEventListener("click", () => loadStructureBuilder().catch((error) => toast(error.message)));
 $("#build-structure-builder").addEventListener("click", async () => { await runBuild("builder-world", { state: "#live-editor-build-state", output: "#live-editor-build-output" }); await loadStructureBuilder().catch((error) => toast(error.message)); });
 $("#save-content-instance").addEventListener("click", () => saveContentInstance().then(() => toast("게임 인스턴스 경로를 저장했습니다.")).catch((error) => toast(error.message)));
+$("#save-artifact-versions").addEventListener("click", () => saveArtifactVersions().then(() => toast("산출물 버전을 저장했습니다.")).catch((error) => toast(error.message)));
+$$("#build-jar-version, #build-content-version").forEach((field) => field.addEventListener("input", () => {
+  field.dataset.dirty = "true";
+  $("#artifact-version-status").textContent = "저장되지 않은 버전입니다. 아래 파일명을 확인한 뒤 저장하거나 빌드하세요.";
+  renderBuildCommands();
+}));
+$("#open-build-folder").addEventListener("click", async () => {
+  const button = $("#open-build-folder");
+  button.disabled = true;
+  try {
+    const result = await request("/api/build/open-folder", { method: "POST", body: "{}" });
+    if (!result.ok) throw new Error(result.data.error || "빌드 폴더를 열지 못했습니다.");
+    toast("빌드 결과 폴더를 열었습니다.");
+  } catch (error) {
+    toast(error.message);
+  } finally {
+    button.disabled = buildBusy;
+  }
+});
 $("#build-live-nbt-editor").addEventListener("click", async () => { await runBuild("live-editor-world", { state: "#live-editor-build-state", output: "#live-editor-build-output" }); await loadStructureBuilder().catch((error) => toast(error.message)); });
 $("#install-structure-builder").addEventListener("click", async () => { await runBuild("builder-install", { state: "#live-editor-build-state", output: "#live-editor-build-output" }); await loadStructureBuilder().catch((error) => toast(error.message)); });
 $("#install-live-nbt-editor").addEventListener("click", async () => { await runBuild("live-editor-install", { state: "#live-editor-build-state", output: "#live-editor-build-output" }); await loadStructureBuilder().catch((error) => toast(error.message)); });

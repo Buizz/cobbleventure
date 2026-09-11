@@ -2505,3 +2505,11 @@ body { font-size: 14px; line-height: 1.45; }
 #builds .build-export-options { background: var(--panel); border-radius: 8px; }
 #builds .build-export-options label span { color: var(--text); }
 #builds .build-export-options select { background: var(--panel); color: var(--text); border-color: var(--line); }
+.artifact-version-settings { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto; align-items:end; gap:12px; margin:0 24px 24px; padding:18px; border:1px solid var(--line); border-radius:8px; }
+.artifact-version-settings label { display:grid; gap:8px; min-width:0; font-weight:700; }
+.artifact-version-settings input { width:100%; min-width:0; min-height:40px; box-sizing:border-box; padding:9px 12px; border:1px solid var(--control-line); border-radius:6px; background:var(--control-input); color:var(--control-text); }
+.artifact-version-settings input:focus-visible { outline:2px solid var(--control-focus); outline-offset:2px; }
+.artifact-version-settings input:disabled { background:var(--control-soft); color:var(--control-muted); }
+.artifact-version-settings > small, .artifact-version-settings > p { grid-column:1 / -1; margin:0; color:var(--muted); line-height:1.5; overflow-wrap:anywhere; }
+#builds .artifact-file-name { display:block; margin-top:10px; color:var(--muted); font-size:12px; overflow-wrap:anywhere; }
+@media(max-width:620px) { .artifact-version-settings { grid-template-columns:1fr; } }

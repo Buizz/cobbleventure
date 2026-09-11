@@ -6,6 +6,7 @@ plugins {
 apply from: rootProject.file('../../gradle/cobblemon-target.gradle')
 
 version = mod_version
+apply from: rootProject.file('../../gradle/artifact-version.gradle')
 group = mod_group_id
 
 base {
@@ -61,7 +62,8 @@ processResources {
         mod_id: mod_id,
         mod_name: mod_name,
         mod_license: mod_license,
-        mod_version: mod_version,
+        mod_version: artifactJarVersion,
+        artifact_version_range: artifactVersionRange,
         cobblemon_version: cobblemonEffectiveVersion,
         cobblemon_version_range: cobblemonVersionRange,
         cobblenav_version_range: cobblemonTarget == '1.8' ? '[2.4.0,2.5)' : '[2.3.3,2.4)',

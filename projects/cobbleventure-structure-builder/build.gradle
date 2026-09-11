@@ -4,6 +4,7 @@ plugins {
 }
 
 version = mod_version
+apply from: rootProject.file('../../gradle/artifact-version.gradle')
 group = mod_group_id
 
 base {
@@ -23,7 +24,7 @@ configurations {
 
 dependencies {
     localRuntime fileTree('../cobbleventure-theme-blocks/build/libs') {
-        include 'cobbleventure-theme-blocks-*.jar'
+        include "cobbleventure-theme-blocks-${artifactJarVersion}.jar"
     }
 }
 
@@ -86,7 +87,8 @@ processResources {
         mod_id: mod_id,
         mod_name: mod_name,
         mod_license: mod_license,
-        mod_version: mod_version,
+        mod_version: artifactJarVersion,
+        artifact_version_range: artifactVersionRange,
     ]
     inputs.properties properties
     filesMatching('META-INF/neoforge.mods.toml') {
