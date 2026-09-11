@@ -94,3 +94,16 @@ for (const [mode, groups, actors] of [['independent', 3, 3], ['cooperative', 2, 
   assert.equal(markers.npcCapacity.valid, true);
 }
 console.log('PASS: one large chamber hosts three solo encounters or two cooperative pairs');
+assert.equal(vm.runInContext('JSON.stringify(dungeonEditedFloorRange("discrete_floors", "flat", 2, 3))', context), '[2,3]');
+assert.equal(vm.runInContext('JSON.stringify(dungeonEditedFloorRange("flat", "discrete_floors", 2, 3))', context), '[2,3]');
+assert.equal(vm.runInContext('JSON.stringify(dungeonEditedFloorRange("flat", "discrete_floors", 1, 1))', context), '[2,2]');
+assert.equal(vm.runInContext('dungeonNpcCapacityLabel({assigned:5, actorDemand:7, demand:7, capacity:36})', context),
+  '5/7명 배치 · 7자리 필요 / 36개 후보 슬롯');
+for (const mode of ['continuous', 'authored']) {
+  context.input = structuredClone(documents[0]); context.input.vertical.mode = mode;
+  assert.equal(vm.runInContext('runtimeNbtDungeonPlan(input, 7)', context), null);
+  assert.ok(vm.runInContext('dungeonRuntimeVerticalProblem(input)', context));
+  context.input.plan.mode = 'authored';
+  assert.equal(vm.runInContext('dungeonRuntimeVerticalProblem(input)', context), '');
+}
+console.log('PASS: floor range retention, unsupported runtime modes, actual NPC assignment label');

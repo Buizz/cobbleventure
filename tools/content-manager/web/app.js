@@ -5974,11 +5974,40 @@ function selectDungeonTemplate(resourceId) {
   renderDungeonPreview();
 }
 
+function dungeonRuntimeVerticalProblem(document) {
+  if (document?.plan?.mode !== "runtime" || document?.terrain?.mode !== "nbt_pieces") return "";
+  const mode = dungeonVertical(document).mode;
+  if (mode === "continuous") return "자연스러운 높이 변화는 NBT 자동 생성에서 아직 지원하지 않습니다. 단층 또는 여러 층 + 계단을 선택하세요.";
+  if (mode === "authored") return "직접 배치는 자동 생성에서 지원하지 않습니다. 계획 방식을 웹에서 직접 조립 또는 확정 계획 중 선택으로 변경하세요.";
+  return "";
+}
+
+function dungeonEditedFloorRange(previousMode, mode, minimum, maximum) {
+  const range = parseDungeonRange(`${minimum},${maximum}`, [2, 2], 1);
+  // Flat mode uses one floor at generation time, but retains the author's
+  // multi-floor settings so switching the UI back does not destroy them.
+  return previousMode === "flat" && mode === "discrete_floors" && range[1] === 1 ? [2, 2] : range;
+}
+
+function dungeonNpcCapacityLabel(capacity) {
+  return `${capacity.assigned ?? 0}/${capacity.actorDemand}명 배치 · ${capacity.demand}자리 필요 / ${capacity.capacity}개 후보 슬롯`;
+}
+
 function renderDungeonOptionVisibility() {
   const form = $("#dungeon-form");
   ensureDungeonTopologyOptions(form);
   const terrainMode = form.elements.terrainMode.value;
   const multiplayerMode = form.elements.multiplayerMode.value;
+  const runtimeNbt = terrainMode === "nbt_pieces" && form.elements.planMode.value === "runtime";
+  [...form.elements.verticalMode.options].forEach((option) => {
+    const unsupported = runtimeNbt && ["continuous", "authored"].includes(option.value);
+    option.disabled = unsupported;
+    const labels = { continuous: "자연스러운 높이 변화", authored: "직접 배치" };
+    if (labels[option.value]) option.textContent = labels[option.value] + (unsupported ? " (자동 생성 미지원)" : "");
+  });
+  form.elements.verticalMode.closest("label").querySelector("small").textContent = runtimeNbt
+    ? "자동 생성은 단층·여러 층 + 계단을 지원합니다. 직접 배치는 계획 방식에서 선택하세요."
+    : "층 수만 정하며 공간 배치 방식은 전 층 공통입니다.";
   [...form.elements.planMode.options].forEach((option) => {
     option.disabled = terrainMode === "procedural_cave" && option.value !== "runtime";
   });
@@ -6229,11 +6258,9 @@ function updateDungeonFromForm() {
       const branchCount = parseDungeonRange(form.elements.branchCount.value, [1, 2], 0);
       const branchDepth = parseDungeonRange(form.elements.branchDepth.value, [1, 2], 1);
       const loopChance = Number(form.elements.loopChance.value || 0);
-      const floorCount = verticalMode === "flat" ? [1, 1] : parseDungeonRange(
-        `${form.elements.floorCountMin.value},${form.elements.floorCountMax.value}`,
-        [2, 2], 1,
-      );
-      const verticalDirection = verticalMode === "flat" ? "ascending" : form.elements.verticalDirection.value;
+      const floorCount = dungeonEditedFloorRange(document.vertical?.mode, verticalMode,
+        form.elements.floorCountMin.value, form.elements.floorCountMax.value);
+      const verticalDirection = form.elements.verticalDirection.value;
       document.progression = {
         pattern: progressionPattern,
         required_targets: integer("requiredTargets", 2),
@@ -6243,7 +6270,7 @@ function updateDungeonFromForm() {
       document.spatial_layout = { algorithm: spatialAlgorithm, chamber_pieces: chamberPieces };
       document.topology = { mode: topologyMode, critical_path_rooms: criticalPathRooms, branch_count: branchCount, branch_depth: branchDepth, loop_chance: loopChance };
       document.vertical = { mode: verticalMode, direction: verticalDirection, floor_count: floorCount, floor_height: integer("floorHeight", 8), connections_per_floor: [1, 1] };
-      document.layout = { mode: legacyDungeonLayoutMode(topologyMode), critical_path_rooms: criticalPathRooms, branch_count: branchCount, branch_depth: branchDepth, loop_chance: loopChance, vertical_direction: verticalMode === "flat" ? "flat" : verticalDirection, floor_changes: floorCount.map((value) => Math.max(0, value - 1)) };
+      document.layout = { mode: legacyDungeonLayoutMode(topologyMode), critical_path_rooms: criticalPathRooms, branch_count: branchCount, branch_depth: branchDepth, loop_chance: loopChance, vertical_direction: verticalMode === "flat" ? "flat" : verticalDirection, floor_changes: verticalMode === "flat" ? [0, 0] : floorCount.map((value) => Math.max(0, value - 1)) };
     }
   }
   document.progression = {
@@ -8430,6 +8457,7 @@ function compileRuntimeNbtDungeonPlan(document, seed, random, attempt = 0) {
 }
 
 function runtimeNbtDungeonPlan(document, seed) {
+  if (dungeonRuntimeVerticalProblem(document)) return null;
   let lastPlan = null;
   const maxAttempts = Math.max(1, Math.min(128, Number(document.plan?.max_attempts || 16)));
   for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
@@ -8840,11 +8868,11 @@ function renderDungeonPreview() {
     state.dungeonPreview.hitTargets = [];
     $("#dungeon-preview-empty").hidden = false;
     $("#dungeon-preview-details").hidden = true;
-    $("#dungeon-preview-status").textContent = state.dungeon?.terrain?.mode === "fixed_template"
+    $("#dungeon-preview-status").textContent = dungeonRuntimeVerticalProblem(state.dungeon) || (state.dungeon?.terrain?.mode === "fixed_template"
       ? "전체 세트 NBT를 검색해서 선택하면 실제 절단면을 표시합니다."
       : state.dungeon?.plan?.mode === "runtime"
         ? "미리보기 계획을 만들 수 없습니다. 생성 설정을 확인하세요."
-        : "게시형 계획을 새로 만들거나 이 던전에 연결된 계획을 선택하세요.";
+        : "게시형 계획을 새로 만들거나 이 던전에 연결된 계획을 선택하세요.");
     return;
   }
   const floors = syncDungeonFloorChoice(plan);
@@ -8969,7 +8997,7 @@ function renderDungeonPreview() {
   const verticalMode = naturalTerrain
     ? "natural"
     : dungeonVertical(state.dungeon).mode || "flat";
-  const capacityMetric = plan.npcCapacity ? `<dt>NPC 배치·공간</dt><dd class="${plan.npcCapacity.valid ? "" : "dungeon-inline-error"}">${plan.npcCapacity.actorDemand}명 배치 · ${plan.npcCapacity.demand}자리 필요 / ${plan.npcCapacity.capacity}자리 생성</dd>` : "";
+  const capacityMetric = plan.npcCapacity ? `<dt>NPC 배치·공간</dt><dd class="${plan.npcCapacity.valid ? "" : "dungeon-inline-error"}">${dungeonNpcCapacityLabel(plan.npcCapacity)}</dd>` : "";
   $("#dungeon-preview-metrics").innerHTML = `<dt>계획 방식</dt><dd>${escapeHtml(plan.kind)}</dd><dt>진행 구조</dt><dd>${escapeHtml(progressionPattern)}</dd><dt>공간 배치</dt><dd>${escapeHtml(spatialAlgorithm)}</dd><dt>층 배치</dt><dd>${escapeHtml(verticalMode)}</dd><dt>조회 층</dt><dd>${selectedFloor === null ? `전체 ${floors.length || 1}개 층` : `${floors.indexOf(selectedFloor) + 1}층 · Y ${selectedFloor}`}</dd><dt>표시 구획</dt><dd>${visiblePlacements.length} / ${plan.placements.length}</dd><dt>일반 공동</dt><dd>${visibleOrdinaryChamberCount} / ${totalOrdinaryChamberCount}</dd><dt>공동 전체</dt><dd>${visibleChamberCount} / ${totalChamberCount}</dd><dt>중·대형 공동</dt><dd>${visibleExpandedChamberCount} / ${totalExpandedChamberCount}</dd><dt>주 경로</dt><dd>${criticalCount}</dd><dt>곁가지</dt><dd>${plan.placements.length - criticalCount}</dd>${capacityMetric}<dt>경계</dt><dd>${plan.bounds.join(" × ")}</dd>`;
   $("#dungeon-preview-selection").innerHTML = selected ? `<b>${escapeHtml(selected.role)}</b><br>${escapeHtml(selected.pieceId)}<br>원점 ${selected.minimum.join(", ")} · 크기 ${selected.size.join(" × ")}<br>회전 ${escapeHtml(selected.rotation)}${placementProblems.has(selected.index) ? `<br><strong class="dungeon-inline-error">${escapeHtml(placementProblems.get(selected.index).join(" · "))}</strong>` : ""}` : "평면도의 방을 선택하면 조각 ID, 좌표, 크기와 회전을 표시합니다.";
   const visibleMarkers = plan.markers.filter(onSelectedFloor);
