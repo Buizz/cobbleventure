@@ -80,6 +80,41 @@ final class BagTransactionPlannerTest {
         return new FakeStack(kind, count, 64);
     }
 
+    @Test
+    void consumableGrantMergesWithOwnedItemsAndSplitsOversizedStacks() {
+        List<FakeStack> bag = slots(stack("rare_candy", 32), EMPTY, EMPTY);
+        assertEquals(BagTransactionPlanner.Status.SUCCESS,
+            planner.plan(bag, slots(EMPTY), List.of(), List.of(stack("rare_candy", 96))));
+        assertEquals(128, count(bag, "rare_candy"));
+        assertEquals(64, bag.get(0).count());
+        assertEquals(64, bag.get(1).count());
+        assertEquals(EMPTY, bag.get(2));
+    }
+
+    @Test
+    void grantsMultipleUnstackableToolsWithoutCosts() {
+        List<FakeStack> bag = slots(stack("existing", 64), EMPTY, EMPTY);
+        List<FakeStack> tools = List.of(new FakeStack("flute", 1, 1), new FakeStack("pokedex", 1, 1));
+        assertEquals(BagTransactionPlanner.Status.SUCCESS,
+            planner.plan(bag, slots(EMPTY), List.of(), tools));
+        assertEquals(64, count(bag, "existing"));
+        assertEquals(1, count(bag, "flute"));
+        assertEquals(1, count(bag, "pokedex"));
+    }
+
+    @Test
+    void refusesToolBatchThatOnlyPartiallyFits() {
+        assertEquals(BagTransactionPlanner.Status.OUTPUT_FULL,
+            planner.plan(slots(EMPTY), slots(EMPTY), List.of(),
+                List.of(new FakeStack("flute", 1, 1), new FakeStack("pokedex", 1, 1))));
+    }
+
+    @Test
+    void alreadyOwnedToolsRequireNoFreeSpaceForFlagRepair() {
+        assertEquals(BagTransactionPlanner.Status.SUCCESS,
+            planner.plan(slots(stack("existing", 64)), slots(EMPTY), List.of(), List.of()));
+    }
+
     private static List<FakeStack> slots(FakeStack... stacks) {
         return new ArrayList<>(List.of(stacks));
     }

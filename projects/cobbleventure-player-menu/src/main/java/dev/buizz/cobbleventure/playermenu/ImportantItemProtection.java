@@ -23,6 +23,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.scores.Objective;
+import net.minecraft.world.scores.criteria.ObjectiveCriteria;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
@@ -150,6 +151,43 @@ public final class ImportantItemProtection {
         if (!changed) return;
         BagStorage.save(player, storage);
         BagNetwork.syncExternalMutation(player, storage);
+    }
+
+    /** Grants the catalog as one transaction, including the flags used by loss recovery. */
+    static BagTransaction.Result grantAll(ServerPlayer player) {
+        var storage = BagStorage.load(player);
+        List<ItemStack> outputs = new ArrayList<>();
+        for (Definition definition : DEFINITIONS) {
+            var item = BuiltInRegistries.ITEM.getOptional(definition.item()).orElseThrow(
+                () -> new IllegalStateException("등록되지 않은 중요도구: " + definition.item()));
+            int missing = definition.minimumCount() - count(player, storage, definition.item());
+            if (missing > 0) outputs.add(new ItemStack(item, missing));
+        }
+        return BagTransaction.execute(player, List.of(), outputs, new BagTransaction.SideEffect() {
+            private final java.util.Map<Objective, Integer> previous = new java.util.LinkedHashMap<>();
+
+            @Override public boolean canApply() { return true; }
+
+            @Override public void apply() {
+                var scoreboard = player.getScoreboard();
+                for (Definition definition : DEFINITIONS) {
+                    String key = flagObjective(definition.acquisitionFlag());
+                    Objective objective = scoreboard.getObjective(key);
+                    if (objective == null) {
+                        objective = scoreboard.addObjective(key, ObjectiveCriteria.DUMMY,
+                            Component.literal(key), ObjectiveCriteria.RenderType.INTEGER, false, null);
+                    }
+                    var score = scoreboard.getOrCreatePlayerScore(player, objective);
+                    previous.putIfAbsent(objective, score.get());
+                    score.set(1);
+                }
+            }
+
+            @Override public void rollback() {
+                previous.forEach((objective, value) ->
+                    player.getScoreboard().getOrCreatePlayerScore(player, objective).set(value));
+            }
+        });
     }
 
     private static int count(

@@ -33,10 +33,10 @@ final class CheatCommands {
             .requires(source -> source.hasPermission(2))
             .executes(context -> {
                 context.getSource().sendSuccess(() -> Component.literal(
-                    "/cobbleventure_cheat <badges|hm|menus|destinations|tm|team|money|all> [대상] · 생략하면 자신"), false);
+                    "/cobbleventure_cheat <badges|hm|menus|destinations|tm|team|money|key_items|items|all> [대상] · items는 [대상] [수량] 지원"), false);
                 return 1;
             });
-        for (String action : List.of("badges", "hm", "menus", "destinations", "tm", "team", "all")) {
+        for (String action : List.of("badges", "hm", "menus", "destinations", "tm", "team", "key_items", "all")) {
             root.then(Commands.literal(action)
                 .executes(context -> apply(context.getSource(),
                     List.of(context.getSource().getPlayerOrException()), action))
@@ -44,11 +44,13 @@ final class CheatCommands {
                     .executes(context -> apply(context.getSource(),
                         EntityArgument.getPlayers(context, "players"), action))));
         }
+        root.then(CheatItems.command());
         dispatcher.register(root);
     }
 
     private static int apply(CommandSourceStack source, Collection<ServerPlayer> players, String action) {
         if (action.equals("team")) return CheatTeam.grant(source, players);
+        if (action.equals("key_items")) return grantImportantItems(source, players);
         Set<String> badges = Set.of();
         if (action.equals("badges") || action.equals("all")) {
             var resource = source.getServer().getResourceManager().getResource(
@@ -77,6 +79,29 @@ final class CheatCommands {
             "[Cobbleventure] 테스트 설정 " + action + " 적용 완료 · 대상 " + players.size() + "명"
                 + " (이미 획득한 항목은 유지)"), true);
         return players.size();
+    }
+
+    private static int grantImportantItems(CommandSourceStack source, Collection<ServerPlayer> players) {
+        int completed = 0;
+        for (ServerPlayer player : players) {
+            try {
+                var result = ImportantItemProtection.grantAll(player);
+                if (!result.success()) {
+                    source.sendFailure(Component.literal(player.getScoreboardName() + ": 중요도구 지급 실패 · "
+                        + (result.status() == BagTransaction.Status.OUTPUT_FULL
+                            ? "가방 공간이 부족합니다." : result.status().name())));
+                    continue;
+                }
+                player.sendSystemMessage(Component.literal(
+                    "[Cobbleventure] 모든 중요도구 획득 완료! 이미 보유한 도구는 유지하고 부족한 도구만 지급했습니다."));
+                completed++;
+            } catch (IllegalStateException error) {
+                source.sendFailure(Component.literal(player.getScoreboardName() + ": " + error.getMessage()));
+            }
+        }
+        int count = completed;
+        source.sendSuccess(() -> Component.literal("[Cobbleventure] 중요도구 치트 적용 완료 · 대상 " + count + "명"), true);
+        return completed;
     }
 
 }

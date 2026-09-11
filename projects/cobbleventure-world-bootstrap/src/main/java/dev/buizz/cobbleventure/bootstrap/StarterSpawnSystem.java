@@ -37,6 +37,14 @@ final class StarterSpawnSystem {
     }
 
     static void register() {
+        PokemonCenterDefeatReturn.setStarterRecovery(player -> {
+            StarterConfig config = configs.get(defaultGeneration);
+            BuildingRuntimeSystem.SpawnDestination destination = config == null || !config.enabled
+                ? null : CobbleventureBootstrap.resolveStarterSpawn(player.getServer(), config);
+            return destination == null ? null : new PokemonCenterDefeatReturn.RecoveryDestination(
+                destination.level(), destination.position()
+            );
+        });
         NeoForge.EVENT_BUS.addListener(StarterSpawnSystem::onChangedDimension);
         NeoForge.EVENT_BUS.addListener(StarterSpawnSystem::onLoggedIn);
         NeoForge.EVENT_BUS.addListener(StarterSpawnSystem::registerTestCommand);

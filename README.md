@@ -12,6 +12,7 @@
 
 ## 문서
 
+- [테스트용 치트 명령어 — 전체 목록과 사용 예시](docs/CHEAT_COMMANDS.md)
 - [Content Studio 사용자 가이드](guide/README.md)
 - [프로젝트 기획서](docs/PROJECT_PLAN.md)
 - [구현 설계 문서 안내](docs/implementation/README.md)

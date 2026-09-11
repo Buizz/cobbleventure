@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.battles.BattleRegistry;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.mojang.logging.LogUtils;
 import dev.buizz.cobbleventure.adventure.event.EventDialogueLifecycle;
 import dev.buizz.cobbleventure.adventure.event.EventBattleBridge;
 import dev.buizz.cobbleventure.adventure.event.EventNpcInteractionHandler;
@@ -15,8 +16,10 @@ import dev.buizz.cobbleventure.adventure.event.EventSessionKey;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,6 +43,9 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 /** Returns a player with a fully fainted party to the nurse that last healed them. */
 public final class PokemonCenterDefeatReturn {
+    private static final org.slf4j.Logger LOGGER = LogUtils.getLogger();
+    private static final String RECOVERY_REQUIRED = "cobbleventureDefeatRecoveryRequired";
+    private static final long RETRY_TICKS = 100L;
     private static final String CHECKPOINT_DIMENSION = "cobbleventurePokemonCenterDimension";
     private static final String CHECKPOINT_X = "cobbleventurePokemonCenterX";
     private static final String CHECKPOINT_Y = "cobbleventurePokemonCenterY";
@@ -62,6 +68,7 @@ public final class PokemonCenterDefeatReturn {
     private static final Map<UUID, RecoverySequence> ACTIVE_RECOVERIES = new HashMap<>();
     private static final Map<UUID, UUID> FORFEITED_BATTLES = new HashMap<>();
     private static Predicate<ServerPlayer> defeatRecoveryOverride = player -> false;
+    private static Function<ServerPlayer, RecoveryDestination> starterRecovery = player -> null;
     private static boolean registered;
 
     private PokemonCenterDefeatReturn() {}
@@ -100,6 +107,13 @@ public final class PokemonCenterDefeatReturn {
      */
     public static void setDefeatRecoveryOverride(Predicate<ServerPlayer> override) {
         defeatRecoveryOverride = override == null ? player -> false : override;
+    }
+
+    public record RecoveryDestination(ServerLevel level, BlockPos position) {}
+
+    /** Resolves the authored start again when a saved checkpoint is missing or unsafe. */
+    public static void setStarterRecovery(Function<ServerPlayer, RecoveryDestination> resolver) {
+        starterRecovery = resolver;
     }
 
     /**
@@ -210,16 +224,15 @@ public final class PokemonCenterDefeatReturn {
     public static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
         long gameTime = server.overworld().getGameTime();
-        Iterator<Map.Entry<UUID, PendingReturn>> iterator = PENDING_RETURNS.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<UUID, PendingReturn> entry = iterator.next();
+        // Starting a recovery can enqueue a retry; iterate a snapshot for multiple players.
+        for (Map.Entry<UUID, PendingReturn> entry : List.copyOf(PENDING_RETURNS.entrySet())) {
             PendingReturn pending = entry.getValue();
             if (pending.returnAt > gameTime) {
                 continue;
             }
             ServerPlayer player = server.getPlayerList().getPlayer(entry.getKey());
             if (player == null) {
-                iterator.remove();
+                PENDING_RETURNS.remove(entry.getKey(), pending);
                 continue;
             }
             if (shouldDeferRecovery(
@@ -229,9 +242,12 @@ public final class PokemonCenterDefeatReturn {
                 pending.returnAt = gameTime + 1L;
                 continue;
             }
-            iterator.remove();
-            if (pending.forceRecovery || isPartyWiped(player)) {
+            PENDING_RETURNS.remove(entry.getKey(), pending);
+            if (pending.forceRecovery || player.getPersistentData().getBoolean(RECOVERY_REQUIRED)
+                || isPartyWiped(player)) {
+                player.getPersistentData().putBoolean(RECOVERY_REQUIRED, true);
                 if (defeatRecoveryOverride.test(player)) {
+                    player.getPersistentData().remove(RECOVERY_REQUIRED);
                     BattleLossEconomy.announce(player, pending.settlement);
                     continue;
                 }
@@ -251,9 +267,9 @@ public final class PokemonCenterDefeatReturn {
         ACTIVE_RECOVERIES.clear();
         FORFEITED_BATTLES.clear();
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            if (isPartyWiped(player)) {
-                Cobblemon.INSTANCE.getStorage().getParty(player).heal();
-                player.removeEffect(MobEffects.DARKNESS);
+            player.removeEffect(MobEffects.DARKNESS);
+            if (player.getPersistentData().getBoolean(RECOVERY_REQUIRED) || isPartyWiped(player)) {
+                queueRecoveryRetry(player, server.overworld().getGameTime(), null);
             }
         }
     }
@@ -272,6 +288,9 @@ public final class PokemonCenterDefeatReturn {
                     event, actor, forfeited
                 );
                 long gameTime = player.getServer().overworld().getGameTime();
+                if (forfeited || isPartyWiped(player)) {
+                    player.getPersistentData().putBoolean(RECOVERY_REQUIRED, true);
+                }
                 PENDING_RETURNS.put(
                     player.getUUID(),
                     new PendingReturn(gameTime + RETURN_DELAY_TICKS, settlement, forfeited)
@@ -289,6 +308,7 @@ public final class PokemonCenterDefeatReturn {
         BattleLossEconomy.Settlement settlement = BattleLossEconomy.settle(event);
         consumeForfeit(player.getUUID(), event.getBattle().getBattleId());
         if (!event.getBattle().isPvW()) {
+            player.getPersistentData().putBoolean(RECOVERY_REQUIRED, true);
             long gameTime = player.getServer().overworld().getGameTime();
             PENDING_RETURNS.put(
                 player.getUUID(),
@@ -318,7 +338,7 @@ public final class PokemonCenterDefeatReturn {
 
     private static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)
-            || !isPartyWiped(player)
+            || !(player.getPersistentData().getBoolean(RECOVERY_REQUIRED) || isPartyWiped(player))
             || PENDING_RETURNS.containsKey(player.getUUID())
             || ACTIVE_RECOVERIES.containsKey(player.getUUID())) {
             return;
@@ -347,34 +367,35 @@ public final class PokemonCenterDefeatReturn {
         ResourceLocation dimensionId = ResourceLocation.tryParse(
             data.getString(CHECKPOINT_DIMENSION)
         );
-        if (dimensionId == null) {
-            player.sendSystemMessage(Component.translatable(
-                "message.cobbleventure_bootstrap.pokemon_center_missing"
-            ));
-            return;
-        }
-        ResourceKey<Level> dimension = ResourceKey.create(Registries.DIMENSION, dimensionId);
-        ServerLevel destination = server.getLevel(dimension);
-        if (destination == null) {
-            player.sendSystemMessage(Component.translatable(
-                "message.cobbleventure_bootstrap.pokemon_center_missing"
-            ));
-            return;
-        }
-
+        ServerLevel destination = dimensionId == null ? null
+            : server.getLevel(ResourceKey.create(Registries.DIMENSION, dimensionId));
         BlockPos position = new BlockPos(
             data.getInt(CHECKPOINT_X), data.getInt(CHECKPOINT_Y), data.getInt(CHECKPOINT_Z)
         );
-        destination.getChunk(position);
         boolean center = data.getBoolean(CHECKPOINT_IS_CENTER);
-        BlockPos safePosition = resolveRecoveryPosition(destination, position, center);
+        // Old non-center checkpoints may contain the generic world spawn. Resolve the
+        // authored player home afresh instead of treating those coordinates as authoritative.
+        BlockPos safePosition = destination == null || !center ? null
+            : resolveRecoveryPosition(destination, position, center);
         if (safePosition == null) {
+            RecoveryDestination fallback = starterRecovery.apply(player);
+            if (fallback != null) {
+                destination = fallback.level();
+                safePosition = resolveRecoveryPosition(destination, fallback.position(), false);
+                center = false;
+                LOGGER.info("Defeat return using authored start: player={}, target={}/{}",
+                    player.getUUID(), destination.dimension().location(), safePosition);
+            }
+        }
+        if (safePosition == null) {
+            queueRecoveryRetry(player, gameTime, settlement);
             player.sendSystemMessage(Component.translatable(
                 "message.cobbleventure_bootstrap.pokemon_center_missing"
             ));
             return;
         }
         position = safePosition;
+        ResourceKey<Level> dimension = destination.dimension();
         player.addEffect(new MobEffectInstance(
             MobEffects.DARKNESS,
             (int) (center ? NURSE_DIALOGUE_TIMEOUT_TICKS : RECOVERY_COMPLETE_TICKS) + 20,
@@ -424,13 +445,35 @@ public final class PokemonCenterDefeatReturn {
                 ServerLevel destination = server.getLevel(recovery.dimension);
                 if (destination == null) {
                     iterator.remove();
+                    queueRecoveryRetry(player, gameTime,
+                        recovery.moneyAnnounced ? null : recovery.settlement);
                     player.removeEffect(MobEffects.DARKNESS);
                     player.sendSystemMessage(Component.translatable(
                         "message.cobbleventure_bootstrap.pokemon_center_missing"
                     ));
                     continue;
                 }
-                teleport(player, destination, recovery.position);
+                if (recovery.arrival == null) {
+                    teleport(player, destination, recovery.position);
+                    recovery.arrival = new DefeatReturnArrival(gameTime);
+                    continue;
+                }
+                DefeatReturnArrival.Result arrival = recovery.arrival.check(gameTime,
+                    player.serverLevel().dimension().equals(recovery.dimension),
+                    player.distanceToSqr(recovery.position.getX() + 0.5D,
+                        recovery.position.getY(), recovery.position.getZ() + 0.5D)
+                );
+                if (arrival == DefeatReturnArrival.Result.DISPLACED) {
+                    LOGGER.warn("Defeat return displaced: player={}, actual={}/{}, target={}/{}",
+                        player.getUUID(), player.serverLevel().dimension().location(),
+                        player.blockPosition(), recovery.dimension.location(), recovery.position);
+                    iterator.remove();
+                    player.removeEffect(MobEffects.DARKNESS);
+                    queueRecoveryRetry(player, gameTime,
+                        recovery.moneyAnnounced ? null : recovery.settlement);
+                    continue;
+                }
+                if (arrival == DefeatReturnArrival.Result.WAITING) continue;
                 if (!recovery.center) {
                     Cobblemon.INSTANCE.getStorage().getParty(player).heal();
                 }
@@ -488,6 +531,7 @@ public final class PokemonCenterDefeatReturn {
     private static BlockPos resolveRecoveryPosition(
         ServerLevel level, BlockPos saved, boolean center
     ) {
+        level.getChunk(saved);
         if (isSafeStandingRoom(level, saved)) return saved;
         if (center) {
             AABB column = new AABB(
@@ -507,9 +551,7 @@ public final class PokemonCenterDefeatReturn {
                 if (nearNurse != null) return nearNurse;
             }
         }
-        BlockPos nearby = findNearbySafeRoom(level, saved, 5, 16);
-        if (nearby != null) return nearby;
-        return findNearbySafeRoom(level, level.getSharedSpawnPos(), 8, 16);
+        return findNearbySafeRoom(level, saved, 5, 16);
     }
 
     private static double horizontalDistance(BlockPos left, BlockPos right) {
@@ -578,6 +620,7 @@ public final class PokemonCenterDefeatReturn {
     }
 
     private static void finishRecovery(ServerPlayer player, boolean center) {
+        player.getPersistentData().remove(RECOVERY_REQUIRED);
         player.removeEffect(MobEffects.DARKNESS);
         player.sendSystemMessage(Component.translatable(
             center
@@ -624,6 +667,20 @@ public final class PokemonCenterDefeatReturn {
         return registeredBattle || pendingTrainerBattle;
     }
 
+    private static void queueRecoveryRetry(
+        ServerPlayer player, long gameTime, BattleLossEconomy.Settlement settlement
+    ) {
+        player.getPersistentData().putBoolean(RECOVERY_REQUIRED, true);
+        PENDING_RETURNS.put(player.getUUID(), new PendingReturn(
+            gameTime + RETRY_TICKS, settlement, true
+        ));
+        LOGGER.warn("Defeat recovery pending retry: player={}, checkpoint={}/({}, {}, {})",
+            player.getUUID(), player.getPersistentData().getString(CHECKPOINT_DIMENSION),
+            player.getPersistentData().getInt(CHECKPOINT_X),
+            player.getPersistentData().getInt(CHECKPOINT_Y),
+            player.getPersistentData().getInt(CHECKPOINT_Z));
+    }
+
     private static void saveCheckpoint(
         CompoundTag data,
         ServerLevel level,
@@ -648,6 +705,7 @@ public final class PokemonCenterDefeatReturn {
         private final long startedAt;
         private final BattleLossEconomy.Settlement settlement;
         private boolean teleported;
+        private DefeatReturnArrival arrival;
         private boolean moneyAnnounced;
         private UUID nurseNpcId;
         private boolean dialogueStarted;
