@@ -5917,8 +5917,8 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn("function toggleNavigationGroup", script)
         self.assertIn("function validateMainNavigation()", script)
         self.assertIn("validateMainNavigation();", script)
-        self.assertIn("openNavigationGroup(group);", script)
-        self.assertNotIn('group.classList.remove("is-open")', script)
+        self.assertIn('group.classList.toggle("is-open", shouldOpen)', script)
+        self.assertIn('items.hidden = !shouldOpen', script)
         self.assertIn('aria-expanded="false"', html)
         navigation = html.split('<nav class="nav-tree"', 1)[1].split('</nav>', 1)[0]
         self.assertNotIn("<span>", navigation)

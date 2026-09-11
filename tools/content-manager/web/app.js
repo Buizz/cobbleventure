@@ -1044,7 +1044,11 @@ function openNavigationGroup(group) {
 
 function toggleNavigationGroup(group) {
   if (!group) return;
-  openNavigationGroup(group);
+  const shouldOpen = !group.classList.contains("is-open");
+  group.classList.toggle("is-open", shouldOpen);
+  group.querySelector(".nav-group-toggle")?.setAttribute("aria-expanded", String(shouldOpen));
+  const items = group.querySelector(".nav-group-items");
+  if (items) items.hidden = !shouldOpen;
 }
 
 function validateMainNavigation() {
