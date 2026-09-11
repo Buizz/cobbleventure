@@ -1,10 +1,15 @@
 {
   "schema_version": 1,
-  "provider": "The Skindex (MinecraftSkins.com)",
-  "provider_terms": "https://www.minecraftskins.com/terms-and-conditions/",
+  "provider": "Community skin platforms (The Skindex / Planet Minecraft)",
+  "provider_terms": "각 source_url의 게시물과 해당 플랫폼 이용 조건을 따릅니다.",
   "retrieved_at": "2026-08-07",
-  "note": "원본 업로더가 저작권을 보유합니다. 공개 재배포 전 각 제작자의 허가 조건을 별도로 확인해야 합니다.",
+  "note": "커뮤니티 스킨의 권리는 각 제작자에게 있습니다. 이 카탈로그는 출처와 로컬 오버라이드 슬롯만 기록하며 원본·가공 스킨 파일은 Git이나 배포본에 포함하지 않습니다.",
+  "contact": "https://github.com/Buizz/cobbleventure/issues",
   "skins": [
+    { "resource": "cobbleventure:trainer_skin/erika", "title": "Erika (HGSS)", "creator": "Skycrafts", "creator_url": "https://www.planetminecraft.com/member/skycrafts/", "source_url": "https://www.planetminecraft.com/skin/erika-hgss/", "source_model": "classic", "target_model": "classic" },
+    { "resource": "cobbleventure:trainer_skin/blaine", "title": "Blaine (HGSS)", "creator": "Skycrafts", "creator_url": "https://www.planetminecraft.com/member/skycrafts/", "source_url": "https://www.planetminecraft.com/skin/blaine-hgss/", "source_model": "classic", "target_model": "classic" },
+    { "resource": "cobbleventure:trainer_skin/koga", "title": "Koga (HGSS)", "creator": "Skycrafts", "creator_url": "https://www.planetminecraft.com/member/skycrafts/", "source_url": "https://www.planetminecraft.com/skin/koga-hgss/", "source_model": "classic", "target_model": "classic" },
+    { "resource": "cobbleventure:trainer_skin/sabrina", "title": "Sabrina (HGSS)", "creator": "Skycrafts", "creator_url": "https://www.planetminecraft.com/member/skycrafts/", "source_url": "https://www.planetminecraft.com/skin/sabrina-hgss/", "source_model": "classic", "target_model": "classic" },
     { "resource": "cobbleventure:trainer_skin/hex_maniac", "title": "Hex Maniac", "creator": "DemonKing69", "creator_url": "https://www.planetminecraft.com/member/demonking69/", "source_url": "https://www.planetminecraft.com/skin/hex-maniac-6686393/", "source_model": "slim", "target_model": "slim" },
     { "resource": "cobbleventure:trainer_skin/youngster", "title": "Youngster From Pokemon NPC Trainer", "creator": "DemonKing69", "creator_url": "https://www.planetminecraft.com/member/demonking69/", "source_url": "https://www.planetminecraft.com/skin/youngster-from-pokemon-npc-trainer/", "source_model": "classic", "target_model": "classic" },
     { "resource": "cobbleventure:trainer_skin/police_officer", "title": "Police Officer", "creator": "enrorhf", "creator_url": "https://www.planetminecraft.com/member/enrorhf/", "source_url": "https://www.planetminecraft.com/skin/police-officer-3686106/", "source_model": "classic", "target_model": "classic" },

@@ -5499,18 +5499,30 @@ class ContentManagerTests(unittest.TestCase):
         script = (CORE_ROOT / "tools" / "content-manager" / "web" / "app.js").read_text(encoding="utf-8")
         self.assertIn('id="league-team-editor"', page)
         self.assertIn('id="league-team-list" class="team-list"', page)
-        self.assertIn("연결된 배틀 프리셋의 포켓몬 엔트리를 NPC·배틀 편집기와 같은 형태로 수정합니다.", page)
+        self.assertIn("이 페이지에서 포켓몬과 기술, 능력치, 도구를 직접 편집합니다.", page)
         self.assertIn("function loadLeagueBattlePreset", script)
         self.assertIn('renderTeam("#league-team-list")', script)
         self.assertIn('category=battles", { method: "POST", body: JSON.stringify(state.leagueBattlePreset)', script)
         self.assertIn('body: JSON.stringify(state.leagueBattlePreset)', script)
+        self.assertIn('name="leaderIdentityMode"', page)
+        self.assertIn('data-official-leader-field', page)
+        self.assertIn('본가 관장은 이름과 외형을 캐릭터 카탈로그에서 자동 적용합니다.', page)
+        self.assertIn("function applyOfficialLeagueCharacter", script)
+        self.assertIn("identity_source: identitySource", script)
+        league_form = page.split('id="league-form"', 1)[1].split('</form>', 1)[0]
+        create_form = page.split('id="league-member-form"', 1)[1].split('</form>', 1)[0]
+        self.assertNotIn("리그 항목 ID", league_form)
+        self.assertNotIn("지역 ID", league_form)
+        self.assertNotIn("지역 ID", create_form)
+        self.assertNotIn('region: form.elements.region.value.trim(),', script)
+        self.assertNotIn('entry.region = form.elements.region.value.trim()', script)
 
     def test_web_separates_npc_and_battle_preset_pages(self) -> None:
         root = PROJECT_ROOT
         page = (CORE_ROOT / "tools" / "content-manager" / "web" / "index.html").read_text(encoding="utf-8")
         script = (CORE_ROOT / "tools" / "content-manager" / "web" / "app.js").read_text(encoding="utf-8")
-        self.assertIn('data-section="trainers">NPC 관리', page)
-        self.assertIn('data-section="battles">배틀 프리셋 관리', page)
+        self.assertIn('data-section="trainers">NPC', page)
+        self.assertIn('data-section="battles">배틀 프리셋', page)
         self.assertIn('id="battle-list"', page)
         self.assertIn('id="battle-form"', page)
         self.assertIn('id="event-command-list"', page)
@@ -5875,8 +5887,8 @@ class ContentManagerTests(unittest.TestCase):
         script = (CORE_ROOT / "tools/content-manager/web/app.js").read_text(encoding="utf-8")
         styles = (CORE_ROOT / "tools/content-manager/web/styles.css").read_text(encoding="utf-8")
         self.assertIn('data-section="routes"', html)
-        self.assertIn('data-section="settlements">마을 관리', html)
-        self.assertIn('data-section="routes">길 관리', html)
+        self.assertIn('data-section="settlements">마을', html)
+        self.assertIn('data-section="routes">길', html)
         self.assertNotIn('<span>06</span>마을 프리셋', html)
         self.assertNotIn('<span>07</span>길 프리셋', html)
         self.assertIn('activeNavigationItem?.textContent.trim()', script)
@@ -5910,7 +5922,7 @@ class ContentManagerTests(unittest.TestCase):
             "dungeon": ("dungeons", "dungeon-chambers", "dungeon-pieces"),
             "characters": ("starter-settings", "trainers", "system-npcs", "battles", "league"),
             "content": ("definitions", "economy", "casino-config"),
-            "resources": ("space-connections", "structures", "live-nbt-editor", "music", "global-resources", "pokefinder-icons", "builds"),
+            "resources": ("space-connections", "structures", "live-nbt-editor", "music", "global-resources", "skin-settings", "pokefinder-icons", "builds"),
         }
         for group, sections in expected_groups.items():
             group_markup = html.split(f'data-nav-group="{group}"', 1)[1].split('</section>', 1)[0]
@@ -5919,15 +5931,30 @@ class ContentManagerTests(unittest.TestCase):
             for section in sections:
                 self.assertEqual(1, html.count(f'data-section="{section}"'))
         self.assertIn('<strong>월드 · 지역</strong>', html)
-        self.assertIn('<strong>던전 제작</strong>', html)
+        self.assertIn('<strong>던전</strong>', html)
         self.assertIn('<strong>캐릭터 · 전투</strong>', html)
         self.assertIn('<strong>스토리 · 시스템</strong>', html)
-        self.assertIn('<strong>공간 · 리소스 · 빌드</strong>', html)
-        self.assertIn('data-section="dungeon-chambers">던전 공동 라이브러리', html)
-        self.assertIn('data-section="dungeon-pieces">던전 조각 라이브러리', html)
-        self.assertIn('data-section="economy">상점 · 드롭 · 교환식', html)
-        self.assertIn('data-section="music">음악 라이브러리 · 배정', html)
-        self.assertIn('data-section="builds">팩 빌드 · 인스턴스 설치', html)
+        self.assertIn('<strong>리소스 · 도구</strong>', html)
+        self.assertIn('data-section="dungeon-chambers">방 라이브러리', html)
+        self.assertIn('data-section="dungeon-pieces">연결 조각', html)
+        self.assertIn('data-section="economy">경제 · 제작', html)
+        self.assertIn('data-section="music">음악', html)
+        self.assertIn('data-section="builds">빌드 · 설치', html)
+        expected_labels = {
+            "worlds": "월드맵", "biomes": "바이옴", "settlements": "마을", "routes": "길",
+            "forests": "숲", "caves": "동굴", "underground-roads": "지하통로",
+            "dungeons": "던전 설정", "dungeon-chambers": "방 라이브러리", "dungeon-pieces": "연결 조각",
+            "starter-settings": "시작 위치", "trainers": "NPC", "system-npcs": "시스템 NPC",
+            "battles": "배틀 프리셋", "league": "리그", "definitions": "게임 데이터",
+            "economy": "경제 · 제작", "casino-config": "카지노 · 가챠", "space-connections": "공간 연결",
+            "structures": "NBT 건물", "live-nbt-editor": "라이브 NBT", "music": "음악",
+            "global-resources": "대화 · 메뉴 테마", "skin-settings": "트레이너 스킨",
+            "pokefinder-icons": "포켓파인더 아이콘", "builds": "빌드 · 설치",
+        }
+        for section, label in expected_labels.items():
+            self.assertIn(f'data-section="{section}">{label}</', html)
+        self.assertIn('data-tool-title="이벤트 관리">이벤트</a>', html)
+        self.assertIn('data-tool-title="퀘스트 관리">퀘스트</a>', html)
         self.assertIn("function openNavigationGroup", script)
         self.assertIn("function toggleNavigationGroup", script)
         self.assertIn("function validateMainNavigation()", script)
@@ -5964,7 +5991,7 @@ class ContentManagerTests(unittest.TestCase):
         styles = (web_root / "styles.css").read_text(encoding="utf-8")
 
         self.assertIn('data-section="starter-settings"', html)
-        self.assertIn('data-section="starter-settings">스타팅 위치', html)
+        self.assertIn('data-section="starter-settings">시작 위치', html)
         self.assertIn('id="starter-default-generation"', html)
         self.assertIn('data-starter-mode="town"', html)
         self.assertIn('data-starter-mode="building"', html)
@@ -5996,7 +6023,7 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn('.gacha-casino-set-heading > strong { min-width:0; overflow-wrap:anywhere; word-break:keep-all; }', styles)
 
         self.assertIn('data-section="casino-config"', html)
-        self.assertIn('data-section="casino-config">카지노 · 가챠 관리', html)
+        self.assertIn('data-section="casino-config">카지노 · 가챠', html)
         self.assertNotIn('id="casino-config-file-list"', html)
         self.assertNotIn('id="casino-config-form"', html)
         self.assertNotIn('id="casino-config-json"', html)
@@ -6942,7 +6969,7 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn("cheat_probability", app_script)
         self.assertIn("PokeAPI/sprites/master/sprites/pokemon", app_script)
         self.assertIn("trainerReferenceSprites", app_script)
-        self.assertIn("본가 디자인 기준", app_script)
+        self.assertNotIn("본가 디자인 기준", app_script)
         self.assertIn("현재 Minecraft 외형", app_script)
         self.assertIn("rosterCharacterOptions", app_script)
         self.assertIn("rosterCharactersForClass", app_script)
@@ -6963,7 +6990,7 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn("trainer-reference:", app_script)
         self.assertIn("/api/trainer-skin?resource=", app_script)
         self.assertNotIn("https://gitlab.com/srcmc/rct/mod/-/raw/1.21.1/common", app_script)
-        self.assertIn("trainer-reference-image", styles)
+        self.assertNotIn("trainer-reference-image", styles)
         self.assertIn("world-map-viewport", styles)
         self.assertIn("hex-settlement", styles)
         self.assertIn("hex-route", styles)
@@ -9024,20 +9051,34 @@ class ContentManagerTests(unittest.TestCase):
                 "schema_version": 1,
                 "badges": [{"id": "cobbleventure:badge/test/stone"}],
             }), encoding="utf-8")
+            (catalogs / "trainer-roster.json").write_text(json.dumps({
+                "schema_version": 1,
+                "league_characters": [{
+                    "id": "cobbleventure:character/brock",
+                    "display_name": {"ko_kr": "웅", "en_us": "Brock"},
+                    "role": "gym_leader",
+                    "appearance": {
+                        "source": "rct_single", "type": "skin",
+                        "resource": "rctmod:trainers/single/kanto_brock",
+                    },
+                }],
+                "organizations": [],
+            }), encoding="utf-8")
 
             leader, leader_issues = content_manager.create_league_member(root, {
                 "role": "gym_leader", "slug": "test_leader", "name": "테스트 관장",
                 "name_en": "Test Leader", "generation": 1,
-                "region": "cobbleventure:region/test", "order": 1, "level_cap": 20,
+                "order": 1, "level_cap": 20,
                 "primary_type": "rock", "theme": "rock", "badge_id": "cobbleventure:badge/test/stone",
+                "identity_source": "official", "appearance_source": "custom",
                 "character": "cobbleventure:character/brock",
-                "appearance_resource": "rctmod:trainers/single/kanto_brock",
+                "appearance_resource": "cobbleventure:trainer_skin/ignored_for_official",
                 "reward_money": 500, "reward_item": "cobblemon:potion", "reward_item_count": 2,
             })
             elite, elite_issues = content_manager.create_league_member(root, {
                 "role": "elite_four", "slug": "test_elite", "name": "테스트 사천왕",
                 "name_en": "Test Elite", "generation": 1,
-                "region": "cobbleventure:region/test", "order": 2, "level_cap": 50,
+                "order": 2, "level_cap": 50,
                 "primary_type": "ice", "theme": "normal", "badge_id": "",
                 "display_badge_id": "cobbleventure:badge/test/stone",
             })
@@ -9051,11 +9092,24 @@ class ContentManagerTests(unittest.TestCase):
             self.assertTrue((root / elite["battle_path"]).is_file())
             league = json.loads((catalogs / "league-progression.json").read_text(encoding="utf-8"))
             self.assertEqual(["gym_leader", "elite_four"], [entry["role"] for entry in league["entries"]])
+            self.assertEqual(
+                ["cobbleventure:region/kanto", "cobbleventure:region/kanto"],
+                [entry["region"] for entry in league["entries"]],
+            )
+            self.assertEqual(
+                ["cobbleventure:league/kanto/test_leader", "cobbleventure:league/kanto/test_elite"],
+                [entry["id"] for entry in league["entries"]],
+            )
             self.assertNotIn("trainer_card_order", league["entries"][0])
             self.assertNotIn("trainer_id", league["entries"][0])
             self.assertEqual(500, league["entries"][0]["encounter"]["rewards"]["money"])
             self.assertEqual("rock", league["entries"][0]["primary_type"])
+            self.assertEqual("웅", league["entries"][0]["display_name"]["ko_kr"])
+            self.assertEqual("Brock", league["entries"][0]["display_name"]["en_us"])
+            self.assertEqual("official", league["entries"][0]["encounter"]["identity_source"])
             self.assertEqual("cobbleventure:character/brock", league["entries"][0]["encounter"]["character"])
+            self.assertEqual("rct_single", league["entries"][0]["encounter"]["appearance"]["source"])
+            self.assertEqual("rctmod:trainers/single/kanto_brock", league["entries"][0]["encounter"]["appearance"]["resource"])
             self.assertEqual("ice", league["entries"][1]["primary_type"])
             self.assertEqual("cobbleventure:badge/test/stone", league["entries"][1]["badge_id"])
             gyms = json.loads((catalogs / "gyms.json").read_text(encoding="utf-8"))

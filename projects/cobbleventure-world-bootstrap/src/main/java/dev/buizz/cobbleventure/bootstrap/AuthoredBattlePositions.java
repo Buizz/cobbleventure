@@ -45,7 +45,7 @@ final class AuthoredBattlePositions {
         Entity npc = event.opponent();
         for (Arena arena : ARENAS.values()) {
             if (player.serverLevel() != arena.level || npc.level() != arena.level
-                || !npc.getTags().contains(arena.npcTag)
+                || !AuthoredNpcIdentity.matches(npc.getTags(), arena.npcTag)
                 || npc.distanceToSqr(Vec3.atBottomCenterOf(arena.opponent)) > 16) continue;
             AABB room = new AABB(Vec3.atLowerCornerOf(arena.player),
                 Vec3.atLowerCornerOf(arena.opponent)).inflate(8, 4, 8);

@@ -19,6 +19,14 @@ OWNER = 'cobbleventure:league/indigo_plateau'
 
 
 class KantoLeagueTests(unittest.TestCase):
+    def test_generated_trainers_emit_the_identity_used_by_battle_positioning(self):
+        from generate_easy_npc_presets import npc_identity_tag_fragment
+        encounters = leagues.generated_encounters(PROJECT)
+        self.assertEqual(5, len(encounters))
+        for encounter in encounters:
+            identity = 'cobbleventure_npc/' + encounter['npc']['id'].replace(':', '/')
+            self.assertIn(json.dumps(identity), npc_identity_tag_fragment(encounter['npc']))
+
     @classmethod
     def setUpClass(cls):
         cls.catalog = leagues.read(PROJECT / leagues.CATALOG)

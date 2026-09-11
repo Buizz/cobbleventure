@@ -1,9 +1,11 @@
 event interact(range: 4) {
   page when flag("cobbleventure:runtime/npc_instance_defeated") {
-    say npc "이미 실력을 증명했군. 다음 목표를 향해 나아가라."
+    say npc "패배한 내가 부하들 앞에 설 수는 없다. 로켓단은 오늘로 끝이다. 나 역시 처음부터 다시 수련하겠다."
   }
   page default {
-    say npc "체육관에 온 것을 환영한다. 준비가 됐다면 승부하자!"
+    say npc "후후후... 또다시 내 앞에 나타났군."
+    say npc "이곳에서 로켓단을 다시 일으킬 계획이었지만, 네가 끝까지 방해하는군."
+    say npc "좋다. 이번에는 봐주지 않겠다! 최강의 트레이너 비주기의 전력을 받아 보아라!"
     id "challenge/battle" await battle "cobbleventure:battle/gym_leader/giovanni_gym" -> result
     if result.outcome == "win" {
       id "victory/set_instance_defeated" set_flag "cobbleventure:runtime/npc_instance_defeated" true
@@ -12,9 +14,10 @@ event interact(range: 4) {
       id "victory/grant_badge" grant_badge "cobbleventure:badge/kanto/earth"
       id "victory/grant_field_move" grant_field_move rock_climb
       id "victory/set_level_cap" set_level_cap 100
-      say npc "훌륭한 승부였다. 그린배지와 함께 락클라임을 사용할 자격을 주겠다."
+      say npc "이토록 치열한 승부에서 네가 끝내 이겼군. 완벽한 패배다."
+      say npc "그린배지를 받아라. 락클라임을 다룰 자격도 네게 있다."
     } else {
-      say npc "좋은 승부였다. 준비해서 다시 도전해라."
+      say npc "아직 나를 넘어설 힘은 없군. 각오를 다지고 다시 찾아와라."
     }
   }
 }

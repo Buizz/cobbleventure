@@ -1,9 +1,11 @@
 event interact(range: 4) {
   page when flag("cobbleventure:runtime/npc_instance_defeated") {
-    say npc "이미 실력을 증명했군. 다음 목표를 향해 나아가라."
+    say npc "힘만으로는 모든 승부를 이길 수 없다. 변화무쌍한 전술을 익혀 더 높은 경지로 나아가거라."
   }
   page default {
-    say npc "체육관에 온 것을 환영한다. 준비가 됐다면 승부하자!"
+    say npc "후하하하! 어린 트레이너가 감히 닌자의 길에 도전하는가!"
+    say npc "독은 서서히 숨통을 조이고, 잠은 반격할 틈마저 빼앗는다."
+    say npc "독타입 포켓몬이 펼치는 공포의 비술을 견뎌 보아라!"
     id "challenge/battle" await battle "cobbleventure:battle/gym_leader/koga" -> result
     if result.outcome == "win" {
       id "victory/set_instance_defeated" set_flag "cobbleventure:runtime/npc_instance_defeated" true
@@ -12,9 +14,10 @@ event interact(range: 4) {
       id "victory/grant_badge" grant_badge "cobbleventure:badge/kanto/soul"
       id "victory/grant_field_move" grant_field_move surf -> surf_granted
       id "victory/set_level_cap" set_level_cap 43
-      say npc "훌륭한 승부였다. 이 배지와 함께 파도타기 사용을 허가하마."
+      say npc "흥! 네 실력과 인내를 인정하마."
+      say npc "연분홍배지를 받아라. 이제 파도타기의 비술도 다룰 자격이 있다."
     } else {
-      say npc "좋은 승부였다. 준비해서 다시 도전해라."
+      say npc "맹독은 시간이 흐를수록 깊어지는 법. 조급함을 버리고 다시 수련해 오너라!"
     }
   }
 }

@@ -1,9 +1,11 @@
 event interact(range: 4) {
   page when flag("cobbleventure:runtime/npc_instance_defeated") {
-    say npc "이미 실력을 증명했군. 다음 목표를 향해 나아가라."
+    say npc "그 배짱을 잊지 마라! 어떤 전장에서도 포켓몬과 함께라면 길을 열 수 있을 거다."
   }
   page default {
-    say npc "체육관에 온 것을 환영한다. 준비가 됐다면 승부하자!"
+    say npc "이봐, 꼬마! 전기 포켓몬은 얕볼 상대가 아니다!"
+    say npc "전쟁터에서 녀석들의 전기가 몇 번이나 나를 구해 줬지."
+    say npc "마비와 강렬한 전격 앞에서도 버틸 수 있는지 시험해 주마!"
     id "challenge/battle" await battle "cobbleventure:battle/gym_leader/lt_surge" -> result
     if result.outcome == "win" {
       id "victory/set_instance_defeated" set_flag "cobbleventure:runtime/npc_instance_defeated" true
@@ -11,9 +13,10 @@ event interact(range: 4) {
       id "victory/give_money" give_money 2400
       id "victory/grant_badge" grant_badge "cobbleventure:badge/kanto/thunder"
       id "victory/set_level_cap" set_level_cap 29
-      say npc "훌륭한 승부였다. 이 배지는 네 것이다."
+      say npc "이런, 제대로 감전된 쪽은 나였군! 배짱 좋은 트레이너다."
+      say npc "오렌지배지는 네 것이다. 당당히 가져가라!"
     } else {
-      say npc "좋은 승부였다. 준비해서 다시 도전해라."
+      say npc "전투에서는 힘만큼 신중함도 중요하다! 전기 대책을 세워서 다시 와라, 꼬마!"
     }
   }
 }

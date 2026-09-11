@@ -1,9 +1,11 @@
 event interact(range: 4) {
   page when flag("cobbleventure:runtime/npc_instance_defeated") {
-    say npc "이미 실력을 증명했군. 다음 목표를 향해 나아가라."
+    say npc "내 물타입 포켓몬도 계속 강해질 거야. 너도 다음 승부에서 더 강해진 모습을 보여 줘!"
   }
   page default {
-    say npc "체육관에 온 것을 환영한다. 준비가 됐다면 승부하자!"
+    say npc "처음 보는 얼굴이네! 나는 블루시티 체육관 관장 이슬이야."
+    say npc "포켓몬을 키울 때는 누구나 자신만의 방침이 있어야 해."
+    say npc "내 방침은 물타입 포켓몬으로 처음부터 끝까지 전력 공격이야!"
     id "challenge/battle" await battle "cobbleventure:battle/gym_leader/misty" -> result
     if result.outcome == "win" {
       id "victory/set_instance_defeated" set_flag "cobbleventure:runtime/npc_instance_defeated" true
@@ -11,9 +13,10 @@ event interact(range: 4) {
       id "victory/give_money" give_money 2100
       id "victory/grant_badge" grant_badge "cobbleventure:badge/kanto/cascade"
       id "victory/set_level_cap" set_level_cap 24
-      say npc "훌륭한 승부였다. 이 배지는 네 것이다."
+      say npc "와, 정말 강하네! 네 실력은 인정할 수밖에 없겠어."
+      say npc "나를 이긴 증표로 블루배지를 가져가."
     } else {
-      say npc "좋은 승부였다. 준비해서 다시 도전해라."
+      say npc "봤지? 물타입의 거센 공격은 쉽게 멈추지 않아. 다음에는 더 힘껏 덤벼 봐!"
     }
   }
 }

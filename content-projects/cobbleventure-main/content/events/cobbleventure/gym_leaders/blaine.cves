@@ -1,9 +1,11 @@
 event interact(range: 4) {
   page when flag("cobbleventure:runtime/npc_instance_defeated") {
-    say npc "이미 실력을 증명했군. 다음 목표를 향해 나아가라."
+    say npc "좋은 승부는 언제나 연구할 가치가 있지! 그 뜨거운 마음으로 마지막 배지를 향해 가게!"
   }
   page default {
-    say npc "체육관에 온 것을 환영한다. 준비가 됐다면 승부하자!"
+    say npc "하하! 나는 홍련체육관의 뜨거운 퀴즈 마스터 강연이다!"
+    say npc "내 불꽃 포켓몬은 오랜 세월 뜨겁게 단련되어 왔지."
+    say npc "화상치료제는 준비했나? 지금부터 불타는 승부다!"
     id "challenge/battle" await battle "cobbleventure:battle/gym_leader/blaine" -> result
     if result.outcome == "win" {
       id "victory/set_instance_defeated" set_flag "cobbleventure:runtime/npc_instance_defeated" true
@@ -11,9 +13,10 @@ event interact(range: 4) {
       id "victory/give_money" give_money 4700
       id "victory/grant_badge" grant_badge "cobbleventure:badge/kanto/volcano"
       id "victory/set_level_cap" set_level_cap 50
-      say npc "훌륭한 승부였다. 이 배지는 네 것이다."
+      say npc "내 불꽃이 완전히 타버렸군! 네 열정이 한 수 위였다."
+      say npc "승리의 증표인 진홍색배지를 받아라!"
     } else {
-      say npc "좋은 승부였다. 준비해서 다시 도전해라."
+      say npc "하하! 정답은 불꽃보다 뜨거운 투지다! 준비를 갖추고 다시 도전하게!"
     }
   }
 }

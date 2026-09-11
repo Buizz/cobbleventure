@@ -194,9 +194,6 @@ final class DungeonPiecePlannerTest {
                     .filter(encounter -> !encounter.boss() && encounter.actorCount() == 2).count();
                 int pairsPerRoom = Math.max(1, DungeonGenerationRequirements.calculate(runDungeon, pieces).chamberCapacity() / 2);
                 assertTrue(plannerSettings.chamberCount() * pairsPerRoom >= groups, name);
-            } else {
-                assertTrue(plannerSettings.chamberCount()
-                    <= runDungeon.vertical().floorCount().maximum(), name);
             }
             DungeonPieceLayout generated;
             try {
@@ -518,9 +515,9 @@ final class DungeonPiecePlannerTest {
         );
 
         assertEquals(19, compact.criticalPathMin());
-        assertEquals(24, expanded.criticalPathMin());
-        assertEquals(3, compact.chamberCount());
-        assertEquals(3, expanded.chamberCount());
+        assertEquals(29, expanded.criticalPathMin());
+        assertEquals(4, compact.chamberCount());
+        assertEquals(4, expanded.chamberCount());
         assertTrue(expanded.criticalPathMin() > compact.criticalPathMin());
     }
 

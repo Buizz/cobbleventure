@@ -278,6 +278,9 @@ class EconomyCatalogTests(unittest.TestCase):
                 "height": 4, "drops": {"amount": 1, "entries": []},
             }), encoding="utf-8")
             content_manager._economy_pokemon_drops_from_cobblemon.cache_clear()
+            manifest_root = root / "staging/compiled-content/data/cobblemon/species"
+            manifest_root.mkdir(parents=True)
+            (manifest_root / ".cobbleventure-economy-manifest.json").write_text("[]\n", encoding="utf-8")
             issues = content_manager._write_economy_species_overrides(root, {
                 "pokemon_drop_rules": [{
                     "id": "cobbleventure:drop_rule/electric", "enabled": True,
@@ -290,6 +293,8 @@ class EconomyCatalogTests(unittest.TestCase):
             output = root / "staging/compiled-content/data/cobblemon/species/generation1/pikachu.json"
             generated = json.loads(output.read_text(encoding="utf-8"))
             self.assertEqual("cobblemon:thunder_stone", generated["drops"]["entries"][0]["item"])
+            self.assertTrue((manifest_root / ".cobbleventure-economy-manifest").is_file())
+            self.assertFalse((manifest_root / ".cobbleventure-economy-manifest.json").exists())
 
     def test_api_returns_resolved_catalog_and_saves_only_overrides(self):
         with tempfile.TemporaryDirectory() as directory:

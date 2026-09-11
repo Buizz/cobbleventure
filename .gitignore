@@ -64,9 +64,10 @@ tools/content-manager/.cache/
 __pycache__/
 *.py[cod]
 
-# Local licensed/reference assets (never commit source audio)
+# Local licensed/reference/override assets (never commit source media)
 /local-assets/music/
 /local-assets/skins/
+/content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/rctmod/textures/trainers/
 /tools/painting-pack/source-sprites/
 
 # Local content projects; only the Git-managed main project is shared
@@ -79,6 +80,7 @@ dist/
 staging/
 generated/
 /pack/overrides/development-placeholder/config/cobbleventure/content/
+/pack/overrides/development-placeholder/config/easy_npc/skin/
 /pack/overrides/structure-builder/config/cobbleventure/content/
 /pack/overrides/live-nbt-editor/config/cobbleventure/content/
 

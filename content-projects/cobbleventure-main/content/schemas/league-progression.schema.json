@@ -47,6 +47,7 @@
           "required": ["battle_id", "appearance", "dialogue", "rewards"],
           "properties": {
             "battle_id": { "$ref": "#/$defs/resource_id" },
+            "identity_source": { "enum": ["official", "custom"] },
             "character": { "$ref": "#/$defs/resource_id" },
             "appearance": {
               "type": "object", "additionalProperties": false,

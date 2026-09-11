@@ -1,9 +1,11 @@
 event interact(range: 4) {
   page when flag("cobbleventure:runtime/npc_instance_defeated") {
-    say npc "이미 실력을 증명했군. 다음 목표를 향해 나아가라."
+    say npc "포켓몬과 자연을 아끼는 마음을 잊지 마세요. 당신의 여행에도 아름다운 꽃이 피길 바랄게요."
   }
   page default {
-    say npc "체육관에 온 것을 환영한다. 준비가 됐다면 승부하자!"
+    say npc "어머... 잠깐 졸고 있었나 봐요."
+    say npc "저는 무지개시티 체육관의 민화. 꽃꽂이와 풀타입 포켓몬을 좋아한답니다."
+    say npc "강한 트레이너라고 들었어요. 그럼 조용히 시작해 볼까요?"
     id "challenge/battle" await battle "cobbleventure:battle/gym_leader/erika" -> result
     if result.outcome == "win" {
       id "victory/set_instance_defeated" set_flag "cobbleventure:runtime/npc_instance_defeated" true
@@ -11,9 +13,10 @@ event interact(range: 4) {
       id "victory/give_money" give_money 2900
       id "victory/grant_badge" grant_badge "cobbleventure:badge/kanto/rainbow"
       id "victory/set_level_cap" set_level_cap 43
-      say npc "훌륭한 승부였다. 이 배지는 네 것이다."
+      say npc "어머, 제가 졌군요. 아주 훌륭한 승부였어요."
+      say npc "당신의 실력에 어울리는 무지개배지를 드릴게요."
     } else {
-      say npc "좋은 승부였다. 준비해서 다시 도전해라."
+      say npc "풀은 부드러워 보여도 뿌리가 깊답니다. 포켓몬을 더 정성껏 돌본 뒤 다시 오세요."
     }
   }
 }

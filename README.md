@@ -171,6 +171,13 @@ docs/               기획, 구현 설계와 기술 문서
 
 ## 외부 그래픽 크레딧
 
+커뮤니티 트레이너 스킨의 권리는 각 제작자에게 있습니다. 공개 저장소와 배포본에는
+프로젝트 기본 스킨만 포함합니다. 개인적으로 사용할 스킨은 Content Studio의
+**트레이너 스킨 설정**에서 64×64 PNG로 적용할 수 있습니다. 파일은
+`local-assets/skins/overrides/`에만 저장되고 Git에는 올라가지 않으며, 미리보기와
+로컬 콘텐츠 빌드에서 기본 스킨을 덮어씁니다. 알려진 제작자와 원본 링크는
+[그래픽 출처 및 사용 기록](docs/asset-permissions/README.md)에 보존합니다.
+
 트레이너 카드의 배지 그래픽은 다음 픽셀 아트를 가공하여 사용합니다.
 
 - 1~6세대: [JcFerggy, 16x16 Pokemon Badge Sprites: Gen 1-6](https://www.deviantart.com/jcferggy/art/16x16-Pokemon-Badge-Sprites-Gen-1-6-544204402). 원본 설명에 따라 하나지방 배지 기반 작업은 SoaringSkies0에게도 크레딧합니다.

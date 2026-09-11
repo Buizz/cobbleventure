@@ -13,6 +13,7 @@ import subprocess
 import tempfile
 import zipfile
 import engine_content_contract
+import skin_overrides
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from tools import artifact_versions
 
@@ -64,6 +65,19 @@ def write_manifest(bundle: Path, project: Path, language: str, version: str) -> 
     write_json(bundle / "content-manifest.json", {"schema_version": 1, "engine_contract": 2,
         "project": json.loads((project / "project.json").read_text(encoding="utf-8"))["id"],
         "version": version, "language": language, "sha256": digest, "files": entries})
+
+
+def validate_cobblemon_species_payload(bundle: Path) -> None:
+    """Reject non-species JSON before Cobblemon encounters it at runtime."""
+    species_root = bundle / "data/cobblemon/species"
+    for path in sorted(species_root.rglob("*.json")):
+        try:
+            document = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            raise ValueError(f"Cobblemon species JSON을 읽을 수 없습니다: {path}: {error}") from error
+        if not isinstance(document, dict):
+            relative = path.relative_to(bundle).as_posix()
+            raise ValueError(f"Cobblemon species JSON은 객체여야 합니다: {relative}")
 
 
 def build_authoring_content(root: Path, project: Path, profile: str) -> Path:
@@ -300,6 +314,7 @@ def build(root: Path, project: Path, language: str = "ko_kr", *,
         builder.build(root)
         for category in ("assets", "data"):
             copy_tree(builder.OUTPUT / category, bundle / category)
+        skin_overrides.apply_to_bundle(root, bundle)
         presets = import_tool("generate_easy_npc_presets", root / "tools/content-manager/generate_easy_npc_presets.py")
         presets.RESOURCE_ROOT = bundle
         presets.PACK_OVERRIDE = working / "overrides"
@@ -310,6 +325,7 @@ def build(root: Path, project: Path, language: str = "ko_kr", *,
             bundle / "data/cobblemon/species")
         compile_theme_resources(project, working, bundle)
         compile_supplemental_resources(root, project, working, bundle)
+        validate_cobblemon_species_payload(bundle)
         write_manifest(bundle, project, language, versions["content_version"])
         archive.parent.mkdir(parents=True, exist_ok=True)
         temporary_archive = working / "content.zip"

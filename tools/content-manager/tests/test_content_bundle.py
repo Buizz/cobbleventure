@@ -10,6 +10,15 @@ import build_content_bundle as bundle
 
 
 class ContentBundleTests(unittest.TestCase):
+    def test_rejects_non_object_json_in_cobblemon_species_payload(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            bundle_root = Path(temporary)
+            invalid = bundle_root / "data/cobblemon/species/.internal-manifest.json"
+            invalid.parent.mkdir(parents=True)
+            invalid.write_text("[]\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Cobblemon species JSON은 객체여야 합니다"):
+                bundle.validate_cobblemon_species_payload(bundle_root)
+
     def test_indexes_preserve_legacy_objectives_and_settlement_names(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

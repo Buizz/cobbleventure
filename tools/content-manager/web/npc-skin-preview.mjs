@@ -1,5 +1,7 @@
 const skinImages = new Map();
 const previewStates = new WeakMap();
+const defaultView = { yaw: .48, pitch: .28 };
+const maximumPitch = Math.PI / 2 - .08;
 
 function loadSkin(url) {
   if (!skinImages.has(url)) {
@@ -18,47 +20,47 @@ function skinFace(x, y, width, height) {
   return { x, y, width, height };
 }
 
-function skinCuboid(top, right, front, left, back) {
-  return { top, right, front, left, back };
+function skinCuboid(top, bottom, right, front, left, back) {
+  return { top, bottom, right, front, left, back };
 }
 
 function skinParts(slim, legacy) {
   const armWidth = slim ? 3 : 4;
   const rightArm = skinCuboid(
-    skinFace(44, 16, armWidth, 4), skinFace(40, 20, 4, 12),
+    skinFace(44, 16, armWidth, 4), skinFace(44 + armWidth, 16, armWidth, 4), skinFace(40, 20, 4, 12),
     skinFace(44, 20, armWidth, 12), skinFace(44 + armWidth, 20, 4, 12),
     skinFace(48 + armWidth, 20, armWidth, 12)
   );
   const rightArmLayer = skinCuboid(
-    skinFace(44, 32, armWidth, 4), skinFace(40, 36, 4, 12),
+    skinFace(44, 32, armWidth, 4), skinFace(44 + armWidth, 32, armWidth, 4), skinFace(40, 36, 4, 12),
     skinFace(44, 36, armWidth, 12), skinFace(44 + armWidth, 36, 4, 12),
     skinFace(48 + armWidth, 36, armWidth, 12)
   );
   const leftArm = legacy ? rightArm : skinCuboid(
-    skinFace(36, 48, armWidth, 4), skinFace(32, 52, 4, 12),
+    skinFace(36, 48, armWidth, 4), skinFace(36 + armWidth, 48, armWidth, 4), skinFace(32, 52, 4, 12),
     skinFace(36, 52, armWidth, 12), skinFace(36 + armWidth, 52, 4, 12),
     skinFace(40 + armWidth, 52, armWidth, 12)
   );
   const leftArmLayer = legacy ? null : skinCuboid(
-    skinFace(52, 48, armWidth, 4), skinFace(48, 52, 4, 12),
+    skinFace(52, 48, armWidth, 4), skinFace(52 + armWidth, 48, armWidth, 4), skinFace(48, 52, 4, 12),
     skinFace(52, 52, armWidth, 12), skinFace(52 + armWidth, 52, 4, 12),
     skinFace(56 + armWidth, 52, armWidth, 12)
   );
   const rightLeg = skinCuboid(
-    skinFace(4, 16, 4, 4), skinFace(0, 20, 4, 12), skinFace(4, 20, 4, 12),
+    skinFace(4, 16, 4, 4), skinFace(8, 16, 4, 4), skinFace(0, 20, 4, 12), skinFace(4, 20, 4, 12),
     skinFace(8, 20, 4, 12), skinFace(12, 20, 4, 12)
   );
   const leftLeg = legacy ? rightLeg : skinCuboid(
-    skinFace(20, 48, 4, 4), skinFace(16, 52, 4, 12), skinFace(20, 52, 4, 12),
+    skinFace(20, 48, 4, 4), skinFace(24, 48, 4, 4), skinFace(16, 52, 4, 12), skinFace(20, 52, 4, 12),
     skinFace(24, 52, 4, 12), skinFace(28, 52, 4, 12)
   );
   return [
-    { box: [-4, 4, 0, 8, -4, 4], base: skinCuboid(skinFace(8, 0, 8, 8), skinFace(0, 8, 8, 8), skinFace(8, 8, 8, 8), skinFace(16, 8, 8, 8), skinFace(24, 8, 8, 8)), layer: skinCuboid(skinFace(40, 0, 8, 8), skinFace(32, 8, 8, 8), skinFace(40, 8, 8, 8), skinFace(48, 8, 8, 8), skinFace(56, 8, 8, 8)), layerSize: .5 },
-    { box: [-4, 4, 8, 20, -2, 2], base: skinCuboid(null, skinFace(16, 20, 4, 12), skinFace(20, 20, 8, 12), skinFace(28, 20, 4, 12), skinFace(32, 20, 8, 12)), layer: legacy ? null : skinCuboid(null, skinFace(16, 36, 4, 12), skinFace(20, 36, 8, 12), skinFace(28, 36, 4, 12), skinFace(32, 36, 8, 12)), layerSize: .15 },
+    { box: [-4, 4, 0, 8, -4, 4], base: skinCuboid(skinFace(8, 0, 8, 8), skinFace(16, 0, 8, 8), skinFace(0, 8, 8, 8), skinFace(8, 8, 8, 8), skinFace(16, 8, 8, 8), skinFace(24, 8, 8, 8)), layer: skinCuboid(skinFace(40, 0, 8, 8), skinFace(48, 0, 8, 8), skinFace(32, 8, 8, 8), skinFace(40, 8, 8, 8), skinFace(48, 8, 8, 8), skinFace(56, 8, 8, 8)), layerSize: .5 },
+    { box: [-4, 4, 8, 20, -2, 2], base: skinCuboid(skinFace(20, 16, 8, 4), skinFace(28, 16, 8, 4), skinFace(16, 20, 4, 12), skinFace(20, 20, 8, 12), skinFace(28, 20, 4, 12), skinFace(32, 20, 8, 12)), layer: legacy ? null : skinCuboid(skinFace(20, 32, 8, 4), skinFace(28, 32, 8, 4), skinFace(16, 36, 4, 12), skinFace(20, 36, 8, 12), skinFace(28, 36, 4, 12), skinFace(32, 36, 8, 12)), layerSize: .15 },
     { box: [-4 - armWidth, -4, 8, 20, -2, 2], base: rightArm, layer: legacy ? null : rightArmLayer, layerSize: .15 },
     { box: [4, 4 + armWidth, 8, 20, -2, 2], base: leftArm, layer: leftArmLayer, layerSize: .15 },
-    { box: [-4, 0, 20, 32, -2, 2], base: rightLeg, layer: legacy ? null : skinCuboid(null, skinFace(0, 36, 4, 12), skinFace(4, 36, 4, 12), skinFace(8, 36, 4, 12), skinFace(12, 36, 4, 12)), layerSize: .15 },
-    { box: [0, 4, 20, 32, -2, 2], base: leftLeg, layer: legacy ? null : skinCuboid(null, skinFace(0, 52, 4, 12), skinFace(4, 52, 4, 12), skinFace(8, 52, 4, 12), skinFace(12, 52, 4, 12)), layerSize: .15 }
+    { box: [-4, 0, 20, 32, -2, 2], base: rightLeg, layer: legacy ? null : skinCuboid(skinFace(4, 32, 4, 4), skinFace(8, 32, 4, 4), skinFace(0, 36, 4, 12), skinFace(4, 36, 4, 12), skinFace(8, 36, 4, 12), skinFace(12, 36, 4, 12)), layerSize: .15 },
+    { box: [0, 4, 20, 32, -2, 2], base: leftLeg, layer: legacy ? null : skinCuboid(skinFace(4, 48, 4, 4), skinFace(8, 48, 4, 4), skinFace(0, 52, 4, 12), skinFace(4, 52, 4, 12), skinFace(8, 52, 4, 12), skinFace(12, 52, 4, 12)), layerSize: .15 }
   ];
 }
 
@@ -101,15 +103,19 @@ function renderSkinPreview(canvas) {
   context.ellipse(width / 2, height * .91, width * .194, height * .041, 0, 0, Math.PI * 2);
   context.fill();
 
-  const yaw = preview.yaw;
+  const yaw = preview.yaw, pitch = preview.pitch;
   const sinYaw = Math.sin(yaw), cosYaw = Math.cos(yaw);
+  const sinPitch = Math.sin(pitch), cosPitch = Math.cos(pitch);
   const heightScale = Math.max(.5, Math.min(1.25, Number(canvas.dataset.heightScale) || 1));
   const scale = Math.min(width, height) * .0225 / Math.max(1, heightScale);
-  const top = height * .84 - 32 * scale * heightScale;
+  const centerY = height * .84 - 16 * scale * heightScale;
+  const camera = [sinYaw * cosPitch, -sinPitch, cosYaw * cosPitch];
   const project = ([x, y, z]) => {
     const horizontal = x * cosYaw - z * sinYaw;
-    const depth = x * sinYaw + z * cosYaw;
-    return { x: width / 2 + horizontal * scale, y: top + y * scale * heightScale - depth * scale * .29, depth };
+    const yawDepth = x * sinYaw + z * cosYaw;
+    const vertical = (y - 16) * heightScale;
+    const depth = yawDepth * cosPitch - vertical * sinPitch;
+    return { x: width / 2 + horizontal * scale, y: centerY + (vertical * cosPitch + yawDepth * sinPitch) * scale, depth };
   };
   const faces = [];
   const addFaces = (box, texture, expansion, layer) => {
@@ -121,11 +127,12 @@ function renderSkinPreview(canvas) {
       ["back", [0, 0, -1], [[x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0]]],
       ["right", [1, 0, 0], [[x1, y0, z1], [x1, y0, z0], [x1, y1, z0], [x1, y1, z1]]],
       ["left", [-1, 0, 0], [[x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0]]],
-      ["top", [0, -1, 0], [[x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1]]]
+      ["top", [0, -1, 0], [[x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1]]],
+      ["bottom", [0, 1, 0], [[x0, y1, z1], [x1, y1, z1], [x1, y1, z0], [x0, y1, z0]]]
     ];
     for (const [name, normal, vertices] of definitions) {
       if (!texture[name]) continue;
-      if (name !== "top" && normal[0] * sinYaw + normal[2] * cosYaw <= .015) continue;
+      if (normal[0] * camera[0] + normal[1] * camera[1] + normal[2] * camera[2] <= .015) continue;
       const points = vertices.map(project);
       faces.push({ uv: texture[name], points, depth: points.reduce((sum, point) => sum + point.depth, 0) / 4 + layer * .001 });
     }
@@ -146,7 +153,7 @@ function escapeAttribute(value) {
 
 export function skinPreviewHtml(url, body = {}, options = {}) {
   const size = options.size || 320;
-  return `<canvas class="npc-skin-preview ${escapeAttribute(options.className || "")}" width="${size}" height="${size}" data-skin-url="${escapeAttribute(url)}" data-arm-model="${body.arm_model === "slim" ? "slim" : "classic"}" data-height-scale="${Math.max(.5, Math.min(1.25, Number(body.height_scale) || 1))}" aria-label="${escapeAttribute(options.label || "NPC 3D 스킨 미리보기")}" title="드래그하여 회전 · 두 번 클릭하여 초기화"></canvas>`;
+  return `<canvas class="npc-skin-preview ${escapeAttribute(options.className || "")}" width="${size}" height="${size}" data-skin-url="${escapeAttribute(url)}" data-arm-model="${body.arm_model === "slim" ? "slim" : "classic"}" data-height-scale="${Math.max(.5, Math.min(1.25, Number(body.height_scale) || 1))}" aria-label="${escapeAttribute(options.label || "NPC 3D 스킨 미리보기")}" title="상하·좌우로 드래그하여 회전 · 두 번 클릭하여 초기화"></canvas>`;
 }
 
 export function updateSkinPreview(canvas, options = {}) {
@@ -156,17 +163,18 @@ export function updateSkinPreview(canvas, options = {}) {
   if (options.heightScale !== undefined) canvas.dataset.heightScale = options.heightScale;
   let preview = previewStates.get(canvas);
   if (!preview) {
-    preview = { image: null, yaw: .48, drag: null, url: null, revision: 0 };
+    preview = { image: null, yaw: defaultView.yaw, pitch: defaultView.pitch, drag: null, url: null, revision: 0 };
     previewStates.set(canvas, preview);
     canvas.addEventListener("pointerdown", (event) => {
       if (event.button !== 0) return;
-      preview.drag = { pointerId: event.pointerId, x: event.clientX, yaw: preview.yaw };
+      preview.drag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, yaw: preview.yaw, pitch: preview.pitch };
       canvas.setPointerCapture(event.pointerId);
       canvas.classList.add("is-dragging");
     });
     canvas.addEventListener("pointermove", (event) => {
       if (!preview.drag || preview.drag.pointerId !== event.pointerId) return;
       preview.yaw = preview.drag.yaw + (event.clientX - preview.drag.x) * .018;
+      preview.pitch = Math.max(-maximumPitch, Math.min(maximumPitch, preview.drag.pitch - (event.clientY - preview.drag.y) * .012));
       renderSkinPreview(canvas);
     });
     const stopDragging = (event) => {
@@ -178,7 +186,7 @@ export function updateSkinPreview(canvas, options = {}) {
     canvas.addEventListener("pointerup", stopDragging);
     canvas.addEventListener("pointercancel", stopDragging);
     canvas.addEventListener("lostpointercapture", stopDragging);
-    canvas.addEventListener("dblclick", () => { preview.yaw = .48; renderSkinPreview(canvas); });
+    canvas.addEventListener("dblclick", () => { preview.yaw = defaultView.yaw; preview.pitch = defaultView.pitch; renderSkinPreview(canvas); });
   }
   const url = canvas.dataset.skinUrl || "";
   if (preview.url === url) { renderSkinPreview(canvas); return; }

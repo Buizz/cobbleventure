@@ -13,6 +13,32 @@ import generate_easy_npc_presets as generator  # noqa: E402
 
 
 class KantoGymLeaderTests(unittest.TestCase):
+    def test_each_kanto_gym_leader_has_character_specific_dialogue(self) -> None:
+        league = content_manager.load_json(PROJECT_ROOT / "content/catalogs/league-progression.json")
+        leaders = [entry for entry in league["entries"] if entry["role"] == "gym_leader"]
+        self.assertEqual(8, len(leaders))
+        for field in ("challenge", "victory", "defeat", "cleared"):
+            dialogues = {
+                tuple(value if isinstance(value, list) else [value])
+                for entry in leaders
+                for value in [entry["encounter"]["dialogue"][field]]
+            }
+            self.assertEqual(8, len(dialogues), field)
+        challenge_text = {
+            entry["encounter"]["character"].rsplit("/", 1)[-1]: " ".join(
+                entry["encounter"]["dialogue"]["challenge"]
+                if isinstance(entry["encounter"]["dialogue"]["challenge"], list)
+                else [entry["encounter"]["dialogue"]["challenge"]]
+            )
+            for entry in leaders
+        }
+        expected_themes = {
+            "brock": "바위", "misty": "전력 공격", "lt_surge": "전쟁터", "erika": "꽃꽂이",
+            "koga": "닌자", "sabrina": "미래", "blaine": "퀴즈", "giovanni_gym": "로켓단",
+        }
+        for character, theme in expected_themes.items():
+            self.assertIn(theme, challenge_text[character])
+
     def test_trainer_card_appearances_use_bundled_kanto_texture_ids(self) -> None:
         expected = {
             "brock": "kanto_brock",

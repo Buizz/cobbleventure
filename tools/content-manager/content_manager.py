@@ -41,6 +41,7 @@ if str(CONTENT_MANAGER_ROOT) not in sys.path:
 import laboratory_research
 import league_facilities
 import content_deployment
+import skin_overrides
 from tools import artifact_versions
 from tools.npc_event_presets import BATTLE_PRESETS, materialize_event_document
 from cves import (
@@ -6708,11 +6709,16 @@ def _write_economy_species_overrides(root: Path, catalog: dict[str, Any], output
             _issue(issues, "warning", root / "content/catalogs/economy.json", "$.pokemon_drop_rules", "Cobblemon 종족 원본을 찾지 못해 인게임 루트 테이블 생성은 건너뜁니다.")
         return issues
     output_root = output_root or root / "staging/compiled-content/data/cobblemon/species"
-    manifest_path = output_root / ".cobbleventure-economy-manifest.json"
+    # Cobblemon 1.8 parses every JSON file below data/cobblemon/species as a
+    # species document. Keep our generated-file bookkeeping extensionless so
+    # it cannot be mistaken for a species during a resource reload.
+    manifest_path = output_root / ".cobbleventure-economy-manifest"
+    legacy_manifest_path = output_root / ".cobbleventure-economy-manifest.json"
     previous: list[str] = []
-    if manifest_path.exists():
+    previous_manifest_path = manifest_path if manifest_path.exists() else legacy_manifest_path
+    if previous_manifest_path.exists():
         try:
-            previous = json.loads(manifest_path.read_text(encoding="utf-8"))
+            previous = json.loads(previous_manifest_path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             previous = []
     species_catalog = _economy_pokemon_drops_from_cobblemon(root)
@@ -6755,6 +6761,8 @@ def _write_economy_species_overrides(root: Path, catalog: dict[str, Any], output
             if stale.is_file():
                 stale.unlink()
     output_root.mkdir(parents=True, exist_ok=True)
+    if legacy_manifest_path.is_file():
+        legacy_manifest_path.unlink()
     manifest_path.write_text(json.dumps(written, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return issues
 
@@ -7151,6 +7159,20 @@ def validate_league_progression_file(
             encounter = _require_object(entry.get("encounter"), issues, path, f"{entry_path}.encounter")
             if encounter is not None:
                 _resource_id(encounter.get("battle_id"), issues, path, f"{entry_path}.encounter.battle_id")
+                identity_source = encounter.get("identity_source")
+                if identity_source not in {None, "official", "custom"}:
+                    _issue(
+                        issues, "error", path, f"{entry_path}.encounter.identity_source",
+                        "본가 관장(official) 또는 자체 관장(custom) 중 하나여야 합니다.",
+                    )
+                character = encounter.get("character")
+                if character is not None:
+                    _resource_id(character, issues, path, f"{entry_path}.encounter.character")
+                if identity_source == "official" and not character:
+                    _issue(
+                        issues, "error", path, f"{entry_path}.encounter.character",
+                        "본가 관장은 캐릭터 카탈로그의 관장을 선택해야 합니다.",
+                    )
                 appearance = _require_object(encounter.get("appearance"), issues, path, f"{entry_path}.encounter.appearance")
                 if appearance is not None:
                     for field in ("source", "type"):
@@ -11369,6 +11391,7 @@ def _league_member_event_template(
                 "invulnerable": True, "collision": True,
             },
         },
+        "event_runtime": {"engine": "easy_npc_v4"},
         "event_design": {"mode": "easy_npc_events"},
         "events": [{
             "id": "on_interact",
@@ -11415,17 +11438,35 @@ def _league_member_event_template(
     }
 
 
+def _trainer_roster_character(root: Path, character_id: str) -> dict[str, Any] | None:
+    path = root / "content" / "catalogs" / "trainer-roster.json"
+    if not path.is_file():
+        return None
+    try:
+        roster = load_json(path)
+    except (OSError, json.JSONDecodeError, DuplicateKeyError):
+        return None
+    characters = list(roster.get("league_characters", []))
+    for organization in roster.get("organizations", []):
+        if not isinstance(organization, dict):
+            continue
+        characters.extend(organization.get("grunt_variants", []))
+        characters.extend(organization.get("named_characters", []))
+    return next((entry for entry in characters if isinstance(entry, dict) and entry.get("id") == character_id), None)
+
+
 def create_league_member(root: Path, payload: dict[str, Any]) -> tuple[dict[str, Any] | None, list[Issue]]:
     role = payload.get("role")
     slug = payload.get("slug")
     name = payload.get("name")
     name_en = payload.get("name_en", "")
-    region = payload.get("region")
     badge_id = payload.get("badge_id", "")
     theme = payload.get("theme", "normal")
     primary_type = payload.get("primary_type", theme if role == "gym_leader" else "normal")
     display_badge_id = payload.get("display_badge_id", "")
     character = payload.get("character", "")
+    identity_source = payload.get("identity_source", "official" if character else "custom")
+    appearance_source = payload.get("appearance_source", "custom")
     appearance_resource = payload.get("appearance_resource", "")
     challenge_dialogue = payload.get("challenge_dialogue", "준비가 됐다면 승부하자!")
     victory_dialogue = payload.get("victory_dialogue", "훌륭한 승부였다. 이 배지는 네 것이다.")
@@ -11438,19 +11479,32 @@ def create_league_member(root: Path, payload: dict[str, Any]) -> tuple[dict[str,
     order = payload.get("order")
     level_cap = payload.get("level_cap")
     input_values = (
-        role, slug, name, name_en, region, badge_id, theme, primary_type, display_badge_id, character, appearance_resource,
+        role, slug, name, name_en, badge_id, theme, primary_type, display_badge_id,
+        character, identity_source, appearance_source, appearance_resource,
         challenge_dialogue, victory_dialogue, defeat_dialogue, cleared_dialogue, reward_item,
     )
     if not all(isinstance(value, str) for value in input_values):
         return None, [Issue("error", "", "$", "문자열 입력값의 형식이 올바르지 않습니다.")]
     if role not in {"gym_leader", "elite_four", "champion"}:
         return None, [Issue("error", "", "$.role", "관장, 사천왕, 챔피언 중 하나를 선택해야 합니다.")]
+    official_character = None
+    if role == "gym_leader":
+        if identity_source not in {"official", "custom"}:
+            return None, [Issue("error", "", "$.identity_source", "본가 관장 또는 자체 관장을 선택해야 합니다.")]
+        if identity_source == "official":
+            official_character = _trainer_roster_character(root, character)
+            if official_character is None or official_character.get("role") != "gym_leader":
+                return None, [Issue("error", "", "$.character", "캐릭터 카탈로그의 본가 관장을 선택해야 합니다.")]
+            display_name = official_character.get("display_name", {})
+            appearance = official_character.get("appearance", {})
+            name = display_name.get("ko_kr", "")
+            name_en = display_name.get("en_us", "")
+            appearance_source = appearance.get("source", "custom")
+            appearance_resource = appearance.get("resource", "")
     if not DOCUMENT_SLUG.fullmatch(slug):
         return None, [Issue("error", "", "$.slug", "파일 ID는 소문자, 숫자와 밑줄만 사용할 수 있습니다.")]
     if not name.strip():
         return None, [Issue("error", "", "$.name", "한국어 이름이 필요합니다.")]
-    if not RESOURCE_ID.fullmatch(region):
-        return None, [Issue("error", "", "$.region", "올바른 지역 리소스 ID가 필요합니다.")]
     if not isinstance(generation, int) or isinstance(generation, bool) or not 1 <= generation <= 9:
         return None, [Issue("error", "", "$.generation", "세대는 1~9 정수여야 합니다.")]
     if not isinstance(order, int) or isinstance(order, bool) or not 1 <= order <= 99:
@@ -11474,7 +11528,8 @@ def create_league_member(root: Path, payload: dict[str, Any]) -> tuple[dict[str,
     if display_badge_id and not RESOURCE_ID.fullmatch(display_badge_id):
         return None, [Issue("error", "", "$.display_badge_id", "올바른 표시 배지 ID가 필요합니다.")]
 
-    region_slug = region.rsplit("/", 1)[-1]
+    region_slug = POKEDEX_SERIES_BY_GENERATION[generation]
+    region = f"cobbleventure:region/{region_slug}"
     folder = {"gym_leader": "gym_leaders", "elite_four": "elite_four", "champion": "champions"}[role]
     npc_id = f"cobbleventure:npc/{role}/{slug}"
     battle_id = f"cobbleventure:battle/{role}/{slug}"
@@ -11512,10 +11567,15 @@ def create_league_member(root: Path, payload: dict[str, Any]) -> tuple[dict[str,
         "level_cap": level_cap,
     }
     if role == "gym_leader":
+        official_appearance = official_character.get("appearance", {}) if official_character else {}
         league_entry["encounter"] = {
+            "identity_source": identity_source,
             "battle_id": battle_id,
             "appearance": {
-                "source": "rct_single", "type": "skin", "resource": appearance_resource,
+                "source": appearance_source, "type": official_appearance.get("type", "skin"),
+                "resource": appearance_resource,
+                **({"texture": official_appearance["texture"]} if official_appearance.get("texture") else {}),
+                **({"arm_model": official_appearance["arm_model"]} if official_appearance.get("arm_model") else {}),
             },
             "dialogue": {
                 "challenge": challenge_dialogue.strip(),
@@ -11525,7 +11585,7 @@ def create_league_member(root: Path, payload: dict[str, Any]) -> tuple[dict[str,
             },
             "rewards": {"money": reward_money, "badge_id": badge_id},
         }
-        if character:
+        if identity_source == "official" and character:
             league_entry["encounter"]["character"] = character
         if reward_item:
             league_entry["encounter"]["rewards"].update({
@@ -16250,6 +16310,12 @@ def create_handler(
             if request.path == "/api/resource-pack-characters":
                 self._json(200, resource_pack_character_catalog())
                 return
+            if request.path == "/api/skin-overrides":
+                try:
+                    self._json(200, skin_overrides.catalog_payload(core_root, root))
+                except (OSError, ValueError, json.JSONDecodeError) as error:
+                    self._json(400, {"error": str(error)})
+                return
             if request.path == "/api/resource-pack-character":
                 query = parse_qs(request.query)
                 pack_token = query.get("pack", [""])[0]
@@ -16296,6 +16362,10 @@ def create_handler(
                 ).resolve()
                 fallback = skin_root / "cobbleventure" / "textures" / "entity" / "trainer" / "unimplemented.png"
                 if rct_match:
+                    override_candidate = skin_overrides.override_path(core_root, resource)
+                    if override_candidate.is_file():
+                        self._bytes(200, override_candidate.read_bytes(), "image/png")
+                        return
                     installed_png = load_installed_cobbleverse_rct_png(
                         rct_match.group(1), rct_match.group(2)
                     )
@@ -16317,6 +16387,7 @@ def create_handler(
                     return
                 skin_path = fallback
                 if match:
+                    override_candidate = skin_overrides.override_path(core_root, resource)
                     manual_candidate = (
                         manual_retouch_root / f"{match.group(2)}.png"
                     ).resolve()
@@ -16328,7 +16399,9 @@ def create_handler(
                         / "trainer"
                         / f"{match.group(2)}.png"
                     ).resolve()
-                    if (
+                    if override_candidate.is_file():
+                        skin_path = override_candidate
+                    elif (
                         manual_candidate.is_relative_to(manual_retouch_root)
                         and manual_candidate.is_file()
                     ):
@@ -16606,6 +16679,19 @@ def create_handler(
                     self._json(200, {"opened": True, "path": str(directory)})
                 except (OSError, ValueError) as error:
                     self._json(400, {"error": f"빌드 폴더를 열지 못했습니다: {error}"})
+                return
+            if request.path == "/api/skin-overrides":
+                try:
+                    if not isinstance(payload, dict):
+                        raise ValueError("스킨 저장 요청은 객체여야 합니다.")
+                    resource = payload.get("resource")
+                    if not isinstance(resource, str):
+                        raise ValueError("스킨 리소스 ID가 필요합니다.")
+                    data = skin_overrides.decode_data_url(payload.get("data"))
+                    target = skin_overrides.save_override(core_root, resource, data)
+                    self._json(200, {"saved": True, "path": str(target)})
+                except (OSError, ValueError) as error:
+                    self._json(400, {"error": str(error)})
                 return
             if request.path == "/api/cves/preset-preview":
                 if not isinstance(payload, dict) or not isinstance(payload.get("document"), dict):
@@ -17506,6 +17592,16 @@ def create_handler(
 
         def do_DELETE(self) -> None:
             request = urlparse(self.path)
+            if request.path == "/api/skin-overrides":
+                resource = parse_qs(request.query).get("resource", [""])[0]
+                try:
+                    target = skin_overrides.remove_override(core_root, resource)
+                    self._json(200, {"deleted": True, "path": str(target)})
+                except FileNotFoundError as error:
+                    self._json(404, {"error": str(error)})
+                except (OSError, ValueError) as error:
+                    self._json(400, {"error": str(error)})
+                return
             if request.path == "/api/world-layout":
                 try:
                     generation = int(parse_qs(request.query).get("generation", ["1"])[0])

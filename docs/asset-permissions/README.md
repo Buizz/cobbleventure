@@ -1,6 +1,43 @@
-# 뱃지 그래픽 출처 및 사용 기록
+# 그래픽 출처 및 사용 기록
 
-이 폴더는 트레이너 카드 뱃지 그래픽의 출처와 사용 근거를 보존합니다. 포켓몬 관련 명칭과 디자인의 권리는 각 권리자에게 있으며, 아래 허가는 팬아트 제작자가 기여한 픽셀 그래픽에 대한 기록입니다.
+이 폴더는 커뮤니티 그래픽의 출처와 사용 기록을 보존합니다. 포켓몬 관련 명칭과
+디자인의 권리는 각 권리자에게 있으며, 아래 기록은 팬아트 제작자가 기여한 픽셀
+그래픽에 관한 것입니다.
+
+## 커뮤니티 트레이너 스킨
+
+커뮤니티 스킨 원본과 이를 바탕으로 만든 작업본은 공개 저장소나 배포 산출물에
+포함하지 않습니다. Content Studio의 **트레이너 스킨 설정**에서 PNG를 적용하면
+`local-assets/skins/overrides/<namespace>/<slug>.png`에 로컬 전용으로 저장되며,
+콘텐츠 빌드 때 같은 리소스 ID의 프로젝트 기본 스킨을 덮어씁니다.
+`local-assets/skins/` 전체는 `.gitignore` 대상입니다.
+
+관장 카탈로그의 RCT 외형도 동일한 화면에서 관리합니다. RCT 리소스 ID는 유지하되
+로컬 교체본은 `local-assets/skins/overrides/rctmod/trainers/` 아래에 저장합니다.
+
+일부 트레이너 스킨은 Planet Minecraft와 The Skindex에 공개된 커뮤니티 작업을
+기반으로 합니다. 각 스킨의 제목, 제작자, 제작자 프로필과 원본 게시물은
+[`trainer-skin-sources.json`](../../content-projects/cobbleventure-main/content/catalogs/trainer-skin-sources.json)에
+기록합니다.
+
+- 스킨의 권리는 각 제작자에게 있으며 Cobbleventure가 소유권을 주장하지 않습니다.
+- 특정 게시물에 별도 라이선스나 이용 조건이 있으면 그 조건을 우선합니다.
+- 원본 다운로드 파일은 로컬 참고 자료로만 보관하고 Git에 포함하지 않습니다.
+- 게임용 텍스처는 원본 또는 Minecraft 모델에 맞춘 변환본일 수 있습니다.
+- 제작자나 권리자가 출처 수정, 크레딧 추가, 파일 수정 또는 제거를 요청하면
+  [GitHub Issues](https://github.com/Buizz/cobbleventure/issues)로 접수하여 확인 후
+  저장소와 다음 배포본에 반영합니다.
+
+현재 확인된 Planet Minecraft 제작자는 다음과 같습니다.
+
+- [Skycrafts](https://www.planetminecraft.com/member/skycrafts/)
+- [DemonKing69](https://www.planetminecraft.com/member/demonking69/)
+- [enrorhf](https://www.planetminecraft.com/member/enrorhf/)
+
+프로젝트의 코드 라이선스나 배포 조건은 위 제3자 스킨에 대한 재라이선스를
+의미하지 않습니다.
+
+## 트레이너 카드 뱃지
 
 ## 1~6세대
 

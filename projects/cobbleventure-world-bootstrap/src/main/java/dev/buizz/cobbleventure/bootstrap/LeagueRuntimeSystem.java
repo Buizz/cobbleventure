@@ -201,7 +201,7 @@ final class LeagueRuntimeSystem {
         for (Instance instance : INSTANCES.values()) {
             for (Room room : instance.rooms) {
                 if (room.npcTag == null || event.opponent().level() != room.level
-                    || !event.opponent().getTags().contains(room.npcTag)
+                    || !AuthoredNpcIdentity.matches(event.opponent().getTags(), room.npcTag)
                     || event.opponent().distanceToSqr(Vec3.atBottomCenterOf(room.npc)) > 16) continue;
                 CompoundTag state = state(player, instance);
                 if (!room.contains(player) || !state.getBoolean("active")
@@ -216,7 +216,7 @@ final class LeagueRuntimeSystem {
             }
         }
         boolean retiredLeagueNpc = INSTANCES.values().stream().flatMap(instance -> instance.rooms.stream())
-            .anyMatch(room -> room.npcTag != null && event.opponent().getTags().contains(room.npcTag));
+            .anyMatch(room -> AuthoredNpcIdentity.matches(event.opponent().getTags(), room.npcTag));
         if (retiredLeagueNpc) {
             event.setCanceled(true);
             message(player, "이전 리그 배치입니다. 현재 리그 로비를 통해 입장하세요.");

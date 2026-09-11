@@ -48,6 +48,7 @@ const state = {
   npcFilter: "all",
   systemNpcs: { loaded: false, items: [] },
   resourcePackCharacters: { packs: [], items: [], query: "", kind: "all", pack: "all", targetIndex: -1 },
+  skinSettings: { loaded: false, folder: "", items: [], query: "", revision: 0 },
   selectedPokemonIndex: 0, editorCatalog: null, choice: null,
   biomeCatalog: { profiles: [], sets: [] }, pokemonHabitats: [], selectedBiomeProfile: null,
   worldLayout: null, worldGenerations: [1], selectedGeneration: 1,
@@ -2299,6 +2300,90 @@ function changeCasinoConfigRows(event) {
   renderCasinoConfig();
 }
 
+async function loadSkinSettings(force = false) {
+  if (state.skinSettings.loaded && !force) {
+    renderSkinSettings();
+    return;
+  }
+  const result = await request("/api/skin-overrides");
+  if (!result.ok) throw new Error(result.data.error || "스킨 설정을 불러오지 못했습니다.");
+  state.skinSettings.loaded = true;
+  state.skinSettings.folder = result.data.folder || "";
+  state.skinSettings.items = result.data.items || [];
+  renderSkinSettings();
+}
+
+function skinSettingsPreviewUrl(resource) {
+  return `/api/trainer-skin?resource=${encodeURIComponent(resource)}&revision=${state.skinSettings.revision}`;
+}
+
+function renderSkinSettings() {
+  const settings = state.skinSettings;
+  const query = settings.query.trim().toLowerCase();
+  const items = settings.items.filter((item) => [item.title, item.resource, item.creator]
+    .some((value) => String(value || "").toLowerCase().includes(query)));
+  const overrides = settings.items.filter((item) => item.override).length;
+  $("#skin-settings-folder").textContent = settings.folder || "local-assets/skins/overrides";
+  $("#skin-settings-summary").textContent = `로컬 적용 ${overrides} / 전체 ${settings.items.length}`;
+  $("#skin-settings-grid").innerHTML = items.length ? items.map((item) => `
+    <article class="skin-setting-card" data-skin-resource="${escapeHtml(item.resource)}">
+      <div class="skin-setting-preview">${skinPreviewHtml(skinSettingsPreviewUrl(item.resource), { arm_model: item.target_model }, { size: 180, label: `${item.title} 스킨 미리보기` })}</div>
+      <div class="skin-setting-copy">
+        <span class="skin-setting-status ${item.override ? "is-local" : ""}">${item.override ? "로컬 스킨 적용 중" : "프로젝트 기본 스킨"}</span>
+        <h3>${escapeHtml(item.title)}</h3>
+        <code>${escapeHtml(item.resource)}</code>
+        <small>${item.category === "gym_leader" ? `${item.generation || "?"}세대 관장${item.subtitle ? ` · ${escapeHtml(item.subtitle)}` : ""}` : item.creator ? `원본 참고: ${escapeHtml(item.creator)}` : "프로젝트 기본 스킨"}</small>
+        <div class="skin-setting-actions">
+          <label class="button primary">${item.override ? "PNG 교체" : "PNG 적용"}<input type="file" accept="image/png" data-skin-upload hidden></label>
+          <button class="button secondary" type="button" data-skin-reset ${item.override ? "" : "disabled"}>기본으로 되돌리기</button>
+          ${item.source_url ? `<a class="button secondary" href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">출처 보기</a>` : ""}
+        </div>
+      </div>
+    </article>`).join("") : '<div class="issues empty">조건에 맞는 스킨이 없습니다.</div>';
+  initializeSkinPreviews($("#skin-settings-grid"));
+}
+
+function readSkinFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error("PNG 파일을 읽지 못했습니다."));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function uploadSkinOverride(input) {
+  const resource = input.closest("[data-skin-resource]")?.dataset.skinResource;
+  const file = input.files?.[0];
+  if (!resource || !file) return;
+  try {
+    const data = await readSkinFile(file);
+    const result = await request("/api/skin-overrides", {
+      method: "POST", body: JSON.stringify({ resource, data })
+    });
+    if (!result.ok) throw new Error(result.data.error || "스킨을 저장하지 못했습니다.");
+    state.skinSettings.loaded = false;
+    state.skinSettings.revision += 1;
+    await loadSkinSettings(true);
+    toast("로컬 스킨을 적용했습니다.");
+  } catch (error) {
+    toast(error.message);
+  } finally {
+    input.value = "";
+  }
+}
+
+async function resetSkinOverride(button) {
+  const resource = button.closest("[data-skin-resource]")?.dataset.skinResource;
+  if (!resource || !confirm("로컬 스킨을 삭제하고 프로젝트 기본 스킨으로 되돌릴까요?")) return;
+  const result = await request(`/api/skin-overrides?resource=${encodeURIComponent(resource)}`, { method: "DELETE" });
+  if (!result.ok) { toast(result.data.error || "로컬 스킨을 삭제하지 못했습니다."); return; }
+  state.skinSettings.loaded = false;
+  state.skinSettings.revision += 1;
+  await loadSkinSettings(true);
+  toast("프로젝트 기본 스킨으로 되돌렸습니다.");
+}
+
 function loadSectionData(section, force = false) {
   if (section === "dashboard") return loadDashboard();
   if (section === "music") {
@@ -2326,6 +2411,7 @@ function loadSectionData(section, force = false) {
   if (section === "definitions") return loadGameDefinitions(force);
   if (section === "economy") return loadEconomy(force);
   if (section === "global-resources") return loadDialogueTheme(force);
+  if (section === "skin-settings") return loadSkinSettings(force);
   if (section === "casino-config") return Promise.all([loadGachaMachines(force), loadGachaRewardChoices(force), loadGachaItemGraphics()]);
   if (section === "builds") return loadContentDeployment();
   if (section === "live-nbt-editor") return loadStructureBuilder();
@@ -12737,8 +12823,9 @@ function trainerReferenceHtml(trainerClass, rosterCharacter = null) {
   const characterSlug = String(rosterCharacter?.id || "").split("/").pop();
   const appearance = effectiveCharacterAppearance(rosterCharacter);
   const mappedCharacterSprite = trainerCharacterReferenceSprites[characterSlug];
+  const localReferenceSlug = String(appearance.resource || "").split("/").pop() || characterSlug;
   const characterSprites = appearance.source === "custom"
-    ? [`local:${characterSlug}`, mappedCharacterSprite]
+    ? [`local:${localReferenceSlug}`, mappedCharacterSprite]
     : [mappedCharacterSprite];
   const candidates = [...new Set([...characterSprites, classSprite].filter(Boolean))];
   const sprite = candidates.shift();
@@ -12783,27 +12870,11 @@ function renderTrainerPreview() {
       : { className: "ready", label: "전용 스킨 준비됨" };
   const preview = $("#trainer-preview");
   preview.innerHTML = skinUrl ? `
-    <div class="trainer-appearance-comparison">
-      <section class="trainer-reference-card"><span>본가 디자인 기준</span>${trainerReferenceHtml(trainerClass, rosterCharacter)}</section>
-      <section class="trainer-minecraft-card"><span>현재 Minecraft 외형</span>${minecraftModelHtml(skinUrl, body)}</section>
-    </div>
+    <section class="trainer-minecraft-card"><span>현재 Minecraft 외형</span>${minecraftModelHtml(skinUrl, body)}</section>
     <strong>${escapeHtml(fullTitle)}</strong>
     <span class="appearance-status ${appearanceState.className}">${appearanceState.label}</span>`
     : `<div class="trainer-preview-fallback">${escapeHtml(className.slice(0, 2))}</div><strong>${escapeHtml(fullTitle)}</strong>`;
   initializeSkinPreviews(preview);
-  const referenceImage = preview.querySelector(".trainer-reference-image");
-  referenceImage?.addEventListener("error", () => {
-    const fallbackSprites = JSON.parse(referenceImage.dataset.fallbackSprites || "[]");
-    const nextSprite = fallbackSprites.shift();
-    if (nextSprite) {
-      referenceImage.dataset.fallbackSprites = JSON.stringify(fallbackSprites);
-      referenceImage.src = trainerReferenceUrl(nextSprite);
-      return;
-    }
-    referenceImage.hidden = true;
-    const fallback = preview.querySelector(".trainer-reference-empty");
-    if (fallback) fallback.hidden = false;
-  });
   const ageNames = { child: "어린이", teen: "청소년", adult: "성인" };
   $("#trainer-appearance-note").textContent = visualMatch === "generic"
     ? `${rosterCharacter?.display_name?.ko_kr || "선택한 인물"}의 검토용 1차 slim 스킨입니다. 원작과 다른 부분은 수동 리터치 또는 개별 재생성으로 교체할 수 있습니다.`
@@ -14060,6 +14131,55 @@ function leagueFacilityTrainer(entry) {
   return entry?.role !== "gym_leader" ? window.LeagueFacilitiesPanel.trainerFor(entry?.trainer_id) : null;
 }
 
+function leagueLeaderIdentityMode(entry) {
+  if (entry?.role !== "gym_leader") return "custom";
+  return entry.encounter?.identity_source || (entry.encounter?.character ? "official" : "custom");
+}
+
+function leagueAppearanceDocument(appearance = {}) {
+  return {
+    source: appearance.source || "custom",
+    type: appearance.type || "skin",
+    resource: appearance.resource || "",
+    ...(appearance.texture ? { texture: appearance.texture } : {}),
+    ...(appearance.arm_model ? { arm_model: appearance.arm_model } : {}),
+  };
+}
+
+function applyOfficialLeagueCharacter(form) {
+  const character = rosterCharactersForClass("cobbleventure:trainer_class/gym_leader")
+    .find((item) => item.id === form.elements.rosterCharacter.value);
+  if (!character) return null;
+  const appearance = effectiveCharacterAppearance(character);
+  const nameKo = form.elements.nameKo || form.elements.name;
+  if (nameKo) nameKo.value = character.display_name?.ko_kr || "";
+  if (form.elements.nameEn) form.elements.nameEn.value = character.display_name?.en_us || "";
+  form.elements.appearanceSource.value = appearance.source || "custom";
+  form.elements.appearanceResource.value = appearance.resource || "";
+  return character;
+}
+
+function configureLeagueLeaderIdentityFields(form, gymLeader) {
+  const mode = form.elements.leaderIdentityMode?.value || "official";
+  const official = gymLeader && mode === "official";
+  form.querySelectorAll("[data-official-leader-field]").forEach((element) => { element.hidden = !official; });
+  form.querySelectorAll("[data-custom-leader-field]").forEach((element) => { element.hidden = !gymLeader || official; });
+  const nameKo = form.elements.nameKo || form.elements.name;
+  if (nameKo) nameKo.readOnly = official;
+  if (form.elements.nameEn) form.elements.nameEn.readOnly = official;
+  form.elements.rosterCharacter.disabled = !official;
+  form.elements.rosterCharacter.required = official;
+  form.elements.appearanceSource.disabled = !gymLeader || official;
+  form.elements.appearanceResource.readOnly = official;
+  form.elements.appearanceResource.required = gymLeader && !official;
+  if (form.id === "league-form") {
+    const note = $("#league-leader-identity-note");
+    if (note) note.textContent = official
+      ? "본가 관장의 한국어·영문 이름과 기준 외형을 자동으로 사용합니다."
+      : "자체 관장은 이름과 외형 리소스를 직접 지정합니다.";
+  }
+}
+
 function configureLeagueEncounterVisibility(entry) {
   const gym = entry?.role === "gym_leader";
   const trainer = leagueFacilityTrainer(entry);
@@ -14096,7 +14216,7 @@ function renderLeagueAppearancePreview() {
   const trainerClass = state.trainerClasses.find((item) => item.id === `cobbleventure:trainer_class/${entry.role}`);
   const skinUrl = trainerSkinUrl(appearance);
   const body = { ...(character?.body || trainerClass?.body || {}), ...(appearance.arm_model ? { arm_model: appearance.arm_model } : {}) };
-  preview.innerHTML = skinUrl ? `<div class="trainer-appearance-comparison"><section class="trainer-reference-card"><span>본가 디자인 기준</span>${trainerReferenceHtml(trainerClass, character)}</section><section class="trainer-minecraft-card"><span>현재 Minecraft 외형</span>${minecraftModelHtml(skinUrl, body)}</section></div><strong>${escapeHtml(entry.display_name?.ko_kr || entry.id)}</strong>` : `<div class="trainer-preview-fallback">관장</div><strong>${escapeHtml(entry.display_name?.ko_kr || entry.id)}</strong>`;
+  preview.innerHTML = skinUrl ? `<section class="trainer-minecraft-card"><span>현재 Minecraft 외형</span>${minecraftModelHtml(skinUrl, body)}</section><strong>${escapeHtml(entry.display_name?.ko_kr || entry.id)}</strong>` : `<div class="trainer-preview-fallback">관장</div><strong>${escapeHtml(entry.display_name?.ko_kr || entry.id)}</strong>`;
   initializeSkinPreviews(preview);
 }
 
@@ -14245,10 +14365,10 @@ function renderLeagueEditor() {
     return;
   }
   $("#league-editor-title").textContent = entry.display_name?.ko_kr || entry.id;
-  setFormValue(form, "id", entry.id); setFormValue(form, "role", entry.role); setFormValue(form, "levelCap", entry.level_cap);
+  setFormValue(form, "role", entry.role); setFormValue(form, "levelCap", entry.level_cap);
   setFormValue(form, "primaryType", entry.primary_type || "normal");
   setFormValue(form, "nameKo", entry.display_name?.ko_kr || ""); setFormValue(form, "nameEn", entry.display_name?.en_us || "");
-  setFormValue(form, "generation", entry.generation); setFormValue(form, "order", entry.order); setFormValue(form, "region", entry.region);
+  setFormValue(form, "generation", entry.generation); setFormValue(form, "order", entry.order);
   form.elements.trainerId.innerHTML = trainerPoolOptions(entry.trainer_id); setFormValue(form, "trainerId", entry.trainer_id);
   const isGymLeader = entry.role === "gym_leader";
   const encounter = leagueFacilityTrainer(entry) || entry.encounter || {};
@@ -14260,7 +14380,8 @@ function renderLeagueEditor() {
   setFormValue(form, "battleId", encounter.battle_id || "");
   setFormValue(form, "appearanceResource", encounter.appearance?.resource || "");
   setFormValue(form, "appearanceSource", encounter.appearance?.source || "rct_single");
-  form.elements.rosterCharacter.innerHTML = rosterCharacterOptions("cobbleventure:trainer_class/gym_leader");
+  setFormValue(form, "leaderIdentityMode", leagueLeaderIdentityMode(entry));
+  form.elements.rosterCharacter.innerHTML = rosterCharacterOptions("cobbleventure:trainer_class/gym_leader", encounter.character || "", "본가 관장을 선택하세요");
   setFormValue(form, "rosterCharacter", encounter.character || "");
   setFormValue(form, "challengeDialogue", dialogueLinesValue(encounter.dialogue?.challenge));
   setFormValue(form, "victoryDialogue", dialogueLinesValue(encounter.dialogue?.victory));
@@ -14285,6 +14406,7 @@ function renderLeagueEditor() {
   $("#choose-league-reward-item").disabled = !isGymLeader;
   $("#league-card-derived").hidden = !isGymLeader;
   configureLeagueEncounterVisibility(entry);
+  configureLeagueLeaderIdentityFields(form, isGymLeader);
   if (isGymLeader) {
     const pageEntries = orderedTrainerCardEntries().filter((candidate) => candidate.generation === entry.generation && candidate.region === entry.region);
     const position = pageEntries.findIndex((candidate) => candidate.id === entry.id);
@@ -14298,19 +14420,28 @@ function renderLeagueEditor() {
 
 function updateLeagueEntryFromForm() {
   const entry = selectedLeagueEntry(); if (!entry) return;
-  const form = $("#league-form"); const previousId = entry.id;
-  entry.id = form.elements.id.value.trim(); entry.role = form.elements.role.value; entry.primary_type = form.elements.primaryType.value;
+  const form = $("#league-form");
+  entry.role = form.elements.role.value; entry.primary_type = form.elements.primaryType.value;
   entry.display_name = { ko_kr: form.elements.nameKo.value.trim() };
   if (form.elements.nameEn.value.trim()) entry.display_name.en_us = form.elements.nameEn.value.trim();
-  entry.generation = Number(form.elements.generation.value); entry.region = form.elements.region.value.trim();
+  entry.generation = Number(form.elements.generation.value);
   entry.order = Number(form.elements.order.value); entry.level_cap = Number(form.elements.levelCap.value); entry.trainer_id = form.elements.trainerId.value;
   if (entry.role === "gym_leader") {
     delete entry.trainer_id;
+    const identitySource = form.elements.leaderIdentityMode.value;
+    const officialCharacter = identitySource === "official"
+      ? rosterCharactersForClass("cobbleventure:trainer_class/gym_leader").find((item) => item.id === form.elements.rosterCharacter.value)
+      : null;
+    if (officialCharacter) {
+      entry.display_name = { ko_kr: officialCharacter.display_name?.ko_kr || officialCharacter.id };
+      if (officialCharacter.display_name?.en_us) entry.display_name.en_us = officialCharacter.display_name.en_us;
+    }
     entry.encounter = {
+      identity_source: identitySource,
       battle_id: form.elements.battleId.value,
-      appearance: {
-        source: form.elements.appearanceSource.value, type: "skin", resource: form.elements.appearanceResource.value.trim(),
-      },
+      appearance: officialCharacter
+        ? leagueAppearanceDocument(effectiveCharacterAppearance(officialCharacter))
+        : leagueAppearanceDocument({ source: form.elements.appearanceSource.value, type: "skin", resource: form.elements.appearanceResource.value.trim() }),
       dialogue: {
         challenge: dialogueLinesFromInput(form.elements.challengeDialogue.value),
         victory: dialogueLinesFromInput(form.elements.victoryDialogue.value),
@@ -14322,7 +14453,7 @@ function updateLeagueEntryFromForm() {
         badge_id: form.elements.badgeId.value,
       },
     };
-    if (form.elements.rosterCharacter.value) entry.encounter.character = form.elements.rosterCharacter.value;
+    if (officialCharacter) entry.encounter.character = officialCharacter.id;
     if (form.elements.rewardItem.value) {
       entry.encounter.rewards.item = form.elements.rewardItem.value;
       entry.encounter.rewards.item_count = Number(form.elements.rewardItemCount.value || 1);
@@ -14342,17 +14473,15 @@ function updateLeagueEntryFromForm() {
       window.LeagueFacilitiesPanel.markChanged();
     }
   }
-  state.selectedLeagueId = entry.id || previousId;
 }
 
 function addLeagueEntry() {
   const form = $("#league-member-form");
   form.reset();
   form.elements.generation.value = state.selectedGeneration;
-  form.elements.region.value = `cobbleventure:region/generation_${state.selectedGeneration}`;
   form.elements.badgeId.innerHTML = badgeOptions("");
   form.elements.displayBadgeId.innerHTML = badgeOptions("");
-  form.elements.rosterCharacter.innerHTML = rosterCharacterOptions("cobbleventure:trainer_class/gym_leader");
+  form.elements.rosterCharacter.innerHTML = rosterCharacterOptions("cobbleventure:trainer_class/gym_leader", "", "본가 관장을 선택하세요");
   updateLeagueMemberDialog();
   showIssues("#league-member-issues", { valid: true, issues: [] });
   $("#league-member-dialog").showModal();
@@ -14362,10 +14491,13 @@ function updateLeagueMemberDialog() {
   const form = $("#league-member-form");
   const role = form.elements.role.value;
   const gymLeader = role === "gym_leader";
+  const officialLeader = gymLeader && form.elements.leaderIdentityMode.value === "official";
   $(".league-member-gym-fields").hidden = !gymLeader;
   $(".league-member-display-badge-fields").hidden = true;
   form.elements.badgeId.required = gymLeader;
-  form.elements.appearanceResource.required = gymLeader;
+  configureLeagueLeaderIdentityFields(form, gymLeader);
+  form.elements.name.required = !officialLeader;
+  form.elements.appearanceResource.required = gymLeader && !officialLeader;
   if (gymLeader) form.elements.primaryType.value = form.elements.primaryType.value || "normal";
   const roleLabel = leagueRoleLabel(role);
   const outputs = gymLeader
@@ -14384,14 +14516,15 @@ async function createLeagueMember(event) {
     name: form.elements.name.value.trim(),
     name_en: form.elements.nameEn.value.trim(),
     generation: Number(form.elements.generation.value),
-    region: form.elements.region.value.trim(),
     order: Number(form.elements.order.value),
     level_cap: Number(form.elements.levelCap.value),
     primary_type: form.elements.primaryType.value,
     theme: form.elements.primaryType.value,
     badge_id: form.elements.role.value === "gym_leader" ? form.elements.badgeId.value : "",
+    identity_source: form.elements.role.value === "gym_leader" ? form.elements.leaderIdentityMode.value : "custom",
     display_badge_id: "",
     character: form.elements.role.value === "gym_leader" ? form.elements.rosterCharacter.value : "",
+    appearance_source: form.elements.role.value === "gym_leader" ? form.elements.appearanceSource.value : "custom",
     appearance_resource: form.elements.role.value === "gym_leader" ? form.elements.appearanceResource.value.trim() : "",
     reward_money: form.elements.role.value === "gym_leader" ? Number(form.elements.rewardMoney.value || 0) : 0,
     reward_item: form.elements.role.value === "gym_leader" ? form.elements.rewardItem.value.trim() : "",
@@ -20838,6 +20971,17 @@ window.addEventListener("mouseup", () => {
   $("#dungeon-plan-canvas").classList.remove("is-panning");
 });
 $("#refresh-button").addEventListener("click", () => refreshAll());
+$("#skin-settings-search").addEventListener("input", (event) => {
+  state.skinSettings.query = event.target.value;
+  renderSkinSettings();
+});
+$("#skin-settings-grid").addEventListener("change", (event) => {
+  if (event.target.matches("[data-skin-upload]")) uploadSkinOverride(event.target);
+});
+$("#skin-settings-grid").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-skin-reset]");
+  if (button) resetSkinOverride(button);
+});
 $("#open-project").addEventListener("click", openProjectDialog);
 $("#project-form").addEventListener("submit", loadProject);
 $("#pick-project-folder").addEventListener("click", pickProjectFolder);
@@ -21033,7 +21177,7 @@ $("#delete-league-entry").addEventListener("click", () => {
   state.leagueProgression.entries = state.leagueProgression.entries.filter((candidate) => candidate !== entry);
   state.selectedLeagueId = ""; renderLeagueEditor();
 });
-$("#league-form").addEventListener("input", () => {
+$("#league-form").addEventListener("input", (event) => {
   updateLeagueEntryFromForm(); renderLeagueList();
   const entry = selectedLeagueEntry(); const isGym = entry?.role === "gym_leader";
   $$("#league-form .league-badge-fields input, #league-form .league-badge-fields select").forEach((element) => { element.disabled = !isGym; });
@@ -21044,6 +21188,7 @@ $("#league-form").addEventListener("input", () => {
   $("#league-encounter-fields").hidden = !isGym;
   $("#league-display-badge-fields").hidden = isGym;
   configureLeagueEncounterVisibility(entry);
+  configureLeagueLeaderIdentityFields(event.currentTarget, isGym);
   renderLeagueAppearancePreview();
   renderLeagueBadgePreviews();
 });
@@ -21055,15 +21200,17 @@ $("#league-form").addEventListener("change", (event) => {
     state.leagueBattlePath = "";
     state.leagueBattleId = "";
     renderLeagueTeamEditor(selectedLeagueEntry());
+  } else if (event.target.name === "leaderIdentityMode") {
+    if (form.elements.leaderIdentityMode.value === "official") applyOfficialLeagueCharacter(form);
+    configureLeagueLeaderIdentityFields(form, selectedLeagueEntry()?.role === "gym_leader");
+    updateLeagueEntryFromForm();
+    renderLeagueList();
+    renderLeagueAppearancePreview();
   } else if (event.target.name === "rosterCharacter") {
-    const character = rosterCharacters().find((item) => item.id === form.elements.rosterCharacter.value);
-    if (character) {
-      const appearance = effectiveCharacterAppearance(character);
-      form.elements.appearanceSource.value = appearance.source || "rct_single";
-      form.elements.appearanceResource.value = appearance.resource || "";
-      updateLeagueEntryFromForm();
-      renderLeagueAppearancePreview();
-    }
+    applyOfficialLeagueCharacter(form);
+    updateLeagueEntryFromForm();
+    renderLeagueList();
+    renderLeagueAppearancePreview();
   }
 });
 $("#choose-league-reward-item").addEventListener("click", () => openItemChoice("league-reward-item", {
@@ -21095,15 +21242,13 @@ $$('[data-league-workspace]').forEach((tab) => tab.addEventListener("click", () 
 }));
 $("#league-member-form").addEventListener("submit", createLeagueMember);
 $("#league-member-form").addEventListener("change", (event) => {
-  if (event.target.name === "role") updateLeagueMemberDialog();
+  if (event.target.name === "role" || event.target.name === "leaderIdentityMode") {
+    if (event.currentTarget.elements.leaderIdentityMode.value === "official") applyOfficialLeagueCharacter(event.currentTarget);
+    updateLeagueMemberDialog();
+  }
   if (event.target.name === "rosterCharacter") {
-    const form = event.currentTarget;
-    const character = rosterCharacters().find((entry) => entry.id === form.elements.rosterCharacter.value);
-    if (!character) return;
-    const appearance = effectiveCharacterAppearance(character);
-    form.elements.name.value = character.display_name?.ko_kr || form.elements.name.value;
-    form.elements.nameEn.value = character.display_name?.en_us || form.elements.nameEn.value;
-    form.elements.appearanceResource.value = appearance.resource || form.elements.appearanceResource.value;
+    applyOfficialLeagueCharacter(event.currentTarget);
+    updateLeagueMemberDialog();
   }
 });
 $("#league-member-close").addEventListener("click", () => $("#league-member-dialog").close());

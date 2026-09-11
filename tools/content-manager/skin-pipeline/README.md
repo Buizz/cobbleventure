@@ -24,7 +24,12 @@ UV 면 축소에는 최근접 이웃 필터만 사용합니다. 생성 이미지
 배치합니다. 머리 좌우 옆면의 앞쪽 영역은 인접 텍스처 열로 정리하여 눈·눈썹·코·입이
 옆면에 남지 않도록 합니다.
 
-최종 스킨은 `content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure/textures/entity/trainer/`에 저장합니다. 생성물의 머리 모자와 몸통 가방끈처럼 돌출되어야 하는 색상은 `overlay_colors`에 지정하며, 나머지는 불투명 기본 레이어로 합성합니다.
+공개 저장소에는 프로젝트 기본 스킨만 둡니다. 완성한 실제 스킨은 Content Studio의
+**트레이너 스킨 설정**을 통해
+`local-assets/skins/overrides/cobbleventure/<slug>.png`에 보관합니다. 이 폴더는
+Git에서 제외되며 콘텐츠 빌드가 같은 리소스 ID를 자동으로 덮어씁니다. 생성물의 머리
+모자와 몸통 가방끈처럼 돌출되어야 하는 색상은 `overlay_colors`에 지정하며, 나머지는
+불투명 기본 레이어로 합성합니다.
 
 자동 생성한 1차 64×64 결과는 `retouch/generated/`에도 저장됩니다. 직접 수정할
 파일은 같은 이름으로 `retouch/manual/`에 저장합니다. `manual/` 파일은 자동 생성기가
@@ -40,8 +45,9 @@ python tools/content-manager/register_ai_trainer_concept.py <slug> <concept.png>
 
 등록 도구는 원본 참조와 콘셉트를 캐릭터별 `work/<slug>/` 폴더에 보관하고,
 64×64 slim UV 합성, 정면 외 얼굴 특징 제거, `retouch/generated/` 보관 및 최종 게임
-리소스 출력을 한 번에 수행합니다. 같은 이름의 `retouch/manual/` 파일이 있으면 수동
-리터치본이 최종 출력에서 계속 우선합니다.
+리소스 출력을 수행합니다. 완성본을 확인한 뒤 Content Studio에서 로컬 오버라이드로
+등록합니다. 같은 이름의 `retouch/manual/` 파일이 있으면 수동 리터치본이 최종
+출력에서 계속 우선합니다.
 
 `equipment_outputs`가 있으면 파이프라인은 다음 어댑터 리소스도 함께 만듭니다.
 

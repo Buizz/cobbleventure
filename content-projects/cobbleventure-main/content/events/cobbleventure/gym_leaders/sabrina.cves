@@ -1,9 +1,11 @@
 event interact(range: 4) {
   page when flag("cobbleventure:runtime/npc_instance_defeated") {
-    say npc "이미 실력을 증명했군. 다음 목표를 향해 나아가라."
+    say npc "강한 힘만으로는 충분하지 않아. 포켓몬을 아끼는 마음이 네 미래를 더 멀리 이끌 거야."
   }
   page default {
-    say npc "체육관에 온 것을 환영한다. 준비가 됐다면 승부하자!"
+    say npc "네가 이곳에 올 것은 이미 알고 있었어."
+    say npc "나는 어릴 때부터 마음으로 사물을 움직이고 미래의 조각을 볼 수 있었지."
+    say npc "싸움은 좋아하지 않지만, 네가 원한다면 내 힘을 보여 주겠어."
     id "challenge/battle" await battle "cobbleventure:battle/gym_leader/sabrina" -> result
     if result.outcome == "win" {
       id "victory/set_instance_defeated" set_flag "cobbleventure:runtime/npc_instance_defeated" true
@@ -11,9 +13,10 @@ event interact(range: 4) {
       id "victory/give_money" give_money 4300
       id "victory/grant_badge" grant_badge "cobbleventure:badge/kanto/marsh"
       id "victory/set_level_cap" set_level_cap 47
-      say npc "훌륭한 승부였다. 이 배지는 네 것이다."
+      say npc "예상과 다른 결말이군... 네 힘이 내 예지를 넘어섰어."
+      say npc "그 실력을 인정해 골드배지를 주겠어."
     } else {
-      say npc "좋은 승부였다. 준비해서 다시 도전해라."
+      say npc "이 결과는 이미 보았어. 하지만 미래는 수련으로 바꿀 수 있으니 다시 도전해."
     }
   }
 }

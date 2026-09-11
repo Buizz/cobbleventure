@@ -281,7 +281,7 @@ def generated_encounters(root=None, data=None):
                       + '      "다음에 도전한다" { stop }\n    }\n  }\n}\n')
             npc = {'schema_version': 4, 'id': npc_id(league, room), 'enabled': True,
                    'name': copy.deepcopy(trainer['name']), 'description': {'ko_kr': '리그 시설 설정에서 자동 생성한 NPC'},
-                   'tags': ['trainer', 'league', league['id'], 'generated_from_league_facility'],
+                   'tags': ['trainer', 'league', 'building_runtime', league['id'], 'generated_from_league_facility'],
                    'placement_profile': {'classification': 'trainer', 'automatic_town_placement': False,
                                          'automatic_route_placement': False, 'preferred_biomes': []},
                    'npc': {'display_name': copy.deepcopy(trainer['name']), 'role': 'default',

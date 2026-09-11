@@ -29,6 +29,7 @@ test('shared markup escapes resources and preserves body options', () => {
   assert.match(html, /data-arm-model="slim"/);
   assert.match(html, /data-height-scale="0.7"/);
   assert.match(html, /&quot;&lt;test&gt;/);
+  assert.match(html, /상하·좌우로 드래그하여 회전/);
 });
 
 test('both views share image requests; updating arm model reuses image and listeners', async () => {
@@ -44,10 +45,23 @@ test('both views share image requests; updating arm model reuses image and liste
   updateSkinPreview(a, { armModel: 'slim', heightScale: .7 });
   assert.equal(images.length, count + 1);
   assert.ok(a.calls.length > before);
-  a.listeners.get('pointerdown')({ button: 0, pointerId: 1, clientX: 0 });
-  a.listeners.get('pointermove')({ pointerId: 1, clientX: 40 });
+  const beforeRotation = a.calls.filter(call => call[0] === 'moveTo').at(-1);
+  a.listeners.get('pointerdown')({ button: 0, pointerId: 1, clientX: 0, clientY: 0 });
+  a.listeners.get('pointermove')({ pointerId: 1, clientX: 40, clientY: 80 });
+  const afterRotation = a.calls.filter(call => call[0] === 'moveTo').at(-1);
+  assert.notDeepEqual(afterRotation, beforeRotation);
   a.listeners.get('pointerup')({ pointerId: 1 });
   a.listeners.get('dblclick')();
+});
+
+test('renderer defines bottom faces and modern outer layers for every body part', () => {
+  const source = readFileSync(new URL('../web/npc-skin-preview.mjs', import.meta.url), 'utf8');
+  assert.match(source, /\["bottom", \[0, 1, 0\]/);
+  assert.match(source, /skinFace\(16, 0, 8, 8\)/); // head bottom
+  assert.match(source, /skinFace\(48, 0, 8, 8\)/); // hat bottom
+  assert.match(source, /skinFace\(28, 32, 8, 4\)/); // jacket bottom
+  assert.match(source, /skinFace\(8, 32, 4, 4\)/); // right trouser bottom
+  assert.match(source, /skinFace\(8, 48, 4, 4\)/); // left trouser bottom
 });
 
 test('stale image requests cannot replace the latest skin', async () => {
