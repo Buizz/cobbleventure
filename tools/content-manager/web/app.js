@@ -721,7 +721,7 @@ async function loadStarterSettingsData(force = false) {
   const starter = state.starterSettings;
   if (starter.loaded && !force) return;
   const result = await request("/api/starter-settings");
-  if (!result.ok) throw new Error(result.data.error || "스타팅 설정을 불러오지 못했습니다.");
+  if (!result.ok) throw new Error(result.data.error || "스타팅 위치 설정을 불러오지 못했습니다.");
   starter.configs = (result.data.generations || []).map((entry) => {
     const town = state.settlements.find((settlement) => settlement.id === entry.town);
     const spawn = entry.spawn || {};
@@ -854,12 +854,12 @@ function validateStarterSettings() {
   if (!invalid.length) {
     issues.className = "issues empty";
     issues.textContent = "오류가 없습니다.";
-    toast("스타팅 설정 검증을 통과했습니다.");
+    toast("스타팅 위치 설정 검증을 통과했습니다.");
     return true;
   }
   issues.className = "issues";
   issues.innerHTML = invalid.map((config) => `<div class="issue"><span class="issue-level">오류</span><span><b>${config.generation}세대 시작 위치를 완성해 주세요.</b><br><span class="issue-path">마을, 건물, NPC 슬롯 연결을 확인하세요.</span></span></div>`).join("");
-  toast("스타팅 설정을 확인해 주세요.");
+  toast("스타팅 위치 설정을 확인해 주세요.");
   return false;
 }
 
@@ -937,7 +937,7 @@ function deleteStarterGeneration() {
   const starter = state.starterSettings;
   if (starter.configs.length <= 1) return;
   const generation = starter.selectedGeneration;
-  if (!confirm(`${generation}세대 스타팅 설정을 목록에서 제거할까요?`)) return;
+  if (!confirm(`${generation}세대 스타팅 위치 설정을 목록에서 제거할까요?`)) return;
   starter.configs = starter.configs.filter((config) => config.generation !== generation);
   starter.selectedGeneration = starter.configs[0].generation;
   if (starter.defaultGeneration === generation) starter.defaultGeneration = starter.selectedGeneration;
@@ -958,8 +958,14 @@ function switchPage(section) {
   if (activeNavigationItem) openNavigationGroup(activeNavigationItem.closest(".nav-group"));
   const contentSection = section === "dungeon-chambers" ? "dungeon-pieces" : section;
   $$(".page").forEach((page) => page.classList.toggle("is-active", page.id === contentSection));
-  const titles = { dashboard: "프로젝트 현황", trainers: "트레이너풀", "system-npcs": "시스템 NPC", battles: "배틀 프리셋", routes: "길 관리", league: "리그 운영 · 구성원", "league-facilities": "리그 운영 · 리그 시설", "trainer-card": "리그 운영 · 자동 카드", worlds: "세대별 월드맵", "starter-settings": "스타팅 설정", caves: "동굴 관리", dungeons: "던전 관리", "dungeon-chambers": "공동 관리", "dungeon-pieces": "던전 조각 관리", "underground-roads": "지하통로 관리", forests: "숲 관리", settlements: "마을 관리", gyms: "리그 운영 · 체육관 시설", "space-connections": "공간 연결 관계", structures: "NBT 건물 설정", "live-nbt-editor": "라이브 NBT 편집", biomes: "바이옴 관리", definitions: "아이템 · 진행 변수", economy: "상점 · 드롭 · NPC 제작", music: "음악 배정 · 기본값", "global-resources": "전역 리소스", "casino-config": "카지노 콘텐츠 설정", "pokefinder-icons": "포켓파인더 아이콘", builds: "빌드 · 콘텐츠 교체" };
-  $("#page-title").textContent = titles[section];
+  const internalPageTitles = {
+    "league-facilities": "리그 운영 · 리그 시설",
+    "trainer-card": "리그 운영 · 자동 카드",
+    gyms: "리그 운영 · 체육관 시설",
+  };
+  $("#page-title").textContent = internalPageTitles[section]
+    || activeNavigationItem?.textContent.trim()
+    || section;
   $$('[data-league-workspace]').forEach(tab => {
     const active = tab.dataset.leagueWorkspace === section;
     tab.classList.toggle('is-active', active);
@@ -1610,7 +1616,7 @@ async function loadBuildingSettingsData(force = false) {
     if (!force) return;
   }
   lazyDataPromises.buildingSettings = (async () => {
-    const result = await requestStructureCache("/api/building-settings", force, "NBT 건물 설정");
+    const result = await requestStructureCache("/api/building-settings", force, "NBT 건물 관리");
     state.buildingSettings.structures = result.data.structures || {};
     state.buildingSettings.npcs = result.data.npcs || [];
     state.buildingSettings.radarIcons = result.data.radar_icons || { schema_version: 1, categories: {} };
@@ -2178,7 +2184,7 @@ function renderCasinoConfig() {
 async function loadCasinoConfig(force = false) {
   if (state.casinoConfig.loaded && !force) { renderCasinoConfig(); return; }
   const result = await request("/api/casino-config");
-  if (!result.ok) throw new Error(result.data.error || "카지노 설정을 불러오지 못했습니다.");
+  if (!result.ok) throw new Error(result.data.error || "카지노 · 가챠 설정을 불러오지 못했습니다.");
   state.casinoConfig.root = result.data.config_root || "";
   state.casinoConfig.files = (result.data.files || []).map((file) => ({ ...file, dirty: false, draft: null, parseError: "" }));
   state.casinoConfig.selectedPath = state.casinoConfig.files.some((file) => file.path === state.casinoConfig.selectedPath)
@@ -2220,7 +2226,7 @@ async function saveCasinoConfig() {
     method: "PUT", body: JSON.stringify({ path: file.path, document })
   });
   showIssues("#casino-config-issues", result.data);
-  if (!result.ok) { toast(result.data.error || "카지노 설정 값을 확인해 주세요."); return; }
+  if (!result.ok) { toast(result.data.error || "카지노 · 가챠 설정 값을 확인해 주세요."); return; }
   file.document = document;
   file.draft = null;
   file.parseError = "";
@@ -12119,7 +12125,7 @@ function renderConditionEditor(condition, conditionIndex) {
   const type = condition.type === "flag_equals" ? "flag" : condition.type === "has_item" ? "item" : (condition.type || "always");
   let details = "";
   if (type === "flag") {
-    details = `<label class="wide"><span>변수 ID</span><input list="declared-variable-ids" data-condition-field="key" value="${escapeHtml(condition.key || "")}" placeholder="cobbleventure:flag/example"><small>게임 데이터에서 선언한 진행 변수를 선택하거나 직접 입력할 수 있습니다.</small></label>${renderEventValueEditor(condition.value ?? true, "value", "condition")}`;
+    details = `<label class="wide"><span>변수 ID</span><input list="declared-variable-ids" data-condition-field="key" value="${escapeHtml(condition.key || "")}" placeholder="cobbleventure:flag/example"><small>아이템 · 진행 변수에서 선언한 진행 변수를 선택하거나 직접 입력할 수 있습니다.</small></label>${renderEventValueEditor(condition.value ?? true, "value", "condition")}`;
   } else if (type === "item") {
     details = `<label class="wide"><span>아이템 ID</span><input list="declared-item-ids" data-condition-field="item" value="${escapeHtml(condition.item || "")}" placeholder="cobblemon:potion"><small>선언한 퀘스트 아이템 또는 실제 게임 아이템 ID를 사용할 수 있습니다.</small></label><label><span>필요 수량</span><input data-condition-field="count" data-value-type="number" type="number" min="1" step="1" value="${escapeHtml(condition.count ?? 1)}"></label>`;
   } else if (type === "badge") {
@@ -14142,7 +14148,7 @@ async function moveLeagueEntry(entryId, delta) {
 
 function trainerPoolOptions(selected = "") {
   if (selected?.startsWith("cobbleventure:npc/league/")) return `<option value="${escapeHtml(selected)}">리그 시설에서 자동 생성</option>`;
-  return '<option value="">트레이너풀에서 선택</option>' + state.trainers.map((trainer) => `<option value="${escapeHtml(trainer.id)}"${trainer.id === selected ? " selected" : ""}>${escapeHtml(trainer.name || trainer.id)} · ${escapeHtml(trainer.id)}</option>`).join("");
+  return '<option value="">NPC 관리에서 선택</option>' + state.trainers.map((trainer) => `<option value="${escapeHtml(trainer.id)}"${trainer.id === selected ? " selected" : ""}>${escapeHtml(trainer.name || trainer.id)} · ${escapeHtml(trainer.id)}</option>`).join("");
 }
 
 function battlePresetOptions(selected = "") {
@@ -15634,7 +15640,7 @@ async function resizeSelectedBuilding() {
   const view = state.buildingSettings;
   const id = view.selected, metadata = view.structures[id];
   if (!id || !metadata) return;
-  if (view.dirty) return toast("먼저 NBT 건물 설정 변경 사항을 저장하세요.");
+  if (view.dirty) return toast("먼저 NBT 건물 관리 변경 사항을 저장하세요.");
   const width = Number($("#building-size-width").value);
   const height = Number($("#building-size-height").value);
   const depth = Number($("#building-size-depth").value);
@@ -15880,7 +15886,7 @@ function renderResidentialCatalogOptions() {
   $("#residential-catalog-options").innerHTML = visible.map((item) => {
     const size = state.structureSizes[item.structure];
     return `<label class="residential-catalog-option${item.unavailable ? " is-unavailable" : ""}"><input type="checkbox" data-residential-structure="${escapeHtml(item.structure)}"${(useAll && !item.unavailable) || selected.has(item.structure) ? " checked" : ""}${useAll ? " disabled" : ""}><span><strong>${escapeHtml(item.label)}</strong><small>${escapeHtml(item.structure)}</small><small>${size ? `${size.width}×${size.height}×${size.depth} 블록 · ` : ""}${item.unavailable ? "삭제 또는 자동 배치 해제됨 · 선택을 해제하세요" : `가중치 ${item.weight}`}</small></span></label>`;
-  }).join("") || '<p class="issues empty">일치하는 주택이 없습니다. NBT 건물 설정에서 ‘주택 자동 배치에 사용’을 켜고 저장하세요.</p>';
+  }).join("") || '<p class="issues empty">일치하는 주택이 없습니다. NBT 건물 관리에서 ‘주택 자동 배치에 사용’을 켜고 저장하세요.</p>';
 }
 
 function normalizedHousePalette(profile = state.settlement?.structure_profile?.generation_profile?.house_palette) {
@@ -18828,7 +18834,7 @@ async function loadGameDefinitions(force = false) {
   if (lazyDataPromises.definitions) return lazyDataPromises.definitions;
   lazyDataPromises.definitions = (async () => {
     const result = await request("/api/game-definitions");
-    if (!result.ok) throw new Error(result.data.error || "게임 데이터 선언을 불러오지 못했습니다.");
+    if (!result.ok) throw new Error(result.data.error || "아이템 · 진행 변수 선언을 불러오지 못했습니다.");
     state.gameDefinitions = result.data;
     state.gameDefinitions.items ||= [];
     state.gameDefinitions.variables ||= [];
@@ -18909,7 +18915,7 @@ async function saveGameDefinitions() {
   const result = await request("/api/game-definitions", { method: "PUT", body: JSON.stringify(state.gameDefinitions) });
   showIssues("#definition-issues", result.data);
   if (!result.ok) { toast(result.data.error || "선언 내용을 확인해 주세요."); return; }
-  toast("게임 데이터 선언을 저장했습니다.");
+  toast("아이템 · 진행 변수 선언을 저장했습니다.");
 }
 
 async function loadEconomy(force = false) {
@@ -19225,7 +19231,7 @@ function renderSettlementVendorUnits() {
     const vendorNames = assignments.map((assignment) => `${economyText(assignment.display_name)}: ${economyText(vendorsById.get(assignment.vendor_unit)?.role) || assignment.vendor_unit}`);
     const checked = configuredCatalog ? configuredCatalog === catalog.id : index === 0;
     return `<label class="vendor-unit-choice"><input type="radio" name="settlementShopCatalog" value="${escapeHtml(catalog.id)}" ${checked ? "checked" : ""}><span><strong>${escapeHtml(economyText(catalog.display_name))}</strong><small>${vendorNames.length}개 코너 · ${escapeHtml(vendorNames.join(", "))}</small><small>${escapeHtml(catalog.id)} · ${catalog.origin === "custom" ? "사용자 정의" : "기본 제공"}</small></span></label>`;
-  }).join("") : '<div class="economy-empty">이 시설에 사용할 상점 카탈로그가 없습니다. 경제 · 제작에서 추가하세요.</div>';
+  }).join("") : '<div class="economy-empty">이 시설에 사용할 상점 카탈로그가 없습니다. 상점 · 드롭 · 교환식에서 추가하세요.</div>';
 }
 
 function selectedSettlementShopCatalog() {
@@ -20193,7 +20199,7 @@ $("#save-starter-settings").addEventListener("click", async () => {
   if (!validateStarterSettings()) return;
   const result = await request("/api/starter-settings", { method: "PUT", body: JSON.stringify(starterSettingsPayload()) });
   showIssues("#starter-issues", result.data);
-  toast(result.ok ? "스타팅 설정을 저장했습니다." : "스타팅 설정을 확인해 주세요.");
+  toast(result.ok ? "스타팅 위치 설정을 저장했습니다." : "스타팅 위치 설정을 확인해 주세요.");
   if (result.ok) state.starterSettings.loaded = true;
 });
 
@@ -21105,7 +21111,7 @@ $("#league-member-cancel").addEventListener("click", () => $("#league-member-dia
 $("#edit-league-trainer").addEventListener("click", async () => {
   updateLeagueEntryFromForm(); const entry = selectedLeagueEntry(); const trainer = state.trainers.find((candidate) => candidate.id === entry?.trainer_id);
   if (entry?.trainer_id?.startsWith("cobbleventure:npc/league/")) { switchPage("league-facilities"); return; }
-  if (!trainer) { toast("트레이너풀에서 NPC를 먼저 선택해 주세요."); return; }
+  if (!trainer) { toast("NPC 관리에서 NPC를 먼저 선택해 주세요."); return; }
   switchPage("trainers"); await loadDocument("trainers", trainer.path);
 });
 $("#edit-object-npc").addEventListener("click", async () => {

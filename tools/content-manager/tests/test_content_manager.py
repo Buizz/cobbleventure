@@ -1168,10 +1168,21 @@ class ContentManagerTests(unittest.TestCase):
 
         html = (CORE_ROOT / "tools/content-manager/web/index.html").read_text(encoding="utf-8")
         script = (CORE_ROOT / "tools/content-manager/web/app.js").read_text(encoding="utf-8")
+        styles = (CORE_ROOT / "tools/content-manager/web/styles.css").read_text(encoding="utf-8")
         self.assertIn('data-section="global-resources"', html)
+        self.assertIn('data-section="global-resources">대화 · 메뉴 테마', html)
+        self.assertIn('<h2>대화 · 메뉴 테마</h2>', html)
+        self.assertNotIn('<h2>전역 리소스</h2>', html)
+        global_resources = html.split('<section class="page" id="global-resources">', 1)[1].split(
+            '<section class="page" id="casino-config">', 1
+        )[0]
+        self.assertNotIn('/research.html', global_resources)
         self.assertIn('id="dialogue-theme-form"', html)
         self.assertIn('name="menu.corner_radius"', html)
         self.assertIn('class="dialogue-preview-options"', html)
+        self.assertIn('.global-resource-form .form-grid.three {', styles)
+        self.assertIn('grid-template-columns: repeat(3, minmax(0, 1fr));', styles)
+        self.assertIn('@media (max-width: 1100px)', styles)
         self.assertIn('/api/dialogue-theme', script)
 
     def test_event_boundary_catalog_validates_ids_integer_boxes_and_order(self) -> None:
@@ -5499,7 +5510,7 @@ class ContentManagerTests(unittest.TestCase):
         page = (CORE_ROOT / "tools" / "content-manager" / "web" / "index.html").read_text(encoding="utf-8")
         script = (CORE_ROOT / "tools" / "content-manager" / "web" / "app.js").read_text(encoding="utf-8")
         self.assertIn('data-section="trainers">NPC 관리', page)
-        self.assertIn('data-section="battles">배틀 관리', page)
+        self.assertIn('data-section="battles">배틀 프리셋 관리', page)
         self.assertIn('id="battle-list"', page)
         self.assertIn('id="battle-form"', page)
         self.assertIn('id="event-command-list"', page)
@@ -5868,8 +5879,7 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn('data-section="routes">길 관리', html)
         self.assertNotIn('<span>06</span>마을 프리셋', html)
         self.assertNotIn('<span>07</span>길 프리셋', html)
-        self.assertIn('routes: "길 관리"', script)
-        self.assertIn('settlements: "마을 관리"', script)
+        self.assertIn('activeNavigationItem?.textContent.trim()', script)
         self.assertIn('id="route-preset-form"', html)
         self.assertIn('name="routePreset"', html)
         self.assertIn('id="open-selected-management"', html)
@@ -5912,7 +5922,12 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn('<strong>던전 제작</strong>', html)
         self.assertIn('<strong>캐릭터 · 전투</strong>', html)
         self.assertIn('<strong>스토리 · 시스템</strong>', html)
-        self.assertIn('<strong>리소스 · 빌드</strong>', html)
+        self.assertIn('<strong>공간 · 리소스 · 빌드</strong>', html)
+        self.assertIn('data-section="dungeon-chambers">던전 공동 라이브러리', html)
+        self.assertIn('data-section="dungeon-pieces">던전 조각 라이브러리', html)
+        self.assertIn('data-section="economy">상점 · 드롭 · 교환식', html)
+        self.assertIn('data-section="music">음악 라이브러리 · 배정', html)
+        self.assertIn('data-section="builds">팩 빌드 · 인스턴스 설치', html)
         self.assertIn("function openNavigationGroup", script)
         self.assertIn("function toggleNavigationGroup", script)
         self.assertIn("function validateMainNavigation()", script)
@@ -5949,7 +5964,7 @@ class ContentManagerTests(unittest.TestCase):
         styles = (web_root / "styles.css").read_text(encoding="utf-8")
 
         self.assertIn('data-section="starter-settings"', html)
-        self.assertIn('data-section="starter-settings">스타팅 설정', html)
+        self.assertIn('data-section="starter-settings">스타팅 위치', html)
         self.assertIn('id="starter-default-generation"', html)
         self.assertIn('data-starter-mode="town"', html)
         self.assertIn('data-starter-mode="building"', html)
@@ -5957,7 +5972,8 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn('id="starter-set-respawn"', html)
         self.assertIn('id="starter-slot-list"', html)
         self.assertNotIn('class="starter-preview panel"', html)
-        self.assertIn('"starter-settings": "스타팅 설정"', script)
+        self.assertIn('activeNavigationItem?.textContent.trim()', script)
+        self.assertNotIn('"starter-settings": "스타팅 설정"', script)
         self.assertIn("starterFacilityPlacements", script)
         self.assertIn("starterBuildingSlots", script)
         self.assertIn('request("/api/starter-settings"', script)
@@ -5980,12 +5996,12 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn('.gacha-casino-set-heading > strong { min-width:0; overflow-wrap:anywhere; word-break:keep-all; }', styles)
 
         self.assertIn('data-section="casino-config"', html)
-        self.assertIn('data-section="casino-config">카지노 설정', html)
+        self.assertIn('data-section="casino-config">카지노 · 가챠 관리', html)
         self.assertNotIn('id="casino-config-file-list"', html)
         self.assertNotIn('id="casino-config-form"', html)
         self.assertNotIn('id="casino-config-json"', html)
         self.assertNotIn('id="save-casino-config"', html)
-        self.assertIn('"casino-config": "카지노 콘텐츠 설정"', script)
+        self.assertIn('<h2>카지노 · 가챠 관리</h2>', html)
 
         self.assertIn('id="gacha-machine-list"', html)
         self.assertIn('id="gacha-machine-editor"', html)
@@ -8451,7 +8467,7 @@ class ContentManagerTests(unittest.TestCase):
         structures = markup.split('<section class="page" id="structures">', 1)[1].split(
             '<section class="page" id="biomes">', 1
         )[0]
-        self.assertIn("NBT 건물 설정", structures)
+        self.assertIn("NBT 건물 관리", structures)
         self.assertIn('id="building-model-canvas"', markup)
         self.assertIn('id="building-npc-assignments"', markup)
         self.assertIn('id="building-category"', markup)
@@ -8510,7 +8526,7 @@ class ContentManagerTests(unittest.TestCase):
         self.assertEqual(
             1,
             script.count(
-                'requestStructureCache("/api/building-settings", force, "NBT 건물 설정")'
+                'requestStructureCache("/api/building-settings", force, "NBT 건물 관리")'
             ),
         )
         self.assertIn("if (!result.data.cache?.refreshing) return result;", script)

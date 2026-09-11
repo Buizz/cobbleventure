@@ -36,7 +36,7 @@
         <section class="nav-group" data-nav-group="world">
           <button class="nav-group-toggle" type="button" aria-expanded="false"><strong>월드 · 지역</strong><i aria-hidden="true">⌄</i></button>
           <div class="nav-group-items" hidden>
-            <button class="nav-item" data-section="worlds">월드맵</button>
+            <button class="nav-item" data-section="worlds">월드맵 관리</button>
             <button class="nav-item" data-section="biomes">바이옴 관리</button>
             <button class="nav-item" data-section="settlements">마을 관리</button>
             <button class="nav-item" data-section="routes">길 관리</button>
@@ -49,17 +49,17 @@
           <button class="nav-group-toggle" type="button" aria-expanded="false"><strong>던전 제작</strong><i aria-hidden="true">⌄</i></button>
           <div class="nav-group-items" hidden>
             <button class="nav-item" data-section="dungeons">던전 관리</button>
-            <button class="nav-item" data-section="dungeon-chambers">공동 관리</button>
-            <button class="nav-item" data-section="dungeon-pieces">던전 조각 관리</button>
+            <button class="nav-item" data-section="dungeon-chambers">던전 공동 라이브러리</button>
+            <button class="nav-item" data-section="dungeon-pieces">던전 조각 라이브러리</button>
           </div>
         </section>
         <section class="nav-group" data-nav-group="characters">
           <button class="nav-group-toggle" type="button" aria-expanded="false"><strong>캐릭터 · 전투</strong><i aria-hidden="true">⌄</i></button>
           <div class="nav-group-items" hidden>
-            <button class="nav-item" data-section="starter-settings">스타팅 설정</button>
+            <button class="nav-item" data-section="starter-settings">스타팅 위치</button>
             <button class="nav-item" data-section="trainers">NPC 관리</button>
             <button class="nav-item" data-section="system-npcs">시스템 NPC 관리</button>
-            <button class="nav-item" data-section="battles">배틀 관리</button>
+            <button class="nav-item" data-section="battles">배틀 프리셋 관리</button>
             <button class="nav-item" data-section="league">리그 운영</button>
           </div>
         </section>
@@ -68,21 +68,21 @@
           <div class="nav-group-items" hidden>
             <a class="nav-link" href="/cves.html" data-tool-title="이벤트 관리">이벤트 관리</a>
             <a class="nav-link" href="/quests.html" data-tool-title="퀘스트 관리">퀘스트 관리</a>
-            <button class="nav-item" data-section="definitions">게임 데이터</button>
-            <button class="nav-item" data-section="economy">경제 · 제작</button>
-            <button class="nav-item" data-section="casino-config">카지노 설정</button>
+            <button class="nav-item" data-section="definitions">아이템 · 진행 변수</button>
+            <button class="nav-item" data-section="economy">상점 · 드롭 · 교환식</button>
+            <button class="nav-item" data-section="casino-config">카지노 · 가챠 관리</button>
           </div>
         </section>
         <section class="nav-group" data-nav-group="resources">
-          <button class="nav-group-toggle" type="button" aria-expanded="false"><strong>리소스 · 빌드</strong><i aria-hidden="true">⌄</i></button>
+          <button class="nav-group-toggle" type="button" aria-expanded="false"><strong>공간 · 리소스 · 빌드</strong><i aria-hidden="true">⌄</i></button>
           <div class="nav-group-items" hidden>
-            <button class="nav-item" data-section="space-connections">공간 연결 관계</button>
-            <button class="nav-item" data-section="structures">NBT 건물 설정</button>
+            <button class="nav-item" data-section="space-connections">공간 연결 관리</button>
+            <button class="nav-item" data-section="structures">NBT 건물 관리</button>
             <button class="nav-item" data-section="live-nbt-editor">라이브 NBT 편집</button>
-            <button class="nav-item" data-section="music">음악 설정</button>
-            <button class="nav-item" data-section="global-resources">전역 리소스</button>
-            <button class="nav-item" data-section="pokefinder-icons">포켓파인더 아이콘</button>
-            <button class="nav-item" data-section="builds">빌드 작업</button>
+            <button class="nav-item" data-section="music">음악 라이브러리 · 배정</button>
+            <button class="nav-item" data-section="global-resources">대화 · 메뉴 테마</button>
+            <button class="nav-item" data-section="pokefinder-icons">포켓파인더 아이콘 관리</button>
+            <button class="nav-item" data-section="builds">팩 빌드 · 인스턴스 설치</button>
           </div>
         </section>
       </nav>
@@ -91,7 +91,7 @@
 
     <main>
       <header class="topbar">
-        <div><p class="eyebrow">COBBLEVENTURE / CONTENT</p><h1 id="page-title">프로젝트 현황</h1></div>
+        <div><p class="eyebrow">COBBLEVENTURE / CONTENT</p><h1 id="page-title">대시보드</h1></div>
         <div class="topbar-actions">
           <button class="project-chip" id="open-project" type="button"><span>현재 프로젝트</span><strong id="active-project-name">불러오는 중…</strong><small id="active-project-path"></small></button>
           <button class="button secondary" id="refresh-button">새로고침</button>
@@ -286,7 +286,7 @@
               <label><span>세대</span><input name="generation" type="number" min="1" max="9" disabled></label>
               <label><span>리그 순번</span><input name="order" type="number" min="1" max="99" disabled><small>도전 단계용 번호이며 화면 표시 순서는 왼쪽 목록의 위·아래 버튼으로 정합니다.</small></label>
               <label class="wide"><span>지역 ID</span><input name="region" placeholder="cobbleventure:region/kanto" disabled></label>
-              <fieldset class="wide" id="league-trainer-link"><legend>트레이너풀 연결</legend><label class="wide"><span>사용할 NPC 엔트리</span><select name="trainerId" disabled></select></label><button class="button secondary" id="edit-league-trainer" type="button" disabled>트레이너풀에서 편집</button><small class="wide">사천왕과 챔피언처럼 별도 이벤트가 필요한 구성원만 NPC 엔트리를 연결합니다.</small></fieldset>
+              <fieldset class="wide" id="league-trainer-link"><legend>NPC 연결</legend><label class="wide"><span>사용할 NPC 엔트리</span><select name="trainerId" disabled></select></label><button class="button secondary" id="edit-league-trainer" type="button" disabled>NPC 관리에서 편집</button><small class="wide">사천왕과 챔피언처럼 별도 이벤트가 필요한 구성원만 NPC 엔트리를 연결합니다.</small></fieldset>
               <fieldset class="wide league-encounter-fields" id="league-encounter-fields" hidden><legend>관장 약식 이벤트</legend>
                 <input name="battleId" type="hidden">
                 <section class="league-appearance-panel wide"><div id="league-appearance-preview" class="trainer-preview"><div class="trainer-preview-fallback">관장</div></div><div class="trainer-appearance-fields"><label><span>리그 인물·외형</span><select name="rosterCharacter" disabled></select></label><label><span>외형 출처</span><select name="appearanceSource" disabled><option value="custom">직접 제작</option><option value="rct_single">RCT 개별 스킨</option><option value="rct_group">RCT 그룹 스킨</option></select></label><label class="wide"><span>스킨·모델 리소스</span><input name="appearanceResource" placeholder="rctmod:trainers/single/kanto_brock" disabled></label><small>선택한 외형으로 빌드 시 EasyNPC 데이터를 생성합니다.</small></div></section>
@@ -681,7 +681,7 @@
               <label><span>영문 이름</span><input name="nameEn"></label>
               <label><span>동굴 종류</span><select name="caveType"><option value="cobbleventure:cave_type/natural_rock">자연 암석 동굴</option><option value="cobbleventure:cave_type/dark_tunnel">어두운 터널</option></select></label>
               <label><span>동굴 스타일</span><select name="caveStyle"><option value="rock">일반 암석</option><option value="dripstone">점적석</option><option value="crystal">수정 동굴</option><option value="lush">무성한 동굴</option><option value="ice">얼음 동굴</option><option value="lava">용암 동굴</option></select><small>공동의 비율, 통로 형태, 블록과 장식 외형에 적용됩니다.</small></label>
-              <label><span>동굴 BGM</span><select name="musicTrack"></select><small>미지정하면 음악 설정의 동굴 기본 BGM을 사용합니다.</small></label>
+              <label><span>동굴 BGM</span><select name="musicTrack"></select><small>미지정하면 음악 배정의 동굴 기본 BGM을 사용합니다.</small></label>
               <label><span>액체 수위 (Y)</span><input name="fluidLevel" type="number" min="1" max="250"><small id="cave-fluid-level-help">이 높이까지 물이 차오릅니다.</small></label>
               <label><span>최대 깊이</span><input name="fluidDepth" type="number" min="1" max="96"><small>수위 아래에서 액체가 채워지는 최대 깊이입니다.</small></label>
               <label class="toggle"><input name="enabled" type="checkbox"><span>동굴 사용</span></label>
@@ -824,7 +824,7 @@
               <label class="wide"><span>숲 ID</span><input name="id" required pattern="[a-z0-9_.-]+:[a-z0-9_./-]+"></label>
               <label><span>한국어 이름</span><input name="nameKo" required></label><label><span>영문 이름</span><input name="nameEn"></label>
               <label class="toggle"><input name="enabled" type="checkbox"><span>숲 사용</span></label><label><span>날씨</span><select name="weather"><option value="clear">맑음</option><option value="rain">비</option><option value="thunder">뇌우</option></select></label>
-              <label><span>숲 BGM</span><select name="musicTrack"></select><small>미지정하면 음악 설정의 숲 기본 BGM을 사용합니다.</small></label>
+              <label><span>숲 BGM</span><select name="musicTrack"></select><small>미지정하면 음악 배정의 숲 기본 BGM을 사용합니다.</small></label>
               <section class="forest-layout-editor spatial-editor"><header><div class="forest-editor-heading"><strong>타일 숲 길 편집기</strong><small>길 앵커와 입출구는 격자에 고정되지 않습니다. 점을 자유롭게 드래그하거나 선택한 길의 끝을 계속 클릭해 연장하세요.</small><button type="button" class="button secondary forest-maze-open-action" id="open-forest-maze-dialog">⌁ 길 네트워크 생성</button></div><div class="cave-preview-actions spatial-editor-toolbar"><button type="button" class="button secondary" data-forest-tool="path">✎ 길 잇기</button><button type="button" class="button secondary" data-add-forest-path>＋ 새 길</button><button type="button" class="button secondary" data-forest-tool="height-up">▲ 타일 높이</button><button type="button" class="button secondary" data-forest-tool="height-down">▼ 타일 낮추기</button><button type="button" class="button secondary" data-forest-tool="height-reset">○ 높이 초기화</button><button type="button" class="button secondary" data-forest-tool="stairs">▤ 계단</button><label class="forest-brush-size"><span>브러시 크기</span><input id="forest-height-brush-radius" type="range" min="0" max="5" step="1" value="0"><output id="forest-height-brush-size">1×1</output><span>설정 높이</span><input id="forest-height-brush-target" type="number" min="1" max="16" step="1" value="1"><output id="forest-height-target-value">+1</output></label></div></header><div class="forest-layout-body spatial-editor-stage"><button type="button" class="forest-anchor-delete" id="forest-anchor-delete" aria-label="선택한 길 앵커 삭제" title="선택한 길 앵커 삭제" hidden>×</button><canvas id="forest-layout-canvas" width="900" height="560" aria-label="자유 배치 숲길과 타일 높이 편집기"></canvas><aside class="spatial-editor-inspector"><div id="forest-selection-empty" class="forest-selection-empty"><span>⌁</span><p>지도에서 길이나 입출구를 선택하면<br>해당 요소의 속성을 편집할 수 있습니다.</p></div><section id="forest-path-properties" class="forest-selection-properties" hidden><strong>선택한 길</strong><div id="forest-path-list" class="forest-item-list"></div></section><section id="forest-entrance-properties" class="forest-selection-properties" hidden><strong>선택한 입출구</strong><div id="forest-entrance-list" class="forest-item-list"></div></section><div id="forest-height-list" hidden></div></aside></div><footer class="spatial-editor-status"><span id="forest-preview-summary">숲을 선택하면 타일 배치를 표시합니다.</span><small>황록: 주 경로 · 주황: 지름길 · 노랑: 입출구 · 파랑/갈색: 높낮이 · 흰색: 계단</small></footer></section>
               <fieldset class="wide cave-settings-group"><legend>주변 포켓몬 인카운터</legend><p class="cave-section-help">숲에서 플레이어 주변에 소수의 포켓몬이 머물며, 시야 안에서 플레이어를 발견하면 추적합니다.</p><div class="cave-field-grid"><label class="toggle"><input name="randomEncounters" type="checkbox"><span>주변 인카운터 사용</span></label><label><span>최소 스폰 거리</span><input name="encounterMinDistance" type="number" min="1" max="10000"></label><label><span>최대 스폰 거리</span><input name="encounterMaxDistance" type="number" min="1" max="10000"></label><label><span>기본 최소 레벨</span><input name="encounterMinLevel" type="number" min="1" max="100"></label><label><span>기본 최대 레벨</span><input name="encounterMaxLevel" type="number" min="1" max="100"></label><label class="wide"><span>포켓몬 출현 바이옴</span><select name="encounterPokemonBiome"></select><small>나무와 지형 외형과 별개로 출현 후보군만 결정합니다.</small></label><section class="route-pokemon-summary wide"><div><span>서식 포켓몬</span><b data-encounter-pokemon-count="forest">0종</b></div><p data-encounter-pokemon-description="forest">선택한 바이옴의 출현 목록을 사용합니다.</p><div class="encounter-pokemon-icon-list" data-encounter-pokemon-icons="forest" aria-label="숲 실제 출현 포켓몬"></div><button class="button primary" data-edit-encounter-pokemon="forest" type="button">포켓몬 수정</button></section></div></fieldset>
               <fieldset class="wide cave-settings-group forest-environment-group"><legend>나무 장벽과 풀숲</legend><p class="cave-section-help">원하는 숲의 느낌만 고르면 나무 장벽과 풀숲이 한 번에 설정됩니다.</p>
@@ -882,16 +882,16 @@
               <fieldset class="wide house-palette-fields"><legend>주택 구성</legend>
                 <label class="wide"><span>주택 선택 방식</span><select name="residentialSource" disabled><option value="catalog">NBT 주택 카탈로그</option><option value="legacy">기존 층수·지붕 조합 (호환)</option></select></label>
                 <section id="residential-catalog-panel" class="wide" hidden>
-                  <p>‘NBT 건물 설정’에서 자동 배치에 등록한 NBT를 원본 크기와 가중치로 배치합니다. 지붕 색상을 자동 변경하지 않습니다.</p>
+                  <p>‘NBT 건물 관리’에서 자동 배치에 등록한 NBT를 원본 크기와 가중치로 배치합니다. 지붕 색상을 자동 변경하지 않습니다.</p>
                   <label class="toggle"><input type="checkbox" name="residentialUseAll" checked><span>활성화된 공통 주택 전체 사용</span></label>
                   <label><span>주택 검색</span><input id="residential-catalog-search" type="search" placeholder="표시 이름 · NBT ID"></label>
                   <div id="residential-catalog-options" class="residential-catalog-options"></div>
                 </section>
                 <div id="legacy-house-palette" class="wide form-grid compact-grid"><p class="house-palette-help wide">기존 마을의 주택 조합을 유지하는 호환 설정입니다.</p><section><strong>기본 골격</strong><div id="house-base-options" class="house-option-grid"></div></section><section><strong>지붕 형태</strong><div id="house-roof-options" class="house-option-grid"></div></section><section class="wide"><strong>지붕 색상</strong><div id="house-color-options" class="house-option-grid house-color-grid"></div></section></div>
               </fieldset>
-              <fieldset class="wide facility-catalog-fields"><legend>필수 시설 옵션</legend><p class="facility-catalog-help wide">추가한 건물은 지정한 수량만큼 반드시 생성됩니다. NBT를 비워 두면 NBT 건물 설정의 전역 기본값을 사용합니다.</p><div class="civic-facility-options wide"><label class="toggle"><input type="checkbox" name="pokemonCenterEnabled" disabled><span>포켓몬센터 배치</span></label><label><span>상업 시설</span><select name="commercialFacility" disabled><option value="none">없음</option><option value="pokemart">포켓몬상점</option><option value="department_store">백화점</option></select><small>포켓몬상점과 백화점은 둘 중 하나만 선택할 수 있습니다.</small></label><label><span>포켓몬센터 NBT</span><input name="townPokemonCenterStructure" list="facility-nbt-options" placeholder="전역 기본값" disabled><small id="pokemon-center-structure-default">전역 기본값을 사용합니다.</small></label><label><span>상업 시설 NBT</span><input name="commercialFacilityStructure" list="facility-nbt-options" placeholder="전역 기본값" disabled><small id="commercial-structure-default">선택한 시설의 전역 기본값을 사용합니다.</small></label><small class="wide">마을별 NBT를 지정하면 전역값보다 우선합니다. 시작 마을은 포켓몬센터와 상업 시설이 자동으로 비활성화됩니다.</small></div><section class="gym-facility-panel wide" id="gym-config-fields"><header><label class="toggle"><input type="checkbox" name="gymEnabled" disabled><span>체육관 배치</span></label><small>마을에서는 체육관 종류만 선택합니다. 관장과 기타 트레이너는 체육관 관리에서 전역으로 지정합니다.</small></header><div class="gym-facility-grid"><label class="wide"><span>체육관 종류</span><select name="gymId" disabled><option value="">체육관을 선택하세요</option></select></label><input type="hidden" name="gymAnchor" value="gym_building"></div></section><div class="facility-catalog-toolbar wide"><div><strong>추가된 건물</strong><small>현재 마을에 자동 배치할 건물만 표시합니다.</small></div><button type="button" class="button secondary" id="open-facility-picker" disabled>＋ 건물 추가</button></div><div id="facility-option-list" class="facility-option-list wide"></div></fieldset>
+              <fieldset class="wide facility-catalog-fields"><legend>필수 시설 옵션</legend><p class="facility-catalog-help wide">추가한 건물은 지정한 수량만큼 반드시 생성됩니다. NBT를 비워 두면 NBT 건물 관리의 전역 기본값을 사용합니다.</p><div class="civic-facility-options wide"><label class="toggle"><input type="checkbox" name="pokemonCenterEnabled" disabled><span>포켓몬센터 배치</span></label><label><span>상업 시설</span><select name="commercialFacility" disabled><option value="none">없음</option><option value="pokemart">포켓몬상점</option><option value="department_store">백화점</option></select><small>포켓몬상점과 백화점은 둘 중 하나만 선택할 수 있습니다.</small></label><label><span>포켓몬센터 NBT</span><input name="townPokemonCenterStructure" list="facility-nbt-options" placeholder="전역 기본값" disabled><small id="pokemon-center-structure-default">전역 기본값을 사용합니다.</small></label><label><span>상업 시설 NBT</span><input name="commercialFacilityStructure" list="facility-nbt-options" placeholder="전역 기본값" disabled><small id="commercial-structure-default">선택한 시설의 전역 기본값을 사용합니다.</small></label><small class="wide">마을별 NBT를 지정하면 전역값보다 우선합니다. 시작 마을은 포켓몬센터와 상업 시설이 자동으로 비활성화됩니다.</small></div><section class="gym-facility-panel wide" id="gym-config-fields"><header><label class="toggle"><input type="checkbox" name="gymEnabled" disabled><span>체육관 배치</span></label><small>마을에서는 체육관 종류만 선택합니다. 관장과 기타 트레이너는 체육관 관리에서 전역으로 지정합니다.</small></header><div class="gym-facility-grid"><label class="wide"><span>체육관 종류</span><select name="gymId" disabled><option value="">체육관을 선택하세요</option></select></label><input type="hidden" name="gymAnchor" value="gym_building"></div></section><div class="facility-catalog-toolbar wide"><div><strong>추가된 건물</strong><small>현재 마을에 자동 배치할 건물만 표시합니다.</small></div><button type="button" class="button secondary" id="open-facility-picker" disabled>＋ 건물 추가</button></div><div id="facility-option-list" class="facility-option-list wide"></div></fieldset>
               <datalist id="facility-nbt-options"></datalist>
-              <fieldset class="wide" id="special-district-fields"><legend>특별 건물</legend><label class="toggle wide"><input type="checkbox" name="specialBuildingEnabled" disabled><span>특별 건물 배치</span></label><label class="wide"><span>특별 건물 선택</span><select name="specialBuildingPreset" disabled><option value="">직접 입력</option><option value="cobbleventure:placeholder/player_house">플레이어 집</option></select><small>NBT 건물 설정에서 ‘임시·특수 건물’로 복사한 외부 NBT가 자동으로 표시되며 실제 크기로 부지를 준비합니다.</small></label><label class="wide"><span>구조물 리소스 ID</span><input name="specialBuildingStructure" placeholder="cobbleventure:placeholder/radio_tower" disabled><small>구조물 템플릿 크기를 읽어 필요한 부지를 자동으로 준비합니다.</small></label><label class="wide"><span>배치 위치</span><select name="specialDistrictPlacementMode" disabled><option value="auto">자동 · 프리셋 기본 위치</option><option value="manual">직접 지정</option></select><small>자동은 프리셋의 기본 위치를 유지하고, 직접 지정할 때만 마을 중심 기준 오프셋을 입력합니다.</small></label><details class="advanced-settings wide"><summary>고급 설정</summary><div class="form-grid compact-grid"><label data-special-manual><span>오프셋 X</span><input type="number" name="specialDistrictX" disabled></label><label data-special-manual><span>오프셋 Y</span><input type="number" name="specialDistrictY" disabled></label><label data-special-manual><span>오프셋 Z</span><input type="number" name="specialDistrictZ" disabled></label><label><span>최소 폭</span><input type="number" min="8" max="192" name="specialDistrictWidth" disabled></label><label><span>최소 깊이</span><input type="number" min="8" max="192" name="specialDistrictDepth" disabled></label><label><span>주변 여유 폭</span><input type="number" min="0" max="32" name="specialDistrictClearance" disabled></label><small class="wide">최소 폭·깊이는 템플릿보다 넓은 부지가 필요할 때만 사용합니다. 실제 구조물이 더 크면 자동으로 확장됩니다.</small></div></details></fieldset>
+              <fieldset class="wide" id="special-district-fields"><legend>특별 건물</legend><label class="toggle wide"><input type="checkbox" name="specialBuildingEnabled" disabled><span>특별 건물 배치</span></label><label class="wide"><span>특별 건물 선택</span><select name="specialBuildingPreset" disabled><option value="">직접 입력</option><option value="cobbleventure:placeholder/player_house">플레이어 집</option></select><small>NBT 건물 관리에서 ‘임시·특수 건물’로 복사한 외부 NBT가 자동으로 표시되며 실제 크기로 부지를 준비합니다.</small></label><label class="wide"><span>구조물 리소스 ID</span><input name="specialBuildingStructure" placeholder="cobbleventure:placeholder/radio_tower" disabled><small>구조물 템플릿 크기를 읽어 필요한 부지를 자동으로 준비합니다.</small></label><label class="wide"><span>배치 위치</span><select name="specialDistrictPlacementMode" disabled><option value="auto">자동 · 프리셋 기본 위치</option><option value="manual">직접 지정</option></select><small>자동은 프리셋의 기본 위치를 유지하고, 직접 지정할 때만 마을 중심 기준 오프셋을 입력합니다.</small></label><details class="advanced-settings wide"><summary>고급 설정</summary><div class="form-grid compact-grid"><label data-special-manual><span>오프셋 X</span><input type="number" name="specialDistrictX" disabled></label><label data-special-manual><span>오프셋 Y</span><input type="number" name="specialDistrictY" disabled></label><label data-special-manual><span>오프셋 Z</span><input type="number" name="specialDistrictZ" disabled></label><label><span>최소 폭</span><input type="number" min="8" max="192" name="specialDistrictWidth" disabled></label><label><span>최소 깊이</span><input type="number" min="8" max="192" name="specialDistrictDepth" disabled></label><label><span>주변 여유 폭</span><input type="number" min="0" max="32" name="specialDistrictClearance" disabled></label><small class="wide">최소 폭·깊이는 템플릿보다 넓은 부지가 필요할 때만 사용합니다. 실제 구조물이 더 크면 자동으로 확장됩니다.</small></div></details></fieldset>
               <fieldset class="wide npc-placement-panel"><legend>NPC 배치</legend><header class="npc-placement-heading"><div><strong>자동 트레이너 배치</strong><small>네 지역에서 같은 방식으로 바이옴 후보와 직접 지정 NPC를 조합합니다.</small></div><span>마을</span></header><section class="shared-trainer-population" data-trainer-population="settlement"></section><div class="auto-npc-preview" id="settlement-auto-npc-preview">자동 배치를 켜면 후보가 표시됩니다.</div><section class="npc-ambient-placement"><strong>단순 NPC 자동 배치</strong><div><label class="toggle"><input type="checkbox" name="autoPlaceNpcs" disabled><span>단순 NPC 자동 배치</span></label><label><span>최대 배치 수</span><input type="number" min="0" name="maxAmbient" disabled></label><label><span>기본 배회 반경</span><input type="number" min="0" step="0.5" name="wanderRadius" disabled></label></div><small>조건에 맞는 단순 NPC를 자동으로 골라 주택·시설 내부에 배치합니다.</small></section><section class="fixed-town-npc-placement"><header><div><strong>고정 야외 NPC</strong><small>선택한 단순 NPC를 이 마을의 도로 주변에 반드시 한 번 배치합니다. 정확한 위치는 안전한 야외 지점으로 자동 결정됩니다.</small></div><button type="button" class="button secondary" id="add-fixed-town-npc" disabled>고정 NPC 추가</button></header><div id="fixed-town-npc-list" class="fixed-town-npc-list"><div class="issues empty">마을을 선택하면 고정 NPC가 표시됩니다.</div></div></section><section class="npc-manual-placement is-informational"><header><div><strong>직접 위치 배치</strong><small>아래 목록에서 싱글·더블배틀 NPC와 정확한 좌표를 지정합니다.</small></div></header></section></fieldset>
               <label class="toggle wide"><input type="checkbox" name="enabled" disabled><span>이 마을 활성화</span></label>
             </form>
@@ -958,8 +958,8 @@
               <div class="gym-layout-stage"><canvas id="gym-layout-canvas" width="1200" height="620" aria-label="체육관 내부 모듈 평면 배치"></canvas><div class="gym-layout-empty" id="gym-layout-empty">체육관을 선택하세요.</div></div>
               <footer><div class="gym-layout-legend"><span data-kind="entrance">입구</span><span data-kind="trainer">트레이너</span><span data-kind="leader">관장</span><span data-kind="room">내부 모듈</span></div><strong id="gym-layout-summary">배치 정보 없음</strong></footer>
             </section>
-            <div class="subsection-heading legacy-space-editor"><div><p class="eyebrow">INTERIOR MODULES</p><h3>확장형 내부 공간</h3><small>공간 연결 관계 탭에서 시각적으로 편집합니다.</small></div><button class="button secondary" id="add-gym-module" disabled>내부 모듈 추가</button></div>
-            <div id="gym-module-list" class="cave-entry-list legacy-space-editor"><div class="issues empty">공간 연결 관계 탭에서 편집하세요.</div></div>
+            <div class="subsection-heading legacy-space-editor"><div><p class="eyebrow">INTERIOR MODULES</p><h3>확장형 내부 공간</h3><small>공간 연결 관리에서 시각적으로 편집합니다.</small></div><button class="button secondary" id="add-gym-module" disabled>내부 모듈 추가</button></div>
+            <div id="gym-module-list" class="cave-entry-list legacy-space-editor"><div class="issues empty">공간 연결 관리에서 편집하세요.</div></div>
             <details class="advanced"><summary>고급 JSON 편집</summary><textarea class="code-editor compact" id="gym-json" spellcheck="false" disabled></textarea><button class="button text-button" id="apply-gym-json" disabled>JSON을 폼에 반영</button></details>
             <div id="gym-issues" class="issues empty">체육관 카탈로그를 불러오는 중입니다.</div>
           </div>
@@ -969,7 +969,7 @@
       <section class="page" id="space-connections">
         <div class="space-flow panel">
           <div class="panel-heading space-flow-heading">
-            <div><p class="eyebrow">VISUAL SPACE ROUTING</p><h2>공간 연결 관계</h2><p>내부 공간을 배치하고, NBT에 저장된 실제 문끼리 연결합니다. 연결된 문은 하나의 양방향 출입구가 됩니다.</p></div>
+            <div><p class="eyebrow">VISUAL SPACE ROUTING</p><h2>공간 연결 관리</h2><p>내부 공간을 배치하고, NBT에 저장된 실제 문끼리 연결합니다. 연결된 문은 하나의 양방향 출입구가 됩니다.</p></div>
             <div class="editor-heading-actions space-flow-heading-actions"><span class="path-label" id="space-flow-path">content/catalogs/space-connections.json</span><div class="space-flow-save-row"><span class="space-flow-save-state" id="space-flow-save-state" data-state="idle" role="status" aria-live="polite">저장 준비</span><button class="button primary" id="save-space-flow" type="button">공간 연결 저장</button></div></div>
           </div>
           <div class="space-flow-board">
@@ -999,8 +999,8 @@
       <section class="page" id="structures">
         <div class="panel nbt-viewer building-settings-manager">
           <div class="panel-heading">
-            <div><p class="eyebrow">NBT BUILDING GLOBAL SETTINGS</p><h2>NBT 건물 설정</h2><p>NBT 건물을 선택해 실제 블록과 NPC 앵커를 확인하고, 이 건물의 전역 NPC를 배정합니다.</p></div>
-            <div class="editor-heading-actions"><span class="path-label" id="building-settings-path">content/catalogs/building-settings.json</span><button class="button secondary" id="copy-exterior-nbt" type="button">외부 NBT 복사</button><button class="button secondary" id="refresh-nbt-catalog" type="button">NBT 목록 갱신</button><button class="button primary" id="save-building-settings" type="button">NBT 건물 설정 저장</button></div>
+            <div><p class="eyebrow">NBT BUILDING MANAGEMENT</p><h2>NBT 건물 관리</h2><p>NBT 건물을 선택해 실제 블록과 NPC 앵커를 확인하고, 이 건물의 전역 NPC를 배정합니다.</p></div>
+            <div class="editor-heading-actions"><span class="path-label" id="building-settings-path">content/catalogs/building-settings.json</span><button class="button secondary" id="copy-exterior-nbt" type="button">외부 NBT 복사</button><button class="button secondary" id="refresh-nbt-catalog" type="button">NBT 목록 갱신</button><button class="button primary" id="save-building-settings" type="button">NBT 건물 관리 저장</button></div>
           </div>
           <section class="facility-default-settings">
             <div><p class="eyebrow">DEFAULT FACILITY NBT</p><h3>주요 시설 기본 NBT</h3><small>마을에서 별도 NBT를 고르지 않았을 때 사용하는 전역값입니다. 프로젝트에 추가한 외부 건물 NBT를 선택할 수 있습니다.</small></div>
@@ -1052,7 +1052,7 @@
                 <section class="building-space-editor legacy-space-editor">
                   <header><div><strong>건물 내부 BGM</strong><small>이 외관에서 연결되는 모든 내부 공간에 재생합니다.</small></div></header>
                   <label><span>음악</span><select id="building-music-track"></select></label>
-                  <small>미지정하면 음악 설정의 ‘일반 건물 내부 기본 BGM’을 사용합니다.</small>
+                  <small>미지정하면 음악 배정의 ‘일반 건물 내부 기본 BGM’을 사용합니다.</small>
                 </section>
                 <section class="building-space-editor">
                   <header><div><strong>NBT 작업 영역 크기</strong><small>실제 NBT 크기를 변경합니다. 축소하면 범위 밖 블록은 제거됩니다.</small></div></header>
@@ -1120,7 +1120,7 @@
             <div><p class="eyebrow">POKEFINDER ICON SYSTEM</p><h2>포켓파인더 아이콘</h2><p>트레이너·시설·목표 분류별 픽셀 모양과 색상을 직접 편집합니다.</p></div>
             <div class="editor-heading-actions"><span class="path-label" id="pokefinder-icons-path">content/catalogs/pokefinder-icons.json</span><button class="button primary" id="save-pokefinder-icons" type="button">아이콘 설정 저장</button></div>
           </div>
-          <div class="pokefinder-icon-help"><strong>건물에는 여기서 만든 분류를 배정합니다.</strong><span>NBT 건물 설정에서 포켓몬상점·카지노 등의 분류와 표시 이름, 위치 앵커를 선택하세요.</span></div>
+          <div class="pokefinder-icon-help"><strong>건물에는 여기서 만든 분류를 배정합니다.</strong><span>NBT 건물 관리에서 포켓몬상점·카지노 등의 분류와 표시 이름, 위치 앵커를 선택하세요.</span></div>
           <div class="pokefinder-icon-grid" id="pokefinder-icon-settings"><div class="issues empty">아이콘 설정을 불러오는 중입니다.</div></div>
           <div id="pokefinder-icon-issues" class="issues empty">변경 사항이 없습니다.</div>
         </div>
@@ -1143,7 +1143,7 @@
           <div class="definition-summary" id="definition-summary"><article><span>아이템</span><strong>0</strong></article><article><span>전역 변수</span><strong>0</strong></article><article><span>플레이어 변수</span><strong>0</strong></article></div>
           <section class="definition-section"><header><div><h3>추가 아이템</h3><small>기반 Minecraft 아이템과 표시 이름을 연결합니다. NPC의 ‘아이템 보유’ 분기에서 선언 ID를 선택할 수 있습니다.</small></div><button class="button secondary definition-add-button" type="button" data-add-definition="item">＋ 아이템 추가</button></header><div id="game-item-list" class="definition-list"></div></section>
           <section class="definition-section"><header><div><h3>진행 변수</h3><small>월드 전체 또는 플레이어마다 따로 저장할 상태입니다. boolean, integer, string 기본값을 지원합니다.</small></div><button class="button secondary definition-add-button" type="button" data-add-definition="variable">＋ 변수 추가</button></header><div id="game-variable-list" class="definition-list"></div></section>
-          <div id="definition-issues" class="issues empty">게임 데이터 선언을 불러오는 중입니다.</div>
+          <div id="definition-issues" class="issues empty">아이템 · 진행 변수 선언을 불러오는 중입니다.</div>
         </div>
         <datalist id="declared-item-ids"></datalist>
         <datalist id="declared-variable-ids"></datalist>
@@ -1152,7 +1152,7 @@
       <section class="page" id="economy">
         <div class="panel economy-manager">
           <div class="panel-heading economy-heading">
-            <div><p class="eyebrow">ECONOMY &amp; CRAFTING</p><h2>상점 · 드롭 · NPC 제작</h2><small>마을별 판매 품목과 포켓몬 처치 보상, 특수 NPC의 재료 교환식을 한 흐름으로 설계합니다.</small></div>
+            <div><p class="eyebrow">ECONOMY &amp; CRAFTING</p><h2>상점 · 드롭 · 교환식</h2><small>마을별 판매 품목과 포켓몬 처치 보상, 특수 NPC의 재료 교환식을 한 흐름으로 설계합니다.</small></div>
             <div class="editor-heading-actions"><span class="path-label">content/catalogs/economy.json</span><div><button class="button primary" id="save-economy">검증 후 저장</button></div></div>
           </div>
           <div class="economy-rule-banner"><span>VANILLA CRAFTING</span><strong>비활성화 고정</strong><p>NPC 제작 재료는 아래 포켓몬 드롭 목록에 등록된 아이템만 사용할 수 있습니다.</p><i>LOCKED</i></div>
@@ -1206,7 +1206,7 @@
 
       <section class="page" id="music">
         <div class="panel editor">
-          <div class="panel-heading"><div><p class="eyebrow">MUSIC RESOLUTION</p><h2>상황별 기본 음악</h2><p>먼저 실제 사용할 곡에만 의미 있는 태그를 추가하고, 각 사용처에서는 그 태그를 선택합니다.</p></div><div class="editor-heading-actions"><button class="button secondary" id="refresh-music-library">로컬 음원 다시 읽기</button><button class="button primary" id="save-music-settings">음원 설정 저장</button></div></div>
+          <div class="panel-heading"><div><p class="eyebrow">MUSIC RESOLUTION</p><h2>음악 라이브러리 · 배정</h2><p>먼저 실제 사용할 곡에만 의미 있는 태그를 추가하고, 각 사용처에서는 그 태그를 선택합니다.</p></div><div class="editor-heading-actions"><button class="button secondary" id="refresh-music-library">로컬 음원 다시 읽기</button><button class="button primary" id="save-music-settings">음악 배정 저장</button></div></div>
           <form id="music-defaults-form" class="form-grid">
             <label><span>일반 타일 기본 BGM <code>default.tile</code></span><select name="tile"></select></label>
             <label><span>도로 기본 BGM <code>default.road</code></span><select name="road"></select></label>
@@ -1300,14 +1300,13 @@
       </section>
 
       <section class="page" id="global-resources">
-        <p><a href="/research.html">연구소 비용·제작 설정</a></p>
         <div class="section-heading">
-          <div><p class="eyebrow">GLOBAL PRESENTATION</p><h2>전역 리소스</h2><p>모든 V5 대화와 선택지에 적용할 표현 설정입니다. 저장 후 데이터 모드를 다시 빌드하면 게임에 반영됩니다.</p></div>
+          <div><p class="eyebrow">DIALOGUE &amp; MENU THEME</p><h2>대화 · 메뉴 테마</h2><p>모든 V5 대화창과 선택지·메뉴에 적용할 글꼴, 색상, 패널 표현을 설정합니다. 저장 후 데이터 모드를 다시 빌드하면 게임에 반영됩니다.</p></div>
           <div class="section-actions"><button class="button secondary" id="reset-dialogue-theme" type="button">기본값 복원</button><button class="button primary" id="save-dialogue-theme" type="button">대화 테마 저장</button></div>
         </div>
         <div class="global-resource-layout">
           <form class="panel global-resource-form" id="dialogue-theme-form">
-            <div class="panel-heading"><div><p class="eyebrow">DIALOGUE THEME</p><h3>대화 표시 설정</h3></div><code id="dialogue-theme-path">content/catalogs/dialogue-theme.json</code></div>
+            <div class="panel-heading"><div><p class="eyebrow">DIALOGUE THEME</p><h3>대화 · 메뉴 표시 설정</h3></div><code id="dialogue-theme-path">content/catalogs/dialogue-theme.json</code></div>
             <fieldset><legend>폰트와 글자 크기</legend>
               <label><span>폰트 리소스</span><input name="font.resource" list="dialogue-font-resources" placeholder="minecraft:default"><small>게임의 font JSON 리소스 ID를 입력합니다.</small></label>
               <datalist id="dialogue-font-resources"><option value="minecraft:default"><option value="minecraft:uniform"><option value="cobbleventure:battle"></datalist>
@@ -1434,7 +1433,7 @@
 
       <section class="page" id="casino-config">
         <div class="section-heading">
-          <div><p class="eyebrow">COBBLEVENTURE CASINO</p><h2>카지노 콘텐츠 설정</h2><p>티켓 기반 커스텀 가챠와 카지노 전용 아이템을 관리합니다.</p></div>
+          <div><p class="eyebrow">COBBLEVENTURE CASINO</p><h2>카지노 · 가챠 관리</h2><p>티켓 기반 커스텀 가챠와 카지노 전용 아이템을 관리합니다.</p></div>
         </div>
         <section class="panel gacha-item-graphics">
           <header class="panel-heading"><div><p class="eyebrow">ITEM GRAPHICS</p><h3>카지노 아이템 그래픽</h3><p>현재 게임에 적용되는 PNG를 확인하고 새 파일로 교체합니다. 정사각형 PNG를 권장합니다.</p></div></header>
@@ -1530,7 +1529,7 @@
 
       <section class="page" id="builds">
         <div class="panel build-panel">
-          <div class="panel-heading"><div><p class="eyebrow">BUILD &amp; DEPLOY</p><h2>빌드 · 콘텐츠 교체</h2><p>전체 설치팩, 모드 전용 설치팩, 콘텐츠를 필요한 범위로 빌드합니다.</p></div><button class="button secondary" id="open-build-folder" type="button" title="빌드 결과 ZIP이 저장되는 dist 폴더 열기">빌드 폴더 열기</button></div>
+          <div class="panel-heading"><div><p class="eyebrow">BUILD &amp; DEPLOY</p><h2>팩 빌드 · 인스턴스 설치</h2><p>필요한 범위의 팩을 빌드하고 선택한 게임 인스턴스에 바로 설치합니다.</p></div><button class="button secondary" id="open-build-folder" type="button" title="빌드 결과 ZIP이 저장되는 dist 폴더 열기">빌드 폴더 열기</button></div>
           <div class="build-export-options">
             <label for="build-export-language"><span>콘텐츠 언어</span><select id="build-export-language"><option value="ko_kr">한국어</option><option value="en_us">English (US)</option></select></label>
             <small>Minecraft 1.21.1 · Cobblemon 1.8</small>
