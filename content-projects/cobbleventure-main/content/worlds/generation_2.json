@@ -7,7 +7,9 @@
     "en_us": "Johto Region"
   },
   "dimension": "cobbleventure:generation_2",
-  "pokemon_generations": [2],
+  "pokemon_generations": [
+    2
+  ],
   "seed_salt": 1702,
   "grid": {
     "orientation": "pointy_top",
@@ -25,7 +27,27 @@
   },
   "tiles": [],
   "environment_overrides": [],
-  "settlements": [],
+  "settlements": [
+    {
+      "settlement": "cobbleventure:settlement/johto_starter_town",
+      "anchor": {
+        "q": 0,
+        "r": 0
+      },
+      "town_radius_cells": 1,
+      "town_biome": "cobbleventure:starter_plains",
+      "surroundings": [],
+      "boundary_profile": "cobbleventure:boundary/dense_tree_line",
+      "terrain_profile": {
+        "base_height_offset": 0,
+        "height_variation": 0,
+        "noise_scale_blocks": 112
+      },
+      "town_footprint_shape": "line_q",
+      "town_footprint_cells": [],
+      "town_road_exits": []
+    }
+  ],
   "cave_entrances": [],
   "forest_entrances": [],
   "connections": [],

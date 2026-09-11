@@ -1,0 +1,15 @@
+{
+  "moveName": "allyswitch",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "psychic",
+  "recipe": [
+    {
+      "item": "cobblemon:psychic_gem",
+      "count": 2
+    }
+  ]
+}

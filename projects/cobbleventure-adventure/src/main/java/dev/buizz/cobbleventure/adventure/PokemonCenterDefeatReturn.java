@@ -19,6 +19,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -37,7 +38,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-/** Returns a player with a fully fainted party to their latest generated Pokémon Center. */
+/** Returns a player with a fully fainted party to the nurse that last healed them. */
 public final class PokemonCenterDefeatReturn {
     private static final String CHECKPOINT_DIMENSION = "cobbleventurePokemonCenterDimension";
     private static final String CHECKPOINT_X = "cobbleventurePokemonCenterX";
@@ -136,7 +137,7 @@ public final class PokemonCenterDefeatReturn {
         }
     }
 
-    /** Uses the authored starting point until the player visits a Pokémon Center. */
+    /** Uses the authored starting point until a nurse successfully heals the player. */
     public static void recordStarterFallback(
         ServerPlayer player, ServerLevel level, BlockPos position
     ) {
@@ -146,7 +147,32 @@ public final class PokemonCenterDefeatReturn {
         }
     }
 
-    public static void recordCenterVisit(
+    /** Called only after successful nurse healing, including nurses outside town centers. */
+    public static void recordNurseHealing(ServerPlayer player, Entity nurse) {
+        if (!(nurse.level() instanceof ServerLevel level)
+            || !nurse.getTags().contains(NURSE_BINDING_TAG)) {
+            return;
+        }
+        BlockPos position = nurseRecoveryPosition(
+            nurse.blockPosition(), nurse.getDirection(),
+            candidate -> isSafeStandingRoom(level, candidate)
+        );
+        if (position != null) {
+            recordCenterVisit(player, level, position, position);
+        }
+    }
+
+    static BlockPos nurseRecoveryPosition(
+        BlockPos nurse, Direction facing, Predicate<BlockPos> safeStandingRoom
+    ) {
+        for (int distance = 2; distance <= 3; distance++) {
+            BlockPos candidate = nurse.relative(facing, distance);
+            if (safeStandingRoom.test(candidate)) return candidate;
+        }
+        return null;
+    }
+
+    private static void recordCenterVisit(
         ServerPlayer player, ServerLevel level, BlockPos interior, BlockPos exit
     ) {
         CompoundTag data = player.getPersistentData();

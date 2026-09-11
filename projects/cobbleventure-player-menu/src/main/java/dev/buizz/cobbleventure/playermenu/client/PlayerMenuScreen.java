@@ -64,6 +64,7 @@ public final class PlayerMenuScreen extends Screen {
     private final List<MenuRow> rows = new ArrayList<>();
     private final List<ModelWidget> partyModels = new ArrayList<>();
     private final List<Pokemon> partyPokemon = new ArrayList<>();
+    private final List<GrowthActionButton> growthButtons = new ArrayList<>();
     private final MenuTheme menuTheme;
     private final Screen parent;
     private int selectedIndex;
@@ -91,6 +92,7 @@ public final class PlayerMenuScreen extends Screen {
     PlayerMenuScreen(Screen parent) {
         super(Component.translatable("screen.cobbleventure_player_menu.title"));
         this.parent = parent;
+        GrowthNotificationOverlay.dismissHud();
         if (parent instanceof com.cobblemon.mod.common.client.gui.battle.BattleGUI) {
             selectedIndex = PlayerMenuEntry.BAG.ordinal();
         }
@@ -104,6 +106,7 @@ public final class PlayerMenuScreen extends Screen {
         rows.clear();
         partyModels.clear();
         partyPokemon.clear();
+        growthButtons.clear();
         transitionStartedAt = System.currentTimeMillis();
         selectionChangedAt = 0L;
         closing = false;
@@ -361,10 +364,6 @@ public final class PlayerMenuScreen extends Screen {
             graphics, menuTheme, x, y, panelWidth, panelHeight, 1, menuTheme.accent
         );
 
-        boolean selected = PlayerMenuEntry.values()[selectedIndex] == PlayerMenuEntry.QUESTS;
-        if (selected) {
-            graphics.fill(x + 2, y + 2, x + 5, y + panelHeight - 2, menuTheme.accent);
-        }
         renderResponsiveQuestSummary(
             graphics, x + 10, y + 9, panelWidth - 20, panelHeight - 18, layout.mode()
         );
@@ -658,6 +657,7 @@ public final class PlayerMenuScreen extends Screen {
     private void initPartyModels() {
         if (!ModList.get().isLoaded("cobblemon")) return;
         partyPokemon.addAll(CobblemonMenuIntegration.partyPokemon());
+        GrowthNotificationOverlay.reconcileParty(partyPokemon);
         int totalWidth = 6 * PARTY_ICON_SIZE + 5 * PARTY_ICON_GAP;
         int startX = infoX + Math.max(7, (infoWidth - totalWidth) / 2);
         int modelY = trainerPanelY() + 34;
@@ -669,10 +669,26 @@ public final class PlayerMenuScreen extends Screen {
             );
             model.active = false;
             partyModels.add(addRenderableWidget(model));
+            GrowthNotificationState.PendingGrowth pending = GrowthNotificationOverlay.pending(
+                partyPokemon.get(index).getUuid()
+            );
+            if (pending.total() > 0) {
+                GrowthActionButton button = new GrowthActionButton(
+                    partyPokemon.get(index), pending,
+                    model.getX() + PARTY_ICON_SIZE - 11, model.getY() - 1
+                );
+                growthButtons.add(addRenderableWidget(button));
+            }
         }
     }
 
     private void renderPartyTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
+        for (GrowthActionButton button : growthButtons) {
+            if (button.isMouseOver(mouseX, mouseY)) {
+                graphics.renderTooltip(font, button.tooltip(), mouseX, mouseY);
+                return;
+            }
+        }
         for (int index = 0; index < partyModels.size(); index++) {
             ModelWidget model = partyModels.get(index);
             if (mouseX >= model.getX() && mouseX < model.getX() + PARTY_ICON_SIZE
@@ -680,6 +696,76 @@ public final class PlayerMenuScreen extends Screen {
                 graphics.renderTooltip(font, partyPokemon.get(index).getDisplayName(false), mouseX, mouseY);
                 return;
             }
+        }
+    }
+
+    private final class GrowthActionButton extends AbstractButton {
+        private static final int SIZE = 12;
+        private final Pokemon pokemon;
+        private final GrowthNotificationState.PendingGrowth pending;
+        private final Component badgeLabel;
+
+        private GrowthActionButton(
+            Pokemon pokemon, GrowthNotificationState.PendingGrowth pending, int x, int y
+        ) {
+            super(x, y, SIZE, SIZE, growthTooltip(pending));
+            this.pokemon = pokemon;
+            this.pending = pending;
+            badgeLabel = Component.literal(pending.total() > 1
+                ? Integer.toString(pending.total()) : "!");
+        }
+
+        @Override
+        public void onPress() {
+            GrowthNotificationOverlay.Kind kind = pending.moves() > 0
+                ? GrowthNotificationOverlay.Kind.MOVES
+                : GrowthNotificationOverlay.Kind.EVOLUTION;
+            if (CobblemonMenuIntegration.openGrowthAction(pokemon.getUuid(), kind)
+                && kind == GrowthNotificationOverlay.Kind.MOVES) {
+                GrowthNotificationOverlay.acknowledgeMoves(pokemon.getUuid());
+            }
+        }
+
+        private Component tooltip() {
+            return getMessage();
+        }
+
+        private static Component growthTooltip(GrowthNotificationState.PendingGrowth pending) {
+            if (pending.moves() > 0 && pending.evolutions() > 0) {
+                return Component.translatable(
+                    "screen.cobbleventure_player_menu.growth.combined", pending.moves()
+                );
+            }
+            if (pending.moves() > 0) {
+                return Component.translatable(
+                    "screen.cobbleventure_player_menu.growth.moves", pending.moves()
+                );
+            }
+            return Component.translatable("screen.cobbleventure_player_menu.growth.evolution");
+        }
+
+        @Override
+        protected void renderWidget(
+            GuiGraphics graphics, int mouseX, int mouseY, float partialTick
+        ) {
+            int fill = isHoveredOrFocused() ? menuTheme.hoverBackground : menuTheme.background;
+            ThemedOverlayPanel.fillRoundedRect(
+                graphics, getX(), getY(), getX() + width, getY() + height,
+                Math.min(menuTheme.rowRadius, SIZE / 2), menuTheme.warning
+            );
+            ThemedOverlayPanel.fillRoundedRect(
+                graphics, getX() + 1, getY() + 1, getX() + width - 1, getY() + height - 1,
+                Math.min(menuTheme.rowRadius, SIZE / 2) - 1, fill
+            );
+            menuTheme.drawCenteredText(
+                graphics, font, badgeLabel, getX() + width / 2, getY() + 2,
+                MenuTheme.TextRole.CAPTION, menuTheme.selectedTextColor
+            );
+        }
+
+        @Override
+        protected void updateWidgetNarration(NarrationElementOutput output) {
+            defaultButtonNarrationText(output);
         }
     }
 

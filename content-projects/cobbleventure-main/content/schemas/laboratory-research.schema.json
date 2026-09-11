@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "costs",
+    "materials",
+    "z_crystals",
+    "dynamax_excluded"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "costs": {
+      "type": "object",
+      "required": [
+        "z_gems",
+        "exclusive_z_gems",
+        "mega_money",
+        "iv_point",
+        "ev_point",
+        "dynamax_level_mushrooms",
+        "gmax_mushrooms"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "z_gems": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "exclusive_z_gems": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "mega_money": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "iv_point": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "ev_point": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "dynamax_level_mushrooms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "gmax_mushrooms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      }
+    },
+    "materials": {
+      "type": "object",
+      "required": [
+        "blank_z",
+        "mega",
+        "mushroom"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "blank_z": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+:[a-z0-9_/]+$"
+        },
+        "mega": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+:[a-z0-9_/]+$"
+        },
+        "mushroom": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+:[a-z0-9_/]+$"
+        }
+      }
+    },
+    "z_crystals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item",
+          "type",
+          "users",
+          "move"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "item": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "move": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "dynamax_excluded": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

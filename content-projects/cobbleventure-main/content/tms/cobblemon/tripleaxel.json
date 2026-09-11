@@ -1,0 +1,19 @@
+{
+  "moveName": "tripleaxel",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "ice",
+  "recipe": [
+    {
+      "item": "cobblemon:ice_gem",
+      "count": 3
+    },
+    {
+      "item": "cobblemon:fighting_gem",
+      "count": 2
+    }
+  ]
+}

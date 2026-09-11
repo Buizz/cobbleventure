@@ -237,3 +237,10 @@ tasks.register('installDevelopmentJar') {
 tasks.named('build') {
     finalizedBy 'installDevelopmentJar'
 }
+
+processResources {
+    from(new File(contentProjectDir, 'content/catalogs/laboratory-research.json')) {
+        into 'data/cobbleventure_adventure/research'
+        rename { 'settings.json' }
+    }
+}

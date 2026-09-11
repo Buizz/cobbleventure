@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/interiors/leagues/kanto_lobby.nbt",
+  "interior": {
+    "id": "kanto_lobby",
+    "width": 63,
+    "depth": 63,
+    "floor_height": 27,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "id": "nurse",
+      "label": "nurse",
+      "type": "npc_position",
+      "position": [
+        33,
+        1,
+        53
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "chansey",
+      "label": "chansey",
+      "type": "npc_position",
+      "position": [
+        34,
+        1,
+        54
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "shop",
+      "label": "shop",
+      "type": "npc_position",
+      "position": [
+        29,
+        1,
+        53
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "entry",
+      "label": "entry",
+      "type": "arrival",
+      "position": [
+        31,
+        1,
+        43
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "exit",
+      "label": "exit",
+      "type": "transition",
+      "position": [
+        31,
+        12,
+        58
+      ],
+      "safe_spawn": [
+        31,
+        11,
+        56
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "leave",
+      "label": "leave",
+      "type": "transition",
+      "position": [
+        25,
+        2,
+        43
+      ],
+      "safe_spawn": [
+        25,
+        1,
+        46
+      ],
+      "facing": "north"
+    }
+  ]
+}

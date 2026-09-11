@@ -1,0 +1,19 @@
+{
+  "moveName": "furycutter",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "bug",
+  "recipe": [
+    {
+      "item": "cobblemon:bug_gem",
+      "count": 2
+    },
+    {
+      "item": "cobblemon:steel_gem",
+      "count": 1
+    }
+  ]
+}

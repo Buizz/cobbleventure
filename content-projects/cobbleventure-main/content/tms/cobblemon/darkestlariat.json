@@ -1,0 +1,19 @@
+{
+  "moveName": "darkestlariat",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "dark",
+  "recipe": [
+    {
+      "item": "cobblemon:dark_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:fighting_gem",
+      "count": 3
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "moveName": "icefang",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "ice",
+  "recipe": [
+    {
+      "item": "cobblemon:ice_gem",
+      "count": 4
+    },
+    {
+      "item": "cobblemon:dark_gem",
+      "count": 1
+    }
+  ]
+}

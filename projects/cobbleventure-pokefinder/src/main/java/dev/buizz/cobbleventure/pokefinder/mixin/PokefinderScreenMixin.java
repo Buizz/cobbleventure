@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/** CobbleNav 2.3.3 compatibility hook for the integrated exploration settings. */
+/** CobbleNav 2.4.0 compatibility hook for the integrated exploration settings. */
 @Mixin(PokefinderScreen.class)
 abstract class PokefinderScreenMixin extends Screen {
     @Shadow private int screenX;

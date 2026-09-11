@@ -105,6 +105,8 @@ final class BuildingRuntimeSystem {
     }
 
     static void register() {
+        LeagueRuntimeSystem.register();
+        AuthoredBattlePositions.register();
         NeoForge.EVENT_BUS.addListener(BuildingRuntimeSystem::onRightClickBlock);
         NeoForge.EVENT_BUS.addListener(
             EventPriority.HIGHEST, BuildingRuntimeSystem::onEntityInteract
@@ -142,6 +144,8 @@ final class BuildingRuntimeSystem {
     }
 
     static void initialize(MinecraftServer server) {
+        LeagueRuntimeSystem.clear();
+        AuthoredBattlePositions.clear();
         METADATA.clear();
         RADAR_OFFSETS.clear();
         SETTINGS.clear();
@@ -709,7 +713,7 @@ final class BuildingRuntimeSystem {
                             && value.get("random_citizen_eligible").getAsBoolean(),
                     List.copyOf(interiors), Map.copyOf(routes),
                     value.has("music_track") ? value.get("music_track").getAsString() : null,
-                    radar
+                    radar, value.has("runtime_league") ? value.getAsJsonObject("runtime_league") : null
                 ));
             }
         } catch (IOException | RuntimeException error) {
@@ -1039,6 +1043,15 @@ final class BuildingRuntimeSystem {
                 npc = FixedNpcAssignments.match(fixedNpcs, anchor.id);
             }
             String spawnKey = instanceKey + "|npc|" + scoped;
+            Anchor battlePlayer = metadata.anchors.stream()
+                .filter(candidate -> candidate.id.equals(anchor.id + "_battle_player")
+                    && (candidate.type.equals("arrival") || candidate.type.equals("npc_position")))
+                .findFirst().orElse(null);
+            if (npc != null && battlePlayer != null) {
+                AuthoredBattlePositions.add(spawnKey, level, npc,
+                    transform(origin, battlePlayer.position, rotation),
+                    transform(origin, anchor.position, rotation));
+            }
             if (npc == null || data.hasSpawned(spawnKey)) {
                 continue;
             }
@@ -1237,6 +1250,20 @@ final class BuildingRuntimeSystem {
                 (index % 4) * 128, placementYOffset(interior.structure), (index / 4) * 128
             );
             String preparedKey = instanceKey + "|space|" + interior.key;
+            String roomInstanceKey = instanceKey + "|" + interior.key;
+            if (settings.runtimeLeague != null) {
+                for (JsonElement row : settings.runtimeLeague.getAsJsonArray("rooms")) {
+                    if (!row.getAsJsonObject().get("key").getAsString().equals(interior.key)) continue;
+                    // A changed template or assignment gets a fresh, stable slot. Reordering
+                    // rooms never overwrites a different interior in an existing save.
+                    roomInstanceKey = instanceKey + "|league-room|" + UUID.nameUUIDFromBytes(
+                        row.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                    origin = instanceOrigin(runtime, roomInstanceKey, false)
+                        .offset(0, placementYOffset(interior.structure), 0);
+                    preparedKey = roomInstanceKey + "|prepared";
+                    break;
+                }
+            }
             boolean interiorPresent = hasAuthoredInteriorSupport(
                 interiorsLevel, origin, metadata
             );
@@ -1292,7 +1319,11 @@ final class BuildingRuntimeSystem {
             ));
             applyFixedNpcs(
                 interiorsLevel, metadata, origin, Rotation.NONE,
-                instanceKey + "|" + interior.key, settings.fixedNpcs, interior.key
+                roomInstanceKey, settings.fixedNpcs, interior.key
+            );
+            applyFixedPokemon(
+                interiorsLevel, metadata, origin, Rotation.NONE,
+                roomInstanceKey, settings.fixedPokemon, interior.key
             );
             Map<String, String> interiorVendors = settings.fixedVendors;
             if (vendorAssignments != null) {
@@ -1319,6 +1350,38 @@ final class BuildingRuntimeSystem {
             index++;
         }
 
+        if (settings.runtimeLeague != null) {
+            List<LeagueRuntimeSystem.Room> rooms = new ArrayList<>();
+            for (JsonElement value : settings.runtimeLeague.getAsJsonArray("rooms")) {
+                JsonObject configured = value.getAsJsonObject();
+                SpaceInstance space = spaces.get(configured.get("key").getAsString());
+                if (space == null) continue;
+                Anchor entry = space.metadata.namedDestination(configured.get("entry").getAsString());
+                Anchor npc = configured.has("npc_anchor") ? space.metadata.anchors.stream()
+                    .filter(anchor -> anchor.id.equals(configured.get("npc_anchor").getAsString()))
+                    .findFirst().orElse(null) : null;
+                if (entry == null || (configured.has("npc") && npc == null)) {
+                    throw new IllegalStateException("League room markers missing: " + space.structure);
+                }
+                rooms.add(new LeagueRuntimeSystem.Room(space.level, space.origin, space.size,
+                    transform(space.origin, safeDestination(entry), space.rotation),
+                    space.rotation.rotate(entry.facing).toYRot(), configured.get("stage").getAsInt(),
+                    npc == null ? null : "cobbleventure_npc/" + configured.get("npc").getAsString().replace(':', '/'),
+                    npc == null ? null : transform(space.origin, npc.position, space.rotation)));
+            }
+            LeagueRuntimeSystem.add(instanceKey, settings.runtimeLeague, rooms);
+            if (settings.runtimeLeague.has("generation_travel_mode")
+                && settings.runtimeLeague.get("generation_travel_mode").getAsString().equals("travel_test")) {
+                JsonObject hall = settings.runtimeLeague.getAsJsonArray("rooms").asList().getLast().getAsJsonObject();
+                SpaceInstance space = spaces.get(hall.get("key").getAsString());
+                Anchor advance = space.metadata.anchors.stream()
+                    .filter(anchor -> anchor.id.equals(hall.get("advance").getAsString()))
+                    .findFirst().orElseThrow();
+                registerConnectionTrigger(space, advance, new DoorTarget(space.level.dimension(), space.origin,
+                    List.of(), "all", List.of(), List.of(), true, null, null,
+                    settings.runtimeLeague.get("next_generation").getAsInt()));
+            }
+        }
         boolean isDaycare = exteriorStructure.equals(DAYCARE_STRUCTURE);
         if ((eventSpaceId != null && !eventSpaceId.isBlank()) || isDaycare) {
             String registrationKey = eventSpaceId == null || eventSpaceId.isBlank()
@@ -1349,7 +1412,7 @@ final class BuildingRuntimeSystem {
                 continue;
             }
             Anchor sourceAnchor = sourceSpace.metadata.namedConnection(sourceAnchorId);
-            Anchor targetAnchor = targetSpace.metadata.namedConnection(route.getValue().door);
+            Anchor targetAnchor = targetSpace.metadata.namedDestination(route.getValue().door);
             if (sourceAnchor == null || targetAnchor == null) {
                 LOGGER.warn("Building route references a missing door or transition: {}", route.getKey());
                 continue;
@@ -1370,9 +1433,14 @@ final class BuildingRuntimeSystem {
                     targetSpace.level.dimension(), destination,
                     route.getValue().conditions, route.getValue().conditionMode,
                     route.getValue().lockedDialogue, route.getValue().enterDialogue,
-                    !route.getValue().space.equals("exterior"), settings.musicTrack
+                    !route.getValue().space.equals("exterior"), settings.musicTrack,
+                    BuildingConnectionTypes.isTrigger(targetAnchor.type) ? null
+                        : targetSpace.rotation.rotate(targetAnchor.facing).toYRot()
                 )
             );
+            // An explicit outbound route owns this marker. Do not overwrite it with
+            // the inferred reverse of another route (e.g. league lobby leave -> exterior door).
+            if (settings.routes.containsKey(route.getValue().space + ":" + route.getValue().door)) continue;
             registerConnectionTrigger(
                 targetSpace, targetAnchor,
                 new DoorTarget(
@@ -1643,6 +1711,8 @@ final class BuildingRuntimeSystem {
     private static void registerConnectionTrigger(
         SpaceInstance space, Anchor anchor, DoorTarget target
     ) {
+        // Arrival anchors are destinations only. Do not invent an unconditional return route.
+        if (!BuildingConnectionTypes.isTrigger(anchor.type)) return;
         BlockPos position = transform(space.origin, anchor.position, space.rotation);
         if (anchor.type.equals("door")) {
             registerDoor(space.level, position, target);
@@ -1805,25 +1875,32 @@ final class BuildingRuntimeSystem {
         activateTarget(player, target, 10L);
     }
 
-    private static void activateTarget(
+    static boolean activateTarget(
         ServerPlayer player, DoorTarget target, long cooldownTicks
     ) {
+        if (AuthoredBattlePositions.inBattle(player)) return false;
         long gameTime = player.level().getGameTime();
         if (player.getPersistentData().getLong(INTERACTION_COOLDOWN) > gameTime) {
-            return;
+            return false;
         }
         player.getPersistentData().putLong(
             INTERACTION_COOLDOWN, gameTime + cooldownTicks
         );
         if (!target.allows(player)) {
             sendDialogue(player, target.lockedDialogue);
-            return;
+            return false;
         }
+        if (target.generationStart != null) {
+            return LeagueRuntimeSystem.travelToNextGeneration(player, target.generationStart);
+        }
+        LeagueRuntimeSystem.Route leagueRoute = LeagueRuntimeSystem.route(player, target);
+        if (leagueRoute == null) return false;
+        target = leagueRoute.target();
         sendDialogue(player, target.enterDialogue);
         ServerLevel destination = player.getServer().getLevel(target.dimension);
         if (destination == null) {
             player.sendSystemMessage(Component.literal("[건물 출입구] 이동할 공간을 찾을 수 없습니다."));
-            return;
+            return false;
         }
         destination.getChunkAt(target.position);
         BlockPos safePosition = findSafeDoorDestination(destination, target.position);
@@ -1836,19 +1913,21 @@ final class BuildingRuntimeSystem {
             player.sendSystemMessage(Component.literal(
                 "[건물 출입구] 안전한 이동 위치를 찾지 못해 이동을 중단했습니다."
             ));
-            return;
+            return false;
         }
         ResourceKey<Level> sourceDimension = player.level().dimension();
         player.teleportTo(
             destination,
             safePosition.getX() + 0.5D, safePosition.getY(), safePosition.getZ() + 0.5D,
-            player.getYRot(), player.getXRot()
+            target.yaw == null ? player.getYRot() : target.yaw, player.getXRot()
         );
         player.setDeltaMovement(Vec3.ZERO);
         player.resetFallDistance();
+        leagueRoute.arrived().run();
         DoorTransitionSound.afterTeleport(player, sourceDimension, safePosition);
         if (target.interior) MusicPlayback.enterInterior(player, target.musicTrack);
         else MusicPlayback.leaveInterior(player);
+        return true;
     }
 
     private static DoorTarget doorTarget(ServerLevel level, BlockPos clicked) {
@@ -2001,7 +2080,7 @@ final class BuildingRuntimeSystem {
         return !level.getBlockState(safeSpawn.below()).isAir();
     }
 
-    private static BlockPos findSafeDoorDestination(ServerLevel level, BlockPos authored) {
+    static BlockPos findSafeDoorDestination(ServerLevel level, BlockPos authored) {
         BlockPos sameFloor = findSafeDoorDestinationAtY(level, authored, 0);
         if (sameFloor != null) return sameFloor;
         // Authored building portals must stay on their authored floor. Only tolerate a
@@ -2135,7 +2214,7 @@ final class BuildingRuntimeSystem {
 
         Anchor namedConnection(String id) {
             return anchors.stream().filter(anchor -> anchor.id.equals(id)
-                && (anchor.type.equals("door") || anchor.type.equals("transition")))
+                && BuildingConnectionTypes.isTrigger(anchor.type))
                 .findFirst().orElse(null);
         }
 
@@ -2143,6 +2222,11 @@ final class BuildingRuntimeSystem {
             return anchors.stream().filter(anchor -> anchor.id.equals(id)
                 && anchor.type.equals("npc_position"))
                 .findFirst().orElse(null);
+        }
+
+        Anchor namedDestination(String id) {
+            return anchors.stream().filter(anchor -> anchor.id.equals(id)
+                && BuildingConnectionTypes.isDestination(anchor.type)).findFirst().orElse(null);
         }
 
     }
@@ -2180,7 +2264,7 @@ final class BuildingRuntimeSystem {
         Map<String, String> fixedVendors, Map<String, String> fixedGachaMachines,
         boolean citizenPlacementAllowed,
         List<InteriorSetting> interiors, Map<String, RouteTarget> routes,
-        String musicTrack, RadarSetting radar
+        String musicTrack, RadarSetting radar, JsonObject runtimeLeague
     ) {
     }
 
@@ -2197,12 +2281,28 @@ final class BuildingRuntimeSystem {
     ) {
     }
 
-    private record DoorTarget(
+    record DoorTarget(
         ResourceKey<Level> dimension, BlockPos position,
         List<PlayerConditions.Condition> conditions, String conditionMode,
         List<String> lockedDialogue, List<String> enterDialogue,
-        boolean interior, String musicTrack
+        boolean interior, String musicTrack, Float yaw, Integer generationStart
     ) {
+        DoorTarget(ResourceKey<Level> dimension, BlockPos position,
+            List<PlayerConditions.Condition> conditions, String conditionMode,
+            List<String> lockedDialogue, List<String> enterDialogue,
+            boolean interior, String musicTrack, Float yaw) {
+            this(dimension, position, conditions, conditionMode, lockedDialogue, enterDialogue,
+                interior, musicTrack, yaw, null);
+        }
+
+        DoorTarget(ResourceKey<Level> dimension, BlockPos position,
+            List<PlayerConditions.Condition> conditions, String conditionMode,
+            List<String> lockedDialogue, List<String> enterDialogue,
+            boolean interior, String musicTrack) {
+            this(dimension, position, conditions, conditionMode, lockedDialogue, enterDialogue,
+                interior, musicTrack, null);
+        }
+
         boolean allows(ServerPlayer player) {
             if (conditions.isEmpty()) {
                 return true;

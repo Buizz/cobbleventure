@@ -1,0 +1,19 @@
+{
+  "moveName": "chillingwater",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "water",
+  "recipe": [
+    {
+      "item": "cobblemon:water_gem",
+      "count": 3
+    },
+    {
+      "item": "cobblemon:ice_gem",
+      "count": 2
+    }
+  ]
+}

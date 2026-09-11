@@ -44,6 +44,7 @@ public final class BadgeProgressNetwork {
     private BadgeProgressNetwork() {}
 
     public static void register(IEventBus modBus) {
+        AuthoredLeagueProgress.register();
         modBus.addListener(BadgeProgressNetwork::registerPayloads);
         NeoForge.EVENT_BUS.addListener(BadgeProgressNetwork::registerCommands);
         NeoForge.EVENT_BUS.addListener(BadgeProgressNetwork::onPlayerClone);
@@ -67,6 +68,14 @@ public final class BadgeProgressNetwork {
         return badges(player).contains(badge);
     }
 
+    static void completeAuthoredChallenges(ServerPlayer player, Set<String> completed) {
+        Set<String> challenges = leagueChallenges(player);
+        if (challenges.addAll(completed)) {
+            writeLeagueChallenges(player, challenges);
+            sendSnapshot(player);
+        }
+    }
+
     public static void requestSnapshot() {
         PacketDistributor.sendToServer(new BadgeRequestPayload());
     }
@@ -83,10 +92,13 @@ public final class BadgeProgressNetwork {
             .requires(source -> source.hasPermission(2))
             .then(Commands.literal("grant")
                 .then(Commands.argument("players", EntityArgument.players())
-                    .then(Commands.argument("badge", StringArgumentType.string())
+                    .then(Commands.argument("badge", StringArgumentType.greedyString())
                         .executes(context -> {
-                            String badge = StringArgumentType.getString(context, "badge");
-                            if (ResourceLocation.tryParse(badge) == null || !badge.startsWith("cobbleventure:badge/")) return 0;
+                            String badge = ProgressIdArgument.parse(StringArgumentType.getString(context, "badge"));
+                            if (ResourceLocation.tryParse(badge) == null || !badge.startsWith("cobbleventure:badge/")) {
+                                context.getSource().sendFailure(Component.literal("올바른 배지 ID를 입력하세요: cobbleventure:badge/kanto/boulder"));
+                                return 0;
+                            }
                             int targets = 0;
                             for (ServerPlayer player : EntityArgument.getPlayers(context, "players")) {
                                 targets++;
@@ -97,13 +109,16 @@ public final class BadgeProgressNetwork {
                                 }
                                 sendSnapshot(player);
                             }
+                            int targetCount = targets;
+                            context.getSource().sendSuccess(() -> Component.literal(
+                                "[Cobbleventure] 배지 지급 완료: " + badge + " · 대상 " + targetCount + "명"), true);
                             return targets;
                         }))))
             .then(Commands.literal("revoke")
                 .then(Commands.argument("players", EntityArgument.players())
-                    .then(Commands.argument("badge", StringArgumentType.string())
+                    .then(Commands.argument("badge", StringArgumentType.greedyString())
                         .executes(context -> {
-                            String badge = StringArgumentType.getString(context, "badge");
+                            String badge = ProgressIdArgument.parse(StringArgumentType.getString(context, "badge"));
                             int changed = 0;
                             for (ServerPlayer player : EntityArgument.getPlayers(context, "players")) {
                                 Set<String> badges = badges(player);
@@ -117,17 +132,24 @@ public final class BadgeProgressNetwork {
             .requires(source -> source.hasPermission(2))
             .then(Commands.literal("complete")
                 .then(Commands.argument("players", EntityArgument.players())
-                    .then(Commands.argument("challenge", StringArgumentType.string())
+                    .then(Commands.argument("challenge", StringArgumentType.greedyString())
                         .executes(context -> setLeagueChallenge(
                             EntityArgument.getPlayers(context, "players"),
-                            StringArgumentType.getString(context, "challenge"), true)))))
+                            ProgressIdArgument.parse(StringArgumentType.getString(context, "challenge")), true)))))
             .then(Commands.literal("revoke")
                 .then(Commands.argument("players", EntityArgument.players())
-                    .then(Commands.argument("challenge", StringArgumentType.string())
+                    .then(Commands.argument("challenge", StringArgumentType.greedyString())
                         .executes(context -> setLeagueChallenge(
                             EntityArgument.getPlayers(context, "players"),
-                            StringArgumentType.getString(context, "challenge"), false)))))
+                            ProgressIdArgument.parse(StringArgumentType.getString(context, "challenge")), false)))))
         );
+    }
+
+    static void grantAll(ServerPlayer player, Set<String> ids) {
+        Set<String> owned = badges(player);
+        owned.addAll(ids);
+        write(player, owned);
+        sendSnapshot(player);
     }
 
     private static Set<String> badges(ServerPlayer player) {

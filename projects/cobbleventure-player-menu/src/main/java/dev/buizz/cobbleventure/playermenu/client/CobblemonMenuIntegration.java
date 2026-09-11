@@ -1,12 +1,15 @@
 package dev.buizz.cobbleventure.playermenu.client;
 
 import com.cobblemon.mod.common.client.CobblemonClient;
+import com.cobblemon.mod.common.client.gui.summary.Summary;
 import com.cobblemon.mod.common.client.keybind.keybinds.SummaryBinding;
 import com.cobblemon.mod.common.item.PokedexItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import dev.buizz.cobbleventure.playermenu.BagNetwork;
+import dev.buizz.cobbleventure.playermenu.mixin.SummaryScreenAccessor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import net.minecraft.client.Minecraft;
 import dev.buizz.cobbleventure.playermenu.ProgressionNetwork;
 import net.minecraft.client.player.LocalPlayer;
@@ -28,6 +31,29 @@ final class CobblemonMenuIntegration {
 
         CobblemonClient.INSTANCE.getStorage().switchToPokemon(selectedPokemon.getUuid());
         SummaryBinding.INSTANCE.onPress();
+        return true;
+    }
+
+    static boolean openGrowthAction(UUID pokemonId, GrowthNotificationOverlay.Kind kind) {
+        List<Pokemon> party = partyPokemon();
+        int selection = -1;
+        for (int index = 0; index < party.size(); index++) {
+            if (party.get(index).getUuid().equals(pokemonId)) {
+                selection = index;
+                break;
+            }
+        }
+        if (selection < 0) return false;
+
+        Summary.Companion.open(party, true, selection);
+        if (!(Minecraft.getInstance().screen instanceof Summary summary)) return false;
+        if (kind == GrowthNotificationOverlay.Kind.MOVES) {
+            ((SummaryScreenAccessor)(Object)summary).cobbleventure$displayMainScreen(
+                SummaryScreenAccessor.cobbleventure$movesTab()
+            );
+        } else {
+            summary.displaySideScreen(Summary.EVOLVE, null);
+        }
         return true;
     }
 

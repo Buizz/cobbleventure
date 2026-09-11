@@ -83,6 +83,7 @@ final class GymInteriorSystem {
     private static final Map<String, GymConfig> GYMS = new LinkedHashMap<>();
     private static final Map<String, GymDefinition> DEFINITIONS = new LinkedHashMap<>();
     private static final Map<DoorKey, DoorTarget> DOORS = new HashMap<>();
+    private static final Map<DoorKey, DoorTarget> TRANSITIONS = new HashMap<>();
     private static final Map<String, UUID> BLOCKING_NPCS = new HashMap<>();
     private static final Map<String, DoorTarget> BLOCKING_TARGETS = new HashMap<>();
 
@@ -103,6 +104,7 @@ final class GymInteriorSystem {
         GYMS.clear();
         DEFINITIONS.clear();
         DOORS.clear();
+        TRANSITIONS.clear();
         BLOCKING_NPCS.clear();
         BLOCKING_TARGETS.clear();
         loadConfigs(server);
@@ -213,7 +215,7 @@ final class GymInteriorSystem {
         AccessPolicy forwardAccess = connection.fromSpace.equals("exterior")
             ? gymAccess : connection.toSpace.equals("exterior") ? open : connection.access;
         AccessPolicy reverseAccess = connection.toSpace.equals("exterior") ? gymAccess : open;
-        registerDoor(sourceSpace.level, sourceDoor, new DoorTarget(
+        registerConnectionTrigger(sourceSpace, source, new DoorTarget(
             targetSpace.level.dimension(), destination,
             connection.fromSpace.equals("exterior")
                 ? blocker(gym, sourceSpace.level, blockerPosition(sourceDoor, sourceSpace.position(source.safeSpawn))) : null,
@@ -221,7 +223,7 @@ final class GymInteriorSystem {
             forwardAccess.conditions, forwardAccess.conditionMode,
             forwardAccess.lockedDialogue, forwardAccess.enterDialogue
         ));
-        registerDoor(targetSpace.level, targetDoor, new DoorTarget(
+        registerConnectionTrigger(targetSpace, target, new DoorTarget(
             sourceSpace.level.dimension(), reverseDestination,
             connection.toSpace.equals("exterior")
                 ? blocker(gym, targetSpace.level, blockerPosition(targetDoor, targetSpace.position(target.safeSpawn))) : null,
@@ -598,15 +600,15 @@ final class GymInteriorSystem {
                 if ("npc_position".equals(type) && npcAnchors.putIfAbsent(label, position) != null) {
                     throw new IllegalStateException("Duplicate NPC anchor in gym module: " + label);
                 }
-                if ("arrival".equals(type) && label.startsWith("battle_")) {
+                if (("arrival".equals(type) || "npc_position".equals(type)) && label.startsWith("battle_")) {
                     if (battleAnchors.putIfAbsent(label, position) != null) {
                         throw new IllegalStateException("Duplicate battle anchor in gym module: " + label);
                     }
                 }
-                if ("door".equals(type)) {
+                if ("door".equals(type) || "transition".equals(type)) {
                     BlockPoint safeSpawn = anchor.has("safe_spawn")
                         ? arrayPoint(anchor.getAsJsonArray("safe_spawn")) : position;
-                    if (doorAnchors.putIfAbsent(label, new DoorAnchor(position, safeSpawn)) != null) {
+                    if (doorAnchors.putIfAbsent(label, new DoorAnchor(position, safeSpawn, "transition".equals(type))) != null) {
                         throw new IllegalStateException("Duplicate door anchor in gym module: " + label);
                     }
                 }
@@ -789,6 +791,26 @@ final class GymInteriorSystem {
         }
     }
 
+    private static void registerConnectionTrigger(SpaceInstance space, DoorAnchor anchor, DoorTarget target) {
+        BlockPos seed = space.position(anchor.position);
+        if (!anchor.transition) {
+            registerDoor(space.level, seed, target);
+            return;
+        }
+        Set<BlockPos> connected = new HashSet<>();
+        java.util.ArrayDeque<BlockPos> pending = new java.util.ArrayDeque<>();
+        pending.add(seed);
+        while (!pending.isEmpty()) {
+            BlockPos current = pending.removeFirst();
+            if (!space.level.getBlockState(current).is(Blocks.BARRIER) || !connected.add(current)) continue;
+            if (connected.size() > 4096) throw new IllegalStateException("Gym transition barrier region is too large: " + seed);
+            for (Direction direction : Direction.values()) pending.add(current.relative(direction));
+        }
+        if (connected.isEmpty()) throw new IllegalStateException("Gym transition has no authored barrier blocks: " + seed);
+        for (BlockPos position : connected) TRANSITIONS.put(new DoorKey(space.level.dimension(), position), target);
+        if (target.blocker != null) BLOCKING_TARGETS.put(target.blocker.key, target);
+    }
+
     private static void registerDoor(ServerLevel level, BlockPos lower, DoorTarget target) {
         if (level == null) {
             return;
@@ -842,6 +864,11 @@ final class GymInteriorSystem {
         if (player.getPersistentData().getLong(INTERACTION_COOLDOWN) > gameTime) {
             return;
         }
+        activateTarget(player, target);
+    }
+
+    private static void activateTarget(ServerPlayer player, DoorTarget target) {
+        long gameTime = player.level().getGameTime();
         player.getPersistentData().putLong(INTERACTION_COOLDOWN, gameTime + 10L);
         if (!target.allows(player)) {
             ensureBlockingNpc(player.getServer(), target.blocker);
@@ -904,7 +931,8 @@ final class GymInteriorSystem {
             if (!isLeader) continue;
             for (InteriorModule module : gym.modules) {
                 BlockPoint playerPoint = module.metadata.battleAnchors.get("battle_player");
-                BlockPoint leaderPoint = module.metadata.battleAnchors.get("battle_leader");
+                BlockPoint leaderPoint = module.metadata.battleAnchors.getOrDefault(
+                    "battle_leader", module.metadata.npcAnchors.get("leader"));
                 if (playerPoint == null || leaderPoint == null) continue;
                 SpaceInstance space = new SpaceInstance(level,
                     gym.instanceOrigin.offset(module.position.x, module.position.y, module.position.z),
@@ -1060,6 +1088,19 @@ final class GymInteriorSystem {
 
     private static void onServerTick(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            if (player.getPersistentData().getLong(INTERACTION_COOLDOWN) > player.level().getGameTime()) continue;
+            AABB bounds = player.getBoundingBox().inflate(0.08D);
+            for (BlockPos position : BlockPos.betweenClosed(
+                BlockPos.containing(bounds.minX, bounds.minY, bounds.minZ),
+                BlockPos.containing(bounds.maxX, bounds.maxY, bounds.maxZ))) {
+                DoorTarget target = TRANSITIONS.get(new DoorKey(player.level().dimension(), position));
+                if (target != null && bounds.intersects(new AABB(position))) {
+                    activateTarget(player, target);
+                    break;
+                }
+            }
+        }
         if (server.getTickCount() % 20 != 0 || BLOCKING_TARGETS.isEmpty()) return;
         for (DoorTarget target : BLOCKING_TARGETS.values()) {
             BlockingNpc blocker = target.blocker;
@@ -1258,7 +1299,7 @@ final class GymInteriorSystem {
 
     private record ExteriorPalette(BlockState primary, BlockState secondary, BlockState glass) {}
 
-    private record DoorAnchor(BlockPoint position, BlockPoint safeSpawn) {}
+    private record DoorAnchor(BlockPoint position, BlockPoint safeSpawn, boolean transition) {}
 
     private record ModuleMetadata(
         int width, int depth, Map<String, BlockPoint> npcAnchors,

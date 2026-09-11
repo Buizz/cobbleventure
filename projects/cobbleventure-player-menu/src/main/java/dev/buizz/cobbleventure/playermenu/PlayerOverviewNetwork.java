@@ -9,6 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -29,6 +31,35 @@ public final class PlayerOverviewNetwork {
 
     public static void register(IEventBus modBus) {
         modBus.addListener(PlayerOverviewNetwork::registerPayloads);
+        NeoForge.EVENT_BUS.addListener(PlayerOverviewNetwork::onPlayerClone);
+        NeoForge.EVENT_BUS.addListener(PlayerOverviewNetwork::onPlayerLoggedIn);
+    }
+
+    private static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            PacketDistributor.sendToPlayer(player, snapshot(player));
+        }
+    }
+
+    private static void onPlayerClone(PlayerEvent.Clone event) {
+        if (!(event.getEntity() instanceof ServerPlayer replacement)) return;
+        var original = event.getOriginal().getPersistentData();
+        for (String move : FIELD_MOVES) {
+            for (String prefix : List.of(FLAG_PREFIX, ACTIVE_PREFIX)) {
+                if (original.contains(prefix + move)) {
+                    replacement.getPersistentData().putBoolean(prefix + move, original.getBoolean(prefix + move));
+                }
+            }
+        }
+        PacketDistributor.sendToPlayer(replacement, snapshot(replacement));
+    }
+
+    static void grantAll(ServerPlayer player) {
+        for (String move : FIELD_MOVES) {
+            player.getPersistentData().putBoolean(FLAG_PREFIX + move, true);
+            player.getPersistentData().putBoolean(ACTIVE_PREFIX + move, true);
+        }
+        PacketDistributor.sendToPlayer(player, snapshot(player));
     }
 
     public static List<String> clientFieldMoves() {

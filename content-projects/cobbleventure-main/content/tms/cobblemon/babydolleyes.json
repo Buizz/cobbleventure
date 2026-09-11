@@ -1,0 +1,15 @@
+{
+  "moveName": "babydolleyes",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "fairy",
+  "recipe": [
+    {
+      "item": "cobblemon:fairy_gem",
+      "count": 3
+    }
+  ]
+}

@@ -23,14 +23,19 @@ repositories {
     }
 }
 
+def cobblenavDependency = "curse.maven:cobblenav-976014:8823427"
+
 dependencies {
     compileOnly "dev.buizz.cobbleventure:cobbleventure-player-menu:1.6.0"
     compileOnly cobblemonBuildDependency
-    compileOnly "curse.maven:cobblenav-976014:8823427"
+    compileOnly cobblenavDependency
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20"
 
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation cobblenavDependency
+    testRuntimeOnly cobblemonBuildDependency
+    testRuntimeOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

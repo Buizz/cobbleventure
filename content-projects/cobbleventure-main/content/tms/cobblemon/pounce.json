@@ -1,0 +1,15 @@
+{
+  "moveName": "pounce",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "bug",
+  "recipe": [
+    {
+      "item": "cobblemon:bug_gem",
+      "count": 3
+    }
+  ]
+}

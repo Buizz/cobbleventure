@@ -9,6 +9,10 @@ public final class DaycareClient {
 
     public static void open(DaycareNetwork.ViewPayload payload) {
         Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.screen instanceof DaycareScreen.DaycarePartyPicker picker) {
+            picker.apply(payload);
+            return;
+        }
         if (minecraft.screen instanceof DaycareScreen screen && screen.apply(payload)) {
             return;
         }

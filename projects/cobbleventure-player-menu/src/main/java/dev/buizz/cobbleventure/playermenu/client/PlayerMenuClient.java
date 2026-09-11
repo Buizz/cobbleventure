@@ -10,6 +10,7 @@ import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.tutorial.TutorialSteps;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import com.cobblemon.mod.common.client.gui.startselection.StarterSelectionScreen;
@@ -98,6 +99,10 @@ public final class PlayerMenuClient {
 
     public static void giveBagItemToPokemon(boolean extended, int slot, int partySlot) {
         BagNetwork.requestGiveToPokemon(extended, slot, partySlot);
+    }
+
+    public static void showTmResult(Component message) {
+        if (Minecraft.getInstance().screen instanceof BagScreen bag) bag.tmUseResult(message);
     }
 
     public static void useBagItemOnPokemon(boolean extended, int slot, int partySlot) {

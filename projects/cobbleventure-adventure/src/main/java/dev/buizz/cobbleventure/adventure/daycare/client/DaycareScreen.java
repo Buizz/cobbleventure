@@ -38,6 +38,7 @@ final class DaycareScreen extends Screen {
     private MenuTheme theme;
     private DaycareScreenLayout layout;
     private ActionButton depositButton;
+    private ActionButton choosePartyButton;
     private ActionButton withdrawButton;
     private ActionButton trainingButton;
     private ActionButton collectButton;
@@ -122,6 +123,12 @@ final class DaycareScreen extends Screen {
             int modelSize = Math.min(32, layout.partyCardHeight() - 4);
             addModel(view, x + 3, y + 2, modelSize);
         }
+
+        choosePartyButton = addRenderableWidget(new ActionButton(
+            layout.partyPanelX() + layout.partyPanelWidth() - layout.padding() - 58,
+            layout.contentY() + 2, 58, 18, this::openPartyPicker
+        ));
+        choosePartyButton.setMessage(dev.buizz.cobbleventure.adventure.research.ResearchNetwork.text("choose"));
 
         DaycareNetwork.PokemonView selected = selectedPokemon();
         if (selected != null) {
@@ -269,6 +276,34 @@ final class DaycareScreen extends Screen {
         rebuildDaycareWidgets();
     }
 
+    private void openPartyPicker() {
+        if (requestPending || validConfirmation()) return;
+        minecraft.setScreen(new DaycarePartyPicker(this));
+    }
+
+    static final class DaycarePartyPicker extends dev.buizz.cobbleventure.playermenu.client.PokemonSelectScreen {
+        private final DaycareScreen owner;
+        DaycarePartyPicker(DaycareScreen owner) {
+            super(owner, Component.translatable("screen.cobbleventure_adventure.daycare.party"),
+                Component.translatable("screen.cobbleventure_adventure.daycare.select_prompt"), ItemStack.EMPTY,
+                dev.buizz.cobbleventure.playermenu.client.PokemonSelectScreen::currentParty,
+                pokemon -> Eligibility.available(), (pokemon, slot) -> {
+                    // Match the server snapshot as well as the shared picker's live party UUID.
+                    if (owner.validPartySelection(slot) && owner.minecraft.level != null) {
+                        Pokemon expected = new Pokemon().loadFromNBT(owner.minecraft.level.registryAccess(),
+                            owner.payload.partySlots().get(slot).data().copy());
+                        if (expected.getUuid().equals(pokemon.getUuid())) {
+                            owner.selectedPartySlot = slot;
+                            owner.selectedStoredSlot = -1;
+                        }
+                    }
+                    owner.minecraft.setScreen(owner);
+                });
+            this.owner = owner;
+        }
+        void apply(DaycareNetwork.ViewPayload next) { owner.apply(next); }
+    }
+
     private void openWithdrawConfirmation() {
         if (selectedStoredSlot < 0 || requestPending) return;
         pendingConfirmationSlot = selectedStoredSlot;
@@ -322,6 +357,7 @@ final class DaycareScreen extends Screen {
         ));
 
         boolean modalOpen = validConfirmation();
+        choosePartyButton.active = !requestPending && !modalOpen;
         trainingButton.active = validPartySelection(selectedPartySlot)
             && !requestPending && !modalOpen;
         depositButton.active = validPartySelection(selectedPartySlot)

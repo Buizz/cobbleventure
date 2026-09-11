@@ -1,0 +1,15 @@
+{
+  "moveName": "thief",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "dark",
+  "recipe": [
+    {
+      "item": "cobblemon:dark_gem",
+      "count": 5
+    }
+  ]
+}

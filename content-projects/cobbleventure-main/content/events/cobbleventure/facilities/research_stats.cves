@@ -1,0 +1,9 @@
+event interact(range: 4) {
+  page default {
+    say npc {
+      ko_kr: "개체값과 노력치를 원하는 수치로 조절해 드려요. 내리는 것은 무료이고 올리는 만큼 비용이 들어요."
+      en_us: "Set your desired IVs and EVs. Decreases are free; only increases cost money."
+    }
+    open_research
+  }
+}

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>연구소 설정</title><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/form-controls.css"></head>
+<body><main class="page active" style="display:block;max-width:1000px;margin:24px auto;padding:24px">
+<a href="/">← 콘텐츠 관리</a><h1>연구소 설정</h1>
+<p>기존 모드 제작법과 독립적인 비용입니다. 저장 후 콘텐츠를 빌드·배포해 게임에 반영하세요.</p>
+<form id="form"><fieldset><legend>비용</legend><div id="costs" class="form-grid three"></div></fieldset>
+<fieldset><legend>재료</legend><div id="materials" class="form-grid three"></div></fieldset>
+<details><summary>Z크리스탈 조건·다이맥스 제외 목록</summary><p>전용 Z기술의 종·폼과 원본 기술을 함께 지정하세요.</p>
+<label>Z크리스탈 조건 JSON<textarea id="crystals" rows="18" style="width:100%"></textarea></label>
+<label>다이맥스 제외 목록 JSON<textarea id="excluded" rows="3" style="width:100%"></textarea></label></details>
+<button id="save" type="submit" disabled>저장</button><button id="reload" type="button">다시 불러오기</button></form>
+<p id="status" role="status"></p></main><script src="/research.js"></script></body></html>

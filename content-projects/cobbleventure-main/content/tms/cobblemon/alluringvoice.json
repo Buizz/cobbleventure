@@ -1,0 +1,19 @@
+{
+  "moveName": "alluringvoice",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "fairy",
+  "recipe": [
+    {
+      "item": "cobblemon:fairy_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:normal_gem",
+      "count": 3
+    }
+  ]
+}

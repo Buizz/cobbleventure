@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cobbleventure.example/schema/league-facilities.schema.json",
+  "title": "리그 시설·방·진행 방식",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "leagues"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "leagues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/league"
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$"
+    },
+    "resource": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.-]+:[a-z0-9_/.-]+$"
+    },
+    "anchor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "room": {
+      "type": "object",
+      "required": [
+        "structure",
+        "entry",
+        "exit"
+      ],
+      "properties": {
+        "structure": {
+          "$ref": "#/$defs/resource"
+        },
+        "entry": {
+          "$ref": "#/$defs/anchor"
+        },
+        "exit": {
+          "$ref": "#/$defs/anchor"
+        }
+      }
+    },
+    "lobby": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/room"
+        }
+      ],
+      "unevaluatedProperties": false,
+      "required": [
+        "leave",
+        "fixed_npcs",
+        "fixed_pokemon"
+      ],
+      "properties": {
+        "leave": {
+          "$ref": "#/$defs/anchor"
+        },
+        "fixed_npcs": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/resource"
+          }
+        },
+        "fixed_pokemon": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "stage": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/room"
+        }
+      ],
+      "unevaluatedProperties": false,
+      "required": [
+        "id",
+        "role",
+        "trainer",
+        "npc_anchor"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "enum": [
+            "elite",
+            "champion"
+          ]
+        },
+        "npc_anchor": {
+          "$ref": "#/$defs/anchor"
+        },
+        "trainer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "appearance",
+            "dialogue",
+            "battle"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "content-bundle.schema.json#/$defs/localized_text"
+            },
+            "appearance": {
+              "type": "object"
+            },
+            "dialogue": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "challenge",
+                "victory",
+                "defeat"
+              ],
+              "properties": {
+                "challenge": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "victory": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "defeat": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "battle": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "league": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "mode",
+        "condition_mode",
+        "conditions",
+        "locked_dialogue",
+        "lobby",
+        "stages",
+        "hall"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "checkpoint",
+            "relay"
+          ]
+        },
+        "condition_mode": {
+          "enum": [
+            "all",
+            "any"
+          ]
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "player-condition.schema.json#/$defs/condition"
+          }
+        },
+        "locked_dialogue": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lobby": {
+          "$ref": "#/$defs/lobby"
+        },
+        "stages": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 16,
+          "items": {
+            "$ref": "#/$defs/stage"
+          }
+        },
+        "hall": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/room"
+            }
+          ],
+          "unevaluatedProperties": false,
+          "properties": {
+            "advance": {
+              "$ref": "#/$defs/anchor"
+            }
+          }
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "next_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "generation_travel_mode": {
+          "enum": [
+            "disabled",
+            "travel_test"
+          ]
+        }
+      }
+    }
+  }
+}

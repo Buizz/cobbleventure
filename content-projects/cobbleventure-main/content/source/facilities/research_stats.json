@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/npc-event-script.schema.json",
+  "schema_version": 4,
+  "id": "cobbleventure:npc/facilities/research_stats",
+  "enabled": true,
+  "name": {
+    "ko_kr": "능력치 연구원",
+    "en_us": "Pokemon Training Researcher"
+  },
+  "description": {
+    "ko_kr": "능력치 연구원",
+    "en_us": "Pokemon Training Researcher"
+  },
+  "tags": [
+    "service",
+    "research",
+    "building_runtime"
+  ],
+  "placement_profile": {
+    "classification": "ambient",
+    "preferred_biomes": [],
+    "automatic_town_placement": false,
+    "automatic_route_placement": false
+  },
+  "npc": {
+    "display_name": {
+      "ko_kr": "능력치 연구원",
+      "en_us": "Pokemon Training Researcher"
+    },
+    "role": "default",
+    "trainer_class": "cobbleventure:trainer_class/scientist",
+    "appearance": {
+      "source": "rct_single",
+      "type": "skin",
+      "resource": "rctmod:trainers/single/scientist_ed_0158",
+      "arm_model": "slim",
+      "implementation_status": "ready"
+    },
+    "behavior": {
+      "movement": "stationary",
+      "look_at_player": true,
+      "invulnerable": true,
+      "collision": true
+    }
+  },
+  "event_runtime": {
+    "engine": "cves_v5",
+    "authoring": "custom",
+    "script_id": "cobbleventure:event_script/facilities/research_stats"
+  },
+  "event_design": {
+    "mode": "easy_npc_events"
+  },
+  "events": [
+    {
+      "id": "on_interact",
+      "trigger": {
+        "type": "interact",
+        "range": 4
+      },
+      "commands": [
+        {
+          "type": "dialogue",
+          "id": "fallback",
+          "speaker": "npc",
+          "text": {
+            "ko_kr": "개체값과 노력치를 원하는 수치로 조절해 드려요. 내리는 것은 무료이고 올리는 만큼 비용이 들어요.",
+            "en_us": "Set your desired IVs and EVs. Decreases are free; only increases cost money."
+          }
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  ]
+}

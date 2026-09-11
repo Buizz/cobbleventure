@@ -1,0 +1,19 @@
+{
+  "moveName": "scorchingsands",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "ground",
+  "recipe": [
+    {
+      "item": "cobblemon:ground_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:fire_gem",
+      "count": 3
+    }
+  ]
+}

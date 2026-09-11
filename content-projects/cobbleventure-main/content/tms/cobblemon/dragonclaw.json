@@ -1,0 +1,19 @@
+{
+  "moveName": "dragonclaw",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "dragon",
+  "recipe": [
+    {
+      "item": "cobblemon:dragon_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:steel_gem",
+      "count": 3
+    }
+  ]
+}

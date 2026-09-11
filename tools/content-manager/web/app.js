@@ -129,6 +129,34 @@ function settlementFacilityCatalog() {
     }];
   }).sort((left, right) => left.label.localeCompare(right.label, "ko"));
 }
+const defaultFacilityLabels = new Map(Object.entries({
+  basic_building_1: "기본 건물 1",
+  basic_building_2: "기본 건물 2",
+  basic_building_3: "기본 건물 3",
+  battle_tower: "배틀타워",
+  casino: "카지노",
+  daycare: "키우미집",
+  fossil_laboratory: "화석 연구소",
+  gym_site: "체육관 부지",
+  hotel: "호텔",
+  laboratory: "연구소",
+  lighthouse: "등대",
+  mansion: "저택",
+  player_house: "플레이어 집",
+  pokemon_tower: "포켓몬타워",
+  power_plant: "발전소",
+  radio_tower: "라디오타워",
+  silph_company: "실프주식회사",
+  tm_workshop: "기술머신 공방",
+  train_station: "기차역",
+}));
+
+function facilityDisplayLabel(id, configuredLabel = "", fallback = "") {
+  const label = String(configuredLabel || "").trim();
+  const generatedLabel = String(id || "").replaceAll("_", " ");
+  if (label && label !== id && label !== generatedLabel) return label;
+  return defaultFacilityLabels.get(id) || label || fallback || generatedLabel;
+}
 const legacyGymFacilityIds = new Set(["gym_site", "gym_lot"]);
 const houseBaseCatalog = [
   { id: "one_story", label: "1층 주택", width: 16, depth: 16, height: 13 },
@@ -918,18 +946,26 @@ function deleteStarterGeneration() {
 }
 
 function switchPage(section) {
+  if (section !== "league" && $("#league")?.classList.contains("is-active") && state.teamEditorTarget === "#league-team-list" && state.leagueBattlePreset) updateFocusedPokemon();
+  if (section !== "league-facilities" && $("#league-facilities")?.classList.contains("is-active")) window.LeagueFacilitiesPanel.deactivate();
   if (["dungeon-pieces", "dungeon-chambers"].includes(section)) {
     state.dungeonPieceCatalogMode = section === "dungeon-chambers" ? "chambers" : "pieces";
   }
-  const navigationSection = ["gyms", "trainer-card"].includes(section) ? "league" : section;
+  const navigationSection = ["gyms", "trainer-card", "league-facilities"].includes(section) ? "league" : section;
   $$(".nav-item").forEach((button) => button.classList.toggle("is-active", button.dataset.section === navigationSection));
   $$(".nav-link").forEach((link) => link.classList.remove("is-active"));
   const activeNavigationItem = $(`.nav-item[data-section="${navigationSection}"]`);
   if (activeNavigationItem) openNavigationGroup(activeNavigationItem.closest(".nav-group"));
   const contentSection = section === "dungeon-chambers" ? "dungeon-pieces" : section;
   $$(".page").forEach((page) => page.classList.toggle("is-active", page.id === contentSection));
-  const titles = { dashboard: "프로젝트 현황", trainers: "트레이너풀", "system-npcs": "시스템 NPC", battles: "배틀 프리셋", routes: "길 관리", league: "리그 운영 · 구성원", "trainer-card": "리그 운영 · 자동 카드", worlds: "세대별 월드맵", "starter-settings": "스타팅 설정", caves: "동굴 관리", dungeons: "던전 관리", "dungeon-chambers": "공동 관리", "dungeon-pieces": "던전 조각 관리", "underground-roads": "지하통로 관리", forests: "숲 관리", settlements: "마을 관리", gyms: "리그 운영 · 체육관 시설", "space-connections": "공간 연결 관계", structures: "NBT 건물 설정", "live-nbt-editor": "라이브 NBT 편집", biomes: "바이옴 관리", definitions: "아이템 · 진행 변수", economy: "상점 · 드롭 · NPC 제작", music: "음악 배정 · 기본값", "global-resources": "전역 리소스", "casino-config": "카지노 콘텐츠 설정", "pokefinder-icons": "포켓파인더 아이콘", builds: "빌드 및 검사" };
+  const titles = { dashboard: "프로젝트 현황", trainers: "트레이너풀", "system-npcs": "시스템 NPC", battles: "배틀 프리셋", routes: "길 관리", league: "리그 운영 · 구성원", "league-facilities": "리그 운영 · 리그 시설", "trainer-card": "리그 운영 · 자동 카드", worlds: "세대별 월드맵", "starter-settings": "스타팅 설정", caves: "동굴 관리", dungeons: "던전 관리", "dungeon-chambers": "공동 관리", "dungeon-pieces": "던전 조각 관리", "underground-roads": "지하통로 관리", forests: "숲 관리", settlements: "마을 관리", gyms: "리그 운영 · 체육관 시설", "space-connections": "공간 연결 관계", structures: "NBT 건물 설정", "live-nbt-editor": "라이브 NBT 편집", biomes: "바이옴 관리", definitions: "아이템 · 진행 변수", economy: "상점 · 드롭 · NPC 제작", music: "음악 배정 · 기본값", "global-resources": "전역 리소스", "casino-config": "카지노 콘텐츠 설정", "pokefinder-icons": "포켓파인더 아이콘", builds: "빌드 및 검사" };
   $("#page-title").textContent = titles[section];
+  $$('[data-league-workspace]').forEach(tab => {
+    const active = tab.dataset.leagueWorkspace === section;
+    tab.classList.toggle('is-active', active);
+    tab.setAttribute('aria-selected', String(active));
+  });
+  if (section === "league-facilities") window.LeagueFacilitiesPanel.activate();
   if (section === "worlds") requestAnimationFrame(resizeWorldMapWorkspace);
   if (section === "structures") requestAnimationFrame(renderBuildingModel);
   loadSectionData(section).catch((error) => toast(error.message));
@@ -2256,7 +2292,7 @@ function loadSectionData(section, force = false) {
   }
   if (section === "trainer-card") { renderTrainerCardManager(); return Promise.resolve(); }
   if (section === "trainers") return Promise.all([loadTrainerData(force), loadSystemNpcs(force), loadGameDefinitions(force)]);
-  if (section === "battles" || section === "league") return Promise.all([loadTrainerData(force), loadGameDefinitions(force)]).then(() => { if (section === "league") renderLeagueEditor(); });
+  if (section === "battles" || section === "league") return Promise.all([loadTrainerData(force), loadGameDefinitions(force), section === "league" ? window.LeagueFacilitiesPanel.ensure() : Promise.resolve()]).then(() => { if (section === "league") renderLeagueEditor(); });
   if (section === "system-npcs") return Promise.all([loadTrainerData(force), loadSystemNpcs(force)]).then(renderSystemNpcs);
   if (section === "biomes") return loadBiomeData(force);
   if (section === "caves" || section === "forests") return loadBiomeData(force);
@@ -9361,7 +9397,10 @@ function removeRouteNpcPlacement(index) {
   state.routePreset.npc_placements.splice(index, 1); renderRouteNpcList();
 }
 
+let facilityTrainer = null;
+let facilityTrainerChanged = () => {};
 function trainerBattle() {
+  if (state.teamEditorTarget === "#lf-team-list") return facilityTrainer?.battle || null;
   if (state.teamEditorTarget === "#dungeon-team-list") {
     const selected = selectedDungeonContent();
     return selected?.kind === "encounter"
@@ -9373,6 +9412,7 @@ function trainerBattle() {
 }
 
 function activeBattlePreset() {
+  if (state.teamEditorTarget === "#lf-team-list") return facilityTrainer;
   if (state.teamEditorTarget === "#dungeon-team-list") {
     const battle = trainerBattle();
     return battle ? { battle } : null;
@@ -13118,7 +13158,8 @@ async function pasteTeamJson() {
       if (pokemon.gigantamax_factor) trainerBattle().mechanics.dynamax = true;
     }
     state.selectedPokemonIndex = 0;
-    if (state.teamEditorTarget === "#league-team-list") renderTeam("#league-team-list");
+    if (state.teamEditorTarget === "#lf-team-list") { renderTeam("#lf-team-list"); facilityTrainerChanged(); }
+    else if (state.teamEditorTarget === "#league-team-list") renderTeam("#league-team-list");
     else if (state.teamEditorTarget === "#dungeon-team-list") renderTeam("#dungeon-team-list");
     else renderBattlePreset();
     toast(`클립보드에서 포켓몬 ${team.length}마리를 붙여넣었습니다.`);
@@ -13495,7 +13536,8 @@ function chooseDialogValue(value) {
     } else preset.battle = importedBattle;
     state.selectedPokemonIndex = 0;
     closeChoiceDialog();
-    if (state.teamEditorTarget === "#league-team-list") renderTeam("#league-team-list");
+    if (state.teamEditorTarget === "#lf-team-list") { renderTeam("#lf-team-list"); facilityTrainerChanged(); }
+    else if (state.teamEditorTarget === "#league-team-list") renderTeam("#league-team-list");
     else if (state.teamEditorTarget === "#dungeon-team-list") renderTeam("#dungeon-team-list");
     else renderBattlePreset();
     toast(`${reference.name}${reference.entry_number ? ` #${reference.entry_number}` : ""} 엔트리를 적용했습니다. 저장 전까지 원본 파일은 변경되지 않습니다.`);
@@ -13681,6 +13723,8 @@ function hydratePartyArt(root = document) {
 }
 
 function syncTrainerJson() {
+  if (state.teamEditorTarget === "#lf-team-list") facilityTrainerChanged();
+  if (state.teamEditorTarget === "#league-team-list" && leagueFacilityTrainer(selectedLeagueEntry())) window.LeagueFacilitiesPanel.markChanged();
   if (state.trainer && $("#trainer-json")) $("#trainer-json").value = JSON.stringify(state.trainer, null, 2);
   if (state.battlePreset && $("#battle-json")) $("#battle-json").value = JSON.stringify(state.battlePreset, null, 2);
   if (state.teamEditorTarget === "#dungeon-team-list") markDungeonContentDirty();
@@ -13950,7 +13994,29 @@ const leagueTypeColors = { normal:"#929da3",fire:"#ff9d55",water:"#5090d6",elect
 const leagueTypeLabels = { normal:"노말",fire:"불꽃",water:"물",electric:"전기",grass:"풀",ice:"얼음",fighting:"격투",poison:"독",ground:"땅",flying:"비행",psychic:"에스퍼",bug:"벌레",rock:"바위",ghost:"고스트",dragon:"드래곤",dark:"악",steel:"강철",fairy:"페어리" };
 
 function leagueEntryBadgeId(entry) {
-  return entry?.role === "gym_leader" ? entry.encounter?.rewards?.badge_id : entry?.badge_id;
+  return entry?.role === "gym_leader" ? entry.encounter?.rewards?.badge_id : undefined;
+}
+
+function leagueFacilityTrainer(entry) {
+  return entry?.role !== "gym_leader" ? window.LeagueFacilitiesPanel.trainerFor(entry?.trainer_id) : null;
+}
+
+function configureLeagueEncounterVisibility(entry) {
+  const gym = entry?.role === "gym_leader";
+  const trainer = leagueFacilityTrainer(entry);
+  const form = $("#league-form");
+  $("#league-trainer-link").hidden = gym || Boolean(trainer);
+  $("#league-encounter-fields").hidden = !gym && !trainer;
+  $("#league-display-badge-fields").hidden = true;
+  form.elements.displayBadgeId.disabled = true;
+  // The battle ID stays internal; teams are authored directly on this page.
+  for (const name of ["rosterCharacter", "clearedDialogue", "rewardMoney", "rewardItem", "rewardItemCount", "badgeId"]) {
+    form.elements[name].closest("label").hidden = !gym;
+    form.elements[name].disabled = !gym;
+  }
+  $("#league-card-derived").hidden = !gym;
+  $("#league-encounter-fields legend").textContent = gym ? "관장 대사·외형" : "리그 트레이너 대사·외형";
+  $("#league-team-editor h3").textContent = gym ? "관장 엔트리" : "리그 트레이너 엔트리";
 }
 
 function dialogueLinesValue(value) {
@@ -13964,11 +14030,11 @@ function dialogueLinesFromInput(value) {
 function renderLeagueAppearancePreview() {
   const entry = selectedLeagueEntry();
   const preview = $("#league-appearance-preview");
-  if (!entry || entry.role !== "gym_leader" || !preview) return;
-  const encounter = entry.encounter || {};
+  if (!entry || !preview) return;
+  const encounter = leagueFacilityTrainer(entry) || entry.encounter || {};
   const character = rosterCharacters().find((item) => item.id === encounter.character);
   const appearance = character ? effectiveCharacterAppearance(character) : (encounter.appearance || {});
-  const trainerClass = state.trainerClasses.find((item) => item.id === "cobbleventure:trainer_class/gym_leader");
+  const trainerClass = state.trainerClasses.find((item) => item.id === `cobbleventure:trainer_class/${entry.role}`);
   const skinUrl = trainerSkinUrl(appearance);
   const body = { ...(character?.body || trainerClass?.body || {}), ...(appearance.arm_model ? { arm_model: appearance.arm_model } : {}) };
   preview.innerHTML = skinUrl ? `<div class="trainer-appearance-comparison"><section class="trainer-reference-card"><span>본가 디자인 기준</span>${trainerReferenceHtml(trainerClass, character)}</section><section class="trainer-minecraft-card"><span>현재 Minecraft 외형</span>${minecraftModelHtml(skinUrl, body)}</section></div><strong>${escapeHtml(entry.display_name?.ko_kr || entry.id)}</strong>` : `<div class="trainer-preview-fallback">관장</div><strong>${escapeHtml(entry.display_name?.ko_kr || entry.id)}</strong>`;
@@ -13991,9 +14057,9 @@ function renderLeagueList() {
   $("#league-entry-list").innerHTML = entries.length ? groups.map(([role, label]) => {
     const members = entries.filter((entry) => entry.role === role);
     if (!members.length) return "";
-  return `<div class="league-role-heading"><strong>${label}</strong><span>${members.length}</span></div>${members.map((entry, index) => { const type = entry.primary_type || "normal"; const badge = badgeById(leagueEntryBadgeId(entry)); return `<article class="document-button league-member-row ${entry.id === state.selectedLeagueId ? "is-active" : ""}" style="--league-type:${leagueTypeColors[type] || leagueTypeColors.normal}"><button type="button" class="league-member-select" data-league-entry="${escapeHtml(entry.id)}"><span class="league-member-badge">${badgeSprite(badge, 1.05)}</span><span><strong>${escapeHtml(entry.display_name?.ko_kr || entry.id)}</strong><small><b>${escapeHtml(leagueTypeLabels[type] || type)}</b> · ${entry.generation}세대 · ${escapeHtml(entry.region.split("/").at(-1))} · ${entry.order}번째 · 도전 Lv.${entry.level_cap}</small></span></button><span class="league-order-actions"><button type="button" data-league-move="-1" data-league-id="${escapeHtml(entry.id)}" aria-label="위로 이동" title="위로 이동"${index === 0 ? " disabled" : ""}>↑</button><button type="button" data-league-move="1" data-league-id="${escapeHtml(entry.id)}" aria-label="아래로 이동" title="아래로 이동"${index === members.length - 1 ? " disabled" : ""}>↓</button></span></article>`; }).join("")}`;
+  return `<div class="league-role-heading"><strong>${label}</strong><span>${members.length}</span></div>${members.map((entry, index) => { const type = entry.primary_type || "normal"; const badge = badgeById(leagueEntryBadgeId(entry)); return `<article class="document-button league-member-row ${entry.id === state.selectedLeagueId ? "is-active" : ""}" style="--league-type:${leagueTypeColors[type] || leagueTypeColors.normal}"><button type="button" class="league-member-select" data-league-entry="${escapeHtml(entry.id)}">${role === "gym_leader" ? `<span class="league-member-badge">${badgeSprite(badge, 1.05)}</span>` : ""}<span><strong>${escapeHtml(entry.display_name?.ko_kr || entry.id)}</strong><small><b>${escapeHtml(leagueTypeLabels[type] || type)}</b> · ${entry.generation}세대 · ${escapeHtml(entry.region.split("/").at(-1))} · ${entry.order}번째 · 도전 Lv.${entry.level_cap}</small></span></button><span class="league-order-actions"><button type="button" data-league-move="-1" data-league-id="${escapeHtml(entry.id)}" aria-label="위로 이동" title="위로 이동"${index === 0 ? " disabled" : ""}>↑</button><button type="button" data-league-move="1" data-league-id="${escapeHtml(entry.id)}" aria-label="아래로 이동" title="아래로 이동"${index === members.length - 1 ? " disabled" : ""}>↓</button></span></article>`; }).join("")}`;
   }).join("") : '<div class="issues empty">등록된 리그 구성원이 없습니다.</div>';
-  $$('[data-league-entry]').forEach((button) => button.addEventListener("click", () => { state.selectedLeagueId = button.dataset.leagueEntry; renderLeagueList(); renderLeagueEditor(); }));
+  $$('[data-league-entry]').forEach((button) => button.addEventListener("click", () => { if (state.teamEditorTarget === "#league-team-list" && state.leagueBattlePreset) updateFocusedPokemon(); state.selectedLeagueId = button.dataset.leagueEntry; renderLeagueList(); renderLeagueEditor(); }));
   $$('[data-league-move]').forEach((button) => button.addEventListener("click", () => moveLeagueEntry(button.dataset.leagueId, Number(button.dataset.leagueMove))));
 }
 
@@ -14022,6 +14088,7 @@ async function moveLeagueEntry(entryId, delta) {
 }
 
 function trainerPoolOptions(selected = "") {
+  if (selected?.startsWith("cobbleventure:npc/league/")) return `<option value="${escapeHtml(selected)}">리그 시설에서 자동 생성</option>`;
   return '<option value="">트레이너풀에서 선택</option>' + state.trainers.map((trainer) => `<option value="${escapeHtml(trainer.id)}"${trainer.id === selected ? " selected" : ""}>${escapeHtml(trainer.name || trainer.id)} · ${escapeHtml(trainer.id)}</option>`).join("");
 }
 
@@ -14064,6 +14131,17 @@ async function loadLeagueBattlePreset(entry, battleId) {
 
 function renderLeagueTeamEditor(entry) {
   const section = $("#league-team-editor");
+  const trainer = leagueFacilityTrainer(entry);
+  if (trainer) {
+    section.hidden = false;
+    if (state.leagueBattleId !== entry.trainer_id) state.selectedPokemonIndex = 0;
+    state.leagueBattlePreset = trainer;
+    state.leagueBattleId = entry.trainer_id;
+    state.leagueBattlePath = "";
+    setLeagueTeamButtons(true);
+    renderTeam("#league-team-list");
+    return;
+  }
   const isGymLeader = entry?.role === "gym_leader";
   section.hidden = !isGymLeader;
   if (!isGymLeader) {
@@ -14076,7 +14154,7 @@ function renderLeagueTeamEditor(entry) {
     state.leagueBattlePath = "";
     state.leagueBattleId = "";
     setLeagueTeamButtons(false);
-    $("#league-team-list").innerHTML = '<div class="issues empty">먼저 관장 약식 이벤트에서 배틀 프리셋을 선택하세요.</div>';
+    $("#league-team-list").innerHTML = '<div class="issues empty">이 관장의 엔트리 데이터가 없습니다. 관장 생성 상태를 확인해 주세요.</div>';
     return;
   }
   if (state.leagueBattleId !== battleId || !state.leagueBattlePreset) {
@@ -14114,9 +14192,12 @@ function renderLeagueEditor() {
   setFormValue(form, "generation", entry.generation); setFormValue(form, "order", entry.order); setFormValue(form, "region", entry.region);
   form.elements.trainerId.innerHTML = trainerPoolOptions(entry.trainer_id); setFormValue(form, "trainerId", entry.trainer_id);
   const isGymLeader = entry.role === "gym_leader";
-  const encounter = entry.encounter || {};
+  const encounter = leagueFacilityTrainer(entry) || entry.encounter || {};
   const rewards = encounter.rewards || {};
-  form.elements.battleId.innerHTML = battlePresetOptions(encounter.battle_id || "");
+  if (encounter.name) {
+    setFormValue(form, "nameKo", encounter.name.ko_kr || "");
+    setFormValue(form, "nameEn", encounter.name.en_us || "");
+  }
   setFormValue(form, "battleId", encounter.battle_id || "");
   setFormValue(form, "appearanceResource", encounter.appearance?.resource || "");
   setFormValue(form, "appearanceSource", encounter.appearance?.source || "rct_single");
@@ -14136,11 +14217,15 @@ function renderLeagueEditor() {
   [...form.elements].forEach((element) => { element.disabled = false; });
   $$("#league-form .league-badge-fields input, #league-form .league-badge-fields select").forEach((element) => { element.disabled = true; });
   $("#delete-league-entry").disabled = false; $("#save-league").disabled = false; $("#edit-league-trainer").disabled = !entry.trainer_id;
+  const facilityOwned = entry.trainer_id?.startsWith("cobbleventure:npc/league/");
+  form.elements.trainerId.disabled = Boolean(facilityOwned);
+  $("#edit-league-trainer").textContent = facilityOwned ? "리그 시설에서 편집" : "NPC 편집";
   $("#league-trainer-link").hidden = isGymLeader;
   $("#league-encounter-fields").hidden = !isGymLeader;
   $("#league-display-badge-fields").hidden = isGymLeader;
   $("#choose-league-reward-item").disabled = !isGymLeader;
   $("#league-card-derived").hidden = !isGymLeader;
+  configureLeagueEncounterVisibility(entry);
   if (isGymLeader) {
     const pageEntries = orderedTrainerCardEntries().filter((candidate) => candidate.generation === entry.generation && candidate.region === entry.region);
     const position = pageEntries.findIndex((candidate) => candidate.id === entry.id);
@@ -14185,8 +14270,18 @@ function updateLeagueEntryFromForm() {
     }
   } else {
     delete entry.encounter;
-    if (form.elements.displayBadgeId.value) entry.badge_id = form.elements.displayBadgeId.value;
-    else delete entry.badge_id;
+    delete entry.badge_id;
+    const trainer = leagueFacilityTrainer(entry);
+    if (trainer) {
+      trainer.name = {...entry.display_name};
+      trainer.appearance = {...trainer.appearance, source: form.elements.appearanceSource.value, resource: form.elements.appearanceResource.value.trim()};
+      trainer.dialogue = {
+        challenge: form.elements.challengeDialogue.value.trim(),
+        victory: form.elements.victoryDialogue.value.trim(),
+        defeat: form.elements.defeatDialogue.value.trim(),
+      };
+      window.LeagueFacilitiesPanel.markChanged();
+    }
   }
   state.selectedLeagueId = entry.id || previousId;
 }
@@ -14209,7 +14304,7 @@ function updateLeagueMemberDialog() {
   const role = form.elements.role.value;
   const gymLeader = role === "gym_leader";
   $(".league-member-gym-fields").hidden = !gymLeader;
-  $(".league-member-display-badge-fields").hidden = gymLeader;
+  $(".league-member-display-badge-fields").hidden = true;
   form.elements.badgeId.required = gymLeader;
   form.elements.appearanceResource.required = gymLeader;
   if (gymLeader) form.elements.primaryType.value = form.elements.primaryType.value || "normal";
@@ -14236,7 +14331,7 @@ async function createLeagueMember(event) {
     primary_type: form.elements.primaryType.value,
     theme: form.elements.primaryType.value,
     badge_id: form.elements.role.value === "gym_leader" ? form.elements.badgeId.value : "",
-    display_badge_id: form.elements.role.value === "gym_leader" ? "" : form.elements.displayBadgeId.value,
+    display_badge_id: "",
     character: form.elements.role.value === "gym_leader" ? form.elements.rosterCharacter.value : "",
     appearance_resource: form.elements.role.value === "gym_leader" ? form.elements.appearanceResource.value.trim() : "",
     reward_money: form.elements.role.value === "gym_leader" ? Number(form.elements.rewardMoney.value || 0) : 0,
@@ -14267,6 +14362,12 @@ async function saveLeagueProgression() {
   updateLeagueEntryFromForm();
   if (!$("#league-form").reportValidity() && selectedLeagueEntry()) return;
   const entry = selectedLeagueEntry();
+  try {
+    if (window.LeagueFacilitiesPanel.hasChanges()) await window.LeagueFacilitiesPanel.saveShared();
+  } catch (error) {
+    toast(error.message);
+    return;
+  }
   if (entry?.role === "gym_leader" && state.leagueBattlePreset && state.leagueBattleId === entry.encounter?.battle_id) {
     const validation = await request("/api/document-validation?category=battles", { method: "POST", body: JSON.stringify(state.leagueBattlePreset) });
     if (!validation.ok) {
@@ -14299,15 +14400,68 @@ function gymLeagueOptions(selected = "") {
 }
 
 function settlementFacilityRequirements() {
-  const requirements = (Array.isArray(state.settlement?.structure_profile?.facility_requirements)
+  return (Array.isArray(state.settlement?.structure_profile?.facility_requirements)
     ? state.settlement.structure_profile.facility_requirements
     : []).filter((item) => !legacyGymFacilityIds.has(item?.id));
-  if (!isStarterSettlement() || requirements.some((item) => item.id === "laboratory")) return requirements;
-  const laboratory = settlementFacilityCatalog().find((item) => item.id === "laboratory");
-  return laboratory ? [...requirements, {
-    id: laboratory.id, label: laboratory.label, count: 1, required: true,
-    footprint: { width: laboratory.width, depth: laboratory.depth, height: laboratory.height }
-  }] : requirements;
+}
+
+function settlementFacilityOptionsCatalog() {
+  const requirements = settlementFacilityRequirements();
+  const requirementsById = new Map(requirements
+    .filter((requirement) => requirement?.id)
+    .map((requirement) => [requirement.id, requirement]));
+  const baseCatalog = settlementFacilityCatalog();
+  const includedStructures = new Set(baseCatalog.map((facility) => facility.structure));
+  for (const [structure, metadata] of Object.entries(state.buildingSettings.structures || {})) {
+    if (metadata?.category !== "placeholder" || includedStructures.has(structure)) continue;
+    const id = String(structure.split("/").at(-1) || "").trim();
+    if (!id) continue;
+    baseCatalog.push({
+      id,
+    label: facilityDisplayLabel(id),
+      note: `NBT 건물 · ${structure}`,
+      color: "#64748b",
+      width: Number(metadata.width || 16),
+      depth: Number(metadata.depth || 16),
+      height: Number(metadata.height || 1),
+      structure,
+    });
+    includedStructures.add(structure);
+  }
+  const includedIds = new Set();
+  const catalog = baseCatalog.map((facility) => {
+    const requirement = requirementsById.get(facility.id);
+    if (!requirement) return facility;
+    includedIds.add(facility.id);
+    const footprint = requirement.footprint || {};
+    return {
+      ...facility,
+      label: facilityDisplayLabel(facility.id, requirement.label, facility.label),
+      width: Number(footprint.width || facility.width),
+      depth: Number(footprint.depth || facility.depth),
+      height: Number(footprint.height || facility.height),
+      structure: requirement.structure || facility.structure,
+    };
+  });
+  for (const requirement of requirements) {
+    if (!requirement?.id || includedIds.has(requirement.id)) continue;
+    const structure = String(requirement.structure || "").trim();
+    const metadata = state.structureSizes?.[structure]
+      || state.buildingSettings.structures?.[structure] || {};
+    const footprint = requirement.footprint || {};
+    catalog.push({
+      id: requirement.id,
+      label: facilityDisplayLabel(requirement.id, requirement.label, requirement.id),
+      note: structure ? `현재 마을에 포함된 건물 · ${structure}` : "현재 마을에 포함된 건물",
+      color: requirement.color || "#64748b",
+      width: Number(footprint.width || metadata.width || 16),
+      depth: Number(footprint.depth || metadata.depth || 16),
+      height: Number(footprint.height || metadata.height || 1),
+      structure,
+    });
+    includedIds.add(requirement.id);
+  }
+  return catalog.sort((left, right) => left.label.localeCompare(right.label, "ko"));
 }
 
 function isStarterSettlement(document = state.settlement) {
@@ -14316,25 +14470,26 @@ function isStarterSettlement(document = state.settlement) {
 
 function renderFacilityOptions() {
   const selected = new Map(settlementFacilityRequirements().map((item) => [item.id, item]));
-  $("#facility-option-list").innerHTML = settlementFacilityCatalog().map((facility) => {
+  const entries = settlementFacilityOptionsCatalog().filter((facility) => selected.get(facility.id)?.required);
+  $("#facility-option-list").innerHTML = entries.length ? entries.map((facility) => {
     const requirement = selected.get(facility.id);
-    const checked = Boolean(requirement?.required);
     const count = Math.max(1, Math.min(8, Number(requirement?.count || 1)));
-    return `<article class="facility-option${checked ? " is-selected" : ""}" data-facility-id="${facility.id}">
-      <label class="facility-option-toggle"><input class="facility-enabled" type="checkbox"${checked ? " checked" : ""}><span class="facility-swatch" style="--facility-color:${facility.color}"></span><span><strong>${escapeHtml(facility.label)}</strong><small>${escapeHtml(facility.note)}</small></span></label>
+    return `<article class="facility-option is-selected" data-facility-id="${escapeHtml(facility.id)}">
+      <span class="facility-swatch" style="--facility-color:${facility.color}"></span>
+      <span class="facility-option-info"><strong>${escapeHtml(facility.label)}</strong><small>${escapeHtml(facility.note)}</small></span>
       <div class="facility-option-size"><span>${facility.width}×${facility.depth}</span><small>표준 부지</small></div>
-      <label class="facility-count"><span>수량</span><input type="number" min="1" max="8" step="1" value="${count}"${checked ? "" : " disabled"}></label>
+      <label class="facility-count"><span>수량</span><input type="number" min="1" max="8" step="1" value="${count}"></label>
+      <button type="button" class="facility-remove" data-remove-facility="${escapeHtml(facility.id)}" aria-label="${escapeHtml(facility.label)} 삭제" title="목록에서 삭제">×</button>
     </article>`;
-  }).join("");
+  }).join("") : '<div class="issues empty">추가된 건물이 없습니다. ‘건물 추가’를 눌러 선택하세요.</div>';
 }
 
 function selectedFacilityRequirements() {
-  const catalog = settlementFacilityCatalog();
+  const catalog = settlementFacilityOptionsCatalog();
   const visibleIds = new Set(catalog.map((facility) => facility.id));
   const hiddenExisting = (state.settlement?.structure_profile?.facility_requirements || [])
     .filter((requirement) => requirement?.id && !visibleIds.has(requirement.id));
   const selected = $$("#facility-option-list [data-facility-id]").flatMap((row) => {
-    if (!row.querySelector(".facility-enabled")?.checked) return [];
     const facility = catalog.find((item) => item.id === row.dataset.facilityId);
     if (!facility) return [];
     const count = Math.max(1, Math.min(8, Number(row.querySelector(".facility-count input")?.value || 1)));
@@ -14346,6 +14501,64 @@ function selectedFacilityRequirements() {
     }];
   });
   return [...hiddenExisting, ...selected];
+}
+
+function renderFacilityPicker() {
+  const query = $("#facility-picker-search").value.trim().toLocaleLowerCase();
+  const selectedIds = new Set(selectedFacilityRequirements().map((item) => item.id));
+  const entries = settlementFacilityOptionsCatalog().filter((facility) => !query
+    || `${facility.label} ${facility.id} ${facility.structure}`.toLocaleLowerCase().includes(query));
+  $("#facility-picker-count").textContent = `${entries.length}개 · 추가됨 ${selectedIds.size}개`;
+  $("#facility-picker-list").innerHTML = entries.length ? entries.map((facility) => {
+    const selected = selectedIds.has(facility.id);
+    return `<article class="facility-picker-item${selected ? " is-selected" : ""}" data-facility-picker-id="${escapeHtml(facility.id)}">
+      <span class="facility-swatch" style="--facility-color:${facility.color}"></span>
+      <span><strong>${escapeHtml(facility.label)}</strong><small>${escapeHtml(facility.structure)}</small></span>
+      <span class="facility-picker-size">${facility.width}×${facility.depth}</span>
+      <button type="button" class="button ${selected ? "text-button" : "secondary"}" data-toggle-facility="${escapeHtml(facility.id)}">${selected ? "삭제" : "추가"}</button>
+    </article>`;
+  }).join("") : '<div class="issues empty">검색 조건에 맞는 건물이 없습니다.</div>';
+}
+
+function updateFacilitySelection(facilityId, shouldAdd) {
+  if (!state.settlement) return;
+  const current = selectedFacilityRequirements().filter((item) => item.id !== facilityId);
+  if (shouldAdd) {
+    const facility = settlementFacilityOptionsCatalog().find((item) => item.id === facilityId);
+    if (!facility) return;
+    current.push({
+      id: facility.id,
+      label: facility.label,
+      count: 1,
+      required: true,
+      structure: facility.structure,
+      footprint: structureFootprint(facility.structure, facility),
+    });
+  }
+  state.settlement.structure_profile ||= {};
+  state.settlement.structure_profile.facility_requirements = current;
+  renderFacilityOptions();
+  updateSettlementFromForm();
+  renderFacilityPicker();
+}
+
+async function openFacilityPicker() {
+  if (!state.settlement) return;
+  const button = $("#open-facility-picker");
+  button.disabled = true;
+  button.textContent = "건물 목록 불러오는 중…";
+  try {
+    await loadBuildingSettingsData(false);
+    $("#facility-picker-search").value = "";
+    renderFacilityPicker();
+    $("#facility-picker-dialog").showModal();
+    $("#facility-picker-search").focus();
+  } catch (error) {
+    toast(error.message || "건물 목록을 불러오지 못했습니다.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "＋ 건물 추가";
+  }
 }
 
 function structureFootprint(structure, fallback = {}) {
@@ -15243,7 +15456,7 @@ function buildingInteriorOptions(selected = "") {
 function renderBuildingInteriorAssignments(metadata) {
   const target = $("#building-interior-assignments");
   const entries = metadata.settings?.interiors || [];
-  $("#add-building-interior").disabled = ["interior", "gym_interior", "league"].includes(metadata.category);
+  $("#add-building-interior").disabled = ["interior", "gym_interior"].includes(metadata.category);
   target.innerHTML = entries.length ? entries.map((entry, index) => `
     <article class="building-interior-row" data-building-interior="${index}">
       <label><span>공간 키</span><input data-building-interior-field="key" value="${escapeHtml(entry.key || "")}" pattern="[a-z0-9][a-z0-9_]*"></label>
@@ -17646,11 +17859,6 @@ function updateFacilityFormState(preferredFootprintShape = null) {
   for (const name of ["gymId"]) {
     form.elements[name].disabled = !gymEnabled;
   }
-  $$("#facility-option-list [data-facility-id]").forEach((row) => {
-    const enabled = row.querySelector(".facility-enabled").checked;
-    row.classList.toggle("is-selected", enabled);
-    row.querySelector(".facility-count input").disabled = !enabled;
-  });
 }
 
 function applySpecialBuildingPreset(event) {
@@ -19493,6 +19701,7 @@ function renderStructureBuilder() {
 }
 
 let structureSourcePickerMode = "live";
+let structureSourcePickerConsumer = null;
 function structureSourceCategory(item) {
   const value = `${item.id || ""} ${item.path || ""} ${item.category || ""}`.toLocaleLowerCase();
   if (/interior|interiors/.test(value)) return "interior";
@@ -19508,12 +19717,14 @@ function structureSourceSize(item) {
   return [item.width, item.height, item.depth].map((value) => Number(value) || 0);
 }
 function structureSourcePickerEntries() {
+  if (structureSourcePickerMode === "league-room") return structureSourcePickerConsumer.ids.map(id => ({id, key: id, value: id, path: id, category: 'interior', size: structureSourceSize(state.structureSizes?.[id] || {})}));
   if (structureSourcePickerMode === "live") return (state.structureBuilder?.sources || []).map((item) => ({ ...item, key: item.path, value: item.path, size: structureSourceSize(item) }));
   return Object.entries(state.structureSizes || {}).map(([id, metadata]) => ({
     id, key: id, value: id, path: metadata?.source || id, category: metadata?.category || "", size: structureSourceSize(metadata || {})
   })).filter((item) => gateResourceIdPattern.test(item.id)).sort((left, right) => left.id.localeCompare(right.id));
 }
 function selectedStructureSourceValue() {
+  if (structureSourcePickerMode === "league-room") return structureSourcePickerConsumer.selected;
   if (structureSourcePickerMode === "live") return $("#structure-builder-live-source").value;
   if (structureSourcePickerMode === "world-tool") return $("#generic-object-tool-resource").value;
   return $("#tile-inspector-form").elements.genericObjectResource.value;
@@ -19547,6 +19758,11 @@ function openStructureBuilderSourceDialog(mode = "live") {
   $("#structure-builder-source-title").textContent = world ? "배치할 NBT 선택" : "편집할 NBT 선택";
   $("#structure-builder-source-subtitle").textContent = world ? "월드맵에 배치할 구조물을 검색하고 선택합니다." : "라이브 편집할 구조물을 검색하고 선택합니다.";
   $("#structure-builder-source-hint").textContent = world ? "항목을 누르면 오브젝트 NBT로 적용됩니다." : "항목을 누르면 편집 대상으로 지정됩니다.";
+  if (mode === "league-room") {
+    $("#structure-builder-source-title").textContent = structureSourcePickerConsumer.title;
+    $("#structure-builder-source-subtitle").textContent = "이 방에 사용할 수 있는 내부 NBT를 검색하고 선택합니다.";
+    $("#structure-builder-source-hint").textContent = "항목을 누르면 선택한 리그 방에 적용됩니다.";
+  }
   resetStructureSourceFilters();
   renderStructureBuilderSourceDialog();
   $("#structure-builder-source-dialog").showModal();
@@ -19555,6 +19771,11 @@ function openStructureBuilderSourceDialog(mode = "live") {
 function selectStructureSource(key) {
   const item = structureSourcePickerEntries().find((entry) => entry.key === key);
   if (!item) return;
+  if (structureSourcePickerMode === "league-room") {
+    structureSourcePickerConsumer.onSelect(item.id);
+    $("#structure-builder-source-dialog").close();
+    return;
+  }
   if (structureSourcePickerMode === "live") {
     $("#structure-builder-live-source").value = item.path;
     ["width", "height", "depth"].forEach((axis, index) => { $("#structure-builder-live-" + axis).value = item.size[index]; });
@@ -20687,6 +20908,7 @@ $("#league-form").addEventListener("input", () => {
   $("#league-trainer-link").hidden = isGym;
   $("#league-encounter-fields").hidden = !isGym;
   $("#league-display-badge-fields").hidden = isGym;
+  configureLeagueEncounterVisibility(entry);
   renderLeagueAppearancePreview();
   renderLeagueBadgePreviews();
 });
@@ -20720,6 +20942,11 @@ $("#league-paste-team-json").addEventListener("click", () => { state.teamEditorT
 $("#league-add-pokemon").addEventListener("click", () => { state.teamEditorTarget = "#league-team-list"; addPokemon(); });
 $$('[data-league-workspace]').forEach((tab) => tab.addEventListener("click", () => {
   const target = tab.dataset.leagueWorkspace;
+  if (target === "league-facilities") {
+    if ($("#league").classList.contains("is-active") && selectedLeagueEntry()) updateLeagueEntryFromForm();
+    switchPage(target);
+    return;
+  }
   if (target === "league") {
     switchPage("league");
     renderLeagueEditor();
@@ -20748,6 +20975,7 @@ $("#league-member-close").addEventListener("click", () => $("#league-member-dial
 $("#league-member-cancel").addEventListener("click", () => $("#league-member-dialog").close());
 $("#edit-league-trainer").addEventListener("click", async () => {
   updateLeagueEntryFromForm(); const entry = selectedLeagueEntry(); const trainer = state.trainers.find((candidate) => candidate.id === entry?.trainer_id);
+  if (entry?.trainer_id?.startsWith("cobbleventure:npc/league/")) { switchPage("league-facilities"); return; }
   if (!trainer) { toast("트레이너풀에서 NPC를 먼저 선택해 주세요."); return; }
   switchPage("trainers"); await loadDocument("trainers", trainer.path);
 });
@@ -21320,6 +21548,26 @@ $("#settlement-form").addEventListener("input", (event) => {
   applySpecialBuildingPreset(event); keepHousePaletteGroupSelected(event); updateFacilityFormState(); updateSettlementFromForm();
   if (["residentialSource", "residentialUseAll"].includes(event.target.name)) renderResidentialCatalogOptions();
 });
+$("#open-facility-picker").addEventListener("click", openFacilityPicker);
+$("#facility-option-list").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-remove-facility]");
+  if (button) updateFacilitySelection(button.dataset.removeFacility, false);
+});
+$("#facility-picker-search").addEventListener("input", renderFacilityPicker);
+$("#facility-picker-reset").addEventListener("click", () => {
+  $("#facility-picker-search").value = "";
+  renderFacilityPicker();
+  $("#facility-picker-search").focus();
+});
+$("#facility-picker-list").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-toggle-facility]");
+  if (!button) return;
+  const selected = selectedFacilityRequirements().some((item) => item.id === button.dataset.toggleFacility);
+  updateFacilitySelection(button.dataset.toggleFacility, !selected);
+});
+for (const id of ["#facility-picker-close", "#facility-picker-done"]) {
+  $(id).addEventListener("click", () => $("#facility-picker-dialog").close());
+}
 $("#custom-town-layout").addEventListener("click", (event) => {
   const tool = event.target.closest("[data-custom-town-tool]")?.dataset.customTownTool;
   if (tool) { state.customTownTool = tool; $$("[data-custom-town-tool]").forEach((button) => button.classList.toggle("is-active", button.dataset.customTownTool === tool)); return; }
@@ -21511,9 +21759,41 @@ $("#economy-pokemon-type").addEventListener("change", (event) => updateEconomyVi
 $("#economy-pokemon-generation").addEventListener("change", (event) => updateEconomyView("pokemonGeneration", event.target.value));
 $("#economy-pokemon-limit").addEventListener("change", (event) => updateEconomyView("pokemonLimit", Number(event.target.value)));
 
+window.LeagueFacilityUi = {
+  async chooseStructure(options) {
+    try {
+      await loadStructureData();
+      structureSourcePickerConsumer = options;
+      openStructureBuilderSourceDialog("league-room");
+    } catch (error) { toast(error.message); }
+  }
+};
+
+window.LeagueFacilityTeamEditor = {
+  async prepare() { await loadTrainerData(); },
+  mount(trainer, changed) {
+    facilityTrainer = trainer; facilityTrainerChanged = changed;
+    state.selectedPokemonIndex = 0;
+    renderTeam("#lf-team-list");
+  },
+  flush() { if (state.teamEditorTarget === "#lf-team-list") updateFocusedPokemon(); },
+  detach() {
+    if (state.teamEditorTarget === "#lf-team-list") state.teamEditorTarget = "#team-list";
+  },
+  template() { return { format: "GEN_9_SINGLES", battle_type: "singles", level_mode: "fixed",
+    ai: {controller: "cobbleventure", difficulty: "standard", strategy: "balanced", options: {}},
+    rules: {can_forfeit: true, max_item_uses: 99}, bag: [],
+    mechanics: {mega_evolution: false, z_move: false, dynamax: false, terastallization: false},
+    team: [pokemonTemplate()] }; },
+  add() { state.teamEditorTarget = "#lf-team-list"; addPokemon(); },
+  copy() { state.teamEditorTarget = "#lf-team-list"; copyTeamJson(); },
+  paste() { state.teamEditorTarget = "#lf-team-list"; pasteTeamJson(); },
+  import() { state.teamEditorTarget = "#lf-team-list"; openChoiceDialog("trainer_reference"); }
+};
+
 loadActiveProject().then(async () => {
   const requestedSection = new URLSearchParams(window.location.search).get("section");
-  if (requestedSection && $$(".nav-item").some((button) => button.dataset.section === requestedSection)) {
+  if (requestedSection && (requestedSection === "league-facilities" || $$(".nav-item").some((button) => button.dataset.section === requestedSection))) {
     switchPage(requestedSection);
   }
   await refreshAll(true);

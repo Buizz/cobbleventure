@@ -1,0 +1,19 @@
+{
+  "moveName": "magicalleaf",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "grass",
+  "recipe": [
+    {
+      "item": "cobblemon:grass_gem",
+      "count": 3
+    },
+    {
+      "item": "cobblemon:fairy_gem",
+      "count": 1
+    }
+  ]
+}

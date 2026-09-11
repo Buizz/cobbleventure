@@ -3830,7 +3830,7 @@
         "q": -6,
         "r": -2
       },
-      "resource": "cobbleventure:league/kanto_league",
+      "resource": "cobbleventure:league/indigo_plateau",
       "rotation": 0,
       "properties": {
         "teleportable": true,

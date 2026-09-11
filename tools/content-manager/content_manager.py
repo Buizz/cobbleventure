@@ -38,6 +38,8 @@ CONTENT_MANAGER_ROOT = Path(__file__).resolve().parent
 if str(CONTENT_MANAGER_ROOT) not in sys.path:
     sys.path.insert(0, str(CONTENT_MANAGER_ROOT))
 
+import laboratory_research
+import league_facilities
 from tools.npc_event_presets import BATTLE_PRESETS, materialize_event_document
 from cves import (
     AstCodecError,
@@ -7198,6 +7200,7 @@ def save_league_progression(root: Path, data: Any) -> list[Issue]:
             for item in _list_documents(root, "trainers")
             if isinstance((document_id := item.get("id")), str)
         }
+        trainer_ids.update(e['npc']['id'] for e in league_facilities.generated_encounters(root))
         _, issues = validate_league_progression_file(candidate, trainer_ids)
     if not any(issue.level == "error" for issue in issues):
         temporary = target.with_suffix(".json.tmp")
@@ -7334,7 +7337,7 @@ def validate_gym_catalog_file(path: Path, structure_root: Path | None = None) ->
                                     label = anchor.get("label")
                                     if not isinstance(label, str) or not DOCUMENT_SLUG.fullmatch(label):
                                         continue
-                                    if anchor.get("type") == "door":
+                                    if anchor.get("type") in {"door", "transition"}:
                                         door_anchors.add(label)
                                         continue
                                     if anchor.get("type") != "npc_position":
@@ -7519,6 +7522,7 @@ def gym_interior_modules_payload(root: Path) -> dict[str, Any]:
             "arrival_anchors": _structure_named_anchors(
                 nbt_path, {"arrival", "interior_spawn", "exterior_spawn"}
             ),
+            "transition_anchors": _structure_named_anchors(nbt_path, {"transition"}),
             "leader_anchor": leader,
             "used_by": usage.get(resource, []),
         })
@@ -7683,6 +7687,21 @@ def validate_repository(
                 _issue(issues, "error", progression_path, f"$.steps[{index}].npc", f"존재하지 않는 NPC입니다: {npc_id}")
     issues.extend(validate_loot_tables(root, _cves_item_catalog(dependency_root)))
     issues.extend(validate_game_definitions_file(root / "content" / "catalogs" / "game-definitions.json"))
+    research_path = root / "content/catalogs/laboratory-research.json"
+    league_facilities_path = root / league_facilities.CATALOG
+    if league_facilities_path.is_file():
+        try:
+            league_data = load_json(league_facilities_path)
+            league_facilities.validate(league_data, league_facilities.options(root),
+                lambda condition: _validate_player_condition(condition, issues, league_facilities_path, "$.leagues.conditions"))
+            league_facilities.compile_settings(load_json(root / "content/catalogs/building-settings.json"), league_data)
+        except (OSError, ValueError) as error:
+            _issue(issues, "error", league_facilities_path, "$", str(error))
+    if research_path.is_file():
+        try:
+            laboratory_research.validate(load_json(research_path))
+        except (OSError, ValueError) as error:
+            _issue(issues, "error", research_path, "$", str(error))
     dialogue_theme_path = root / "content" / "catalogs" / "dialogue-theme.json"
     if dialogue_theme_path.is_file():
         issues.extend(validate_dialogue_theme_file(dialogue_theme_path))
@@ -7880,7 +7899,8 @@ def validate_repository(
                 )
 
     league_ids, league_issues = validate_league_progression_file(
-        root / "content" / "catalogs" / "league-progression.json", set(seen_content)
+        root / "content" / "catalogs" / "league-progression.json",
+        set(seen_content) | {e['npc']['id'] for e in league_facilities.generated_encounters(root)}
     )
     issues.extend(league_issues)
     try:
@@ -13026,6 +13046,13 @@ def generate_content(
         }
         _write_generated_trainer(rct_root, runtime_root, document)
         trainers.append(trainer_id)
+    for encounter in league_facilities.generated_encounters(root):
+        preset = encounter['battle']
+        trainer_id = preset['battle']['trainer_id']
+        _write_generated_trainer(rct_root, runtime_root, {
+            'id': trainer_id, 'name': preset['name'], 'battle': preset['battle']
+        })
+        trainers.append(trainer_id)
     cves_build = compile_project(
         root, item_catalog=_cves_item_catalog((dependency_root or root).resolve())
     )
@@ -13878,6 +13905,7 @@ def space_connections_payload(
                 "category", "category_label", "width", "height", "depth",
                 "door_anchors", "arrival_anchors", "transition_anchors",
                 "dungeon_entrance_anchors", "cutaway_view",
+                "league_room",
             )
             if key in metadata
         }
@@ -13896,7 +13924,7 @@ def space_connections_payload(
         if entry.get("no_interior_space", False):
             continue
         if structures[exterior_id].get("category") in {
-            "interior", "gym_interior", "league", "gym_exterior", "decoration",
+            "interior", "gym_interior", "gym_exterior", "decoration",
             "natural_feature",
         }:
             continue
@@ -14086,6 +14114,14 @@ def save_space_connections(root: Path, data: Any) -> list[Issue]:
         }
         for resource_id, structure_path in structure_paths.items()
     }
+    destination_labels_by_structure = {
+        resource_id: {
+            anchor["label"] for anchor in _structure_named_anchors(
+                structure_path, {"door", "transition", "arrival", "interior_spawn", "exterior_spawn"}
+            )
+        }
+        for resource_id, structure_path in structure_paths.items()
+    }
     available_entrance_ids = {
         entry["entrance_id"] for entry in dungeon_entrance_catalog(root)
     }
@@ -14147,7 +14183,7 @@ def save_space_connections(root: Path, data: Any) -> list[Issue]:
         owner_settings = building_settings.get(owner, {})
         if kind == "building" and (
             structure_categories.get(owner) in {
-                "interior", "gym_interior", "league", "gym_exterior", "decoration",
+                "interior", "gym_interior", "gym_exterior", "decoration",
                 "natural_feature",
             }
             or (
@@ -14207,9 +14243,10 @@ def save_space_connections(root: Path, data: Any) -> list[Issue]:
                 continue
             anchor_catalog = connection_labels_by_structure if kind == "building" else door_labels_by_structure
             source_doors = anchor_catalog.get(node_structures.get(source.get("node"), ""), set())
-            target_doors = anchor_catalog.get(node_structures.get(target.get("node"), ""), set())
+            target_catalog = destination_labels_by_structure if kind == "building" else door_labels_by_structure
+            target_doors = target_catalog.get(node_structures.get(target.get("node"), ""), set())
             if source.get("anchor") not in source_doors or target.get("anchor") not in target_doors:
-                message = "연결 양쪽 모두 NBT에 저장된 문 또는 접촉 전환 앵커여야 합니다." if kind == "building" else "연결 양쪽 모두 NBT에 저장된 실제 문 앵커여야 합니다."
+                message = "출발은 문 또는 접촉 전환 앵커, 도착은 문·접촉 전환·도착점이어야 합니다." if kind == "building" else "연결 양쪽 모두 NBT에 저장된 실제 문 앵커여야 합니다."
                 _issue(issues, "error", path, edge_path, message)
                 continue
             normalized_connections.append(edge)
@@ -14316,6 +14353,13 @@ def building_settings_payload(
 ) -> dict[str, Any]:
     settings = load_building_settings(root)
     configured = settings["buildings"]
+    league_roles = {}
+    league_catalog_path = root / league_facilities.CATALOG
+    if league_catalog_path.is_file():
+        for league in load_json(league_catalog_path).get("leagues", []):
+            for role, room in [("lobby", league["lobby"]), *[("stage", room) for room in league["stages"]], ("hall", league["hall"])]:
+                league_roles[room["structure"]] = {"id": league["id"], "role": role,
+                    "entry": room["entry"], "leave": room.get("leave", "")}
     structures: dict[str, dict[str, Any]] = {}
     for resource_id, path in managed_structure_files(root).items():
         metadata = (
@@ -14335,6 +14379,7 @@ def building_settings_payload(
             "source": path.relative_to(root).as_posix(),
             "category": category,
             "category_label": STRUCTURE_CATEGORY_LABELS[category],
+            **({"league_room": league_roles[resource_id]} if resource_id in league_roles else {}),
             "npc_labels": _structure_npc_labels(path),
             "door_anchors": _structure_named_anchors(
                 path, {"door"}
@@ -14824,6 +14869,12 @@ def save_building_settings(root: Path, data: Any) -> list[Issue]:
     buildings = data.get("buildings")
     if not isinstance(buildings, dict):
         return [Issue("error", path.as_posix(), "$.buildings", "건물 설정 객체가 필요합니다.")]
+    league_catalog_path = root / league_facilities.CATALOG
+    if league_catalog_path.is_file():
+        try:
+            league_facilities.compile_settings(data, load_json(league_catalog_path))
+        except (ValueError, KeyError, TypeError) as error:
+            return [Issue("error", path.as_posix(), "$.buildings", str(error))]
     existing_defaults = load_building_settings(root).get("facility_defaults", {})
     defaults = data.get("facility_defaults", existing_defaults)
     if not isinstance(defaults, dict):
@@ -15887,6 +15938,10 @@ def create_handler(
             static_files = {
                 "/": web_root / "index.html",
                 "/index.html": web_root / "index.html",
+                "/research.html": web_root / "research.html",
+                "/league-facilities.html": web_root / "league-facilities.html",
+                "/league-facilities.js": web_root / "league-facilities.js",
+                "/research.js": web_root / "research.js",
                 "/app.js": web_root / "app.js",
                 "/npc-skin-preview.mjs": web_root / "npc-skin-preview.mjs",
                 "/world-map-rendering.mjs": web_root / "world-map-rendering.mjs",
@@ -15984,6 +16039,12 @@ def create_handler(
                         "core_path": str(core_root),
                     },
                 )
+                return
+            if request.path == "/api/league-facilities":
+                self._json(200, league_facilities.payload(root))
+                return
+            if request.path == "/api/laboratory-research":
+                self._json(200, load_json(root / "content/catalogs/laboratory-research.json"))
                 return
             if request.path == "/api/dialogue-theme":
                 try:
@@ -17090,6 +17151,30 @@ def create_handler(
                     return
                 errors = sum(issue.level == "error" for issue in issues)
                 self._json(200 if errors == 0 else 422, {"saved": errors == 0, "valid": errors == 0, "issues": [asdict(issue) for issue in issues]})
+                return
+            if request.path == "/api/league-facilities":
+                try:
+                    def check_condition(condition):
+                        condition_issues = []
+                        _validate_player_condition(condition, condition_issues, root / league_facilities.CATALOG, "$.conditions")
+                        if condition_issues:
+                            raise ValueError("; ".join(issue.message for issue in condition_issues))
+                    league_facilities.save(root, self._read_json(), check_condition)
+                    self._json(200, {"saved": True})
+                except (OSError, ValueError) as error:
+                    self._json(400, {"error": str(error)})
+                return
+            if request.path == "/api/laboratory-research":
+                try:
+                    payload = self._read_json()
+                    laboratory_research.validate(payload)
+                    path = root / "content/catalogs/laboratory-research.json"
+                    temporary = path.with_suffix(".json.tmp")
+                    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                    temporary.replace(path)
+                    self._json(200, {"saved": True})
+                except (OSError, ValueError) as error:
+                    self._json(400, {"error": str(error)})
                 return
             if request.path == "/api/dialogue-theme":
                 try:

@@ -264,6 +264,71 @@
           "field_move": "rock_climb"
         }
       }
+    },
+    {
+      "id": "cobbleventure:league/kanto/elite_1",
+      "role": "elite_four",
+      "primary_type": "ice",
+      "display_name": {
+        "ko_kr": "칸나"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 9,
+      "level_cap": 60,
+      "trainer_id": "cobbleventure:npc/league/kanto_elite_1"
+    },
+    {
+      "id": "cobbleventure:league/kanto/elite_2",
+      "role": "elite_four",
+      "primary_type": "fighting",
+      "display_name": {
+        "ko_kr": "시바"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 10,
+      "level_cap": 60,
+      "trainer_id": "cobbleventure:npc/league/kanto_elite_2"
+    },
+    {
+      "id": "cobbleventure:league/kanto/elite_3",
+      "role": "elite_four",
+      "primary_type": "ghost",
+      "display_name": {
+        "ko_kr": "국화"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 11,
+      "level_cap": 60,
+      "trainer_id": "cobbleventure:npc/league/kanto_elite_3"
+    },
+    {
+      "id": "cobbleventure:league/kanto/elite_4",
+      "role": "elite_four",
+      "primary_type": "dragon",
+      "display_name": {
+        "ko_kr": "목호"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 12,
+      "level_cap": 60,
+      "trainer_id": "cobbleventure:npc/league/kanto_elite_4"
+    },
+    {
+      "id": "cobbleventure:league/kanto/champion",
+      "role": "champion",
+      "primary_type": "normal",
+      "display_name": {
+        "ko_kr": "그린"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 13,
+      "level_cap": 70,
+      "trainer_id": "cobbleventure:npc/league/kanto_champion"
     }
   ]
 }

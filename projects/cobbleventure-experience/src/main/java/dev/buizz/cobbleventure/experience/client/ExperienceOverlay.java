@@ -73,11 +73,16 @@ public final class ExperienceOverlay {
             Notice notice = NOTICES.get(uuid);
             long now = System.nanoTime();
             int experience = notice == null ? pokemon.getExperience() : notice.experienceAt(now);
+            if (notice != null && notice.to() > notice.from()
+                && now - notice.startedAt() < ANIMATION_NANOS) ExperienceSounds.filling(now);
             if (notice != null && now - notice.startedAt() >= ANIMATION_NANOS) NOTICES.remove(uuid);
             var group = pokemon.getExperienceGroup();
             int level = group.getLevel(experience);
             Integer previousLevel = DISPLAY_LEVELS.put(uuid, level);
-            if (previousLevel != null && level > previousLevel) LEVEL_UP_FLASHES.put(uuid, now);
+            if (previousLevel != null && level > previousLevel) {
+                LEVEL_UP_FLASHES.put(uuid, now);
+                ExperienceSounds.levelUp(now);
+            }
             int start = group.getExperience(level);
             int next = level >= Cobblemon.INSTANCE.getConfig().getMaxPokemonLevel()
                 ? start : group.getExperience(level + 1);

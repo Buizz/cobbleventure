@@ -500,15 +500,17 @@ final class DungeonPiecePlannerTest {
         expandedRoot.add("npc_placement", JsonParser.parseString("""
             {"capacity_mode":"fixed","required_slots":30,"minimum_spacing":4}
             """).getAsJsonObject());
+        DungeonDefinition compactDungeon = DungeonDefinition.parse(compactRoot);
+        DungeonDefinition expandedDungeon = DungeonDefinition.parse(expandedRoot);
         List<DungeonPieceDefinition> pieces = packagedRocketPieces().stream()
-            .filter(piece -> piece.id().contains("/rocket/"))
+            .filter(piece -> piece.tags().contains(compactDungeon.terrain().piecePool()))
             .toList();
 
         DungeonPiecePlanner.Settings compact = DungeonPieceLayout.plannerSettings(
-            DungeonDefinition.parse(compactRoot), pieces, false
+            compactDungeon, pieces, false
         );
         DungeonPiecePlanner.Settings expanded = DungeonPieceLayout.plannerSettings(
-            DungeonDefinition.parse(expandedRoot), pieces, false
+            expandedDungeon, pieces, false
         );
 
         assertEquals(19, compact.criticalPathMin());
@@ -792,7 +794,7 @@ final class DungeonPiecePlannerTest {
 
     private List<DungeonPieceDefinition> packagedRocketPieces() throws Exception {
         List<DungeonPieceDefinition> pieces = new ArrayList<>();
-        for (String theme : List.of("rocket", "pokemon_tower")) {
+        for (String theme : List.of("rocket", "pokemon_tower", "building")) {
             for (String id : List.of(
                 "boss", "corner", "corridor", "dead_end", "empty_chamber_1x2",
                 "empty_chamber_2x2", "encounter_room", "exit", "junction", "room",

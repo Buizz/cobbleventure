@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/npc-event-script.schema.json",
+  "schema_version": 4,
+  "id": "cobbleventure:npc/facilities/research_z_move",
+  "enabled": true,
+  "name": {
+    "ko_kr": "Z기술 연구원",
+    "en_us": "Z-Move Researcher"
+  },
+  "description": {
+    "ko_kr": "Z기술 연구원",
+    "en_us": "Z-Move Researcher"
+  },
+  "tags": [
+    "service",
+    "research",
+    "building_runtime"
+  ],
+  "placement_profile": {
+    "classification": "ambient",
+    "preferred_biomes": [],
+    "automatic_town_placement": false,
+    "automatic_route_placement": false
+  },
+  "npc": {
+    "display_name": {
+      "ko_kr": "Z기술 연구원",
+      "en_us": "Z-Move Researcher"
+    },
+    "role": "default",
+    "trainer_class": "cobbleventure:trainer_class/scientist",
+    "appearance": {
+      "source": "rct_single",
+      "type": "skin",
+      "resource": "rctmod:trainers/single/scientist_ed_0158",
+      "arm_model": "slim",
+      "implementation_status": "ready"
+    },
+    "behavior": {
+      "movement": "stationary",
+      "look_at_player": true,
+      "invulnerable": true,
+      "collision": true
+    }
+  },
+  "event_runtime": {
+    "engine": "cves_v5",
+    "authoring": "custom",
+    "script_id": "cobbleventure:event_script/facilities/research_z_move"
+  },
+  "event_design": {
+    "mode": "easy_npc_events"
+  },
+  "events": [
+    {
+      "id": "on_interact",
+      "trigger": {
+        "type": "interact",
+        "range": 4
+      },
+      "commands": [
+        {
+          "type": "dialogue",
+          "id": "fallback",
+          "speaker": "npc",
+          "text": {
+            "ko_kr": "현재 기술에 맞는 Z크리스탈을 만들어 드려요. 포켓몬을 고른 뒤 재료를 확인해 주세요.",
+            "en_us": "Choose a Pokemon to research a compatible Z-Crystal."
+          }
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  ]
+}

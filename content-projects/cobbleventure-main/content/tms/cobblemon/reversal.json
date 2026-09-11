@@ -1,0 +1,15 @@
+{
+  "moveName": "reversal",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "fighting",
+  "recipe": [
+    {
+      "item": "cobblemon:fighting_gem",
+      "count": 2
+    }
+  ]
+}

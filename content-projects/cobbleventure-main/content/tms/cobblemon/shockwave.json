@@ -1,0 +1,15 @@
+{
+  "moveName": "shockwave",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "electric",
+  "recipe": [
+    {
+      "item": "cobblemon:electric_gem",
+      "count": 4
+    }
+  ]
+}

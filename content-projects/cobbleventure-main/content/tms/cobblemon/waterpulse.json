@@ -1,0 +1,15 @@
+{
+  "moveName": "waterpulse",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "water",
+  "recipe": [
+    {
+      "item": "cobblemon:water_gem",
+      "count": 4
+    }
+  ]
+}

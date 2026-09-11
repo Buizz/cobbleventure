@@ -1,0 +1,19 @@
+{
+  "moveName": "airslash",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "flying",
+  "recipe": [
+    {
+      "item": "cobblemon:flying_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:steel_gem",
+      "count": 2
+    }
+  ]
+}

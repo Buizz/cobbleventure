@@ -1,0 +1,19 @@
+{
+  "moveName": "supercellslam",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "electric",
+  "recipe": [
+    {
+      "item": "cobblemon:electric_gem",
+      "count": 7
+    },
+    {
+      "item": "cobblemon:rock_gem",
+      "count": 3
+    }
+  ]
+}

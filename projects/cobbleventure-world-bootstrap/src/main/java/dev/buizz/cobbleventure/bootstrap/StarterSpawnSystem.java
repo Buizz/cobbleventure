@@ -39,6 +39,22 @@ final class StarterSpawnSystem {
     static void register() {
         NeoForge.EVENT_BUS.addListener(StarterSpawnSystem::onChangedDimension);
         NeoForge.EVENT_BUS.addListener(StarterSpawnSystem::onLoggedIn);
+        NeoForge.EVENT_BUS.addListener(StarterSpawnSystem::registerTestCommand);
+    }
+
+    private static void registerTestCommand(net.neoforged.neoforge.event.RegisterCommandsEvent event) {
+        event.getDispatcher().register(net.minecraft.commands.Commands.literal("cobbleventure_generation_test")
+            .requires(source -> source.hasPermission(2))
+            .then(net.minecraft.commands.Commands.argument("generation", com.mojang.brigadier.arguments.IntegerArgumentType.integer(1))
+                .executes(context -> {
+                    ServerPlayer player = context.getSource().getPlayerOrException();
+                    int generation = com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(context, "generation");
+                    boolean moved = movePlayerToGenerationStart(player, generation);
+                    player.sendSystemMessage(net.minecraft.network.chat.Component.literal(moved
+                        ? generation + "세대 시작 위치로 이동했습니다. 테스트이므로 아이템·포켓몬은 유지됩니다."
+                        : "이동하지 못했습니다. 전투 여부와 세대 시작 설정을 확인하세요."));
+                    return moved ? 1 : 0;
+                })));
     }
 
     static void initialize(MinecraftServer server) {
@@ -77,6 +93,23 @@ final class StarterSpawnSystem {
         } catch (IOException | RuntimeException error) {
             throw new IllegalStateException("Invalid starter settings: " + SETTINGS, error);
         }
+    }
+
+    /** Travel-only harness: deliberately keeps the player's current assets. */
+    static boolean movePlayerToGenerationStart(ServerPlayer player, int generation) {
+        StarterConfig config = configs.get(generation);
+        if (config == null || !config.enabled || AuthoredBattlePositions.inBattle(player)) return false;
+        BuildingRuntimeSystem.SpawnDestination destination =
+            CobbleventureBootstrap.resolveStarterSpawn(player.getServer(), config);
+        if (destination == null) return false;
+        destination.level().getChunkAt(destination.position());
+        BlockPos safe = BuildingRuntimeSystem.findSafeDoorDestination(destination.level(), destination.position());
+        if (safe == null) return false;
+        markStarted(player, generation);
+        markValidated(player, generation);
+        move(player, new BuildingRuntimeSystem.SpawnDestination(destination.level(), safe, destination.yaw()), config.setRespawn);
+        CobbleventureBootstrap.markPlayerStarted(player);
+        return true;
     }
 
     static boolean movePlayerToDefaultStart(

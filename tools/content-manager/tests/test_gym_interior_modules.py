@@ -13,6 +13,14 @@ import gym_interior_modules  # noqa: E402
 
 
 class InteriorSpaceTests(unittest.TestCase):
+    def test_shared_gym_rooms_expose_barrier_transitions_to_editor(self) -> None:
+        modules = content_manager.gym_interior_modules_payload(ROOT)["modules"]
+        for name in ("shared_lobby", "shared_gimmick", "arena_rock"):
+            module = next(m for m in modules if m["structure"] == f"cobbleventure:interiors/gyms/{name}")
+            self.assertEqual([], module["door_anchors"])
+            self.assertEqual({"door"} if name.startswith("arena_") else {"door", "next"},
+                             {a["label"] for a in module["transition_anchors"]})
+
     def test_gym_module_payload_includes_layout_and_anchor_metadata(self) -> None:
         payload = content_manager.gym_interior_modules_payload(ROOT)
         module = next(

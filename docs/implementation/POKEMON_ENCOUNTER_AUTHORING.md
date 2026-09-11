@@ -85,6 +85,18 @@
 직접 가진다. 길의 `pokemon_spawns`나 바이옴 프로필을 수정해서 던전 출현을
 고치지 않는다.
 
+### 2.5 건물·체육관 내부의 자연 출현 금지
+
+Cobblemon 1.8의 `worldSpawningBlocklist`에 `cobbleventure:building_interiors`와
+`cobbleventure:gym_interiors`를 등록한다. 플레이어의 자연 스폰 시도 자체를
+제외하므로 내부 바이옴이나 바닥 재질에 의존하지 않는다. 배틀 소환·고정 배치
+포켓몬을 삭제하는 방식으로 처리하지 않는다.
+
+개발 팩의 기본 `config/cobblemon/main.json`에 설정하며, 이전 설정을 유지한
+설치본에도 적용되도록 `InteriorSpawnPolicy`가 서버 시작 시 기존 제외 목록에
+두 차원을 추가한다. 이 런타임 설정은 디스크의 사용자 설정을 덮어쓰지 않는다.
+해당 기본 옵션이 없는 Cobblemon 1.7에서는 적용되지 않으며 경고를 출력한다.
+
 ## 3. 조우 방식별 독립 풀
 
 길의 `pokemon_spawns.encounter_pools`에서 다음 키를 각각 설정한다.

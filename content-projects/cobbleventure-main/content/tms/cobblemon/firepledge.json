@@ -1,0 +1,15 @@
+{
+  "moveName": "firepledge",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "fire",
+  "recipe": [
+    {
+      "item": "cobblemon:fire_gem",
+      "count": 6
+    }
+  ]
+}

@@ -42,7 +42,7 @@ abstract class OpenedRadialMenuMixin {
         button.setDisabled(!PinnedPokefinderHud.pokenavAvailable());
     }
 
-    @Inject(method = "buttons$lambda$4", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "buttons$lambda$2", at = @At("HEAD"), cancellable = true)
     private static void cobbleventure$openPokefinder(
         RadialPopupMenu popup,
         PokenavOS os,

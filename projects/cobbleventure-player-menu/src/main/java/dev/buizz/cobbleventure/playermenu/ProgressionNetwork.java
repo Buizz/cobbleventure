@@ -81,6 +81,18 @@ public final class ProgressionNetwork {
         return player.getPersistentData().getBoolean(FEATURE_PREFIX + feature.id);
     }
 
+    static void unlockAll(ServerPlayer player) {
+        for (Feature feature : Feature.values()) {
+            player.getPersistentData().putBoolean(FEATURE_PREFIX + feature.id, true);
+        }
+        maximizeLevelCap(player);
+    }
+
+    static void maximizeLevelCap(ServerPlayer player) {
+        player.getPersistentData().putInt(LEVEL_CAP_KEY, 100);
+        sync(player);
+    }
+
     public static int levelCap(ServerPlayer player) {
         int stored = player.getPersistentData().getInt(LEVEL_CAP_KEY);
         if (stored > 0) {

@@ -1,0 +1,19 @@
+{
+  "moveName": "heatcrash",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "fire",
+  "recipe": [
+    {
+      "item": "cobblemon:fire_gem",
+      "count": 4
+    },
+    {
+      "item": "cobblemon:rock_gem",
+      "count": 1
+    }
+  ]
+}

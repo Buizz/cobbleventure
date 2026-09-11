@@ -6,6 +6,7 @@
 
 | 문서 | 담당 범위 | 현재 상태 |
 |------|-----------|-----------|
+| [기계 공통 가방 연동과 TM 제작](MACHINE_BAG_INTEGRATION_PLAN.md) | 공통 가방 거래·기계 세션·화면, 첫 TM 적용, 자동 등록·재료 수급·검증 순서 | 구현 전 계획 |
 | [Cobblemon 1.8 호환성 검증 기록](COBBLEMON_1_8_COMPATIBILITY.md) | 정식 1.8 기준 자체 모드 빌드 결과와 외부 의존성 차단 조건 | 소스 호환 통과·전체 팩 대기 |
 | [콘텐츠 제작 및 모드팩 빌드 파이프라인](CONTENT_BUILD_PIPELINE.md) | Excel/JSON 정규화, Python 관리 도구, 대상별 출력과 CurseForge ZIP | 기준 설계·착수 |
 | [트레이너 클래스와 외형 관리](TRAINER_APPEARANCE.md) | RCT 외형 구조, 본가식 클래스와 PokéAPI 미리보기 기준 | 1차 구현 |

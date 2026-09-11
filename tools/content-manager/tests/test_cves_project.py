@@ -35,6 +35,10 @@ class CvesProjectBuildTests(unittest.TestCase):
             / Path(*source.relative_to(binding_root).parts[1:])
             for source in sorted(binding_root.rglob("*.json"))
         ]
+        from league_facilities import generated_encounters
+        for encounter in generated_encounters(PROJECT_ROOT):
+            expected_scripts.append(Path('cobbleventure/event_script') / (encounter['path'] + '.json'))
+            expected_bindings.append(Path('cobbleventure/npc_event_binding') / (encounter['path'] + '.json'))
         self.assertEqual(
             expected_scripts,
             [artifact.relative_path for artifact in build.scripts],
@@ -59,7 +63,7 @@ class CvesProjectBuildTests(unittest.TestCase):
             for event in artifact.document["events"]
             for entry in event["source_map"]
         }
-        self.assertTrue(all(value.startswith("content/events/") for value in sources))
+        self.assertTrue(all((value.startswith("content/events/") or value.startswith("league-facilities.json:")) for value in sources))
         self.assertTrue(all(str(PROJECT_ROOT) not in value for value in sources))
 
     def test_project_build_enforces_simple_and_starter_migration_contracts(self) -> None:

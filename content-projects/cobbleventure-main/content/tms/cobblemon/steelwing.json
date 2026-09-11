@@ -1,0 +1,19 @@
+{
+  "moveName": "steelwing",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "steel",
+  "recipe": [
+    {
+      "item": "cobblemon:steel_gem",
+      "count": 4
+    },
+    {
+      "item": "cobblemon:flying_gem",
+      "count": 2
+    }
+  ]
+}

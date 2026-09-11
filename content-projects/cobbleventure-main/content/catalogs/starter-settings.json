@@ -14,6 +14,18 @@
         "space": "room_1",
         "npc_slot": "start"
       }
+    },
+    {
+      "generation": 2,
+      "enabled": true,
+      "town": "cobbleventure:settlement/johto_starter_town",
+      "spawn": {
+        "mode": "slot",
+        "set_respawn": true,
+        "building": "facility_player_house_1",
+        "space": "room_1",
+        "npc_slot": "start"
+      }
     }
   ]
 }

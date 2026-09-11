@@ -1,12 +1,12 @@
 # Cobbleventure Pokefinder
 
-CobbleNav 2.3.3 포켓파인더 HUD 위에 Cobbleventure 탐색 마커를 렌더링하는 전용 NeoForge 모듈이다.
+CobbleNav 2.4.0 포켓파인더 HUD 위에 Cobbleventure 탐색 마커를 렌더링하는 전용 NeoForge 모듈이다.
 
 현재 구현 범위는 정적 장소, NPC 상태, 현재 목표, 통합 설정과 마커 겹침 처리다.
 
 - CobbleNav와 독립적인 범용 `RadarMarker` 모델
 - 원자적으로 교체되는 클라이언트 마커 스냅샷
-- CobbleNav 2.3.3의 패널 크기, 축척, 오프셋과 손 배치를 재현하는 어댑터
+- CobbleNav 2.4.0의 패널 크기, 축척, 오프셋과 손 배치를 재현하는 어댑터
 - 기존 CobbleNav HUD 이후에 동작하는 `Gui.renderTitle` 후처리 Mixin
 - 로컬 범위와 256블록 임시 상한, 가장자리 고정 좌표 변환
 - 실제 건물 배치의 회전된 출입구와 관문·숲·동굴·던전 입구 조회

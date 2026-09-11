@@ -10,6 +10,7 @@ import os
 import re
 import shutil
 import struct
+import sys
 from functools import lru_cache
 from pathlib import Path
 
@@ -3309,7 +3310,15 @@ def _package_building_runtime_data(root: Path, output: Path) -> None:
     if settings.is_file():
         target = _inside(root, output / BUILDING_SETTINGS_ENTRY, "생성 건물 설정")
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(settings.read_bytes())
+        authored = json.loads(settings.read_text(encoding="utf-8"))
+        league_path = root / CONTENT_ROOT / "catalogs/league-facilities.json"
+        if league_path.is_file():
+            sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "content-manager"))
+            import league_facilities
+            catalog = league_facilities.read(league_path)
+            league_facilities.validate(catalog, league_facilities.options(league_path.parents[2]))
+            authored = league_facilities.compile_settings(authored, catalog, league_path.parents[2])
+        target.write_text(json.dumps(authored, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     # Every authored structure is also a runtime resource with the same ID the
     # web editor exposes. Fixed placeholder loops may generate missing
@@ -3448,6 +3457,15 @@ def _package_building_runtime_data(root: Path, output: Path) -> None:
             )
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(source.read_bytes())
+
+    league_path = root / CONTENT_ROOT / 'catalogs/league-facilities.json'
+    if league_path.is_file():
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'content-manager'))
+        from league_facilities import generated_encounters
+        for encounter in generated_encounters(data=json.loads(league_path.read_text(encoding='utf-8'))):
+            target = _inside(root, output / BATTLE_PRESET_ENTRY_DIR / (encounter['path'] + '.json'), '생성 리그 배틀')
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps(encounter['battle'], ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
 def build(root: Path) -> Path:

@@ -1,0 +1,19 @@
+{
+  "moveName": "twister",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "dragon",
+  "recipe": [
+    {
+      "item": "cobblemon:dragon_gem",
+      "count": 1
+    },
+    {
+      "item": "cobblemon:flying_gem",
+      "count": 1
+    }
+  ]
+}

@@ -1,5 +1,8 @@
 package dev.buizz.cobbleventure.playermenu;
 
+import com.cobblemon.mod.common.api.Priority;
+import com.cobblemon.mod.common.api.events.CobblemonEvents;
+import com.cobblemon.mod.common.api.events.pokemon.HeldItemEvent;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -11,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HexFormat;
 import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -38,9 +42,17 @@ public final class ImportantItemProtection {
         NeoForge.EVENT_BUS.addListener(ImportantItemProtection::onLivingDrops);
         NeoForge.EVENT_BUS.addListener(ImportantItemProtection::onPlayerLoggedIn);
         NeoForge.EVENT_BUS.addListener(ImportantItemProtection::onServerTick);
+        CobblemonEvents.HELD_ITEM_PRE.subscribe(
+            Priority.HIGHEST,
+            (Consumer<HeldItemEvent.Pre>) ImportantItemProtection::onHeldItem
+        );
     }
 
     public static boolean isProtected(ItemStack stack) {
+        return BagTechnicalMachines.isTechnicalMachine(stack) || isCatalogProtected(stack);
+    }
+
+    private static boolean isCatalogProtected(ItemStack stack) {
         if (stack.isEmpty()) return false;
         ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
         return DEFINITIONS.stream().anyMatch(definition -> definition.item().equals(itemId));
@@ -56,9 +68,18 @@ public final class ImportantItemProtection {
 
     public static void notifyProtected(ServerPlayer player, ItemStack stack) {
         player.displayClientMessage(Component.translatable(
-            "message.cobbleventure_player_menu.important_item.protected",
+            BagTechnicalMachines.isTechnicalMachine(stack)
+                ? "message.cobbleventure_player_menu.tm.protected"
+                : "message.cobbleventure_player_menu.important_item.protected",
             stack.getHoverName()
         ), true);
+    }
+
+    private static void onHeldItem(HeldItemEvent.Pre event) {
+        if (!BagTechnicalMachines.isTechnicalMachine(event.getReceiving())) return;
+        event.cancel();
+        ServerPlayer player = event.getPokemon().getOwnerPlayer();
+        if (player != null) notifyProtected(player, event.getReceiving());
     }
 
     private static void onItemToss(ItemTossEvent event) {
@@ -69,8 +90,31 @@ public final class ImportantItemProtection {
     }
 
     private static void onLivingDrops(LivingDropsEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer)) return;
-        event.getDrops().removeIf(entity -> isProtected(entity.getItem()));
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        NonNullList<ItemStack> storage = BagStorage.load(player);
+        boolean bagChanged = false;
+        var iterator = event.getDrops().iterator();
+        while (iterator.hasNext()) {
+            ItemEntity entity = iterator.next();
+            ItemStack stack = entity.getItem();
+            if (BagTechnicalMachines.isTechnicalMachine(stack)) {
+                ItemStack remainder = stack.copy();
+                BagStorage.add(storage, remainder);
+                if (remainder.isEmpty()) {
+                    iterator.remove();
+                    bagChanged = true;
+                } else if (remainder.getCount() != stack.getCount()) {
+                    entity.setItem(remainder);
+                    bagChanged = true;
+                }
+            } else if (isCatalogProtected(stack)) {
+                iterator.remove();
+            }
+        }
+        if (bagChanged) {
+            BagStorage.save(player, storage);
+            BagNetwork.syncExternalMutation(player, storage);
+        }
     }
 
     private static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {

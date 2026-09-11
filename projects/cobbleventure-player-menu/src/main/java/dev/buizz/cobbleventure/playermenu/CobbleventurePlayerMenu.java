@@ -12,6 +12,9 @@ public final class CobbleventurePlayerMenu {
     public CobbleventurePlayerMenu(IEventBus modBus) {
         PlayerMenuItems.register(modBus);
         BagNetwork.register(modBus);
+        MachineBagNetwork.register(modBus);
+        TmAcquisitionUnlock.register();
+        TmPokemonRecipeUnlock.register();
         ImportantItemProtection.register();
         ItemAcquisition.register(modBus);
         EventItemGrant.register();
@@ -23,6 +26,7 @@ public final class CobbleventurePlayerMenu {
         BadgeProgressNetwork.register(modBus);
         QuestSummaryNetwork.register(modBus);
         ProgressionNetwork.register(modBus);
+        CheatCommands.register();
         BattleLevelCap.register();
         StarterRouletteNetwork.register(modBus);
         BattleIntro.register(modBus);

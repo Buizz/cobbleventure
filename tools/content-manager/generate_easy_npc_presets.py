@@ -1669,6 +1669,13 @@ def generate(
         source_documents = [
             document for document in source_documents if document.get("id") not in generated_ids
         ] + generated_leaders
+    from league_facilities import generated_encounters
+    facility_encounters = generated_encounters(content_root.parent.parent)
+    source_ids = {document.get('id') for document in source_documents}
+    for encounter in facility_encounters:
+        if encounter['npc']['id'] in source_ids:
+            raise ValueError('리그 자동 생성 NPC와 원본이 중복됩니다: ' + encounter['npc']['id'])
+        source_documents.append(encounter['npc'])
     if GYM_CATALOG.is_file():
         gyms = json.loads(GYM_CATALOG.read_text(encoding="utf-8")).get("gyms", [])
         badge_by_trainer = {

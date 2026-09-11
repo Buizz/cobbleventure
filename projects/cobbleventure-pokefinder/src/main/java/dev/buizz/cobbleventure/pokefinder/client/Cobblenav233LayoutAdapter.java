@@ -7,7 +7,7 @@ import java.util.Optional;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 
-/** All direct CobbleNav 2.3.3 layout and item assumptions live in this adapter. */
+/** All direct CobbleNav 2.4.0 layout and item assumptions live in this adapter. */
 public final class Cobblenav233LayoutAdapter {
     public static final int WIDTH = 145;
     public static final int HEIGHT = 97;

@@ -1,0 +1,15 @@
+{
+  "moveName": "bounce",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "flying",
+  "recipe": [
+    {
+      "item": "cobblemon:flying_gem",
+      "count": 8
+    }
+  ]
+}

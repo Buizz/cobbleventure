@@ -1,0 +1,23 @@
+{
+  "moveName": "triattack",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "normal",
+  "recipe": [
+    {
+      "item": "cobblemon:ice_gem",
+      "count": 3
+    },
+    {
+      "item": "cobblemon:fire_gem",
+      "count": 3
+    },
+    {
+      "item": "cobblemon:electric_gem",
+      "count": 3
+    }
+  ]
+}

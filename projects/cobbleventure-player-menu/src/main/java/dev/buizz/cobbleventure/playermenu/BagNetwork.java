@@ -32,7 +32,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 /** Server-authoritative bag storage, synchronization and item actions. */
 public final class BagNetwork {
-    private static final String VERSION = "7";
+    private static final String VERSION = "8";
     private static final int VANILLA_HOTBAR_SIZE = 9;
     private static volatile ClientSnapshot clientSnapshot = new ClientSnapshot(
         emptySnapshot(), emptyShortcuts(), 0L
@@ -84,6 +84,10 @@ public final class BagNetwork {
         PacketDistributor.sendToServer(new UseOnPokemonPayload(extended, slot, partySlot));
     }
 
+    public static void requestTeachTm(boolean extended, int slot, java.util.UUID pokemon, ItemStack expected) {
+        PacketDistributor.sendToServer(new TeachTmPayload(extended, slot, pokemon, expected.copyWithCount(1)));
+    }
+
     public static void requestUseShortcut(int shortcutSlot) {
         PacketDistributor.sendToServer(new UseShortcutPayload(shortcutSlot));
     }
@@ -107,6 +111,9 @@ public final class BagNetwork {
             BagNetwork::handleGiveToPokemon);
         registrar.playToServer(UseOnPokemonPayload.TYPE, UseOnPokemonPayload.STREAM_CODEC,
             BagNetwork::handleUseOnPokemon);
+        registrar.playToServer(TeachTmPayload.TYPE, TeachTmPayload.STREAM_CODEC, BagNetwork::handleTeachTm);
+        registrar.playToClient(TmResultPayload.TYPE, TmResultPayload.STREAM_CODEC,
+            (payload, context) -> PlayerMenuClient.showTmResult(payload.message()));
     }
 
     private static void handleSnapshotRequest(SnapshotRequestPayload payload, IPayloadContext context) {
@@ -469,6 +476,43 @@ public final class BagNetwork {
         ), true);
     }
 
+    private static void handleTeachTm(TeachTmPayload payload, IPayloadContext context) {
+        if (!(context.player() instanceof ServerPlayer player)
+            || !validSlot(payload.extended(), payload.slot())) return;
+        NonNullList<ItemStack> storage = BagStorage.load(player);
+        ItemStack source = getStack(player, storage, payload.extended(), payload.slot());
+        // Bag normalization and party reordering can happen while the picker is open.
+        if (!BagTechnicalMachines.isTechnicalMachine(source)
+            || !ItemStack.isSameItemSameComponents(source, payload.expected())) {
+            notifyTmResult(player, Component.translatable(
+                "screen.cobbleventure_player_menu.bag.tm.changed"));
+            sync(player, storage);
+            return;
+        }
+        Pokemon pokemon = null;
+        var party = Cobblemon.INSTANCE.getStorage().getParty(player);
+        for (int slot = 0; slot < 6; slot++) {
+            Pokemon candidate = party.get(slot);
+            if (candidate != null && candidate.getUuid().equals(payload.pokemon())) {
+                pokemon = candidate;
+                break;
+            }
+        }
+        if (pokemon == null) {
+            notifyTmResult(player, Component.translatable("screen.cobbleventure_player_menu.bag.tm.party_changed"));
+            return;
+        }
+        if (BagTechnicalMachines.teach(player, source, pokemon, PlayerExtensionsKt.getBattleState(player) != null)) {
+            if (source.isEmpty()) setStack(player, storage, payload.extended(), payload.slot(), ItemStack.EMPTY);
+            finishMutation(player, storage, payload.extended());
+        } else sync(player, storage);
+    }
+
+    static void notifyTmResult(ServerPlayer player, Component message) {
+        player.displayClientMessage(message, true);
+        PacketDistributor.sendToPlayer(player, new TmResultPayload(message));
+    }
+
     private static void handleUseOnPokemon(UseOnPokemonPayload payload, IPayloadContext context) {
         if (!(context.player() instanceof ServerPlayer player)
             || !validSlot(payload.extended(), payload.slot())
@@ -629,6 +673,7 @@ public final class BagNetwork {
     }
 
     static void syncExternalMutation(ServerPlayer player, List<ItemStack> storage) {
+        TmAcquisitionUnlock.discoverInBag(player, storage);
         BagConditionTracker.sync(player);
         markInventoryChanged(player);
         sync(player, storage);
@@ -782,6 +827,32 @@ public final class BagNetwork {
         }
         private static GiveToPokemonPayload read(RegistryFriendlyByteBuf buffer) {
             return new GiveToPokemonPayload(buffer.readBoolean(), buffer.readVarInt(), buffer.readVarInt());
+        }
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    public record TmResultPayload(Component message) implements CustomPacketPayload {
+        public static final Type<TmResultPayload> TYPE = new Type<>(id("bag_tm_result"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, TmResultPayload> STREAM_CODEC =
+            StreamCodec.composite(net.minecraft.network.chat.ComponentSerialization.STREAM_CODEC,
+                TmResultPayload::message, TmResultPayload::new);
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    public record TeachTmPayload(boolean extended, int slot, java.util.UUID pokemon, ItemStack expected)
+        implements CustomPacketPayload {
+        public static final Type<TeachTmPayload> TYPE = new Type<>(id("bag_teach_tm"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, TeachTmPayload> STREAM_CODEC =
+            StreamCodec.ofMember(TeachTmPayload::write, TeachTmPayload::read);
+        private void write(RegistryFriendlyByteBuf buffer) {
+            buffer.writeBoolean(extended);
+            buffer.writeVarInt(slot);
+            buffer.writeUUID(pokemon);
+            ItemStack.STREAM_CODEC.encode(buffer, expected);
+        }
+        private static TeachTmPayload read(RegistryFriendlyByteBuf buffer) {
+            return new TeachTmPayload(buffer.readBoolean(), buffer.readVarInt(), buffer.readUUID(),
+                ItemStack.STREAM_CODEC.decode(buffer));
         }
         @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }

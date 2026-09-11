@@ -4,7 +4,6 @@ import com.cobblemon.mod.common.CobblemonSounds;
 import com.cobblemon.mod.common.api.item.PokemonSelectingItem;
 
 import dev.buizz.cobbleventure.playermenu.BagNetwork;
-import dev.buizz.cobbleventure.playermenu.CobbleventurePlayerMenu;
 import dev.buizz.cobbleventure.playermenu.ImportantItemProtection;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -18,25 +17,16 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import org.lwjgl.glfw.GLFW;
 
 /** 검색, 포켓 분류와 실제 인벤토리 조작을 제공하는 가방 화면. */
 public final class BagScreen extends Screen {
-    private static final TagKey<Item> KEY_ITEMS = TagKey.create(
-        Registries.ITEM,
-        ResourceLocation.fromNamespaceAndPath(CobbleventurePlayerMenu.MOD_ID, "key_items")
-    );
     private static final int PANEL_MAX_WIDTH = 560;
     private static final int PANEL_MAX_HEIGHT = 320;
     private static final int PANEL_PADDING = 8;
@@ -68,7 +58,7 @@ public final class BagScreen extends Screen {
     private final List<ItemSlotButton> itemButtons = new ArrayList<>();
     private final List<BagSlotRef> filteredSlots = new ArrayList<>();
 
-    private BagCategory category = BagCategory.ALL;
+    private BagItemCatalog.Category category = BagItemCatalog.Category.ALL;
     private ViewMode viewMode = ViewMode.GRID;
     private EditBox searchBox;
     private AbstractButton useButton;
@@ -152,7 +142,7 @@ public final class BagScreen extends Screen {
 
         int tabsY = panelY + 29;
         int tabAreaWidth = panelWidth - PANEL_PADDING * 2;
-        BagCategory[] categories = BagCategory.values();
+        BagItemCatalog.Category[] categories = BagItemCatalog.Category.values();
         int tabWidth = tabAreaWidth / categories.length;
         for (int index = 0; index < categories.length; index++) {
             int x = panelX + PANEL_PADDING + index * tabWidth;
@@ -543,7 +533,7 @@ public final class BagScreen extends Screen {
         for (BagSlotRef group : groups) {
             addIfVisible(true, group.slot(), group.stack(), group.displayCount(), query);
         }
-        if (category == BagCategory.ALL && query.isEmpty()) {
+        if (category == BagItemCatalog.Category.ALL && query.isEmpty()) {
             for (int emptySlot : emptySlots) addIfVisible(true, emptySlot, ItemStack.EMPTY, 0, query);
         }
 
@@ -569,16 +559,9 @@ public final class BagScreen extends Screen {
     }
 
     private void addIfVisible(boolean extended, int slot, ItemStack stack, int displayCount, String query) {
-        if (stack.isEmpty() && (category != BagCategory.ALL || !query.isEmpty())) return;
+        if (stack.isEmpty() && (category != BagItemCatalog.Category.ALL || !query.isEmpty())) return;
         if (!stack.isEmpty() && !category.matches(stack)) return;
-        if (!stack.isEmpty() && !query.isEmpty()) {
-            ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
-            List<Component> tooltip = stack.getTooltipLines(Item.TooltipContext.EMPTY, minecraft.player, TooltipFlag.NORMAL);
-            StringBuilder searchable = new StringBuilder(stack.getHoverName().getString().toLowerCase(Locale.ROOT))
-                .append(' ').append(itemId.toString().toLowerCase(Locale.ROOT));
-            for (Component line : tooltip) searchable.append(' ').append(line.getString().toLowerCase(Locale.ROOT));
-            if (!searchable.toString().contains(query)) return;
-        }
+        if (!stack.isEmpty() && !BagItemCatalog.matchesSearch(stack, minecraft.player, query)) return;
         filteredSlots.add(new BagSlotRef(extended, slot, stack, displayCount));
     }
 
@@ -590,7 +573,8 @@ public final class BagScreen extends Screen {
 
     private void useSelectedItem() {
         if (selectedSlot == null || selectedStack().isEmpty()) return;
-        if (selectedStack().getItem() instanceof PokemonSelectingItem) {
+        if (selectedStack().getItem() instanceof PokemonSelectingItem
+            || dev.buizz.cobbleventure.playermenu.BagTechnicalMachines.isTechnicalMachine(selectedStack())) {
             if (minecraft != null) minecraft.setScreen(new BagPokemonSelectScreen(
                 this, selectedSlot.extended(), selectedSlot.slot(), selectedStack().copy(),
                 BagPokemonSelectScreen.Action.USE
@@ -668,6 +652,17 @@ public final class BagScreen extends Screen {
         showStatus(Component.translatable(
             "screen.cobbleventure_player_menu.bag.given_to_pokemon", pokemonName
         ));
+        refreshTicks = 9;
+    }
+
+    void tmUseResult(Component message) {
+        showStatus(message);
+        statusTicks = 120;
+        refreshTicks = 9;
+    }
+
+    void tmUseRequested() {
+        showStatus(Component.translatable("screen.cobbleventure_player_menu.bag.tm.requested"));
         refreshTicks = 9;
     }
 
@@ -838,47 +833,10 @@ public final class BagScreen extends Screen {
         }
     }
 
-    private enum BagCategory {
-        ALL("all"), RECOVERY("recovery"), BALLS("balls"), BATTLE("battle"),
-        MATERIALS("materials"), KEY_ITEMS("key_items");
-
-        private final String id;
-
-        BagCategory(String id) { this.id = id; }
-
-        Component title() {
-            return Component.translatable("screen.cobbleventure_player_menu.bag.category." + id);
-        }
-
-        boolean matches(ItemStack stack) {
-            if (this == ALL) return true;
-            ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
-            String namespace = itemId.getNamespace();
-            String path = itemId.getPath();
-            return switch (this) {
-                case RECOVERY -> stack.has(DataComponents.FOOD)
-                    || containsAny(path, "potion", "heal", "revive", "ether", "elixir", "berry", "candy", "rice_cake");
-                case BALLS -> namespace.equals("cobblemon") && (path.endsWith("_ball") || path.contains("poke_ball"));
-                case BATTLE -> stack.isDamageableItem()
-                    || containsAny(path, "sword", "bow", "shield", "vest", "band", "specs", "scarf", "gem");
-                case KEY_ITEMS -> stack.is(BagScreen.KEY_ITEMS)
-                    || containsAny(path, "pokedex", "exp_share", "key", "badge", "map", "compass");
-                case MATERIALS -> !RECOVERY.matches(stack) && !BALLS.matches(stack)
-                    && !BATTLE.matches(stack) && !KEY_ITEMS.matches(stack);
-                case ALL -> true;
-            };
-        }
-
-        private static boolean containsAny(String value, String... candidates) {
-            for (String candidate : candidates) if (value.contains(candidate)) return true;
-            return false;
-        }
-    }
-
     private final class CategoryButton extends AbstractButton {
-        private final BagCategory buttonCategory;
+        private final BagItemCatalog.Category buttonCategory;
 
-        private CategoryButton(BagCategory category, int x, int y, int width, int height) {
+        private CategoryButton(BagItemCatalog.Category category, int x, int y, int width, int height) {
             super(x, y, width, height, category.title());
             this.buttonCategory = category;
         }

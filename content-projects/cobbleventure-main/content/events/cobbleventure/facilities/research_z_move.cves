@@ -1,0 +1,9 @@
+event interact(range: 4) {
+  page default {
+    say npc {
+      ko_kr: "현재 기술에 맞는 Z크리스탈을 만들어 드려요. 포켓몬을 고른 뒤 재료를 확인해 주세요."
+      en_us: "Choose a Pokemon to research a compatible Z-Crystal."
+    }
+    open_research
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "moveName": "psychicfangs",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "psychic",
+  "recipe": [
+    {
+      "item": "cobblemon:psychic_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:dark_gem",
+      "count": 3
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+event interact(range: 4) {
+  page default {
+    say npc {
+      ko_kr: "메가진화가 가능한 포켓몬과 형태를 골라 주세요. 미가공 메가스톤과 연구비가 필요해요."
+      en_us: "Choose a Pokemon and Mega Evolution. A Mega Stone and research fee are required."
+    }
+    open_research
+  }
+}

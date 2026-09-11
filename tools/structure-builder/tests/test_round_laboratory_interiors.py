@@ -60,7 +60,9 @@ class RoundLaboratoryInteriorTests(unittest.TestCase):
             labels = [a['label'] for a in cm._structure_npc_labels(spaces[key])]
             self.assertIn(researcher, labels)
         self.assertIn('iv_researcher', [a['label'] for a in cm._structure_npc_labels(spaces['stats'])])
-        self.assertEqual({}, settings['fixed_npcs'])
+        for anchor in settings['fixed_npcs']:
+            space, label = anchor.split(':', 1)
+            self.assertIn(label, [a['label'] for a in cm._structure_npc_labels(spaces[space])])
 
 
 if __name__ == '__main__':

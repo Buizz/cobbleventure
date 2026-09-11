@@ -77,7 +77,7 @@ function buildingCardTitle(choice) {
 
 function supportsInteriorConnections(metadata = {}) {
   return !metadata.no_interior_space
-    && !["interior", "gym_interior", "league", "decoration", "natural_feature"].includes(metadata.category);
+    && !["interior", "gym_interior", "decoration", "natural_feature"].includes(metadata.category);
 }
 
 function buildingChoices() {
@@ -119,6 +119,7 @@ function renderLibrary() {
 
   const interiors = Object.entries(flow.structures).filter(([id, metadata]) =>
     ["interior", "gym_interior"].includes(metadata.category)
+    && (!metadata.league_room || metadata.league_room.role === "lobby")
     && (!interiorQuery || `${id} ${metadata.category_label || ""}`.toLowerCase().includes(interiorQuery))
   );
   const graph = selectedGraph();
@@ -134,9 +135,11 @@ function nodeAnchorEntries(node) {
   const metadata = flow.structures[node.structure] || {};
   return [
     ...(metadata.door_anchors || []).map((anchor) => ({ ...anchor, connectionType: "문" })),
-    ...(selectedGraph()?.kind === "building" ? metadata.transition_anchors || [] : [])
+    ...(metadata.transition_anchors || [])
       .map((anchor) => ({ ...anchor, connectionType: "접촉 영역" })),
-  ];
+    ...(selectedGraph()?.kind === "building" ? metadata.arrival_anchors || [] : [])
+      .map((anchor) => ({ ...anchor, connectionType: "도착점", destinationOnly: true })),
+  ].filter(anchor => !metadata.league_room || [metadata.league_room.entry, metadata.league_room.leave].includes(anchor.label));
 }
 
 function nodePorts(node) {
@@ -233,7 +236,7 @@ function renderNodes() {
         ${doorPins}
         ${!doorPins ? '<span class="space-node-no-pins">출입구 마커 없음</span>' : ""}
       </div>
-      <div class="space-node-resource"><code>${escapeHtml(node.structure)}</code><small>반단면 Y 0–${Math.max(0, cutoff - 1)} · ${width}×${depth} · <b class="pin-key door"></b> 실제 문${dungeonCount ? ` · <b class="pin-key dungeon"></b> 던전 입구 ${dungeonCount}` : ""}</small></div>
+      <div class="space-node-resource"><code>${escapeHtml(node.structure)}</code><small>반단면 Y 0–${Math.max(0, cutoff - 1)} · ${width}×${depth} · <b class="pin-key door"></b> 문 / 접촉 영역${dungeonCount ? ` · <b class="pin-key dungeon"></b> 던전 입구 ${dungeonCount}` : ""}</small></div>
     </article>`;
   }).join("") || "";
   drawNodeCutaways();
@@ -291,7 +294,9 @@ function renderInspector() {
   const doorAnchor = node && flow.selectedDoorAnchor?.node === node.id
     ? nodeAnchorEntries(node).find((anchor) => anchor.label === flow.selectedDoorAnchor.label)
     : null;
-  if (doorAnchor) {
+  if (doorAnchor?.destinationOnly) {
+    inspector.innerHTML = `<header><h3>${escapeHtml(doorAnchor.label)}</h3><small>도착 전용 앵커</small></header><p>문 또는 접촉 영역에서 이곳으로 연결하면 단방향 이동이 됩니다. 도착점은 역방향 이동이나 던전 입구를 생성하지 않습니다.</p>`;
+  } else if (doorAnchor) {
     const assignment = dungeonAssignment(node.structure, doorAnchor.label);
     const position = doorAnchor.position || [];
     const safeSpawn = doorAnchor.safe_spawn || [];
@@ -318,10 +323,20 @@ function renderInspector() {
       <div class="space-inspector-fields">
         <p class="space-route-note">두 문은 서로 오갈 수 있습니다. 아래 잠금 조건과 대사는 <b>${escapeHtml(edge.from.node)} → ${escapeHtml(edge.to.node)}</b> 입장 방향에만 적용되고, 반대편 퇴장은 항상 가능합니다.</p>
         <label><span>조건 조합</span><select data-edge-field="condition_mode"><option value="all"${edge.condition_mode !== "any" ? " selected" : ""}>모두 만족</option><option value="any"${edge.condition_mode === "any" ? " selected" : ""}>하나 이상 만족</option></select></label>
-        <label><span>조건 JSON</span><textarea rows="7" data-edge-json="conditions" placeholder='[{"type":"variable",…}]'>${escapeHtml(JSON.stringify(edge.conditions || [], null, 2))}</textarea><small>문 잠금 조건을 배열로 입력합니다.</small></label>
+        <div class="gate-condition-builder" id="space-edge-conditions" data-gate-condition-editor>
+          <header><span>통과 조건 · 배지와 진행도</span><button type="button" data-gate-condition-add>+ 조건 추가</button></header>
+          <div data-gate-condition-list></div>
+          <small>배지 클리어, 아이템, 진행 플래그, 변수, 파티 포켓몬 조건을 선택하세요.</small>
+        </div>
         <label><span>잠겼을 때 대사</span><textarea rows="4" data-edge-lines="locked_dialogue" placeholder="문이 잠겨 있다.">${escapeHtml((edge.locked_dialogue || []).join("\n"))}</textarea></label>
         <label><span>입장할 때 대사</span><textarea rows="4" data-edge-lines="enter_dialogue">${escapeHtml((edge.enter_dialogue || []).join("\n"))}</textarea></label>
       </div><button class="button danger space-delete" id="delete-space-edge" type="button">연결선 삭제</button>`;
+    const editor = $("#space-edge-conditions", inspector);
+    PlayerConditionEditor.initialize(editor, { onChange: () => {
+      edge.conditions = structuredClone(editor.gateConditions);
+      markDirty();
+    } });
+    PlayerConditionEditor.render(editor, edge.conditions || []);
   } else {
     inspector.innerHTML = graph
       ? `<header><p class="eyebrow">FLOW GUIDE</p><h3>${escapeHtml(graph.display_name || graph.owner)}</h3></header><div class="space-flow-help"><p>아래 내부 공간 리소스를 캔버스로 끌어 놓으세요.</p><p>외부의 <b>출입구 핀</b>을 내부 핀까지 끌면 하나의 양방향 출입구가 됩니다.</p><p>문 핀을 짧게 누르면 일반 공간 문과 던전 입구 중에서 연결 방식을 정할 수 있습니다.</p><p>핀은 NBT 안의 실제 문과 배리어 접촉 영역을 함께 표시합니다.</p><p>연결선을 누르면 외부에서 입장할 때의 잠금 조건과 대사를 설정할 수 있습니다.</p></div>`
@@ -422,7 +437,11 @@ function connectTo(nodeId, anchor) {
   let source = { node: flow.connectionDraft.node, anchor: flow.connectionDraft.anchor };
   let target = { node: nodeId, anchor };
   if (source.node === target.node && source.anchor === target.anchor) return;
-  if (target.node === "exterior" && source.node !== "exterior") {
+  const sourceNode = graph.nodes.find((node) => node.id === source.node);
+  const targetNode = graph.nodes.find((node) => node.id === target.node);
+  if (nodeAnchorEntries(sourceNode).find((entry) => entry.label === source.anchor)?.destinationOnly) return;
+  const arrival = nodeAnchorEntries(targetNode).find((entry) => entry.label === target.anchor)?.destinationOnly;
+  if (!arrival && target.node === "exterior" && source.node !== "exterior") {
     [source, target] = [target, source];
   }
   graph.connections ||= [];
@@ -450,6 +469,11 @@ async function saveFlow() {
   setStatus("공간 연결과 런타임 설정을 저장하는 중입니다.");
   let result;
   try {
+    for (const graph of flow.graphs) {
+      for (const edge of graph.connections || []) {
+        PlayerConditionEditor.validate(edge.conditions || []);
+      }
+    }
     result = await api("/api/space-connections", {
       method: "PUT", body: JSON.stringify({
         schema_version: 1,
@@ -599,6 +623,11 @@ $("#space-flow-nodes").addEventListener("pointerdown", (event) => {
   if (port) {
     event.preventDefault();
     event.stopPropagation();
+    const node = selectedGraph()?.nodes.find((item) => item.id === port.dataset.nodeId);
+    if (node && nodeAnchorEntries(node).find((anchor) => anchor.label === port.dataset.anchor)?.destinationOnly) {
+      setStatus("도착점은 목적지입니다. 출발할 문 또는 접촉 영역에서 이곳으로 선을 연결하세요.");
+      return;
+    }
     flow.connectionDraft = {
       node: port.dataset.nodeId, anchor: port.dataset.anchor,
       pointer: canvasPoint(event), pointerId: event.pointerId,

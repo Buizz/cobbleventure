@@ -1,0 +1,19 @@
+{
+  "moveName": "sludgewave",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "poison",
+  "recipe": [
+    {
+      "item": "cobblemon:poison_gem",
+      "count": 6
+    },
+    {
+      "item": "cobblemon:water_gem",
+      "count": 3
+    }
+  ]
+}

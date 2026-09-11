@@ -79,6 +79,7 @@ public final class CobbleventureCasino {
     public CobbleventureCasino(IEventBus modBus) {
         CasinoItems.register(modBus);
         CasinoCashier.register();
+        CasinoMoneyCheat.register();
         CasinoHudNetwork.register(modBus);
         GachaMachineNetwork.register(modBus);
         if (FMLEnvironment.dist.isClient()) {

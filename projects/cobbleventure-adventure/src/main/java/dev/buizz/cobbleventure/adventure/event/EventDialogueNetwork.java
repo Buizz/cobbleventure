@@ -150,13 +150,20 @@ public final class EventDialogueNetwork {
                     + (command == null ? context.instruction().operation() : command)
             );
         };
+        EventCommandAdapter researchFallback = new ResearchEventCommandAdapter(key -> {
+            if (!player.getUUID().equals(key.playerId())) throw new EventRuntimeException("Research session mismatch");
+            var npc = player.serverLevel().getEntity(key.npcId());
+            if (npc == null || !npc.isAlive() || player.distanceToSqr(npc) > 64)
+                throw new EventRuntimeException("Research NPC unavailable");
+            dev.buizz.cobbleventure.adventure.research.ResearchNetwork.open(player, npc);
+        }, unsupported);
         EventCommandAdapter fossilFallback = new FossilEventCommandAdapter(key -> {
             if (!player.getUUID().equals(key.playerId())) throw new EventRuntimeException("화석 복원 세션 불일치");
             var npc = player.serverLevel().getEntity(key.npcId());
             if (npc == null || !npc.isAlive() || player.distanceToSqr(npc) > 64)
                 throw new EventRuntimeException("화석 연구원에게 가까이 다가가 주세요.");
             dev.buizz.cobbleventure.adventure.fossil.FossilNetwork.open(player, npc);
-        }, unsupported);
+        }, researchFallback);
         return new EventAwaitInputLockAdapter(player, new NumberInputEventCommandAdapter(
             numberInputGateway(player),
             environment,

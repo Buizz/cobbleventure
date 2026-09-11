@@ -1,0 +1,19 @@
+{
+  "moveName": "earthpower",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "ground",
+  "recipe": [
+    {
+      "item": "cobblemon:ground_gem",
+      "count": 6
+    },
+    {
+      "item": "cobblemon:fire_gem",
+      "count": 3
+    }
+  ]
+}

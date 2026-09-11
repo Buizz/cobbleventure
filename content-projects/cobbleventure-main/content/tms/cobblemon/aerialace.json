@@ -1,0 +1,19 @@
+{
+  "moveName": "aerialace",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "flying",
+  "recipe": [
+    {
+      "item": "cobblemon:flying_gem",
+      "count": 3
+    },
+    {
+      "item": "cobblemon:steel_gem",
+      "count": 1
+    }
+  ]
+}

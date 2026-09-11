@@ -1,0 +1,19 @@
+{
+  "moveName": "powergem",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "rock",
+  "recipe": [
+    {
+      "item": "cobblemon:rock_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:psychic_gem",
+      "count": 3
+    }
+  ]
+}

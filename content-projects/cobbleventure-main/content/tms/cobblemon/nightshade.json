@@ -1,0 +1,15 @@
+{
+  "moveName": "nightshade",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "ghost",
+  "recipe": [
+    {
+      "item": "cobblemon:ghost_gem",
+      "count": 4
+    }
+  ]
+}

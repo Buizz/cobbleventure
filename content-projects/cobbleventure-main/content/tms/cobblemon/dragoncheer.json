@@ -1,0 +1,15 @@
+{
+  "moveName": "dragoncheer",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "dragon",
+  "recipe": [
+    {
+      "item": "cobblemon:dragon_gem",
+      "count": 3
+    }
+  ]
+}

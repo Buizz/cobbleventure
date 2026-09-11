@@ -16,6 +16,10 @@
   "maxVerticalCorrectionBlocks": 64,
   "minimumLevelRangeMax": 10,
   "enableSpawning": true,
+  "worldSpawningBlocklist": [
+    "cobbleventure:building_interiors",
+    "cobbleventure:gym_interiors"
+  ],
   "minimumDistanceBetweenEntities": 8.0,
   "maxNearbyBlocksHorizontalRange": 4,
   "maxNearbyBlocksVerticalRange": 2,

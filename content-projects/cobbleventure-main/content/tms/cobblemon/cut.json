@@ -1,0 +1,19 @@
+{
+  "moveName": "cut",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "normal",
+  "recipe": [
+    {
+      "item": "cobblemon:normal_gem",
+      "count": 1
+    },
+    {
+      "item": "cobblemon:bug_gem",
+      "count": 1
+    }
+  ]
+}

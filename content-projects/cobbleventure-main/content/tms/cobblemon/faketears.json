@@ -1,0 +1,15 @@
+{
+  "moveName": "faketears",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "dark",
+  "recipe": [
+    {
+      "item": "cobblemon:dark_gem",
+      "count": 3
+    }
+  ]
+}

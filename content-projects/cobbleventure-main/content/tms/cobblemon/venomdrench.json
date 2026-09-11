@@ -1,0 +1,15 @@
+{
+  "moveName": "venomdrench",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "poison",
+  "recipe": [
+    {
+      "item": "cobblemon:poison_gem",
+      "count": 2
+    }
+  ]
+}

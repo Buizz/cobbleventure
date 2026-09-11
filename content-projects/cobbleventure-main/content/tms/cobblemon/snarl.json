@@ -1,0 +1,15 @@
+{
+  "moveName": "snarl",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "dark",
+  "recipe": [
+    {
+      "item": "cobblemon:dark_gem",
+      "count": 5
+    }
+  ]
+}

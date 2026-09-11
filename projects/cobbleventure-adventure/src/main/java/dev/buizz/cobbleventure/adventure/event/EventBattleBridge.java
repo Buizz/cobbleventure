@@ -92,6 +92,14 @@ public final class EventBattleBridge {
 
     public record BattleContext(UUID npcId, String battleId) {}
 
+    /** Used by facilities whose disconnected challenges cannot resume the same battle. */
+    public static void forfeitInterruptedBattle(ServerPlayer player) {
+        PendingBattle pending = PENDING.remove(player.getUUID());
+        if (pending == null) pending = restoreInterruptedBattle(player);
+        clearInterruptedBattle(player);
+        if (pending != null) complete(player, pending, "loss", EventSession.CompletionKind.FAILED);
+    }
+
     private static EventBattleGateway.OpenResult open(
         ServerPlayer player, EventBattleGateway.BattleRequest request
     ) {
@@ -471,6 +479,7 @@ public final class EventBattleBridge {
                 player.getGameProfile().getName(), pending.preset.battleId(), outcome, error
             );
         } finally {
+            NeoForge.EVENT_BUS.post(new NpcBattleResolvedEvent(player, pending.key.npcId(), outcome));
             try {
                 EventServerSignalDispatcher.battleFinished(
                     player, pending.preset.battleId(), outcome

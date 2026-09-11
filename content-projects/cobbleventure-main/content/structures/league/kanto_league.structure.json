@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/league/kanto_league.nbt",
+  "anchors": [
+    {
+      "id": "lobby_nurse",
+      "label": "lobby_nurse",
+      "type": "npc_position",
+      "position": [
+        38,
+        1,
+        61
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "lobby_chansey",
+      "label": "lobby_chansey",
+      "type": "npc_position",
+      "position": [
+        39,
+        1,
+        62
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "lobby_shop",
+      "label": "lobby_shop",
+      "type": "npc_position",
+      "position": [
+        34,
+        1,
+        61
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "lobby_return",
+      "label": "lobby_return",
+      "type": "arrival",
+      "position": [
+        36,
+        1,
+        51
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "elite_1",
+      "label": "elite_1",
+      "type": "npc_position",
+      "position": [
+        36,
+        29,
+        36
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "elite_2",
+      "label": "elite_2",
+      "type": "npc_position",
+      "position": [
+        36,
+        59,
+        36
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "elite_3",
+      "label": "elite_3",
+      "type": "npc_position",
+      "position": [
+        36,
+        86,
+        36
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "elite_4",
+      "label": "elite_4",
+      "type": "npc_position",
+      "position": [
+        36,
+        114,
+        36
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "elite_4_battle_player",
+      "label": "elite_4_battle_player",
+      "type": "npc_position",
+      "position": [
+        36,
+        114,
+        46
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "elite_3_battle_player",
+      "label": "elite_3_battle_player",
+      "type": "npc_position",
+      "position": [
+        36,
+        86,
+        46
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "elite_2_battle_player",
+      "label": "elite_2_battle_player",
+      "type": "npc_position",
+      "position": [
+        36,
+        59,
+        46
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "elite_1_battle_player",
+      "label": "elite_1_battle_player",
+      "type": "npc_position",
+      "position": [
+        36,
+        29,
+        46
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "champion_battle_player",
+      "label": "champion_battle_player",
+      "type": "npc_position",
+      "position": [
+        36,
+        138,
+        46
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "champion",
+      "label": "champion",
+      "type": "npc_position",
+      "position": [
+        36,
+        138,
+        36
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "lobby_to_elite",
+      "label": "lobby_to_elite",
+      "type": "transition",
+      "position": [
+        36,
+        12,
+        66
+      ],
+      "safe_spawn": [
+        36,
+        11,
+        64
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "elite_1_entry",
+      "label": "elite_1_entry",
+      "type": "arrival",
+      "position": [
+        36,
+        29,
+        61
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "elite_1_exit",
+      "label": "elite_1_exit",
+      "type": "transition",
+      "position": [
+        36,
+        40,
+        66
+      ],
+      "safe_spawn": [
+        36,
+        39,
+        63
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "elite_2_entry",
+      "label": "elite_2_entry",
+      "type": "arrival",
+      "position": [
+        36,
+        57,
+        61
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "elite_2_exit",
+      "label": "elite_2_exit",
+      "type": "transition",
+      "position": [
+        36,
+        68,
+        66
+      ],
+      "safe_spawn": [
+        36,
+        67,
+        63
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "elite_3_entry",
+      "label": "elite_3_entry",
+      "type": "arrival",
+      "position": [
+        36,
+        85,
+        61
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "elite_3_exit",
+      "label": "elite_3_exit",
+      "type": "transition",
+      "position": [
+        36,
+        96,
+        66
+      ],
+      "safe_spawn": [
+        36,
+        95,
+        63
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "elite_4_entry",
+      "label": "elite_4_entry",
+      "type": "arrival",
+      "position": [
+        36,
+        113,
+        61
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "elite_4_exit",
+      "label": "elite_4_exit",
+      "type": "transition",
+      "position": [
+        36,
+        124,
+        66
+      ],
+      "facing": "south",
+      "safe_spawn": [
+        36,
+        123,
+        63
+      ]
+    },
+    {
+      "id": "champion_entry",
+      "label": "champion_entry",
+      "type": "arrival",
+      "position": [
+        36,
+        137,
+        61
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "champion_exit",
+      "label": "champion_exit",
+      "type": "transition",
+      "position": [
+        36,
+        141,
+        9
+      ],
+      "safe_spawn": [
+        36,
+        140,
+        12
+      ],
+      "facing": "north"
+    }
+  ]
+}

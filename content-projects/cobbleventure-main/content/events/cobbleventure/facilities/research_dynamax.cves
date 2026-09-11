@@ -1,0 +1,9 @@
+event interact(range: 4) {
+  page default {
+    say npc {
+      ko_kr: "다이버섯으로 다이맥스 레벨과 거다이맥스 인자를 연구해요. 먼저 포켓몬을 골라 주세요."
+      en_us: "Use Max Mushrooms to adjust Dynamax level and the Gigantamax factor."
+    }
+    open_research
+  }
+}

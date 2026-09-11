@@ -844,6 +844,7 @@ public final class CobbleventureBootstrap {
     }
 
     private static void onServerStarted(ServerStartedEvent event) {
+        InteriorSpawnPolicy.apply();
         pendingInitializationPlayer = null;
         pendingInitializationTicks = -1;
         activeInitialization = null;
@@ -3072,7 +3073,7 @@ public final class CobbleventureBootstrap {
                 int baseY = townGenerationBaseHeight(
                     level, x, z, Heightmap.Types.WORLD_SURFACE_WG
                 ) - 1;
-                HexWorldPlan world = activeHexWorld;
+                HexWorldPlan world = level.dimension().equals(GENERATION_ONE) ? activeHexWorld : null;
                 TerrainSample sample = world == null
                     ? null : terrainAt(world, x + 0.5D, z + 0.5D);
                 int minY = Math.max(level.getMinBuildHeight(), baseY - 2);
@@ -3104,7 +3105,7 @@ public final class CobbleventureBootstrap {
     private static int townGenerationBaseHeight(
         ServerLevel level, int x, int z, Heightmap.Types heightmap
     ) {
-        HexWorldPlan world = activeHexWorld;
+        HexWorldPlan world = level.dimension().equals(GENERATION_ONE) ? activeHexWorld : null;
         TerrainSample sample = world == null ? null : terrainAt(world, x + 0.5D, z + 0.5D);
         if (sample == null) {
             return level.getHeight(heightmap, x, z);
@@ -4456,7 +4457,7 @@ public final class CobbleventureBootstrap {
         int baseY, Direction stairDirection,
         boolean carveNaturalTerrain, boolean townSurface
     ) {
-        HexWorldPlan world = activeHexWorld;
+        HexWorldPlan world = level.dimension().equals(GENERATION_ONE) ? activeHexWorld : null;
         TerrainSample sample = world == null ? null : terrainAt(world, x + 0.5D, z + 0.5D);
         if (sample != null) {
             boolean bridgeOverOcean = sample.surfaceStyle().equals("log_bridge")
@@ -4576,7 +4577,7 @@ public final class CobbleventureBootstrap {
     }
 
     private static int plannedTerrainGroundY(ServerLevel level, int x, int z) {
-        HexWorldPlan world = activeHexWorld;
+        HexWorldPlan world = level.dimension().equals(GENERATION_ONE) ? activeHexWorld : null;
         if (world != null && NativeWorldGeneration.usesNativeGenerator(
             level.getChunkSource().getGenerator()
         )) {
@@ -4592,7 +4593,7 @@ public final class CobbleventureBootstrap {
         ServerLevel level, SettlementPlan settlement
     ) {
         Set<Long> chunks = townPreparationChunkKeys(settlement);
-        HexWorldPlan world = activeHexWorld;
+        HexWorldPlan world = level.dimension().equals(GENERATION_ONE) ? activeHexWorld : null;
         boolean constrainToTownTerrain = usesAuthoredTownFootprint(world, settlement);
         BlockPos.MutableBlockPos position = new BlockPos.MutableBlockPos();
         int removed = 0;
@@ -5152,7 +5153,7 @@ public final class CobbleventureBootstrap {
                     int obstructionTopY = level.getHeight(
                         Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z
                     ) - 1;
-                    HexWorldPlan world = activeHexWorld;
+                    HexWorldPlan world = level.dimension().equals(GENERATION_ONE) ? activeHexWorld : null;
                     TerrainSample sample = world == null
                         ? null : terrainAt(world, x + 0.5D, z + 0.5D);
                     String biome = sample == null ? "minecraft:plains" : sample.biome();
@@ -6150,9 +6151,6 @@ public final class CobbleventureBootstrap {
             PursuitEncounterSystem.tick(
                 player, pursuitEncounterAt(level, player.getX(), player.getZ()), gameTime
             );
-            if (gameTime % 10L == 0L) {
-                updatePokemonCenterCheckpoint(player, level);
-            }
             HexWorldPlan world = activeHexWorld;
             if (world != null) {
                 DungeonSystem.tick(player, gameTime);
@@ -6499,160 +6497,6 @@ public final class CobbleventureBootstrap {
             return true;
         }
         return false;
-    }
-
-    private static void updatePokemonCenterCheckpoint(
-        ServerPlayer player,
-        ServerLevel level
-    ) {
-        for (SettlementPlan settlement : activeSettlements.values()) {
-            TownLayout layout = settlement.compiledLayout();
-            if (layout == null) {
-                continue;
-            }
-            TownPlot center = layout.facilities().get("facility_pokemon_center");
-            if (center == null) {
-                continue;
-            }
-            int minX = settlement.center().x() + (int) Math.floor(center.x());
-            int minZ = settlement.center().z() + (int) Math.floor(center.z());
-            if (player.getX() < minX || player.getX() >= minX + center.width()
-                || player.getZ() < minZ || player.getZ() >= minZ + center.depth()) {
-                continue;
-            }
-            FacilityPlacement facility = settlement.facilities().stream()
-                .filter(candidate -> candidate.id().equals("facility_pokemon_center"))
-                .findFirst()
-                .orElse(null);
-            if (facility == null) {
-                continue;
-            }
-            TownRoad entrance = townBuildingEntranceRoad(layout, center);
-            int entranceX = settlement.center().x() + entrance.x2();
-            int entranceZ = settlement.center().z() + entrance.z2();
-            String eventSpaceId = buildingEventSpaceId(settlement.id(), facility.id());
-            BuildingRuntimeSystem.PlacedBuilding placed =
-                BuildingRuntimeSystem.resolvePlacedBuilding(
-                    level.getServer(), level.dimension(), facility.structure(), eventSpaceId
-                );
-            BlockPoint origin;
-            BlockPoint runtimeOrigin;
-            String placementRotation;
-            if (placed != null) {
-                origin = placed.origin();
-                runtimeOrigin = origin;
-                placementRotation = placed.rotation();
-            } else {
-                int originX = settlement.center().x() + (int) Math.round(center.x());
-                int originZ = settlement.center().z() + (int) Math.round(center.z());
-                placementRotation = center.rotation();
-                origin = facilityTemplateOrigin(
-                    level, facility, originX,
-                    loadedRoadSurfaceY(level, entranceX, entranceZ),
-                    originZ, placementRotation
-                );
-                runtimeOrigin = facilityPlacementOrigin(
-                    level, facility, origin, placementRotation
-                );
-            }
-            BlockPos recoveryOffset = BuildingRuntimeSystem.exteriorNpcApproachOffset(
-                facility.structure(), placementRotation, "nurse", 2
-            );
-            if (recoveryOffset == null) {
-                LOGGER.error(
-                    "Pokemon Center checkpoint has no nurse anchor: settlement={}, structure={}",
-                    settlement.id(), facility.structure()
-                );
-                continue;
-            }
-            BlockPos exit = surfacePosition(
-                level, entranceX, entranceZ
-            );
-            PokemonCenterDefeatReturn.recordCenterVisit(
-                player,
-                level,
-                runtimeOrigin.toBlockPos().offset(recoveryOffset),
-                exit
-            );
-            return;
-        }
-        HexWorldPlan world = activeHexWorld;
-        if (world == null) {
-            return;
-        }
-        for (CaveEntrancePlan entrance : world.caveEntrances()) {
-            if (!entrance.pokemonCenterEnabled()) {
-                continue;
-            }
-            Point entranceCenter = world.grid().worldCenter(entrance.anchor());
-            HexCoord offset = entrance.pokemonCenterOffset();
-            Point offsetCenter = world.grid().worldCenter(new HexCoord(
-                entrance.anchor().q() + offset.q(), entrance.anchor().r() + offset.r()
-            ));
-            CavePokemonCenterPlacement.Site site = cavePokemonCenterSite(
-                entrance, entranceCenter, offsetCenter,
-                caveEntranceRoad(world, entrance)
-            );
-            int centerX = site.center().x();
-            int centerZ = site.center().z();
-            double dx = player.getX() - centerX;
-            double dz = player.getZ() - centerZ;
-            if (dx * dx + dz * dz <= 144.0D) {
-                String structure = entrance.pokemonCenterStructure();
-                ResourceLocation structureId = ResourceLocation.tryParse(structure);
-                if (structureId == null || level.getStructureManager().get(structureId).isEmpty()) {
-                    continue;
-                }
-                var size = level.getStructureManager().get(structureId).orElseThrow().getSize();
-                Direction roadFacing = site.roadFacing();
-                String rotation = pokemonCenterRotation(roadFacing);
-                boolean quarterTurn = rotation.equals("clockwise_90")
-                    || rotation.equals("counterclockwise_90");
-                int footprintWidth = quarterTurn ? size.getZ() : size.getX();
-                int footprintDepth = quarterTurn ? size.getX() : size.getZ();
-                FacilityPlacement facility = new FacilityPlacement(
-                    "facility_pokemon_center", "direct_template", structure,
-                    "pokemon_center", "포켓몬센터", "cave_entrance", null, null,
-                    null, null, null, 0.0D,
-                    footprintWidth, footprintDepth, size.getY(), 4
-                );
-                int groundY = plannedTerrainGroundY(level, centerX, centerZ);
-                BlockPoint origin = facilityTemplateOrigin(
-                    level, facility,
-                    centerX - footprintWidth / 2, groundY,
-                    centerZ - footprintDepth / 2, rotation
-                );
-                BlockPoint runtimeOrigin = facilityPlacementOrigin(
-                    level, facility, origin, rotation
-                );
-                BlockPos roadAnchor = facilityRoadAnchorWorldPosition(
-                    level, facility, origin, rotation
-                );
-                if (roadAnchor == null) {
-                    LOGGER.error(
-                        "Cave Pokemon Center checkpoint has no road anchor: entrance={}, structure={}",
-                        entrance.id(), structure
-                    );
-                    continue;
-                }
-                BlockPos recoveryOffset = BuildingRuntimeSystem.exteriorNpcApproachOffset(
-                    structure, rotation, "nurse", 2
-                );
-                if (recoveryOffset == null) {
-                    LOGGER.error(
-                        "Cave Pokemon Center checkpoint has no nurse anchor: entrance={}, structure={}",
-                        entrance.id(), structure
-                    );
-                    continue;
-                }
-                PokemonCenterDefeatReturn.recordCenterVisit(
-                    player, level,
-                    runtimeOrigin.toBlockPos().offset(recoveryOffset),
-                    surfacePosition(level, roadAnchor.getX(), roadAnchor.getZ())
-                );
-                return;
-            }
-        }
     }
 
     private static void scheduleNearbyTownInitialization(ServerLevel level, long gameTime) {
@@ -7997,9 +7841,10 @@ public final class CobbleventureBootstrap {
             .sorted(Map.Entry.comparingByKey(Comparator.comparing(ResourceLocation::toString)))
             .forEach(entry -> {
                 try (Reader reader = entry.getValue().openAsReader()) {
-                    loadedPlans.add(parseSettlement(
-                        level, JsonParser.parseReader(reader).getAsJsonObject(), facilityDefaults
-                    ));
+                    JsonObject document = JsonParser.parseReader(reader).getAsJsonObject();
+                    if (document.get("dimension").getAsString().equals(level.dimension().location().toString())) {
+                        loadedPlans.add(parseSettlement(level, document, facilityDefaults));
+                    }
                 } catch (IOException | RuntimeException error) {
                     throw new IllegalStateException("Invalid settlement resource: " + entry.getKey(), error);
                 }
@@ -8508,7 +8353,7 @@ public final class CobbleventureBootstrap {
         ServerLevel level,
         Map<String, SettlementPlan> settlementPlans
     ) {
-        JsonObject root = readJsonResource(level, "hex_worlds/generation_1.json");
+        JsonObject root = readJsonResource(level, "hex_worlds/" + level.dimension().location().getPath() + ".json");
         Map<String, BoundaryProfile> profiles = loadBoundaryProfiles(level);
         Map<String, Integer> townRadii = new LinkedHashMap<>();
         settlementPlans.forEach((id, plan) -> townRadii.put(id, plan.townRadiusCells()));
@@ -15942,15 +15787,21 @@ public final class CobbleventureBootstrap {
             LOGGER.error("Starter generation dimension is missing: {}", dimension.location());
             return null;
         }
-        if (config.generation() != 1) {
-            return new BuildingRuntimeSystem.SpawnDestination(
-                level, level.getSharedSpawnPos(), 0.0F
-            );
-        }
-        SettlementPlan settlement = activeSettlements.get(config.town());
+        SettlementPlan settlement = config.generation() == 1
+            ? activeSettlements.get(config.town())
+            : loadRuntimeWorld(level).settlements().get(config.town());
         if (settlement == null) {
             LOGGER.error("Starter settlement is missing: {}", config.town());
             return null;
+        }
+        if (config.generation() != 1) {
+            BootstrapSavedData data = server.overworld().getDataStorage().computeIfAbsent(
+                new SavedData.Factory<>(BootstrapSavedData::create, BootstrapSavedData::load), DATA_FILE
+            );
+            if (!data.isSettlementGenerated(settlement.id())) {
+                if (!placeTown(level, settlement) || !placeFacilities(level, settlement)) return null;
+                data.markSettlementGenerated(settlement.id());
+            }
         }
         if (config.mode().equals("town")) {
             BlockPos safe = safeTeleportPosition(

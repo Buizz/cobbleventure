@@ -202,6 +202,17 @@ def compile_project(
             Path(namespace) / "npc_event_binding" / f"{resource_path}.json",
             document,
         ))
+    from league_facilities import generated_encounters
+    binding_paths = {artifact.relative_path for artifact in bindings}
+    for encounter in generated_encounters(project_root):
+        script_id = encounter['script_id']
+        path = encounter['path']
+        binding_path = Path('cobbleventure/npc_event_binding') / (path + '.json')
+        if script_id in known_scripts or binding_path in binding_paths:
+            raise CvesProjectError(f"리그 자동 생성 이벤트와 원본이 중복됩니다: {script_id}")
+        document = compile_program(parse(encounter['script'], 'league-facilities.json:' + path), script_id, catalog)
+        scripts.append(ProjectArtifact(Path('cobbleventure/event_script') / (path + '.json'), document))
+        bindings.append(ProjectArtifact(binding_path, encounter['binding']))
     return ProjectBuild(tuple(scripts), tuple(bindings))
 
 

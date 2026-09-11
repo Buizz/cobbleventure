@@ -1,0 +1,19 @@
+{
+  "moveName": "thunderfang",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "electric",
+  "recipe": [
+    {
+      "item": "cobblemon:electric_gem",
+      "count": 4
+    },
+    {
+      "item": "cobblemon:dark_gem",
+      "count": 1
+    }
+  ]
+}

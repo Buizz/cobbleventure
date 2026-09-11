@@ -1,0 +1,15 @@
+{
+  "moveName": "steelroller",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "steel",
+  "recipe": [
+    {
+      "item": "cobblemon:steel_gem",
+      "count": 6
+    }
+  ]
+}

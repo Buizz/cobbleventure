@@ -1,0 +1,19 @@
+{
+  "moveName": "razorshell",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "water",
+  "recipe": [
+    {
+      "item": "cobblemon:water_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:steel_gem",
+      "count": 2
+    }
+  ]
+}

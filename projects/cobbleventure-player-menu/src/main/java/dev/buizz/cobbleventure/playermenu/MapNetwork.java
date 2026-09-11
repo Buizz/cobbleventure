@@ -32,6 +32,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -62,6 +63,7 @@ public final class MapNetwork {
         modBus.addListener(MapNetwork::registerPayloads);
         NeoForge.EVENT_BUS.addListener(MapNetwork::registerCommands);
         NeoForge.EVENT_BUS.addListener(MapNetwork::onServerTick);
+        NeoForge.EVENT_BUS.addListener(MapNetwork::onPlayerClone);
     }
 
     public static ClientSnapshot clientSnapshot() {
@@ -518,6 +520,25 @@ public final class MapNetwork {
             if (object != null && object.teleportable()) markVisited(player, object.id());
             return;
         }
+    }
+
+    private static void onPlayerClone(PlayerEvent.Clone event) {
+        var original = event.getOriginal().getPersistentData();
+        var replacement = event.getEntity().getPersistentData();
+        for (String key : original.getAllKeys()) {
+            if (key.startsWith(VISITED_PREFIX)) replacement.putBoolean(key, original.getBoolean(key));
+        }
+    }
+
+    static void visitAll(ServerPlayer player) {
+        for (MapContent content : MapContent.all()) {
+            for (MapContent.Town town : content.towns()) markVisited(player, town.id());
+            for (MapContent.MapObject object : content.objects()) {
+                if (object.teleportable()) markVisited(player, object.id());
+            }
+        }
+        PacketDistributor.sendToPlayer(player, new MapStatePayload(
+            isAdministrator(player), player.isCreative(), visitedSettlements(player), visiblePlayers(player)));
     }
 
     private static void markVisited(ServerPlayer player, String settlementId) {

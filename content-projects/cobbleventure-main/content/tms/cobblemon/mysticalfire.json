@@ -1,0 +1,19 @@
+{
+  "moveName": "mysticalfire",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "fire",
+  "recipe": [
+    {
+      "item": "cobblemon:fire_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:psychic_gem",
+      "count": 2
+    }
+  ]
+}

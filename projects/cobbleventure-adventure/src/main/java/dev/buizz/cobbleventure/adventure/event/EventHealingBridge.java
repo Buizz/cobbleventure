@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.cobblemon.mod.common.Cobblemon;
 import com.mojang.logging.LogUtils;
 import dev.buizz.cobbleventure.adventure.PokemonCenterHealingService;
+import dev.buizz.cobbleventure.adventure.PokemonCenterDefeatReturn;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +102,10 @@ public final class EventHealingBridge {
     private static void complete(
         ServerPlayer player, PendingHealing pending, HealingOutcome outcome
     ) {
+        if (outcome.healed) {
+            Entity nurse = player.serverLevel().getEntity(pending.request.sessionKey().npcId());
+            if (nurse != null) PokemonCenterDefeatReturn.recordNurseHealing(player, nurse);
+        }
         EventScript script = EventScriptRepository.instance()
             .find(pending.request.sessionKey().scriptId()).orElse(null);
         if (script == null) return;

@@ -199,7 +199,11 @@
       }
     },
     "cobbleventure:houses/five_story_flat": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "5층 평지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "5층 평지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -211,7 +215,11 @@
       "door_routes": {}
     },
     "cobbleventure:houses/five_story_gable": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "5층 박공지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "5층 박공지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -223,7 +231,11 @@
       "door_routes": {}
     },
     "cobbleventure:houses/five_story_gambrel": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "5층 갬브럴지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "5층 갬브럴지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -235,7 +247,11 @@
       "door_routes": {}
     },
     "cobbleventure:houses/five_story_shed": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "5층 외쪽 경사지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "5층 외쪽 경사지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -247,7 +263,11 @@
       "door_routes": {}
     },
     "cobbleventure:houses/one_story_flat": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "1층 평지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "1층 평지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -273,7 +293,11 @@
       }
     },
     "cobbleventure:houses/one_story_gable": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "1층 박공지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "1층 박공지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -299,7 +323,11 @@
       }
     },
     "cobbleventure:houses/one_story_gambrel": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "1층 갬브럴지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "1층 갬브럴지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -325,7 +353,11 @@
       }
     },
     "cobbleventure:houses/one_story_shed": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "1층 외쪽 경사지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "1층 외쪽 경사지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -351,7 +383,11 @@
       }
     },
     "cobbleventure:houses/two_story_flat": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "2층 평지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "2층 평지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -363,7 +399,11 @@
       "door_routes": {}
     },
     "cobbleventure:houses/two_story_gable": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "2층 박공지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "2층 박공지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -375,7 +415,11 @@
       "door_routes": {}
     },
     "cobbleventure:houses/two_story_gambrel": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "2층 갬브럴지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "2층 갬브럴지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -387,7 +431,11 @@
       "door_routes": {}
     },
     "cobbleventure:houses/two_story_shed": {
-      "residential_placement": { "enabled": true, "weight": 1, "label": "2층 외쪽 경사지붕 주택" },
+      "residential_placement": {
+        "enabled": true,
+        "weight": 1,
+        "label": "2층 외쪽 경사지붕 주택"
+      },
       "placement_y_offset": 0,
       "structure_category": "residential",
       "no_interior_space": false,
@@ -873,7 +921,13 @@
       "placement_y_offset": 0,
       "structure_category": "building",
       "no_interior_space": false,
-      "fixed_npcs": {},
+      "fixed_npcs": {
+        "z_move:z_move_researcher": "cobbleventure:npc/facilities/research_z_move",
+        "mega:mega_researcher": "cobbleventure:npc/facilities/research_mega",
+        "dynamax:dynamax_researcher": "cobbleventure:npc/facilities/research_dynamax",
+        "stats:ev_researcher": "cobbleventure:npc/facilities/research_stats",
+        "stats:iv_researcher": "cobbleventure:npc/facilities/research_stats"
+      },
       "fixed_pokemon": {},
       "fixed_gacha_machines": {},
       "citizen_placement_allowed": false,
@@ -959,6 +1013,118 @@
         "label": "포켓몬 연구소(라운드형)",
         "note": "둥근 크림색 외벽과 붉은 중앙 지붕의 포켓몬 연구소",
         "color": "#ce7763"
+      }
+    },
+    "cobbleventure:interiors/hall_of_fame": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_bug": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_dark": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_dragon": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_electric": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_fairy": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_fighting": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_fire": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_flying": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_ghost": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_grass": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_ground": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_ice": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_normal": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_poison": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_psychic": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_rock": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_steel": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/arena_water": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/shared_gimmick": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:interiors/gyms/shared_lobby": {
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym"
+    },
+    "cobbleventure:league/indigo_plateau": {
+      "placement_y_offset": 0,
+      "structure_category": "league",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [
+        {
+          "key": "lobby",
+          "structure": "cobbleventure:interiors/leagues/kanto_lobby"
+        }
+      ],
+      "door_routes": {
+        "exterior:door": {
+          "space": "lobby",
+          "door": "entry"
+        }
       }
     }
   }

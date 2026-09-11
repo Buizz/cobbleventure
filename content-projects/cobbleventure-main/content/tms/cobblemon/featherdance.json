@@ -1,0 +1,15 @@
+{
+  "moveName": "featherdance",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "flying",
+  "recipe": [
+    {
+      "item": "cobblemon:flying_gem",
+      "count": 3
+    }
+  ]
+}

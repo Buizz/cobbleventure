@@ -1,0 +1,19 @@
+{
+  "moveName": "psychocut",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "psychic",
+  "recipe": [
+    {
+      "item": "cobblemon:psychic_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:steel_gem",
+      "count": 2
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/league/indigo_plateau.nbt",
+  "anchors": [
+    {
+      "id": "door",
+      "label": "door",
+      "type": "transition",
+      "position": [
+        65,
+        27,
+        56
+      ],
+      "safe_spawn": [
+        65,
+        25,
+        66
+      ],
+      "facing": "south"
+    }
+  ]
+}

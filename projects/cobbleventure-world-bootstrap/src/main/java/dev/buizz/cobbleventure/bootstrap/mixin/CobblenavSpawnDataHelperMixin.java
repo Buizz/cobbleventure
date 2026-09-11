@@ -111,6 +111,8 @@ public abstract class CobblenavSpawnDataHelperMixin {
     private static String detailBucket(Object detail) {
         try {
             Object bucket = detail.getClass().getMethod("getBucket").invoke(detail);
+            // Cobblemon 1.8 exposes the bucket name directly as a String.
+            if (bucket instanceof String name) return name;
             return (String) bucket.getClass().getMethod("getName").invoke(bucket);
         } catch (ReflectiveOperationException | ClassCastException ignored) {
             return "";

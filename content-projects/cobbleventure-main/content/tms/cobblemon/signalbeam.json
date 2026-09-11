@@ -1,0 +1,19 @@
+{
+  "moveName": "signalbeam",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "bug",
+  "recipe": [
+    {
+      "item": "cobblemon:bug_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:electric_gem",
+      "count": 2
+    }
+  ]
+}

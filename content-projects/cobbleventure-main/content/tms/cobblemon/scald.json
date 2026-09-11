@@ -1,0 +1,19 @@
+{
+  "moveName": "scald",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "water",
+  "recipe": [
+    {
+      "item": "cobblemon:water_gem",
+      "count": 6
+    },
+    {
+      "item": "cobblemon:fire_gem",
+      "count": 4
+    }
+  ]
+}

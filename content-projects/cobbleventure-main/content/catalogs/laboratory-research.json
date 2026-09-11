@@ -1,0 +1,286 @@
+{
+  "$schema": "../schemas/laboratory-research.schema.json",
+  "schema_version": 1,
+  "costs": {
+    "z_gems": 3,
+    "exclusive_z_gems": 5,
+    "mega_money": 5000,
+    "iv_point": 500,
+    "ev_point": 10,
+    "dynamax_level_mushrooms": 1,
+    "gmax_mushrooms": 3
+  },
+  "materials": {
+    "blank_z": "mega_showdown:blank_z",
+    "mega": "mega_showdown:mega_stone",
+    "mushroom": "mega_showdown:max_mushroom"
+  },
+  "z_crystals": [
+    {
+      "type": "electric",
+      "users": [
+        "Raichu-Alola"
+      ],
+      "move": "Thunderbolt",
+      "item": "mega_showdown:aloraichium_z"
+    },
+    {
+      "type": "Bug",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:buginium_z"
+    },
+    {
+      "type": "Dark",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:darkinium_z"
+    },
+    {
+      "type": "ghost",
+      "users": [
+        "Decidueye"
+      ],
+      "move": "Spirit Shackle",
+      "item": "mega_showdown:decidium_z"
+    },
+    {
+      "type": "Dragon",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:dragonium_z"
+    },
+    {
+      "type": "normal",
+      "users": [
+        "Eevee"
+      ],
+      "move": "Last Resort",
+      "item": "mega_showdown:eevium_z"
+    },
+    {
+      "type": "Electric",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:electrium_z"
+    },
+    {
+      "type": "Fairy",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:fairium_z"
+    },
+    {
+      "type": "Fighting",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:fightinium_z"
+    },
+    {
+      "type": "Fire",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:firium_z"
+    },
+    {
+      "type": "Flying",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:flyinium_z"
+    },
+    {
+      "type": "Ghost",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:ghostium_z"
+    },
+    {
+      "type": "Grass",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:grassium_z"
+    },
+    {
+      "type": "Ground",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:groundium_z"
+    },
+    {
+      "type": "Ice",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:icium_z"
+    },
+    {
+      "type": "dark",
+      "users": [
+        "Incineroar"
+      ],
+      "move": "Darkest Lariat",
+      "item": "mega_showdown:incinium_z"
+    },
+    {
+      "type": "dragon",
+      "users": [
+        "Kommo-o",
+        "Kommo-o-Totem"
+      ],
+      "move": "Clanging Scales",
+      "item": "mega_showdown:kommonium_z"
+    },
+    {
+      "type": "ghost",
+      "users": [
+        "Lunala",
+        "Necrozma-Dawn-Wings"
+      ],
+      "move": "Moongeist Beam",
+      "item": "mega_showdown:lunalium_z"
+    },
+    {
+      "type": "rock",
+      "users": [
+        "Lycanroc",
+        "Lycanroc-Midnight",
+        "Lycanroc-Dusk"
+      ],
+      "move": "Stone Edge",
+      "item": "mega_showdown:lycanium_z"
+    },
+    {
+      "type": "ghost",
+      "users": [
+        "Marshadow"
+      ],
+      "move": "Spectral Thief",
+      "item": "mega_showdown:marshadium_z"
+    },
+    {
+      "type": "psychic",
+      "users": [
+        "Mew"
+      ],
+      "move": "Psychic",
+      "item": "mega_showdown:mewnium_z"
+    },
+    {
+      "type": "fairy",
+      "users": [
+        "Mimikyu",
+        "Mimikyu-Busted",
+        "Mimikyu-Totem",
+        "Mimikyu-Busted-Totem"
+      ],
+      "move": "Play Rough",
+      "item": "mega_showdown:mimikium_z"
+    },
+    {
+      "type": "Normal",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:normalium_z"
+    },
+    {
+      "type": "electric",
+      "users": [
+        "Pikachu"
+      ],
+      "move": "Volt Tackle",
+      "item": "mega_showdown:pikanium_z"
+    },
+    {
+      "type": "electric",
+      "users": [
+        "Pikachu-Original",
+        "Pikachu-Hoenn",
+        "Pikachu-Sinnoh",
+        "Pikachu-Unova",
+        "Pikachu-Kalos",
+        "Pikachu-Alola",
+        "Pikachu-Partner"
+      ],
+      "move": "Thunderbolt",
+      "item": "mega_showdown:pikashunium_z"
+    },
+    {
+      "type": "Poison",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:poisonium_z"
+    },
+    {
+      "type": "water",
+      "users": [
+        "Primarina"
+      ],
+      "move": "Sparkling Aria",
+      "item": "mega_showdown:primarium_z"
+    },
+    {
+      "type": "Psychic",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:psychium_z"
+    },
+    {
+      "type": "Rock",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:rockium_z"
+    },
+    {
+      "type": "normal",
+      "users": [
+        "Snorlax"
+      ],
+      "move": "Giga Impact",
+      "item": "mega_showdown:snorlium_z"
+    },
+    {
+      "type": "steel",
+      "users": [
+        "Solgaleo",
+        "Necrozma-Dusk-Mane"
+      ],
+      "move": "Sunsteel Strike",
+      "item": "mega_showdown:solganium_z"
+    },
+    {
+      "type": "Steel",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:steelium_z"
+    },
+    {
+      "type": "fairy",
+      "users": [
+        "Tapu Koko",
+        "Tapu Lele",
+        "Tapu Bulu",
+        "Tapu Fini"
+      ],
+      "move": "Nature's Madness",
+      "item": "mega_showdown:tapunium_z"
+    },
+    {
+      "type": "psychic",
+      "users": [
+        "Necrozma-Ultra"
+      ],
+      "move": "Photon Geyser",
+      "item": "mega_showdown:ultranecrozium_z"
+    },
+    {
+      "type": "Water",
+      "users": [],
+      "move": "",
+      "item": "mega_showdown:waterium_z"
+    }
+  ],
+  "dynamax_excluded": [
+    "zacian",
+    "zamazenta",
+    "eternatus"
+  ]
+}

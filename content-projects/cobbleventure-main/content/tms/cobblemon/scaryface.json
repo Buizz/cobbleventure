@@ -1,0 +1,15 @@
+{
+  "moveName": "scaryface",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "normal",
+  "recipe": [
+    {
+      "item": "cobblemon:normal_gem",
+      "count": 3
+    }
+  ]
+}

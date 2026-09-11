@@ -1,0 +1,19 @@
+{
+  "moveName": "leafblade",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "grass",
+  "recipe": [
+    {
+      "item": "cobblemon:grass_gem",
+      "count": 6
+    },
+    {
+      "item": "cobblemon:steel_gem",
+      "count": 3
+    }
+  ]
+}

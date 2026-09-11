@@ -1,0 +1,19 @@
+{
+  "moveName": "bodyslam",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:unlockable"
+    }
+  ],
+  "type": "normal",
+  "recipe": [
+    {
+      "item": "cobblemon:normal_gem",
+      "count": 5
+    },
+    {
+      "item": "cobblemon:electric_gem",
+      "count": 3
+    }
+  ]
+}

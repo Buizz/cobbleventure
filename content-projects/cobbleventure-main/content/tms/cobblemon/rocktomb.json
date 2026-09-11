@@ -1,0 +1,15 @@
+{
+  "moveName": "rocktomb",
+  "obtainMethods": [
+    {
+      "variant": "cobblemon:default"
+    }
+  ],
+  "type": "rock",
+  "recipe": [
+    {
+      "item": "cobblemon:rock_gem",
+      "count": 5
+    }
+  ]
+}

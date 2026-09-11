@@ -65,6 +65,11 @@ def load_project_catalog(project_root: Path, *, item_catalog: Path | None = None
         raise ValueError(f"프로젝트 content 디렉터리를 찾을 수 없습니다: {content}")
 
     catalog = ResourceCatalog()
+    from league_facilities import generated_encounters
+    for encounter in generated_encounters(project_root):
+        catalog.add(ResourceKind.BATTLE, encounter['battle']['id'])
+        catalog.add(ResourceKind.FLAG, encounter['flag'])
+
     battle_directory = content / "battles"
     _load_document_ids(battle_directory, ResourceKind.BATTLE, catalog)
     if battle_directory.is_dir():
