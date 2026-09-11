@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.bootstrap;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
 import static dev.buizz.cobbleventure.bootstrap.WorldPlanModels.*;
 
 import dev.buizz.cobbleventure.adventure.AdventureWorldContext;
@@ -238,7 +239,7 @@ public final class CobbleventureBootstrap {
     private static final int WAITING_AREA_X = -8192;
     private static final int WAITING_AREA_Z = -8192;
     private static final int WAITING_AREA_RADIUS = 8;
-    private static final String STARTER_SETTLEMENT = "cobbleventure:settlement/starter_town";
+    private static final String STARTER_SETTLEMENT = CampaignContent.text("starter_settlement");
     private static final String INTEGRATION_TEST_PROPERTY = "cobbleventure.testStarterTown";
     private static final String HEX_WORLD_TEST_PROPERTY = "cobbleventure.testHexWorld";
     private static final String TEST_CLEAN_EXISTING_PROPERTY = "cobbleventure.testCleanExisting";
@@ -317,7 +318,7 @@ public final class CobbleventureBootstrap {
     static final ResourceKey<Level> GENERATION_ONE =
         ResourceKey.create(
             Registries.DIMENSION,
-            ResourceLocation.fromNamespaceAndPath("cobbleventure", "generation_1")
+            ResourceLocation.fromNamespaceAndPath("cobbleventure", CampaignContent.text("generation"))
         );
     private static final ResourceKey<Level> DUNGEONS =
         ResourceKey.create(
@@ -7990,7 +7991,7 @@ public final class CobbleventureBootstrap {
             }
         }
         List<FacilityPlacement> facilities = new ArrayList<>();
-        boolean starterSettlement = id.endsWith("/starter_town")
+        boolean starterSettlement = id.endsWith(CampaignContent.text("starter_settlement_suffix"))
             || (structureProfile.has("village_preset")
                 && structureProfile.get("village_preset").getAsString()
                     .equals("cobbleventure_starter"));
@@ -8393,7 +8394,7 @@ public final class CobbleventureBootstrap {
             }
             JsonObject cave = caves.computeIfAbsent(entrance.cave(), caveId -> {
                 String slug = caveId.substring(caveId.lastIndexOf('/') + 1);
-                return readJsonResource(level, "caves/generation_1/" + slug + ".json");
+                return readJsonResource(level, CampaignContent.text("cave_directory") + slug + ".json");
             });
             BlockPoint destination = null;
             BlockPoint portalAnchor = null;
@@ -8446,7 +8447,7 @@ public final class CobbleventureBootstrap {
             }
             String slug = forestId.substring(forestId.lastIndexOf('/') + 1);
             JsonObject forest = forests.computeIfAbsent(forestId, ignored ->
-                readJsonResource(level, "forests/generation_1/" + slug + ".json")
+                readJsonResource(level, CampaignContent.text("forest_directory") + slug + ".json")
             );
             JsonObject origin = forest.getAsJsonObject("dimension").getAsJsonObject("origin");
             int originX = origin.get("x").getAsInt();

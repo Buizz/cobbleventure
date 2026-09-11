@@ -9,14 +9,24 @@ const projectRoot = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z
 const i18nPath = join(projectRoot, "data", "i18n", "pokemon-i18n-ko.json");
 const csvOutputPath = join(
   projectRoot,
-  "data",
-  "ai",
+  "..",
+  "..",
+  "content-projects",
+  "cobbleventure-main",
+  "content",
+  "catalogs",
+  "battle-ai",
   "ai-move-role-classification.csv",
 );
 const jsonOutputPath = join(
   projectRoot,
-  "data",
-  "ai",
+  "..",
+  "..",
+  "content-projects",
+  "cobbleventure-main",
+  "content",
+  "catalogs",
+  "battle-ai",
   "ai-move-role-classification.json",
 );
 

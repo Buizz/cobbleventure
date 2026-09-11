@@ -48,7 +48,7 @@ class PokemonTowerTests(unittest.TestCase):
         texture = dungeon['entry_ui']['background_texture']
         self.assertEqual('cobbleventure_bootstrap:textures/gui/dungeons/pokemon_tower.png', texture)
         namespace, path = texture.split(':')
-        asset = tower.ROOT / 'projects/cobbleventure-world-bootstrap/src/main/resources/assets' / namespace / path
+        asset = tower.ROOT / 'content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets' / namespace / path
         self.assertTrue(asset.read_bytes().startswith(b'\x89PNG\r\n\x1a\n'))
 
 

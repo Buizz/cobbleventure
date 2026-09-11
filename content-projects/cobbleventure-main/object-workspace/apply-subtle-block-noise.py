@@ -16,7 +16,7 @@ WORKSPACE_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = WORKSPACE_ROOT.parent
 TEXTURE_ROOT = (
     PROJECT_ROOT
-    / "src/main/resources/assets/cobbleventure_theme_blocks/textures/block"
+    / "content/resources/cobbleventure-theme-blocks/assets/cobbleventure_theme_blocks/textures/block"
 )
 BACKUP_ROOT = WORKSPACE_ROOT / "recovery/block-textures/pre-subtle-noise-20260829"
 

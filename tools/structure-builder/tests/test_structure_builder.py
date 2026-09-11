@@ -194,7 +194,8 @@ class StructureBuilderTests(unittest.TestCase):
                 )
                 self.assertEqual("chamber", chamber["spatial_kind"])
                 self.assertEqual(expected_size, chamber["size"])
-                self.assertEqual([], chamber["markers"])
+                self.assertEqual(2 if shape_name.endswith('1x2') else 4, len(chamber["markers"]))
+                self.assertTrue(all(marker['kind'] == 'npc_spawn' for marker in chamber['markers']))
                 for connector in chamber["connectors"]:
                     lateral_axis = 2 if connector["facing"] in {"west", "east"} else 0
                     self.assertEqual(7, connector["position"][lateral_axis] % 16)

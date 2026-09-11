@@ -47,7 +47,6 @@ neoForge {
     addModdingDependenciesTo sourceSets.test
 }
 
-def contentProject = rootProject.file('../../content-projects/cobbleventure-main')
 processResources {
     def properties = [
         minecraft_version_range: minecraft_version_range,
@@ -63,10 +62,6 @@ processResources {
     inputs.properties properties
     filesMatching('META-INF/neoforge.mods.toml') {
         expand properties
-    }
-    from(new File(contentProject, 'content/catalogs/gacha-machines.json')) {
-        into 'data/cobbleventure_casino/gacha'
-        rename { 'machines.json' }
     }
 }
 
@@ -84,3 +79,9 @@ tasks.register('installDevelopmentJar', Copy) {
 }
 
 tasks.named('build') { finalizedBy 'installDevelopmentJar' }
+
+apply from: rootProject.file('../../gradle/external-content.gradle')
+
+dependencies {
+    implementation 'dev.buizz.cobbleventure:cobbleventure-content-runtime:1.0.0'
+}

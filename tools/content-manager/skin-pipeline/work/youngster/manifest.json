@@ -4,5 +4,5 @@
   "source_skin": "community.png",
   "source_url": "https://www.planetminecraft.com/skin/youngster-from-pokemon-npc-trainer/",
   "model": "classic",
-  "output": "../../../../../projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure/textures/entity/trainer/youngster.png"
+  "output": "../../../../../content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure/textures/entity/trainer/youngster.png"
 }

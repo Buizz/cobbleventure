@@ -12,7 +12,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 ASSETS = ROOT / "tools/content-manager/assets/badges"
 CATALOG = ROOT / "content-projects/cobbleventure-main/content/catalogs/badges.json"
-ATLAS = ROOT / "projects/cobbleventure-player-menu/src/main/resources/assets/cobbleventure_player_menu/textures/gui/badges.png"
+ATLAS = ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-player-menu/assets/cobbleventure_player_menu/textures/gui/badges.png"
 SOURCES = ROOT / "tools/content-manager/badge-image-sources.json"
 TILE = 32
 COLS = 8

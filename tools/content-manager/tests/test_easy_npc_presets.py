@@ -267,7 +267,7 @@ class EasyNpcEncounterPresetTests(unittest.TestCase):
         self.assertNotIn("OPEN_DEFAULT_DIALOG", preset)
         self.assertNotIn("cobbleventurebag acquire", preset)
         checked_in = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/easy_npc/"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/easy_npc/"
             "preset/encounter/sample_potion_giver__v5.npc.snbt"
         ).read_text(encoding="utf-8")
         self.assertEqual(preset, checked_in)
@@ -302,12 +302,12 @@ class EasyNpcEncounterPresetTests(unittest.TestCase):
         self.assertIn("ActionEventSet:{}", proximity)
         self.assertIn("DialogDataSet:[]", proximity)
         checked_in = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/easy_npc/"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/easy_npc/"
             "preset/encounter/ai_test__v5.npc.snbt"
         ).read_text(encoding="utf-8")
         self.assertEqual(preset, checked_in)
         checked_in_proximity = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/easy_npc/"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/easy_npc/"
             "preset/encounter/ai_test__v5_proximity.npc.snbt"
         ).read_text(encoding="utf-8")
         self.assertEqual(proximity, checked_in_proximity)
@@ -562,7 +562,7 @@ class EasyNpcEncounterPresetTests(unittest.TestCase):
         self.assertIn("DialogDataSet:[]", preset)
         self.assertNotIn("cobbleventure_battle_intro", preset)
         checked_in = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/easy_npc/"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/easy_npc/"
             "preset/encounter/brock__v5.npc.snbt"
         ).read_text(encoding="utf-8")
         self.assertEqual(preset, checked_in)
@@ -601,7 +601,7 @@ class EasyNpcEncounterPresetTests(unittest.TestCase):
                 document, outfits[document["npc"]["trainer_class"]], binding
             )
             checked_in = (
-                ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/easy_npc/"
+                ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/easy_npc/"
                 f"preset/encounter/{slug}__v5.npc.snbt"
             ).read_text(encoding="utf-8")
             with self.subTest(slug=slug):
@@ -723,7 +723,7 @@ class EasyNpcEncounterPresetTests(unittest.TestCase):
         self.assertNotIn("cobbleventure_starter_roulette", preset)
         self.assertNotIn("cobbleventurebag acquire", preset)
         checked_in = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/easy_npc/"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/easy_npc/"
             "preset/encounter/professor_oak__v5.npc.snbt"
         ).read_text(encoding="utf-8")
         self.assertEqual(preset, checked_in)
@@ -756,7 +756,7 @@ class EasyNpcEncounterPresetTests(unittest.TestCase):
         self.assertNotIn("OPEN_DEFAULT_DIALOG", preset)
         self.assertNotIn("오박사님께 먼저", preset)
         checked_in = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/easy_npc/"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/easy_npc/"
             "preset/encounter/starter_town_gatekeeper_minho__v5.npc.snbt"
         ).read_text(encoding="utf-8")
         self.assertEqual(preset, checked_in)

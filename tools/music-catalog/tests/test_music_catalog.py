@@ -24,7 +24,7 @@ class MusicCatalogTest(unittest.TestCase):
         )
 
     def test_catalog_uses_only_selected_ogg_tracks(self) -> None:
-        self.assertEqual(30, len(self.catalog["tracks"]))
+        self.assertEqual(31, len(self.catalog["tracks"]))
         self.assertFalse(self.catalog["datapack_required"])
         self.assertFalse(self.catalog["source"]["audio_tracked_by_git"])
         self.assertTrue(
@@ -69,6 +69,36 @@ class MusicCatalogTest(unittest.TestCase):
         )
         gym = settings["buildings"]["cobbleventure:interiors/gyms/base_gym_interior"]
         self.assertEqual("facility.gym", gym["music_track"])
+
+    def test_indigo_plateau_tile_and_split_rooms_share_the_league_theme(self) -> None:
+        tracks = {track["id"]: track["source_file"] for track in self.catalog["tracks"]}
+        self.assertEqual("another-red-bgm/PWT.ogg", tracks["kanto.indigo_plateau"])
+
+        world = json.loads(
+            (PROJECT_ROOT / "content/worlds/generation_1.json").read_text(encoding="utf-8")
+        )
+        override = next(
+            entry for entry in world["music_overrides"]
+            if (entry["q"], entry["r"]) == (-6, -2)
+        )
+        self.assertEqual("kanto.indigo_plateau", override["music_track"])
+
+        settings = json.loads(
+            (PROJECT_ROOT / "content/catalogs/building-settings.json").read_text(encoding="utf-8")
+        )["buildings"]
+        structures = [
+            "cobbleventure:league/indigo_plateau",
+            "cobbleventure:interiors/leagues/kanto_lobby",
+            "cobbleventure:interiors/leagues/kanto_elite_1",
+            "cobbleventure:interiors/leagues/kanto_elite_2",
+            "cobbleventure:interiors/leagues/kanto_elite_3",
+            "cobbleventure:interiors/leagues/kanto_elite_4",
+            "cobbleventure:interiors/leagues/kanto_champion",
+            "cobbleventure:interiors/hall_of_fame",
+        ]
+        for structure in structures:
+            with self.subTest(structure=structure):
+                self.assertEqual("kanto.indigo_plateau", settings[structure]["music_track"])
 
     def test_added_kanto_facilities_and_rocket_dungeons_use_named_tags(self) -> None:
         tracks = {track["id"]: track["source_file"] for track in self.catalog["tracks"]}

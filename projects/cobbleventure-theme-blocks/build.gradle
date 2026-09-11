@@ -44,41 +44,6 @@ processResources {
         expand properties
     }
 
-    // Blockbench 작업장은 JAR 소스 트리 밖에 둔다. 빌드할 때 게임에서 실제로
-    // 사용하는 모델 JSON과 텍스처 PNG만 최종 리소스에 합친다.
-    from('object-workspace') {
-        include 'assets/cobbleventure_theme_blocks/models/block/workshop/**/*.json'
-        include 'assets/cobbleventure_theme_blocks/textures/block/**/*.png'
-        exclude 'assets/cobbleventure_theme_blocks/textures/block/windows/**/*.png'
-        // The research device source atlas stays editable outside the JAR;
-        // only the generated *_1_texture.png atlas is a runtime resource.
-        exclude 'assets/cobbleventure_theme_blocks/textures/block/research_device.png'
-        exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/**/*_complete.json'
-        exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/**/*.pack-report.json'
-        exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/02_double_display_case/double_display_case.json'
-        exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/08_white_connecting_bookshelf/white_connecting_bookshelf.json'
-        exclude 'assets/cobbleventure_theme_blocks/models/block/workshop/13_green_connecting_bookshelf/green_connecting_bookshelf.json'
-    }
-    from(layout.buildDirectory.dir('generated/tall-furniture'))
-}
-
-def pythonExecutable = providers.environmentVariable('PYTHON').orElse(
-    System.getProperty('os.name').toLowerCase().contains('windows') ? 'python' : 'python3'
-)
-
-tasks.register('syncEditableBbModels', Exec) {
-    workingDir projectDir
-    commandLine pythonExecutable.get(), 'object-workspace/sync-editable-bbmodels.py'
-}
-
-tasks.named('processResources') {
-    dependsOn 'syncEditableBbModels'
-    dependsOn 'exportTallFurniture'
-}
-
-tasks.register('exportTallFurniture', Exec) {
-    workingDir projectDir
-    commandLine pythonExecutable.get(), 'object-workspace/export-tall-furniture.py'
 }
 
 tasks.register('cleanInstalledThemeBlockJars', Delete) {
@@ -123,3 +88,8 @@ tasks.register('installThemeBlockJars') {
 tasks.named('build') {
     finalizedBy 'installThemeBlockJars'
 }
+
+dependencies {
+    implementation 'dev.buizz.cobbleventure:cobbleventure-content-runtime:1.0.0'
+}
+apply from: rootProject.file('../../gradle/external-content.gradle')

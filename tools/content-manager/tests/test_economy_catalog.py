@@ -287,7 +287,7 @@ class EconomyCatalogTests(unittest.TestCase):
                 "pokemon_drop_overrides": [],
             })
             self.assertFalse(any(issue.level == "error" for issue in issues))
-            output = root / "projects/cobbleventure-world-bootstrap/src/generated/resources/data/cobblemon/species/generation1/pikachu.json"
+            output = root / "staging/compiled-content/data/cobblemon/species/generation1/pikachu.json"
             generated = json.loads(output.read_text(encoding="utf-8"))
             self.assertEqual("cobblemon:thunder_stone", generated["drops"]["entries"][0]["item"])
 

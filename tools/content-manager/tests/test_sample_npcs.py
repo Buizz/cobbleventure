@@ -86,7 +86,7 @@ class SampleNpcTests(unittest.TestCase):
 
     def test_every_sample_has_generated_cves_binding_and_inert_v5_preset(self) -> None:
         preset_root = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/easy_npc/"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/easy_npc/"
             "preset/encounter"
         )
         for document in self.raw_sources:

@@ -124,7 +124,7 @@ def _normalized_resource_pack(source: Path, pack_format: int) -> bytes:
         raise PackError(f"로컬 리소스팩을 읽을 수 없습니다: {source}: {error}") from error
 
 
-def load_profile(root: Path, profile_path: Path) -> dict[str, Any]:
+def load_profile(root: Path, profile_path: Path, *, mods_only: bool = False) -> dict[str, Any]:
     root = root.resolve()
     path = profile_path if profile_path.is_absolute() else root / profile_path
     path = _inside(root, path, "프로필")
@@ -204,7 +204,7 @@ def load_profile(root: Path, profile_path: Path) -> dict[str, Any]:
         raise PackError("출력 파일 확장자는 .zip이어야 합니다.")
 
     local_resourcepacks: list[tuple[Path, str, int]] = []
-    configured_resourcepacks = profile.get("local_resourcepacks", [])
+    configured_resourcepacks = [] if mods_only else profile.get("local_resourcepacks", [])
     if not isinstance(configured_resourcepacks, list):
         raise PackError("$.local_resourcepacks는 배열이어야 합니다.")
     seen_targets: set[str] = set()
@@ -250,6 +250,10 @@ def load_profile(root: Path, profile_path: Path) -> dict[str, Any]:
     profile["_output_path"] = output
     profile["_icon_path"] = icon
     profile["_local_resourcepacks"] = local_resourcepacks
+    profile["_mods_only"] = mods_only
+    if mods_only:
+        profile["_output_path"] = output.with_name(output.stem + "-mods-only.zip")
+        profile["name"] += " - Mods Only"
     return profile
 
 
@@ -379,12 +383,20 @@ def _profile_override_files(profile: dict[str, Any]) -> list[tuple[Path, Path]]:
     selected: list[tuple[Path, Path]] = []
     seen: set[str] = set()
 
-    for source in sorted(overrides.rglob("*")):
+    override_sources = (overrides / "mods").glob("*.jar") if profile.get("_mods_only") else overrides.rglob("*")
+    for source in sorted(override_sources):
         if source.is_symlink():
             raise PackError(f"overrides에 심볼릭 링크를 사용할 수 없습니다: {source}")
         if not source.is_file():
             continue
         relative = source.relative_to(overrides)
+        # Contract 2 owns these resources inside the external content bundle.
+        if (overrides / "config/cobbleventure/content/data/cobbleventure/catalogs/campaign.json").is_file() and relative.as_posix() in {
+            "config/paxi/resourcepacks/Cobbleventure-Music.zip",
+            "config/paxi/resourcepacks/Cobbleventure-Pokemon-Paintings.zip",
+            "config/paxi/datapacks/zzz-cobbleventure-spawns.zip",
+        }:
+            continue
         if separate_mods and relative.parts and relative.parts[0].casefold() == "mods":
             continue
         seen.add(relative.as_posix().casefold())
@@ -402,6 +414,9 @@ def _profile_override_files(profile: dict[str, Any]) -> list[tuple[Path, Path]]:
                 raise PackError(f"중복 overrides 경로입니다: {relative.as_posix()}")
             seen.add(key)
             selected.append((source, relative))
+    if profile.get("_mods_only"):
+        selected = [(source, relative) for source, relative in selected
+            if relative.parent == Path("mods") and relative.suffix.lower() == ".jar"]
     return selected
 
 
@@ -532,9 +547,9 @@ spawn-protection=0
     }
 
 
-def build_pack(root: Path, profile_path: Path) -> Path:
+def build_pack(root: Path, profile_path: Path, *, mods_only: bool = False) -> Path:
     root = root.resolve()
-    profile = load_profile(root, profile_path)
+    profile = load_profile(root, profile_path, mods_only=mods_only)
     output: Path = profile["_output_path"]
     overrides: Path = profile["_overrides_path"]
     icon: Path = profile["_icon_path"]
@@ -550,6 +565,7 @@ def build_pack(root: Path, profile_path: Path) -> Path:
         "notice": profile["notice"],
         "icon": "icon.png",
         "minecraft": manifest["minecraft"],
+        "content_included": not mods_only,
     }
 
     if temporary.exists():
@@ -724,6 +740,14 @@ def validate_pack(
                     raise PackError(f"안전하지 않은 ZIP 엔트리입니다: {name}")
             if "manifest.json" not in names:
                 raise PackError("ZIP 최상위에 manifest.json이 없습니다.")
+            if profile.get("_mods_only"):
+                metadata = {"manifest.json", "icon.png", "overrides/", "overrides/icon.png",
+                    "overrides/cobbleventure-pack-info.json"}
+                forbidden = [name for name in names if name not in metadata and not (
+                    PurePosixPath(name).parent == PurePosixPath("overrides/mods")
+                    and name.lower().endswith(".jar"))]
+                if forbidden:
+                    raise PackError(f"모드 전용 ZIP에 콘텐츠가 포함됐습니다: {forbidden[0]}")
             if "icon.png" not in names:
                 raise PackError("ZIP 최상위에 icon.png가 없습니다.")
             if "overrides/" not in names:
@@ -761,6 +785,8 @@ def _parser() -> argparse.ArgumentParser:
         child = subcommands.add_parser(command)
         child.add_argument("--root", type=Path, default=Path.cwd())
         child.add_argument("--profile", type=Path, required=True)
+        if command in {"build", "validate"}:
+            child.add_argument("--mods-only", action="store_true", help="Include JARs and mod references only")
     return parser
 
 
@@ -768,9 +794,10 @@ def main() -> int:
     arguments = _parser().parse_args()
     try:
         root = arguments.root.resolve()
-        profile = load_profile(root, arguments.profile)
+        mods_only = getattr(arguments, "mods_only", False)
+        profile = load_profile(root, arguments.profile, mods_only=mods_only)
         if arguments.command == "build":
-            output = build_pack(root, arguments.profile)
+            output = build_pack(root, arguments.profile, mods_only=mods_only)
             manifest = validate_pack(output, profile=profile)
             digest = hashlib.sha256(output.read_bytes()).hexdigest()
             with zipfile.ZipFile(output, "r") as archive:

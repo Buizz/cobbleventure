@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.bootstrap;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.google.gson.JsonArray;
@@ -70,9 +71,9 @@ final class GymInteriorSystem {
     );
     private static final String INTERACTION_COOLDOWN = "cobbleventureGymDoorCooldown";
     private static final String STARTER_RECEIVED_FLAG =
-        "cobbleventure:flag/story/starter_received";
+        CampaignContent.text("flag_story_starter_received");
     private static final String LEGACY_GYM_BLOCKER_BINDING =
-        "cves_binding/cobbleventure/story/starter_town_gatekeeper_minho";
+        CampaignContent.text("starter_gate_binding");
     private static final String GYM_GUIDE_BINDING =
         "cves_binding/cobbleventure/story/gym_guide";
     private static final int INSTANCE_GAP = 128;
@@ -529,12 +530,12 @@ final class GymInteriorSystem {
 
     private static String clearVariable(String trainerId) {
         if (trainerId == null || trainerId.isBlank()) {
-            return "cobbleventure:flag/gym/unknown/defeated";
+            return CampaignContent.text("flag_gym_unknown_defeated");
         }
         String slug = trainerId.substring(
             Math.max(trainerId.lastIndexOf('/'), trainerId.lastIndexOf(':')) + 1
         );
-        return "cobbleventure:flag/gym/kanto/" + slug + "/defeated";
+        return CampaignContent.text("flag_gym_kanto_prefix") + slug + "/defeated";
     }
 
     private static String flagObjective(String variable) {

@@ -12,5 +12,5 @@
   "palette_colors": 20,
   "fallback_color": "#d8a174",
   "overlay_parts": [],
-  "output": "../../../../../projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure/textures/entity/trainer/wicke.png"
+  "output": "../../../../../content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure/textures/entity/trainer/wicke.png"
 }

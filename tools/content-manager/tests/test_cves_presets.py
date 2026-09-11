@@ -40,7 +40,7 @@ class CvesBehaviorPresetTests(unittest.TestCase):
         source_root = PROJECT_ROOT / "content/source"
         binding_root = PROJECT_ROOT / "content/event-bindings"
         preset_root = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/"
             "easy_npc/preset/encounter"
         )
         sources = sorted(source_root.rglob("*.json"))
@@ -72,7 +72,7 @@ class CvesBehaviorPresetTests(unittest.TestCase):
             "rocket_power_plant_officer",
         )
         preset_root = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/"
             "easy_npc/preset/encounter"
         )
         for slug in slugs:

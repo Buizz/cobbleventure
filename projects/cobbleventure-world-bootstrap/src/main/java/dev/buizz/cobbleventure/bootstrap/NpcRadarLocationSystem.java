@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.bootstrap;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -100,41 +101,41 @@ final class NpcRadarLocationSystem {
         if (normalized.contains("/rewards/")) {
             return RadarLocationCatalog.NpcKind.IMPORTANT_NPC;
         }
-        if (normalized.endsWith("/professor_oak")) {
+        if (normalized.endsWith(CampaignContent.text("professor_suffix"))) {
             return RadarLocationCatalog.NpcKind.IMPORTANT_NPC;
         }
         return null;
     }
 
     static String trainerFlag(String slug) {
-        return "cobbleventure:flag/trainer/" + slug + "/defeated";
+        return CampaignContent.text("flag_trainer_prefix") + slug + "/defeated";
     }
 
     static String gymFlag(String slug) {
-        return "cobbleventure:flag/gym/kanto/" + slug + "/defeated";
+        return CampaignContent.text("flag_gym_kanto_prefix") + slug + "/defeated";
     }
 
     static String rewardFlag(String slug) {
         if (slug.startsWith("field_move_") && slug.endsWith("_instructor")) {
             String move = slug.substring("field_move_".length(),
                 slug.length() - "_instructor".length());
-            return "cobbleventure:flag/rewards/field_move/" + move;
+            return CampaignContent.text("flag_rewards_field_move_prefix") + move;
         }
         if (slug.startsWith("item_") && slug.endsWith("_supplier")) {
             String item = slug.substring("item_".length());
-            return "cobbleventure:flag/rewards/item/" + item;
+            return CampaignContent.text("flag_rewards_item_prefix") + item;
         }
         if (slug.equals("item_coin_case_guest")) {
-            return "cobbleventure:flag/rewards/item/coin_case_guest";
+            return CampaignContent.text("flag_rewards_item_coin_case_guest");
         }
         if (slug.equals("feature_map_guide")) {
-            return "cobbleventure:flag/rewards/feature/map";
+            return CampaignContent.text("flag_rewards_feature_map");
         }
         if (slug.equals("feature_pc_technician")) {
-            return "cobbleventure:flag/rewards/feature/pc";
+            return CampaignContent.text("flag_rewards_feature_pc");
         }
         if (slug.equals("feature_teleport_guide")) {
-            return "cobbleventure:flag/rewards/feature/settlement_teleport";
+            return CampaignContent.text("flag_rewards_feature_settlement_teleport");
         }
         return null;
     }

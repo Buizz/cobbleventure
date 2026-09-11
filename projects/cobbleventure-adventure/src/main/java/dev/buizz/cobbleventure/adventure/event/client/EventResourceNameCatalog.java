@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.adventure.event.client;
 
+import dev.buizz.cobbleventure.content.ContentFiles;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -78,7 +79,7 @@ final class EventResourceNameCatalog {
     }
 
     private static EventResourceNameCatalog loadDefault() {
-        try (InputStream stream = EventResourceNameCatalog.class.getResourceAsStream(RESOURCE)) {
+        try (InputStream stream = ContentFiles.open(RESOURCE)) {
             if (stream == null) {
                 throw new IllegalStateException("이름 카탈로그 리소스를 찾을 수 없습니다: " + RESOURCE);
             }

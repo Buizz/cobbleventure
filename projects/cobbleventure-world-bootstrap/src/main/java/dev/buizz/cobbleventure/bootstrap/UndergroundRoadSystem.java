@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.bootstrap;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -43,7 +44,7 @@ final class UndergroundRoadSystem {
     static JsonObject loadDocument(ServerLevel level, String roadId) {
         String slug = roadId.substring(roadId.lastIndexOf('/') + 1);
         ResourceLocation location = ResourceLocation.fromNamespaceAndPath(
-            "cobbleventure", "underground_roads/generation_1/" + slug + ".json"
+            "cobbleventure", CampaignContent.text("underground_road_directory") + slug + ".json"
         );
         Resource resource = level.getServer().getResourceManager().getResource(location)
             .orElseThrow(() -> new IllegalStateException("Missing underground passage document: " + location));

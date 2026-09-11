@@ -24,7 +24,7 @@ UV 면 축소에는 최근접 이웃 필터만 사용합니다. 생성 이미지
 배치합니다. 머리 좌우 옆면의 앞쪽 영역은 인접 텍스처 열로 정리하여 눈·눈썹·코·입이
 옆면에 남지 않도록 합니다.
 
-최종 스킨은 `projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure/textures/entity/trainer/`에 저장합니다. 생성물의 머리 모자와 몸통 가방끈처럼 돌출되어야 하는 색상은 `overlay_colors`에 지정하며, 나머지는 불투명 기본 레이어로 합성합니다.
+최종 스킨은 `content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure/textures/entity/trainer/`에 저장합니다. 생성물의 머리 모자와 몸통 가방끈처럼 돌출되어야 하는 색상은 `overlay_colors`에 지정하며, 나머지는 불투명 기본 레이어로 합성합니다.
 
 자동 생성한 1차 64×64 결과는 `retouch/generated/`에도 저장됩니다. 직접 수정할
 파일은 같은 이름으로 `retouch/manual/`에 저장합니다. `manual/` 파일은 자동 생성기가

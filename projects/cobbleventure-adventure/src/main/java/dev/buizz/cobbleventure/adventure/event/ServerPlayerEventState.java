@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.adventure.event;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -29,7 +30,7 @@ public final class ServerPlayerEventState implements EventStateAccess {
     private static final String INSTANCE_DEFEATED_FLAG =
         "cobbleventure:runtime/npc_instance_defeated";
     private static final String STARTER_RECEIVED_FLAG =
-        "cobbleventure:flag/story/starter_received";
+        CampaignContent.text("flag_story_starter_received");
     private static final String INSTANCE_DEFEATED_OBJECTIVE = "cv_npc_defeated";
     private static final String STARTER_RECEIVED_OBJECTIVE = "cv_starter_recv";
     private static final String FEATURE_PREFIX = "cobbleventureFeature.";

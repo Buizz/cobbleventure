@@ -28,6 +28,9 @@ final class DungeonPiecePlannerTest {
         root.getAsJsonObject("generated_trainers").add(
             "count", JsonParser.parseString("[36,36]")
         );
+        root.getAsJsonObject("spatial_layout").add("chamber_pieces", JsonParser.parseString(
+            "[\"cobbleventure:dungeon_piece/building/room\"]"
+        ));
         DungeonDefinition crowded = DungeonDefinition.parse(root);
         DungeonGenerationRequirements crowdedRequirements =
             DungeonGenerationRequirements.calculate(crowded, pieces);
@@ -189,7 +192,8 @@ final class DungeonPiecePlannerTest {
             if (runDungeon.multiplayer().mode().equals("cooperative")) {
                 long groups = runDungeon.encounters().stream()
                     .filter(encounter -> !encounter.boss() && encounter.actorCount() == 2).count();
-                assertTrue(plannerSettings.chamberCount() >= groups, name);
+                int pairsPerRoom = Math.max(1, DungeonGenerationRequirements.calculate(runDungeon, pieces).chamberCapacity() / 2);
+                assertTrue(plannerSettings.chamberCount() * pairsPerRoom >= groups, name);
             } else {
                 assertTrue(plannerSettings.chamberCount()
                     <= runDungeon.vertical().floorCount().maximum(), name);
@@ -305,7 +309,7 @@ final class DungeonPiecePlannerTest {
 
     @Test
     void resolvesEntryAndExitMarkersFromRotatedPiecePlan() throws Exception {
-        var stream = getClass().getClassLoader().getResourceAsStream(
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(
             "data/cobbleventure/dungeons/generation_1/rocket_power_plant.json"
         );
         assertTrue(stream != null);
@@ -571,7 +575,7 @@ final class DungeonPiecePlannerTest {
 
     @Test
     void assignsMarkerRelativeGateToAReusableRoomSlot() throws Exception {
-        var stream = getClass().getClassLoader().getResourceAsStream(
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(
             "data/cobbleventure/dungeons/generation_1/rocket_power_plant.json"
         );
         assertTrue(stream != null);
@@ -757,13 +761,8 @@ final class DungeonPiecePlannerTest {
             ),
             "More than one encounter occupied a passage piece for seed "
                 + seed + ": " + occupancy);
-        long chamberCount = layout.plan().placements().stream()
-            .filter(placement -> placement.role().equals("room")).count();
-        if (encounterPlacements.size() > chamberCount && !passagePlacements.isEmpty()) {
-            assertTrue(encounterPlacements.stream().anyMatch(passagePlacements::contains),
-                "Encounters filled chamber slots instead of using passages for seed "
-                    + seed + ": " + occupancy);
-        }
+        // Authored chamber slots may serve several encounters; passages retain
+        // their single slot. Do not require spilling into passages by room count.
     }
 
     private static boolean contains(
@@ -816,7 +815,7 @@ final class DungeonPiecePlannerTest {
     }
 
     private com.google.gson.JsonObject resourceJson(String path) throws Exception {
-        var stream = getClass().getClassLoader().getResourceAsStream(path);
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(path);
         assertTrue(stream != null, "Missing test resource: " + path);
         try (stream; var reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
             return JsonParser.parseReader(reader).getAsJsonObject();
@@ -838,7 +837,7 @@ final class DungeonPiecePlannerTest {
         int branchCount, int maxAttempts, int horizontalBounds,
         String layoutMode
     ) throws Exception {
-        var stream = getClass().getClassLoader().getResourceAsStream(
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(
             "data/cobbleventure/dungeons/generation_1/rocket_power_plant.json"
         );
         assertTrue(stream != null);

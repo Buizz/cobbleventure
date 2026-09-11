@@ -165,7 +165,7 @@ final class DungeonAuthoredPlanDefinitionTest {
         DungeonAuthoredPlanDefinition authored = plan(
             "cobbleventure:dungeon_plan/test", 77L, 10
         );
-        var stream = getClass().getClassLoader().getResourceAsStream(
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(
             "data/cobbleventure/dungeons/generation_1/rocket_power_plant.json"
         );
         assertNotNull(stream);
@@ -266,7 +266,7 @@ final class DungeonAuthoredPlanDefinitionTest {
     }
 
     private DungeonDefinition dungeonWithPlan(String planJson) throws Exception {
-        var stream = getClass().getClassLoader().getResourceAsStream(
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(
             "data/cobbleventure/dungeons/generation_1/rocket_power_plant.json"
         );
         assertNotNull(stream);
@@ -317,7 +317,7 @@ final class DungeonAuthoredPlanDefinitionTest {
     }
 
     private com.google.gson.JsonObject resourceJson(String path) throws Exception {
-        var stream = getClass().getClassLoader().getResourceAsStream(path);
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(path);
         assertNotNull(stream, path);
         try (stream; var reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
             return JsonParser.parseReader(reader).getAsJsonObject();

@@ -9,3 +9,5 @@ plugins {
 }
 
 rootProject.name = 'cobbleventure-player-menu'
+
+includeBuild('../cobbleventure-content-runtime')

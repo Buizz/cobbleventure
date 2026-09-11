@@ -20,5 +20,5 @@
     "right_leg": { "front": [94, 931, 167, 1176], "left": [399, 931, 474, 1176], "back": [714, 931, 786, 1176], "right": [557, 931, 632, 1176], "top": [1011, 939, 1093, 1024], "bottom": [1011, 1053, 1093, 1176] },
     "left_leg": { "front": [247, 931, 319, 1176], "left": [557, 931, 632, 1176], "back": [869, 931, 942, 1176], "right": [399, 931, 474, 1176], "top": [1011, 939, 1093, 1024], "bottom": [1011, 1053, 1093, 1176] }
   },
-  "output": "../../../../../projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure/textures/entity/trainer/proton.png"
+  "output": "../../../../../content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure/textures/entity/trainer/proton.png"
 }

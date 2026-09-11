@@ -42,8 +42,8 @@ PROJECT_ROOT = Path(os.environ.get(
     "COBBLEVENTURE_PROJECT_PATH", "content-projects/cobbleventure-main"
 ))
 CONTENT_ROOT = PROJECT_ROOT / "content"
-SOURCE = Path("projects/cobbleventure-world-bootstrap/src/main/resources")
-OUTPUT = Path("projects/cobbleventure-world-bootstrap/src/generated/resources")
+SOURCE = CONTENT_ROOT / "resources/cobbleventure-world-bootstrap"
+OUTPUT = Path("staging/compiled-content")
 SETTLEMENT_CONFIG_DIR = CONTENT_ROOT / "settlements"
 STARTER_TOWN_CONFIG = SETTLEMENT_CONFIG_DIR / "generation_1/starter_town.json"
 HEX_WORLD_CONFIG_DIR = CONTENT_ROOT / "worlds"
@@ -84,8 +84,6 @@ SPACE_CONNECTIONS_SOURCE = CONTENT_ROOT / "catalogs/space-connections.json"
 BUILDING_SETTINGS_ENTRY = Path("data/cobbleventure/building_settings.json")
 STRUCTURE_METADATA_ENTRY_DIR = Path("data/cobbleventure/structure_metadata")
 REQUIRED_ENTRIES = {
-    "META-INF/neoforge.mods.toml",
-    "pack.mcmeta",
     "data/cobbleventure/worldgen/template_pool/starter_town/center.json",
     "data/cobbleventure/worldgen/template_pool/route_01_town/center.json",
     "data/cobbleventure/worldgen/template_pool/crimson_town/center.json",

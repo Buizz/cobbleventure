@@ -72,5 +72,24 @@
       ]
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "id": "npc_spawn_1",
+      "kind": "npc_spawn",
+      "position": [
+        8,
+        1,
+        8
+      ]
+    },
+    {
+      "id": "npc_spawn_2",
+      "kind": "npc_spawn",
+      "position": [
+        8,
+        1,
+        24
+      ]
+    }
+  ]
 }

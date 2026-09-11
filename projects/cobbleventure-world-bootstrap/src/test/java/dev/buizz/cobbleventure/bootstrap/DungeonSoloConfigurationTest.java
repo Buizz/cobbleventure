@@ -76,7 +76,7 @@ final class DungeonSoloConfigurationTest {
 
     private DungeonDefinition packagedDungeon(String name) throws Exception {
         String path = "data/cobbleventure/dungeons/generation_1/" + name + ".json";
-        var stream = getClass().getClassLoader().getResourceAsStream(path);
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(path);
         assertNotNull(stream, path);
         try (stream; var reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
             return DungeonDefinition.parse(JsonParser.parseReader(reader).getAsJsonObject());

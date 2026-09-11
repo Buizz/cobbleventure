@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1] / "src/main/resources/assets/cobbleventure_theme_blocks/models/block"
+ROOT = Path(__file__).resolve().parents[1] / "content/resources/cobbleventure-theme-blocks/assets/cobbleventure_theme_blocks/models/block"
 MODELS = {
     "underground_olive_band": (7, 15),
     "house_beige_panel_wall": (3, 7, 11, 15),

@@ -13,3 +13,5 @@ pluginManagement {
 }
 
 rootProject.name = 'cobbleventure-theme-blocks'
+
+includeBuild('../cobbleventure-content-runtime')

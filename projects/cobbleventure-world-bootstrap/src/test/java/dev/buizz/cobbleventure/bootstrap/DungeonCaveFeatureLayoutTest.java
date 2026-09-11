@@ -61,7 +61,7 @@ final class DungeonCaveFeatureLayoutTest {
     }
 
     private DungeonDefinition caveDungeon() throws Exception {
-        var stream = getClass().getClassLoader().getResourceAsStream(
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(
             "data/cobbleventure/dungeons/generation_1/rocket_power_plant.json"
         );
         JsonObject root;

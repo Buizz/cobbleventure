@@ -2488,3 +2488,20 @@ body { font-size: 14px; line-height: 1.45; }
 @media(max-width:1400px) { .lf-five-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media(max-width:900px) { .lf-five-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:600px) { .lf-editor { padding:4px 12px 16px; }.lf-five-grid,.lf-two-grid { grid-template-columns:1fr; } }
+
+/* Build and content deployment share the existing editor theme. */
+#builds .build-command { flex-direction: column; align-items: stretch; gap: 18px; }
+#builds .build-command strong { font-family: inherit; font-size: 17px; }
+#builds .build-command small { min-height: 3em; }
+#builds .build-command .button { align-self: flex-start; }
+.content-deployment-settings { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: end; margin: 0 24px 24px; padding: 18px; border: 1px solid var(--line); border-radius: 8px; }
+.content-deployment-settings label { display: grid; gap: 8px; min-width: 0; }
+.content-deployment-settings label span { font-weight: 700; }
+.content-deployment-settings input { width: 100%; }
+.content-deployment-settings p, .content-deployment-settings > small { grid-column: 1 / -1; margin: 0; color: var(--muted); line-height: 1.5; }
+#live-nbt-editor details.structure-builder-workflow > summary { cursor: pointer; font-weight: 700; padding-bottom: 12px; }
+@media (max-width: 620px) { .content-deployment-settings { grid-template-columns: 1fr; } }
+
+#builds .build-export-options { background: var(--panel); border-radius: 8px; }
+#builds .build-export-options label span { color: var(--text); }
+#builds .build-export-options select { background: var(--panel); color: var(--text); border-color: var(--line); }

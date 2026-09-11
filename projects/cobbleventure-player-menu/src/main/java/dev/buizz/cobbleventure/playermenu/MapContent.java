@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.playermenu;
 
+import dev.buizz.cobbleventure.content.ContentFiles;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -294,7 +295,7 @@ public final class MapContent {
         List<MapContent> result = new ArrayList<>();
         for (int generation = 1; generation <= 9; generation++) {
             String path = "generation_" + generation + ".json";
-            if (MapContent.class.getResource(ROOT + path) != null) result.add(load(generation));
+            if (ContentFiles.exists(ROOT + path)) result.add(load(generation));
         }
         if (result.isEmpty()) throw new IllegalStateException("No generation map resources found");
         return List.copyOf(result);
@@ -965,7 +966,7 @@ public final class MapContent {
     }
 
     private static JsonObject resource(String path) {
-        try (InputStream stream = MapContent.class.getResourceAsStream(ROOT + path)) {
+        try (InputStream stream = ContentFiles.open(ROOT + path)) {
             if (stream == null) throw new IllegalStateException("Missing map resource: " + path);
             return JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
         } catch (IOException error) {

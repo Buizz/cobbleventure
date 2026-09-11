@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.playermenu;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
 import com.cobblemon.mod.common.battles.BattleRegistry;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
@@ -457,7 +458,7 @@ public final class MusicPlayback {
                 );
             }
 
-            JsonObject world = MusicPlayback.read(resources, "hex_worlds/generation_1.json");
+            JsonObject world = MusicPlayback.read(resources, CampaignContent.text("world_plan"));
             Map<Cell, String> tileMusic = musicByCell(world, "tiles");
             Map<Cell, String> coordinateOverrides = musicByCell(world, "music_overrides");
             Map<String, String> routeMusic = musicById(world, "connections", "id");

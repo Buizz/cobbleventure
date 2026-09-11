@@ -47,7 +47,7 @@ def register(slug: str, concept: Path, reference: Path, root: Path, model: str =
         "fallback_color": "#d8a174",
         "overlay_parts": [],
         "output": (
-            "../../../../../projects/cobbleventure-world-bootstrap/src/main/resources/"
+            "../../../../../content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/"
             f"assets/cobbleventure/textures/entity/trainer/{slug}.png"
         ),
     }

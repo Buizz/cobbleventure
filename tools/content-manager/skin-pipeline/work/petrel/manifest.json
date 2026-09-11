@@ -20,5 +20,5 @@
     "right_leg": { "front": [46, 930, 133, 1179], "left": [185, 930, 269, 1179], "back": [320, 930, 402, 1179], "right": [453, 930, 537, 1182], "top": [453, 930, 537, 1050], "bottom": [453, 1060, 537, 1182] },
     "left_leg": { "front": [687, 930, 770, 1182], "left": [819, 930, 899, 1179], "back": [950, 930, 1036, 1180], "right": [1091, 930, 1174, 1182], "top": [1091, 930, 1174, 1050], "bottom": [1091, 1060, 1174, 1182] }
   },
-  "output": "../../../../../projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure/textures/entity/trainer/petrel.png"
+  "output": "../../../../../content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure/textures/entity/trainer/petrel.png"
 }

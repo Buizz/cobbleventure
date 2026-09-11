@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.playermenu;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.google.gson.JsonObject;
@@ -20,7 +21,7 @@ public final class PlayerConditions {
     private static final String INSTANCE_DEFEATED_FLAG =
         "cobbleventure:runtime/npc_instance_defeated";
     private static final String STARTER_RECEIVED_FLAG =
-        "cobbleventure:flag/story/starter_received";
+        CampaignContent.text("flag_story_starter_received");
 
     private PlayerConditions() {}
 

@@ -5,3 +5,5 @@ pluginManagement {
     }
 }
 rootProject.name = 'cobbleventure-live-nbt-editor'
+
+includeBuild("../cobbleventure-content-runtime")

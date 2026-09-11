@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.playermenu;
 
+import dev.buizz.cobbleventure.content.ContentFiles;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.events.pokemon.HeldItemEvent;
@@ -226,7 +227,7 @@ public final class ImportantItemProtection {
     }
 
     static List<Definition> loadDefinitions() {
-        InputStream stream = ImportantItemProtection.class.getResourceAsStream(RESOURCE);
+        InputStream stream = ContentFiles.open(RESOURCE);
         if (stream == null) {
             throw new IllegalStateException("중요 도구 카탈로그가 없습니다: " + RESOURCE);
         }

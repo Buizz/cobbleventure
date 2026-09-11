@@ -6,8 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 CONTENT = ROOT / "content-projects" / "cobbleventure-main" / "content"
 EASY_NPC_PRESETS = (
-    ROOT / "projects" / "cobbleventure-world-bootstrap" / "src" / "main"
-    / "resources" / "data" / "easy_npc" / "preset" / "encounter"
+    ROOT / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap" / "data" / "easy_npc" / "preset" / "encounter"
 )
 TRAINER_SLUGS = {
     "kanto_sailor_junho": "sailor",

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 final class KeyItemsTagTest {
     @Test
     void pokenavIsCategorizedAsAKeyItem() throws Exception {
-        try (var stream = getClass().getResourceAsStream(
+        try (var stream = dev.buizz.cobbleventure.content.ContentFiles.open(
             "/data/cobbleventure_player_menu/tags/item/key_items.json"
         )) {
             String tag = new String(stream.readAllBytes(), StandardCharsets.UTF_8);

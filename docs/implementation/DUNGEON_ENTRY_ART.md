@@ -6,7 +6,7 @@ Minecraft풍 3D 내부 공간, 어두운 조명과 안개, 오른쪽 UI 영역�
 
 ## 실프주식회사
 
-저장 경로: `projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure_bootstrap/textures/gui/dungeons/silph_company.png`
+저장 경로: `content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure_bootstrap/textures/gui/dungeons/silph_company.png`
 
 최종 프롬프트:
 
@@ -14,7 +14,7 @@ Minecraft풍 3D 내부 공간, 어두운 조명과 안개, 오른쪽 UI 영역�
 
 ## 포켓몬타워
 
-저장 경로: `projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure_bootstrap/textures/gui/dungeons/pokemon_tower.png`
+저장 경로: `content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure_bootstrap/textures/gui/dungeons/pokemon_tower.png`
 
 최종 프롬프트:
 

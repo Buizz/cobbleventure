@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "캠페인 엔진 설정",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "values"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "values": {
+      "type": "object",
+      "required": [
+        "cave_directory",
+        "flag_gate_prefix",
+        "flag_gym_kanto_prefix",
+        "flag_gym_unknown_defeated",
+        "flag_rewards_feature_map",
+        "flag_rewards_feature_pc",
+        "flag_rewards_feature_settlement_teleport",
+        "flag_rewards_field_move_prefix",
+        "flag_rewards_item_coin_case_guest",
+        "flag_rewards_item_prefix",
+        "flag_story_starter_received",
+        "flag_trainer_prefix",
+        "forest_directory",
+        "generation",
+        "professor_suffix",
+        "settlement_directory",
+        "starter_gate_binding",
+        "starter_settlement",
+        "starter_settlement_suffix",
+        "underground_road_directory",
+        "world_plan"
+      ],
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

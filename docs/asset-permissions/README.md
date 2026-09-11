@@ -24,4 +24,4 @@
 - 사용 조건: 게시자가 자유 사용 가능하다고 표시한 자료를 사용합니다.
 - 가공: 전체 18개 중 체육관 뱃지 8개만 추출하여 nearest-neighbour로 32×32 축소합니다.
 
-게임에 포함되는 최종 파일은 `projects/cobbleventure-player-menu/src/main/resources/assets/cobbleventure_player_menu/textures/gui/badges.png`이며, 세부 셀 좌표와 변환 방식은 `tools/content-manager/badge-image-sources.json`에 기록됩니다.
+게임에 포함되는 최종 파일은 `content-projects/cobbleventure-main/content/resources/cobbleventure-player-menu/assets/cobbleventure_player_menu/textures/gui/badges.png`이며, 세부 셀 좌표와 변환 방식은 `tools/content-manager/badge-image-sources.json`에 기록됩니다.

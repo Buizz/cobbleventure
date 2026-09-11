@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "values": {
+    "generation": "generation_1",
+    "world_plan": "hex_worlds/generation_1.json",
+    "settlement_directory": "settlements/generation_1/",
+    "cave_directory": "caves/generation_1/",
+    "forest_directory": "forests/generation_1/",
+    "underground_road_directory": "underground_roads/generation_1/",
+    "starter_settlement": "cobbleventure:settlement/starter_town",
+    "starter_settlement_suffix": "/starter_town",
+    "professor_suffix": "/professor_oak",
+    "starter_gate_binding": "cves_binding/cobbleventure/story/starter_town_gatekeeper_minho",
+    "flag_trainer_prefix": "cobbleventure:flag/trainer/",
+    "flag_gym_kanto_prefix": "cobbleventure:flag/gym/kanto/",
+    "flag_story_starter_received": "cobbleventure:flag/story/starter_received",
+    "flag_gate_prefix": "cobbleventure:flag/gate/",
+    "flag_gym_unknown_defeated": "cobbleventure:flag/gym/unknown/defeated",
+    "flag_rewards_field_move_prefix": "cobbleventure:flag/rewards/field_move/",
+    "flag_rewards_item_prefix": "cobbleventure:flag/rewards/item/",
+    "flag_rewards_item_coin_case_guest": "cobbleventure:flag/rewards/item/coin_case_guest",
+    "flag_rewards_feature_map": "cobbleventure:flag/rewards/feature/map",
+    "flag_rewards_feature_pc": "cobbleventure:flag/rewards/feature/pc",
+    "flag_rewards_feature_settlement_teleport": "cobbleventure:flag/rewards/feature/settlement_teleport"
+  }
+}

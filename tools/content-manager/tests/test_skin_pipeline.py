@@ -74,7 +74,7 @@ class SkinPipelineTests(unittest.TestCase):
         root = Path(__file__).parents[3]
         project_root = root / "content-projects" / "cobbleventure-main"
         catalog = json.loads((project_root / "content/catalogs/trainer-skin-sources.json").read_text(encoding="utf-8"))
-        texture_root = root / "projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure/textures/entity/trainer"
+        texture_root = root / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure/textures/entity/trainer"
         resources = [entry["resource"] for entry in catalog["skins"]]
         self.assertEqual(len(resources), len(set(resources)))
         for slug in ("hex_maniac", "youngster", "police_officer"):

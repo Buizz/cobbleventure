@@ -306,7 +306,7 @@ final class DungeonDefinitionTest {
         );
         for (Map.Entry<String, String> resource : resources.entrySet()) {
             String name = resource.getKey();
-            var stream = getClass().getClassLoader().getResourceAsStream(
+            var stream = dev.buizz.cobbleventure.content.ContentFiles.open(
                 "data/cobbleventure/dungeons/generation_1/" + name + ".json"
             );
             assertTrue(stream != null, "Missing dungeon resource: " + name);
@@ -526,7 +526,7 @@ final class DungeonDefinitionTest {
     }
 
     private JsonObject resourceObject(String name) throws Exception {
-        var stream = getClass().getClassLoader().getResourceAsStream(
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(
             "data/cobbleventure/dungeons/generation_1/" + name + ".json"
         );
         assertTrue(stream != null, "Missing dungeon resource: " + name);

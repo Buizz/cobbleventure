@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.adventure;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
 import com.mojang.brigadier.CommandDispatcher;
 import dev.buizz.cobbleventure.adventure.event.ServerPlayerEventState;
 import java.util.Collection;
@@ -131,7 +132,7 @@ public final class TrainerBattleState {
             .filter(tag -> tag.startsWith(EVENT_BINDING_PREFIX))
             .map(tag -> tag.substring(tag.lastIndexOf('/') + 1))
             .filter(slug -> !slug.isBlank())
-            .map(slug -> "cobbleventure:flag/trainer/" + slug + "/defeated")
+            .map(slug -> CampaignContent.text("flag_trainer_prefix") + slug + "/defeated")
             .findFirst()
             .orElse(null);
     }
@@ -141,7 +142,7 @@ public final class TrainerBattleState {
             .filter(tag -> tag.startsWith(GYM_LEADER_BINDING_PREFIX))
             .map(tag -> tag.substring(tag.lastIndexOf('/') + 1))
             .filter(slug -> !slug.isBlank())
-            .map(slug -> "cobbleventure:flag/gym/kanto/" + slug + "/defeated")
+            .map(slug -> CampaignContent.text("flag_gym_kanto_prefix") + slug + "/defeated")
             .findFirst()
             .orElse(null);
     }

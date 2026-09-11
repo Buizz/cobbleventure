@@ -92,10 +92,20 @@ SHAPES = {
     ),
     "empty_chamber_1x2": Shape(
         "room", ("west", "east", "north", "south"), 3,
+        markers=(
+            ("npc_spawn_1", "npc_spawn", (8, 1, 8), None),
+            ("npc_spawn_2", "npc_spawn", (8, 1, 24), None),
+        ),
         weight=3, size=(16, 8, 32),
     ),
     "empty_chamber_2x2": Shape(
         "room", ("west", "east", "north", "south"), 3,
+        markers=(
+            ("npc_spawn_1", "npc_spawn", (8, 1, 8), None),
+            ("npc_spawn_2", "npc_spawn", (24, 1, 8), None),
+            ("npc_spawn_3", "npc_spawn", (8, 1, 24), None),
+            ("npc_spawn_4", "npc_spawn", (24, 1, 24), None),
+        ),
         weight=2, size=(32, 8, 32),
     ),
     "stairs_up": Shape(
@@ -421,7 +431,8 @@ def _definition(shape_name: str, shape: Shape, skin_name: str) -> dict[str, obje
     }
 
 
-def generate(root: Path = ROOT, skin_names: tuple[str, ...] | None = None) -> list[Path]:
+def generate(root: Path = ROOT, skin_names: tuple[str, ...] | None = None,
+             shape_names: tuple[str, ...] | None = None) -> list[Path]:
     project = root / PROJECT
     structure_root = project / "content/structures/dungeon_pieces"
     definition_root = project / "content/dungeon_pieces"
@@ -430,6 +441,8 @@ def generate(root: Path = ROOT, skin_names: tuple[str, ...] | None = None) -> li
         if skin_names is not None and skin_name not in skin_names:
             continue
         for shape_name, shape in SHAPES.items():
+            if shape_names is not None and shape_name not in shape_names:
+                continue
             nbt_path = structure_root / skin_name / f"{shape_name}.nbt"
             json_path = definition_root / skin_name / f"{shape_name}.json"
             nbt_path.parent.mkdir(parents=True, exist_ok=True)
@@ -447,6 +460,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--skin", choices=tuple(SKINS), action="append",
                         help="Regenerate only this theme, preserving other editable NBTs.")
+    parser.add_argument("--shape", choices=tuple(SHAPES), action="append",
+                        help="Regenerate only these shapes, preserving other authored pieces.")
     args = parser.parse_args()
-    for generated in generate(skin_names=tuple(args.skin) if args.skin else None):
+    for generated in generate(skin_names=tuple(args.skin) if args.skin else None,
+                              shape_names=tuple(args.shape) if args.shape else None):
         print(generated.relative_to(ROOT).as_posix())

@@ -57,7 +57,7 @@ class KantoLeagueTests(unittest.TestCase):
         self.assertEqual([start['spawn']['building']], list(layout['facilities']))
         self.assertFalse(layout['houses'])
         self.assertFalse(layout['decorations'])
-        dimension = leagues.read(ROOT / 'projects/cobbleventure-world-bootstrap/src/main/resources/data/cobbleventure/dimension/generation_2.json')
+        dimension = leagues.read(ROOT / 'content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/cobbleventure/dimension/generation_2.json')
         self.assertEqual('minecraft:flat', dimension['generator']['type'])
         self.assertEqual(69, sum(layer['height'] for layer in dimension['generator']['settings']['layers']))
 

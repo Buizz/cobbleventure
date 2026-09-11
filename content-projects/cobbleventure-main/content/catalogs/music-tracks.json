@@ -37,6 +37,14 @@
   },
   "tracks": [
     {
+      "id": "kanto.indigo_plateau",
+      "sound_event": "music.kanto.indigo_plateau",
+      "resource": "music/kanto/indigo_plateau",
+      "source_file": "another-red-bgm/PWT.ogg",
+      "category": "league",
+      "usage": "석영고원 및 관동 포켓몬리그 내부"
+    },
+    {
       "id": "facility.building",
       "sound_event": "music.facility.building",
       "resource": "music/facility/building",

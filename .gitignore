@@ -77,6 +77,9 @@ __pycache__/
 dist/
 staging/
 generated/
+/pack/overrides/development-placeholder/config/cobbleventure/content/
+/pack/overrides/structure-builder/config/cobbleventure/content/
+/pack/overrides/live-nbt-editor/config/cobbleventure/content/
 
 # Temporary files
 *.tmp

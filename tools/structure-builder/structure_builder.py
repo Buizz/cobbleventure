@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 PROJECT = Path("projects/cobbleventure-structure-builder")
-GENERATED_RESOURCES = PROJECT / "src/generated/resources"
+GENERATED_RESOURCES = Path("staging/structure-builder-resources")
 SOURCE_STRUCTURES = Path("content/structures")
 CATALOG_RESOURCE = Path(
     "data/cobbleventure_builder/structure_builder/catalog.json"
@@ -92,7 +92,39 @@ def deploy_builder_world(root: Path, instance: Path) -> dict[str, object]:
     jar_backups: list[tuple[Path, Path]] = []
     world_installed = False
     jar_installed = False
+    support_installed: list[Path] = []
+    support_backups: list[tuple[Path, Path]] = []
+    support_temporary: list[Path] = []
     try:
+        support = []
+        for prefix in ("cobbleventure-content-runtime", "cobbleventure-theme-blocks"):
+            for source in (packaged / "mods").glob(prefix + "-*.jar"):
+                support.append((source, mods / source.name))
+                for installed in mods.glob(prefix + "-*.jar"):
+                    installed.resolve().relative_to(instance)
+                    backup = _available_backup_path(installed)
+                    os.replace(installed, backup)
+                    support_backups.append((installed, backup))
+        source_content = packaged / "config/cobbleventure/content"
+        if source_content.is_dir():
+            support.append((source_content, instance / "config/cobbleventure/content"))
+        for source, target in support:
+            target.resolve().relative_to(instance)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            temporary = target.with_name(target.name + ".builder-sync.tmp")
+            if temporary.exists():
+                raise OSError(f"이전 교체 임시 경로를 먼저 확인해 주세요: {temporary}")
+            support_temporary.append(temporary)
+            if source.is_dir():
+                shutil.copytree(source, temporary)
+            else:
+                shutil.copy2(source, temporary)
+            if target.exists():
+                backup = _available_backup_path(target)
+                os.replace(target, backup)
+                support_backups.append((target, backup))
+            os.replace(temporary, target)
+            support_installed.append(target)
         for old_jar in mods.glob("cobbleventure-structure-builder-*.jar"):
             backup_jar = _available_backup_path(old_jar)
             os.replace(old_jar, backup_jar)
@@ -105,6 +137,14 @@ def deploy_builder_world(root: Path, instance: Path) -> dict[str, object]:
         os.replace(temporary_jar, target_jar)
         jar_installed = True
     except OSError as error:
+        for target in reversed(support_installed):
+            if target.is_dir(): shutil.rmtree(target)
+            else: target.unlink(missing_ok=True)
+        for target, backup in reversed(support_backups):
+            os.replace(backup, target)
+        for temporary in support_temporary:
+            if temporary.is_dir(): shutil.rmtree(temporary)
+            else: temporary.unlink(missing_ok=True)
         if jar_installed:
             target_jar.unlink(missing_ok=True)
         if world_installed and target_world.exists():
@@ -122,6 +162,9 @@ def deploy_builder_world(root: Path, instance: Path) -> dict[str, object]:
         ) from error
     for _, backup_jar in jar_backups:
         backup_jar.unlink(missing_ok=True)
+    for _, backup in support_backups:
+        if backup.is_dir(): shutil.rmtree(backup)
+        else: backup.unlink(missing_ok=True)
 
     return {
         "instance": str(instance),

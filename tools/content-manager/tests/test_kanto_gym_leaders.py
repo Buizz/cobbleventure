@@ -42,13 +42,13 @@ class KantoGymLeaderTests(unittest.TestCase):
         self.assertEqual(expected, roster_resources)
 
         texture_root = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap"
             / "assets/rctmod/textures/trainers/single"
         )
         for slug in expected.values():
             custom = not slug.startswith("kanto_")
             texture = (
-                ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources"
+                ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap"
                 / "assets/cobbleventure/textures/entity/trainer" / f"{slug}.png"
                 if custom else texture_root / f"{slug}.png"
             )
@@ -96,7 +96,7 @@ class KantoGymLeaderTests(unittest.TestCase):
             "kanto_giovanni": "bbe69b2e-c900-59ac-be96-a99b46202bd3",
         }
         texture_root = (
-            ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources"
+            ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap"
             / "assets/rctmod/textures/trainers/single"
         )
         skin_root = (

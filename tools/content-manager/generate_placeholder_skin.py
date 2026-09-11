@@ -67,7 +67,7 @@ def main() -> None:
     for x, y in ((22, 22), (23, 21), (24, 21), (25, 22), (25, 23), (24, 24), (23, 25), (23, 28)):
         pixels[y][x] = LIGHT
 
-    output = Path(__file__).parents[2] / "projects" / "cobbleventure-world-bootstrap" / "src" / "main" / "resources" / "assets" / "cobbleventure" / "textures" / "entity" / "trainer" / "unimplemented.png"
+    output = Path(__file__).parents[2] / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap" / "assets" / "cobbleventure" / "textures" / "entity" / "trainer" / "unimplemented.png"
     write_png(output, pixels)
     print(output)
 

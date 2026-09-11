@@ -21,6 +21,39 @@ SPEC.loader.exec_module(pack_builder)
 
 
 class PackBuilderTests(unittest.TestCase):
+    def test_mods_only_pack_excludes_content_and_uses_a_separate_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            profile_path = self._fixture(root)
+            overrides = root / "pack/overrides/smoke"
+            (overrides / "mods").mkdir()
+            (overrides / "mods/engine.jar").write_bytes(b"engine")
+            (overrides / "mods/notes.txt").write_text("not a mod")
+            content = overrides / "config/cobbleventure/content"
+            content.mkdir(parents=True)
+            (content / "content-manifest.json").write_text("{}")
+            full = pack_builder.build_pack(root, profile_path)
+            full_before = full.read_bytes()
+            mods = pack_builder.build_pack(root, profile_path, mods_only=True)
+            self.assertNotEqual(full, mods)
+            self.assertEqual(full_before, full.read_bytes())
+            with zipfile.ZipFile(full) as archive:
+                self.assertIn("overrides/config/cobbleventure/content/content-manifest.json", archive.namelist())
+            with zipfile.ZipFile(mods) as archive:
+                names = archive.namelist()
+                self.assertIn("overrides/mods/engine.jar", names)
+                self.assertNotIn("overrides/mods/notes.txt", names)
+                self.assertFalse(any(name.startswith("overrides/config/") for name in names))
+
+    def test_mods_only_does_not_require_local_content_assets(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            profile_path = self._fixture(root)
+            profile = json.loads((root / profile_path).read_text())
+            profile["local_resourcepacks"] = [{"source": "local-assets/missing.zip", "target": "missing.zip", "pack_format": 34}]
+            (root / profile_path).write_text(json.dumps(profile))
+            self.assertTrue(pack_builder.build_pack(root, profile_path, mods_only=True).is_file())
+
     def _write_png(self, path: Path, width: int = 400, height: int = 400) -> None:
         def chunk(name: bytes, data: bytes) -> bytes:
             payload = name + data

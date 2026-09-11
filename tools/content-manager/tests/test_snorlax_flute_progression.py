@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 CONTENT = ROOT / "content-projects/cobbleventure-main/content"
-RESOURCES = ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources"
+RESOURCES = ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap"
 FLUTE = "cobbleventure_bootstrap:poke_flute"
 
 

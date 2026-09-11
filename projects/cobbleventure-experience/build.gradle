@@ -79,3 +79,8 @@ tasks.register('installDevelopmentJar', Copy) {
 }
 
 tasks.named('build') { finalizedBy 'installDevelopmentJar' }
+
+dependencies {
+    implementation 'dev.buizz.cobbleventure:cobbleventure-content-runtime:1.0.0'
+}
+apply from: rootProject.file('../../gradle/external-content.gradle')

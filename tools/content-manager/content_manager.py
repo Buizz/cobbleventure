@@ -40,6 +40,7 @@ if str(CONTENT_MANAGER_ROOT) not in sys.path:
 
 import laboratory_research
 import league_facilities
+import content_deployment
 from tools.npc_event_presets import BATTLE_PRESETS, materialize_event_document
 from cves import (
     AstCodecError,
@@ -287,16 +288,19 @@ VALID_CLASSIFICATIONS = {
     "development",
 }
 BUILD_COMMANDS = {
+    "content": "콘텐츠 빌드",
+    "content-install": "인스턴스 콘텐츠 교체",
+    "mods-pack": "모드팩 빌드 · 콘텐츠 제외",
     "validate": "콘텐츠와 의존성 검사",
     "test": "Python 도구 회귀 테스트",
-    "generate": "RCT와 실제 게임용 AI 프로필 생성",
+    "generate": "엔진 JAR 재빌드 없이 외부 콘텐츠팩 생성",
     "mod-ai": "독립 Battle AI 모드 JAR 생성",
     "mod-adventure": "게임플레이 규칙 모드 JAR 생성",
     "mod-bootstrap": "월드 부트스트랩 모드 JAR 생성",
     "mod-menu": "플레이어 메뉴 모드 JAR 생성",
     "mod-casino": "커스텀 가챠 기계 애드온 JAR 생성",
     "pack-smoke": "최소 CurseForge 임포트 ZIP 생성",
-    "pack": "개발용 CurseForge ZIP 생성",
+    "pack": "전체 빌드 · JAR와 콘텐츠를 포함한 CurseForge 설치팩",
     "pack-server": "NeoForge 전용 서버 준비 ZIP 생성",
     "validate-pack": "실제 모드팩 빌드 준비 상태 검사",
     "builder-world": "독립 건축 월드 CurseForge ZIP 생성",
@@ -5440,8 +5444,7 @@ def _gacha_item_asset_paths(core_root: Path, item: str) -> tuple[Path, Path]:
     if texture_name is None:
         raise ValueError("지원하지 않는 카지노 아이템 그래픽입니다.")
     asset_root = (
-        core_root / "projects" / "cobbleventure-casino" / "src" / "main"
-        / "resources" / "assets" / "cobbleventure_casino"
+        core_root / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-casino" / "assets" / "cobbleventure_casino"
     )
     return (
         asset_root / "textures" / "item" / f"{texture_name}.png",
@@ -6244,7 +6247,7 @@ def _economy_localizations(root: Path) -> tuple[dict[str, str], dict[str, str]]:
     en: dict[str, str] = {}
     language_paths = [
         root / ".tmp" / "cobblemon-1.7.3-source" / "common" / "src" / "main" / "resources" / "assets" / "cobblemon" / "lang",
-        root / "projects" / "cobbleventure-player-menu" / "src" / "main" / "resources" / "assets" / "cobbleventure_player_menu" / "lang",
+        root / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-player-menu" / "assets" / "cobbleventure_player_menu" / "lang",
     ]
     for directory in language_paths:
         for locale, target in (("ko_kr", ko), ("en_us", en)):
@@ -6430,8 +6433,8 @@ def _economy_editor_catalog(root: Path, species: list[dict[str, Any]]) -> dict[s
     data_roots = [
         root / ".tmp" / "cobblemon-1.7.3-source" / "common" / "src" / "main" / "resources" / "data",
         root / ".tmp" / "cobblemon-1.7.3-full" / "cobblemon-1.7.3" / "common" / "src" / "main" / "resources" / "data",
-        root / "projects" / "cobbleventure-world-bootstrap" / "src" / "main" / "resources" / "data",
-        root / "projects" / "cobbleventure-world-bootstrap" / "src" / "generated" / "resources" / "data",
+        root / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap" / "data",
+        root / "staging" / "compiled-content" / "data",
     ]
     for data_root in data_roots:
         if not data_root.is_dir():
@@ -6503,7 +6506,7 @@ def _economy_editor_catalog(root: Path, species: list[dict[str, Any]]) -> dict[s
     resource_roots = [
         root / ".tmp" / "cobblemon-1.7.3-source" / "common" / "src" / "main" / "resources" / "assets",
         root / ".tmp" / "cobblemon-1.7.3-full" / "cobblemon-1.7.3" / "common" / "src" / "main" / "resources" / "assets",
-        root / "projects" / "cobbleventure-player-menu" / "src" / "main" / "resources" / "assets",
+        root / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-player-menu" / "assets",
     ]
     for assets in resource_roots:
         if not assets.is_dir():
@@ -6696,14 +6699,14 @@ def _economy_rule_matches(rule: dict[str, Any], species: dict[str, Any]) -> bool
     return True
 
 
-def _write_economy_species_overrides(root: Path, catalog: dict[str, Any]) -> list[Issue]:
+def _write_economy_species_overrides(root: Path, catalog: dict[str, Any], output_root: Path | None = None) -> list[Issue]:
     issues: list[Issue] = []
     source_root = _cobblemon_species_root(root)
     if source_root is None:
         if catalog.get("pokemon_drop_rules") or catalog.get("pokemon_drop_overrides"):
             _issue(issues, "warning", root / "content/catalogs/economy.json", "$.pokemon_drop_rules", "Cobblemon 종족 원본을 찾지 못해 인게임 루트 테이블 생성은 건너뜁니다.")
         return issues
-    output_root = root / "projects/cobbleventure-world-bootstrap/src/generated/resources/data/cobblemon/species"
+    output_root = output_root or root / "staging/compiled-content/data/cobblemon/species"
     manifest_path = output_root / ".cobbleventure-economy-manifest.json"
     previous: list[str] = []
     if manifest_path.exists():
@@ -7583,16 +7586,15 @@ def create_interior_space(root: Path, payload: dict[str, Any]) -> dict[str, Any]
 
 
 def validate_easy_npc_preset_ownership(
-    core_root: Path, npc_ids: set[str]
+    core_root: Path, npc_ids: set[str], project_root: Path | None = None
 ) -> list[Issue]:
     """Reject duplicate presets and module-owned copies of source-authored NPCs."""
     issues: list[Issue] = []
-    resource_roots = sorted((core_root / "projects").glob("*/src/main/resources"))
+    resource_directory = (project_root or core_root / "content-projects/cobbleventure-main") / "content/resources"
+    resource_roots = sorted(resource_directory.glob("*"))
     by_resource: dict[str, list[Path]] = {}
     source_slugs = {npc_id.rsplit("/", 1)[-1] for npc_id in npc_ids}
-    canonical_root = (
-        core_root / "projects" / "cobbleventure-world-bootstrap" / "src" / "main" / "resources"
-    ).resolve()
+    canonical_root = (resource_directory / "cobbleventure-world-bootstrap").resolve()
     for resource_root in resource_roots:
         preset_root = resource_root / "data" / "easy_npc" / "preset" / "encounter"
         for path in sorted(preset_root.glob("*.npc.snbt")) if preset_root.is_dir() else []:
@@ -7630,6 +7632,12 @@ def validate_repository(
     issues = validate_dependency_lock(
         dependency_root / "pack" / dependency_lock_name, strict_pack
     )
+    if (root / "content/catalogs/campaign.json").exists() or (root / "content/catalogs/theme-blocks.json").exists():
+        import engine_content_contract
+        try:
+            engine_content_contract.validate(root)
+        except (OSError, ValueError, TypeError, KeyError) as error:
+            _issue(issues, "error", root / "content/catalogs", "$", str(error))
     issues.extend(_validate_cves_project(root, dependency_root))
     quest_ids: dict[str, Path] = {}
     quest_root = root / "content" / "quests"
@@ -8093,7 +8101,7 @@ def validate_repository(
             seen_forests.add(forest_id)
 
     issues.extend(validate_easy_npc_preset_ownership(
-        dependency_root, set(seen_content)
+        dependency_root, set(seen_content), root
     ))
 
     errors = sum(issue.level == "error" for issue in issues)
@@ -11919,6 +11927,17 @@ def _run_build(
         raise ValueError("지원하지 않는 내보내기 언어입니다.")
     if cobblemon_target not in COBBLEMON_BUILD_TARGETS:
         raise ValueError("지원하지 않는 Cobblemon 빌드 대상입니다.")
+    if command == "content-install":
+        try:
+            project_id = load_json(project_root / "project.json")["id"]
+            installation = content_deployment.install(core_root, project_id)
+            return {"command": command, "description": BUILD_COMMANDS[command], "success": True,
+                "return_code": 0, "installation": installation,
+                "output": f"[OK] 콘텐츠 교체 완료\n경로: {installation['instance_path']}\n"
+                    f"파일: {installation['files']}개\n콘텐츠: {installation['sha256']}\n게임을 다시 실행하면 적용됩니다."}
+        except (OSError, ValueError, RuntimeError, zipfile.BadZipFile) as error:
+            return {"command": command, "description": BUILD_COMMANDS[command], "success": False,
+                "return_code": None, "output": f"[ERROR] 콘텐츠 교체 실패: {error}"}
     special_target: tuple[Path, bool] | None = None
     if command in SPECIAL_PACK_INSTALLS:
         try:
@@ -11937,14 +11956,17 @@ def _run_build(
                 "output": f"[ERROR] 인스턴스 자동 설치 준비 실패: {error}",
             }
     try:
-        music_catalog, _ = sync_local_music_catalog(project_root, core_root)
-        music_library = music_catalog.get("local_library", {})
-        music_status = (
-            "[INFO] 로컬 음원 자동 갱신: "
-            f"OGG {music_library.get('registered_ogg', 0)}곡 / "
-            f"사용 태그 {music_library.get('registered_tracks', 0)}개 / "
-            f"누락 {music_library.get('missing_tracks', 0)}개"
-        )
+        if command == "mods-pack":
+            music_status = "[INFO] 엔진과 모드만 빌드합니다. 콘텐츠 생성은 실행하지 않습니다."
+        else:
+            music_catalog, _ = sync_local_music_catalog(project_root, core_root)
+            music_library = music_catalog.get("local_library", {})
+            music_status = (
+                "[INFO] 로컬 음원 자동 갱신: "
+                f"OGG {music_library.get('registered_ogg', 0)}곡 / "
+                f"사용 태그 {music_library.get('registered_tracks', 0)}개 / "
+                f"누락 {music_library.get('missing_tracks', 0)}개"
+            )
     except (OSError, ValueError, json.JSONDecodeError, DuplicateKeyError) as error:
         return {
             "command": command,
@@ -11969,7 +11991,7 @@ def _run_build(
                 "COBBLEVENTURE_COBBLEMON_TARGET": cobblemon_target,
             },
             capture_output=True,
-            timeout=300,
+            timeout=1800 if command in {"pack", "mods-pack"} else 300,
             check=False,
         )
         stdout = _decode_build_output(completed.stdout)
@@ -12020,7 +12042,7 @@ def _run_build(
             "description": BUILD_COMMANDS[command],
             "success": False,
             "return_code": None,
-            "output": f"5분 제한 시간을 초과했습니다.\n{output}",
+            "output": f"{'30' if command in {'pack', 'mods-pack'} else '5'}분 제한 시간을 초과했습니다.\n{output}",
         }
 
 
@@ -12054,24 +12076,9 @@ def _save_structure_builder_settings(
         return str(resolved.resolve(strict=False))
     value = normalize(instance_path)
     live_value = normalize(live_instance_path)
-    path = _content_manager_settings_path(root)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    document = {
-        "schema_version": 1,
-        "structure_builder": {
-            "instance_path": value,
-            "live_instance_path": live_value,
-        },
-    }
-    temporary = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
-    try:
-        temporary.write_text(
-            json.dumps(document, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
-        os.replace(temporary, path)
-    finally:
-        temporary.unlink(missing_ok=True)
+    content_deployment.update_settings(root, "structure_builder", {
+        "instance_path": value, "live_instance_path": live_value,
+    })
     return {"instance_path": value, "live_instance_path": live_value}
 
 
@@ -15276,8 +15283,8 @@ def load_structure_size_catalog(
         structures[resource_id] = {**metadata, "source": source}
 
     resource_roots = [
-        core_root / "projects" / "cobbleventure-world-bootstrap" / "src" / "main" / "resources",
-        core_root / "projects" / "cobbleventure-world-bootstrap" / "src" / "generated" / "resources",
+        core_root / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap",
+        core_root / "staging" / "compiled-content",
     ]
     for resource_root in resource_roots:
         if not resource_root.is_dir():
@@ -15391,8 +15398,8 @@ def load_structure_model(
         f"data/{namespace}/structures/{structure_path}.nbt",
     ]
     resource_roots = [
-        core_root / "projects" / "cobbleventure-world-bootstrap" / "src" / "main" / "resources",
-        core_root / "projects" / "cobbleventure-world-bootstrap" / "src" / "generated" / "resources",
+        core_root / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap",
+        core_root / "staging" / "compiled-content",
     ]
     for resource_root in resource_roots:
         for entry_name in entry_names:
@@ -15440,8 +15447,8 @@ def structure_catalog_signature(
         if path.with_suffix(".structure.json").is_file()
     )
     for resource_root in [
-        core_root / "projects" / "cobbleventure-world-bootstrap" / "src" / "main" / "resources",
-        core_root / "projects" / "cobbleventure-world-bootstrap" / "src" / "generated" / "resources",
+        core_root / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap",
+        core_root / "staging" / "compiled-content",
     ]:
         if resource_root.is_dir():
             candidates.extend(resource_root.glob("data/*/structure*/**/*.nbt"))
@@ -15799,11 +15806,7 @@ def create_handler(
         local_catalog_path = root / "content" / "catalogs" / "trainer-skin-sources.json"
         local_skin_root = (
             core_root
-            / "projects"
-            / "cobbleventure-world-bootstrap"
-            / "src"
-            / "main"
-            / "resources"
+            / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap"
             / "assets"
         ).resolve()
         local_count = 0
@@ -15971,11 +15974,7 @@ def create_handler(
                 / "fonts"
                 / "PretendardVariable.woff2",
                 "/fonts/pokemon_bw.ttf": core_root
-                / "projects"
-                / "cobbleventure-world-bootstrap"
-                / "src"
-                / "main"
-                / "resources"
+                / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap"
                 / "assets"
                 / "cobbleventure"
                 / "font"
@@ -16117,6 +16116,12 @@ def create_handler(
                 result = validate_repository(root, strict_pack, core_root)
                 self._json(200 if result.valid else 422, result.as_json())
                 return
+            if request.path == "/api/content-deployment":
+                try:
+                    self._json(200, content_deployment.status(core_root))
+                except (OSError, ValueError) as error:
+                    self._json(400, {"error": str(error)})
+                return
             if request.path == "/api/dashboard":
                 result = validate_repository(root, dependency_root=core_root)
                 self._json(
@@ -16127,8 +16132,8 @@ def create_handler(
                         "gyms": len(load_json(root / "content" / "catalogs" / "gyms.json").get("gyms", [])),
                         "validation": result.as_json(),
                         "build_commands": [
-                            {"id": command, "description": description}
-                            for command, description in BUILD_COMMANDS.items()
+                            {"id": command, "description": BUILD_COMMANDS[command]}
+                            for command in ("pack", "mods-pack", "content", "content-install")
                         ] if active_project.is_default else [],
                         "export_languages": [
                             {"id": language, "name": name}
@@ -16187,7 +16192,7 @@ def create_handler(
                 return
             if request.path == "/api/badge-atlas":
                 try:
-                    atlas = core_root / "projects" / "cobbleventure-player-menu" / "src" / "main" / "resources" / "assets" / "cobbleventure_player_menu" / "textures" / "gui" / "badges.png"
+                    atlas = core_root / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-player-menu" / "assets" / "cobbleventure_player_menu" / "textures" / "gui" / "badges.png"
                     self._bytes(200, atlas.read_bytes(), "image/png")
                 except OSError as error:
                     self._json(404, {"error": f"배지 아틀라스를 찾을 수 없습니다: {error}"})
@@ -16267,11 +16272,7 @@ def create_handler(
                 match = re.fullmatch(r"([a-z0-9_.-]+):trainer_skin/([a-z0-9_./-]+)", resource)
                 skin_root = (
                     core_root
-                    / "projects"
-                    / "cobbleventure-world-bootstrap"
-                    / "src"
-                    / "main"
-                    / "resources"
+                    / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap"
                     / "assets"
                 ).resolve()
                 manual_retouch_root = (
@@ -17125,6 +17126,23 @@ def create_handler(
                             "core_path": str(core_root),
                         },
                     )
+                except (OSError, ValueError) as error:
+                    self._json(400, {"error": str(error)})
+                return
+            if request.path == "/api/content-deployment":
+                try:
+                    payload = self._read_json()
+                    value = payload.get("instance_path") if isinstance(payload, dict) else None
+                    if not isinstance(value, str):
+                        raise ValueError("게임 인스턴스 경로를 입력해 주세요.")
+                    if not build_lock.acquire(blocking=False):
+                        self._json(409, {"error": "작업 실행 중에는 대상 인스턴스를 변경할 수 없습니다."})
+                        return
+                    try:
+                        content_deployment.save_instance(core_root, value)
+                    finally:
+                        build_lock.release()
+                    self._json(200, content_deployment.status(core_root))
                 except (OSError, ValueError) as error:
                     self._json(400, {"error": str(error)})
                 return

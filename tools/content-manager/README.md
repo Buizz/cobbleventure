@@ -3,7 +3,31 @@
 Python 표준 라이브러리만으로 실행되는 콘텐츠 제작·검증 도구다. CLI, 로컬 관리
 화면과 Web API는 같은 검증 코드를 사용한다.
 
+게임 콘텐츠만 갱신할 때는 `build.bat content`를 실행한다. 엔진 JAR을 재빌드하지
+않고 `dist/cobbleventure-content.zip`을 생성한다. `build.bat generate`도 같은
+경로를 사용한다. 최초 엔진 전환, 설치 위치와 재시작 범위는
+[콘텐츠·엔진 분리 계약](../../docs/implementation/CONTENT_ENGINE_SEPARATION.md)을 따른다.
+
+콘텐츠 계약 2부터 정적 원본은 프로젝트의 `content/resources/`, 테마 제작 원본은
+`object-workspace/`에 둔다. 캠페인 설정과 테마 블록 등록은 각각
+`content/catalogs/campaign.json`, `theme-blocks.json`을 수정한다. 공통
+`cobbleventure-content-runtime` JAR을 포함한 전체 설치를 최초 한 번 수행해야 한다.
+
 ## 실행
+
+웹의 `빌드 · 콘텐츠 교체` 화면은 다음 네 가지 작업을 제공한다.
+
+| 작업 | 결과 |
+|------|------|
+| 전체 빌드 | 엔진 JAR과 콘텐츠를 모두 빌드하여 CurseForge 설치 ZIP에 포함한다. |
+| 모드팩 빌드 | JAR·모드만 빌드하여 별도 `-mods-only.zip`에 포함한다. 콘텐츠와 설정은 제외한다. |
+| 콘텐츠 빌드 | 엔진 JAR을 재빌드하지 않고 콘텐츠 ZIP만 생성한다. |
+| 콘텐츠 교체 | 마지막으로 빌드한 콘텐츠 ZIP과 관련 스킨을 지정한 게임 인스턴스에 적용한다. |
+
+교체 대상은 인스턴스 경로 입력란에서 선택하고 저장한다. 외부 콘텐츠를 지원하는
+엔진을 최초 한 번 설치한 뒤, 게임을 종료한 상태에서 교체한다. 저장 월드·모드·
+다른 설정은 유지하며 교체 실패 시 이전 콘텐츠를 복구한다. 건축 월드 도구는
+`라이브 NBT 편집` 화면에서 사용한다.
 
 저장소 루트에서 다음 중 하나를 사용한다.
 
@@ -16,13 +40,15 @@ build.bat test
 build.bat generate
 build.bat pack-smoke
 build.bat pack
+build.bat mods-pack
+build.bat content
 build.bat pack-release
 build.bat builder-world
 ```
 
 상점 이름·카테고리와 EasyNPC 대사처럼 클라이언트의 마인크래프트 언어 설정을
 직접 읽지 못하는 고정 텍스트는 빌드할 때 언어를 선택한다. 두 번째 인수에
-`ko_kr`(기본값) 또는 `en_us`를 전달하거나, 관리 화면의 `빌드 및 검사`에서
+`ko_kr`(기본값) 또는 `en_us`를 전달하거나, 관리 화면의 `빌드 · 콘텐츠 교체`에서
 내보내기 언어를 선택한다.
 
 ```bat
@@ -39,9 +65,10 @@ build.bat generate ko_kr
 | `build.bat web` | 콘텐츠 관리 화면과 외부 로컬 도구용 Web API를 함께 실행한다. | `127.0.0.1:8765`에서 서버가 시작됨 |
 | `build.bat api` | 기존 자동화 호환을 위한 `web` 명령의 별칭이다. | `web`과 동일하게 실행됨 |
 | `build.bat test` | 콘텐츠 검증기와 로컬 Web API의 회귀 테스트를 실행한다. | 모든 Python 단위 테스트가 통과함 |
-| `build.bat generate` | 트레이너 런타임 데이터와 CVES Runtime IR·NPC 바인딩을 생성한다. | 기존 출력과 `generated/cves/data` 데이터팩 산출물이 생성됨 |
+| `build.bat content` / `build.bat generate` | 트레이너·CVES·월드·지도 등 외부 콘텐츠 번들을 생성한다. | `dist/cobbleventure-content.zip` 생성, 엔진 JAR 변경 없음 |
 | `build.bat pack-smoke` | 별도 팩 빌더로 최소 CurseForge 임포트 ZIP을 생성하고 검증한다. | `dist`에 ZIP과 SHA-256이 생성됨 |
-| `build.bat pack` | 일반 검증 후 별도 팩 빌더로 임시 개발 ZIP을 생성한다. | `dist`에 개발 ZIP과 SHA-256이 생성됨 |
+| `build.bat pack` | 엔진 JAR과 콘텐츠를 모두 빌드하여 CurseForge 설치 ZIP을 생성한다. | `dist`에 개발 ZIP과 SHA-256이 생성됨 |
+| `build.bat mods-pack` | JAR·모드만 빌드하여 콘텐츠·설정을 제외한 설치 ZIP을 생성한다. | 별도 `-mods-only.zip` 생성, 전체 빌드 ZIP 유지 |
 | `build.bat pack-release` | 정식 패키징 조건을 엄격 검증한다. | Lock이 `draft`인 현재는 실패하고 ZIP을 만들지 않음 |
 | `build.bat builder-world` | 독립 건축 평지 월드와 경량 CurseForge ZIP을 생성한다. | 월드, 자체 JAR과 건축용 외부 모드가 포함된 ZIP 생성 |
 
@@ -172,7 +199,7 @@ route·dimension·space 목적지는 명시적인 `anchor`가 필수지만 독�
 고정한다. V1은 임의 hex·cave·forest 선택을 허용하지 않는다.
 
 건축 인스턴스 경로는 Git에 포함되지 않는
-`tools/content-manager/settings.local.json`에 저장된다. 웹 화면의 `빌드 및 검사`에서
+`tools/content-manager/settings.local.json`에 저장된다. 웹 화면의 `라이브 NBT 편집`에서
 CurseForge 프로필 폴더를 지정한다. 이후 `건축 팩 빌드`는 독립 ZIP을 생성하고,
 `건축 월드 갱신`은 Minecraft가 종료된 상태에서 기존 월드를 백업한 뒤 새 월드와
 자체 건축 모드 JAR만 해당 인스턴스에 설치한다. CurseForge 프로필을 다시 임포트하거나

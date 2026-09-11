@@ -566,15 +566,15 @@ record DungeonPieceLayout(
             .map(ResolvedMarker::placementIndex)
             .distinct()
             .filter(index -> preferredPlacement < 0 || index == preferredPlacement)
-            // A placement hosts one encounter group, even when extra slots remain.
-            .filter(index -> occupancy.getOrDefault(index, 0) == 0)
+            // Authored slots define room capacity. A second encounter may use
+            // remaining slots; compatible-slot checks still enforce spacing.
             .sorted(java.util.Comparator
                 .comparingInt((Integer index) -> floorOccupancy.getOrDefault(
                     floorY(index), 0
                 ))
-                .thenComparingInt(index -> occupancy.getOrDefault(index, 0))
                 .thenComparingInt(index -> index == preferredPlacement ? 0
                     : isOrdinaryChamber(index) ? 1 : 2)
+                .thenComparingInt(index -> occupancy.getOrDefault(index, 0))
                 .thenComparingDouble(index -> -npcPlacementSeparationSquared(
                     index, available, used
                 ))

@@ -28,7 +28,7 @@ class MinecraftBitmapFontTest(unittest.TestCase):
             second = temporary / "second.zip"
             font = (
                 ROOT
-                / "projects/cobbleventure-world-bootstrap/src/main/resources/"
+                / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/"
                 "assets/cobbleventure/font/pokemon_bw.ttf"
             )
             with zipfile.ZipFile(source, "w") as archive:

@@ -17,7 +17,7 @@ Classic(Steve) 모델이며 리사이즈나 색상 변경을 하지 않았다.
 별도 파일을 관장 JSON에 복제하거나 포켓몬 라인업·진행 순서를 바꾸지 않는다.
 
 원본 제공 파일이 없어도 빌드할 수 있도록 실제 텍스처는
-`projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure/textures/entity/trainer/`
+`content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure/textures/entity/trainer/`
 에 포함한다. EasyNPC용 스킨은 기존 프리셋 생성기로 다시 생성한다.
 
 제공된 네 파일은 파일명으로만 PlanetMinecraft 출처를 확인했다.

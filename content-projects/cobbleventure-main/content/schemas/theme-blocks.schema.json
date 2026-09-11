@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "테마 블록 등록 카탈로그",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "blocks"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "blocks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "behavior",
+          "map_color",
+          "hardness",
+          "resistance",
+          "sound",
+          "requires_tool",
+          "occlusion",
+          "push_reaction",
+          "light"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+$"
+          },
+          "behavior": {
+            "enum": [
+              "bookshelf",
+              "directional",
+              "double_display_case",
+              "double_glass_counter",
+              "double_glow_window",
+              "fixed_directional",
+              "glow_window",
+              "grave",
+              "large_bed",
+              "research_device",
+              "rocket_machine_one",
+              "rocket_machine_three",
+              "rocket_machine_two",
+              "stone",
+              "wide_furniture"
+            ]
+          },
+          "map_color": {
+            "enum": [
+              "COLOR_BLUE",
+              "COLOR_GREEN",
+              "COLOR_LIGHT_BLUE",
+              "COLOR_LIGHT_GRAY",
+              "COLOR_LIGHT_GREEN",
+              "COLOR_ORANGE",
+              "COLOR_PURPLE",
+              "COLOR_YELLOW",
+              "GOLD",
+              "METAL",
+              "SAND",
+              "TERRACOTTA_YELLOW"
+            ]
+          },
+          "hardness": {
+            "type": "number",
+            "minimum": 0
+          },
+          "resistance": {
+            "type": "number",
+            "minimum": 0
+          },
+          "sound": {
+            "enum": [
+              "STONE",
+              "WOOD",
+              "METAL",
+              "GLASS"
+            ]
+          },
+          "requires_tool": {
+            "type": "boolean"
+          },
+          "occlusion": {
+            "type": "boolean"
+          },
+          "push_reaction": {
+            "enum": [
+              "NORMAL",
+              "BLOCK",
+              "DESTROY",
+              "IGNORE",
+              "PUSH_ONLY"
+            ]
+          },
+          "light": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 15
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

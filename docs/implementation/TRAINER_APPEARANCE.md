@@ -64,7 +64,7 @@ RCT Mob의 `type`은 외형 클래스가 아니라 RCT 내부 트레이너 유�
 체크무늬와 물음표가 있는 유효한 64×64 Minecraft 스킨이며 다음 경로에 있다.
 
 ```text
-projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure/textures/entity/trainer/unimplemented.png
+content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure/textures/entity/trainer/unimplemented.png
 ```
 
 원본은 `tools/content-manager/generate_placeholder_skin.py`로 재현할 수 있다.

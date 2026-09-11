@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.playermenu.client;
 
+import dev.buizz.cobbleventure.content.ContentFiles;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -164,7 +165,7 @@ final class LeagueProgressionContent {
     }
 
     private static JsonObject read(String name) throws IOException {
-        try (InputStream stream = LeagueProgressionContent.class.getResourceAsStream(ROOT + name)) {
+        try (InputStream stream = ContentFiles.open(ROOT + name)) {
             if (stream == null) throw new IOException("Missing trainer-card resource: " + name);
             return JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
         }

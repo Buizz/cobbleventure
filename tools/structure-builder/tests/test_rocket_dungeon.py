@@ -14,7 +14,7 @@ from content_manager import _read_minecraft_structure_root
 class RocketDungeonTests(unittest.TestCase):
     def test_saved_rooms_have_complete_machines_and_connected_anchors(self):
         content = gen.ROOT / gen.PROJECT / 'content'
-        resources = gen.ROOT / 'projects/cobbleventure-theme-blocks/src/main/resources/assets/cobbleventure_theme_blocks/blockstates'
+        resources = gen.ROOT / 'content-projects/cobbleventure-main/content/resources/cobbleventure-theme-blocks/assets/cobbleventure_theme_blocks/blockstates'
         for name, shape in gen.SHAPES.items():
             with self.subTest(piece=name):
                 data = (content / f'structures/dungeon_pieces/rocket/{name}.nbt').read_bytes()

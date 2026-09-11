@@ -3434,7 +3434,7 @@ class ContentManagerTests(unittest.TestCase):
         generator = (sources / "ForestDimensionGenerator.java").read_text(encoding="utf-8")
         bootstrap = (sources / "CobbleventureBootstrap.java").read_text(encoding="utf-8")
         dimension = content_manager.load_json(
-            CORE_ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/cobbleventure/dimension/forests.json"
+            CORE_ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/cobbleventure/dimension/forests.json"
         )
         self.assertTrue(dimension["generator"]["settings"]["features"])
         self.assertIn("Block.UPDATE_CLIENTS", generator)
@@ -3460,8 +3460,8 @@ class ContentManagerTests(unittest.TestCase):
         forest = content_manager.load_json(
             PROJECT_ROOT / "content/forests/generation_1/viridian_forest.json"
         )
-        dimension = CORE_ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/cobbleventure/dimension/forests.json"
-        dimension_type = CORE_ROOT / "projects/cobbleventure-world-bootstrap/src/main/resources/data/cobbleventure/dimension_type/forest_world.json"
+        dimension = CORE_ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/cobbleventure/dimension/forests.json"
+        dimension_type = CORE_ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/cobbleventure/dimension_type/forest_world.json"
         bootstrap = (CORE_ROOT / "projects/cobbleventure-world-bootstrap/src/main/java/dev/buizz/cobbleventure/bootstrap/CobbleventureBootstrap.java").read_text(encoding="utf-8")
         gates = (CORE_ROOT / "projects/cobbleventure-world-bootstrap/src/main/java/dev/buizz/cobbleventure/bootstrap/WorldGateSystem.java").read_text(encoding="utf-8")
         generator = (CORE_ROOT / "projects/cobbleventure-world-bootstrap/src/main/java/dev/buizz/cobbleventure/bootstrap/ForestDimensionGenerator.java").read_text(encoding="utf-8")
@@ -4952,11 +4952,7 @@ class ContentManagerTests(unittest.TestCase):
             self.assertTrue(
                 (
                     root
-                    / "projects"
-                    / "cobbleventure-world-bootstrap"
-                    / "src"
-                    / "main"
-                    / "resources"
+                    / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap"
                     / "assets"
                     / "cobbleventure"
                     / "textures"
@@ -4989,7 +4985,7 @@ class ContentManagerTests(unittest.TestCase):
         self.assertNotIn("double_team_male", classes)
         self.assertNotIn("double_team_female", classes)
         custom_only = {"ace_trainer_gen6_male", "ace_trainer_gen6_female", "veteran_female"}
-        skin_root = CORE_ROOT / "projects" / "cobbleventure-world-bootstrap" / "src" / "main" / "resources" / "assets" / "cobbleventure" / "textures" / "entity" / "trainer"
+        skin_root = CORE_ROOT / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap" / "assets" / "cobbleventure" / "textures" / "entity" / "trainer"
         for slug, model in expected_models.items():
             with self.subTest(slug=slug):
                 entry = classes[slug]
@@ -5111,11 +5107,7 @@ class ContentManagerTests(unittest.TestCase):
             self.assertTrue(
                 (
                     root
-                    / "projects"
-                    / "cobbleventure-world-bootstrap"
-                    / "src"
-                    / "main"
-                    / "resources"
+                    / "content-projects" / "cobbleventure-main" / "content" / "resources" / "cobbleventure-world-bootstrap"
                     / "assets"
                     / "cobbleventure"
                     / "textures"
@@ -5345,7 +5337,7 @@ class ContentManagerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             duplicate = (
-                root / "projects/casino/src/main/resources/data/easy_npc/preset/encounter/dealer.npc.snbt"
+                root / "content-projects/cobbleventure-main/content/resources/cobbleventure-casino/data/easy_npc/preset/encounter/dealer.npc.snbt"
             )
             duplicate.parent.mkdir(parents=True)
             duplicate.write_text("{}", encoding="utf-8")
@@ -5637,7 +5629,7 @@ class ContentManagerTests(unittest.TestCase):
         self.assertEqual({1, 2, 3, 4, 5, 6, 8, 9}, {badge["generation"] for badge in badges})
         self.assertTrue(all(badge["id"].startswith("cobbleventure:badge/") for badge in badges))
         self.assertTrue(all("세대" in badge["tooltip"]["ko_kr"] and "관장" in badge["tooltip"]["ko_kr"] for badge in badges))
-        self.assertTrue((CORE_ROOT / "projects/cobbleventure-player-menu/src/main/resources/assets/cobbleventure_player_menu/textures/gui/badges.png").is_file())
+        self.assertTrue((CORE_ROOT / "content-projects/cobbleventure-main/content/resources/cobbleventure-player-menu/assets/cobbleventure_player_menu/textures/gui/badges.png").is_file())
         sources = content_manager.load_json(CORE_ROOT / "tools/content-manager/badge-image-sources.json")
         self.assertEqual(68, len(sources["badges"]))
         self.assertEqual({badge["id"] for badge in catalog["badges"]}, {badge["badge_id"] for badge in sources["badges"]})
@@ -5646,7 +5638,7 @@ class ContentManagerTests(unittest.TestCase):
         root = PROJECT_ROOT
         legacy_oak = (
             CORE_ROOT
-            / "projects/cobbleventure-world-bootstrap/src/main/resources/data/easy_npc/preset/encounter/professor_oak.npc.snbt"
+            / "content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/data/easy_npc/preset/encounter/professor_oak.npc.snbt"
         )
         legacy_before = legacy_oak.read_bytes()
         with tempfile.TemporaryDirectory() as directory:
@@ -6145,7 +6137,7 @@ class ContentManagerTests(unittest.TestCase):
     def test_gacha_item_graphic_save_writes_texture_and_item_model(self) -> None:
         source = (
             CORE_ROOT
-            / "projects/cobbleventure-casino/src/main/resources/assets/cobbleventure_casino/textures/item/coin_case.png"
+            / "content-projects/cobbleventure-main/content/resources/cobbleventure-casino/assets/cobbleventure_casino/textures/item/coin_case.png"
         ).read_bytes()
         with tempfile.TemporaryDirectory() as directory:
             core_root = Path(directory)
@@ -7442,14 +7434,17 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn('id="sync-structure-builder"', markup)
         self.assertIn('id="import-structure-builder"', markup)
         self.assertIn('id="build-export-language"', markup)
-        self.assertIn('id="build-cobblemon-target"', markup)
-        self.assertIn('id="build-server-pack"', markup)
-        self.assertIn('runBuild("pack-server")', script)
+        self.assertNotIn('id="build-cobblemon-target"', markup)
+        self.assertNotIn('id="build-server-pack"', markup)
+        self.assertNotIn('runBuild("pack-server")', script)
+        self.assertIn('id="content-instance-path"', markup)
+        self.assertIn('id="save-content-instance"', markup)
+        self.assertIn('/api/content-deployment', script)
         self.assertIn('"pack-server": "NeoForge 전용 서버 준비 ZIP 생성"', (
             Path(__file__).parents[1] / "content_manager.py"
         ).read_text(encoding="utf-8"))
         self.assertNotIn('value="1.7.3"', markup)
-        self.assertIn('value="1.8"', markup)
+        self.assertIn('Cobblemon 1.8', markup)
         self.assertIn('JSON.stringify({ command, language, cobblemon_target: cobblemonTarget })', script)
         live_page = markup.index('<section class="page" id="live-nbt-editor">')
         builds_page = markup.index('<section class="page" id="builds">')
@@ -7457,8 +7452,12 @@ class ContentManagerTests(unittest.TestCase):
         self.assertLess(markup.index('id="build-live-nbt-editor"'), builds_page)
         self.assertLess(live_page, markup.index('id="open-structure-builder-live"'))
         self.assertLess(markup.index('id="open-structure-builder-live"'), builds_page)
-        self.assertIn('"builder-install", "live-editor-install"', script)
-        self.assertIn('runBuild("builder-install")', script)
+        for control in ('build-structure-builder', 'install-structure-builder', 'save-structure-builder-settings'):
+            self.assertLess(live_page, markup.index(f'id="{control}"'))
+            self.assertLess(markup.index(f'id="{control}"'), builds_page)
+        for command in ('pack', 'mods-pack', 'content', 'content-install'):
+            self.assertIn(f'id: "{command}"', script)
+        self.assertIn('runBuild("builder-install",', script)
         self.assertIn('runBuild("live-editor-install"', script)
         self.assertIn('state: "#live-editor-build-state"', script)
         self.assertIn("/api/structure-builder/settings", script)

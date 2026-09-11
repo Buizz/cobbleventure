@@ -48,3 +48,10 @@ type="optional"
 versionRange="${cobblenav_version_range}"
 ordering="AFTER"
 side="CLIENT"
+
+[[dependencies.${mod_id}]]
+modId="cobbleventure_content_runtime"
+type="required"
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="BOTH"

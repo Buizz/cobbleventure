@@ -12,15 +12,15 @@ if not defined COBBLEVENTURE_PROJECT_PATH set "COBBLEVENTURE_PROJECT_PATH=%REPO_
 set "CONTENT_MANAGER=%REPO_ROOT%tools\content-manager\content_manager.py"
 set "STOP_CONTENT_MANAGER=%REPO_ROOT%tools\content-manager\stop_existing_server.ps1"
 set "PACK_BUILDER=%REPO_ROOT%tools\pack-builder\pack_builder.py"
-set "DATA_MOD_BUILDER=%REPO_ROOT%tools\mod-builder\build_data_mod.py"
+set "CONTENT_BUNDLE_BUILDER=%REPO_ROOT%tools\content-manager\build_content_bundle.py"
 set "CUSTOM_SPAWN_BUILDER=%REPO_ROOT%tools\cobblemon-custom-spawns\build_custom_spawns.py"
 set "TRAINER_SKIN_BUILDER=%REPO_ROOT%tools\content-manager\skin-pipeline\assemble_skin.py"
 set "YOUNGSTER_SKIN_MANIFEST=%REPO_ROOT%tools\content-manager\skin-pipeline\work\youngster\manifest.json"
-set "EASY_NPC_PRESET_BUILDER=%REPO_ROOT%tools\content-manager\generate_easy_npc_presets.py"
 set "GRADLEW=%REPO_ROOT%projects\cobbleventure-battle-ai\gradlew.bat"
 set "BATTLE_AI_PROJECT=%REPO_ROOT%projects\cobbleventure-battle-ai"
 set "ADVENTURE_PROJECT=%REPO_ROOT%projects\cobbleventure-adventure"
 set "WORLD_BOOTSTRAP_PROJECT=%REPO_ROOT%projects\cobbleventure-world-bootstrap"
+set "CONTENT_RUNTIME_PROJECT=%REPO_ROOT%projects\cobbleventure-content-runtime"
 set "PLAYER_MENU_PROJECT=%REPO_ROOT%projects\cobbleventure-player-menu"
 set "EXPERIENCE_PROJECT=%REPO_ROOT%projects\cobbleventure-experience"
 set "CASINO_PROJECT=%REPO_ROOT%projects\cobbleventure-casino"
@@ -68,6 +68,8 @@ if /I "%~1"=="web" goto api
 if /I "%~1"=="api" goto api
 if /I "%~1"=="test" goto test
 if /I "%~1"=="generate" goto generate
+if /I "%~1"=="content" goto generate
+if /I "%~1"=="mods-pack" goto mods_pack
 if /I "%~1"=="spawns" goto spawns
 if /I "%~1"=="music" goto music
 if /I "%~1"=="paintings" goto paintings
@@ -128,6 +130,8 @@ if errorlevel 1 exit /b %errorlevel%
 if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% -m unittest discover -s "%REPO_ROOT%tools\cobblemon-custom-spawns\tests" -p "test_*.py"
 if errorlevel 1 exit /b %errorlevel%
+%PYTHON_CMD% "%CONTENT_BUNDLE_BUILDER%" --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%" --language "%EXPORT_LANGUAGE%"
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%BATTLE_AI_PROJECT%" test
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%ADVENTURE_PROJECT%" test
@@ -152,11 +156,7 @@ call "%GRADLEW%" -p "%LIVE_NBT_EDITOR_PROJECT%" test
 exit /b %errorlevel%
 
 :generate
-%PYTHON_CMD% "%CONTENT_MANAGER%" generate --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%"
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%TRAINER_SKIN_BUILDER%" "%YOUNGSTER_SKIN_MANIFEST%"
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%EASY_NPC_PRESET_BUILDER%" --language "%EXPORT_LANGUAGE%"
+%PYTHON_CMD% "%CONTENT_BUNDLE_BUILDER%" --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%" --language "%EXPORT_LANGUAGE%"
 exit /b %errorlevel%
 
 :spawns
@@ -172,23 +172,21 @@ exit /b %errorlevel%
 exit /b %errorlevel%
 
 :mod_ai
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%BATTLE_AI_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_adventure
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%ADVENTURE_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_bootstrap
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%CONTENT_MANAGER%" generate --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%"
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%TRAINER_SKIN_BUILDER%" "%YOUNGSTER_SKIN_MANIFEST%"
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%EASY_NPC_PRESET_BUILDER%" --language "%EXPORT_LANGUAGE%"
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%DATA_MOD_BUILDER%" --root "%REPO_ROOT%."
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%ADVENTURE_PROJECT%" build
 if errorlevel 1 exit /b %errorlevel%
@@ -196,24 +194,34 @@ call "%GRADLEW%" -p "%WORLD_BOOTSTRAP_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_menu
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%PLAYER_MENU_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_experience
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%PLAYER_MENU_PROJECT%" build
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%EXPERIENCE_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_casino
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%CASINO_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_pokefinder
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" build
 exit /b %errorlevel%
 
 :mod_theme_blocks
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 exit /b %errorlevel%
 
@@ -222,21 +230,15 @@ exit /b %errorlevel%
 exit /b %errorlevel%
 
 :pack
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+%PYTHON_CMD% "%TRAINER_SKIN_BUILDER%" "%YOUNGSTER_SKIN_MANIFEST%"
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%ADVENTURE_PROJECT%" syncCobbreedingDevelopmentJar
 if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% "%CONTENT_MANAGER%" validate --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%"
 if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%CONTENT_MANAGER%" generate --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%"
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%CUSTOM_SPAWN_BUILDER%" --root "%REPO_ROOT%."
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%TRAINER_SKIN_BUILDER%" "%YOUNGSTER_SKIN_MANIFEST%"
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%EASY_NPC_PRESET_BUILDER%" --language "%EXPORT_LANGUAGE%"
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%MUSIC_PACK_BUILDER%" --root "%REPO_ROOT%."
-if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%DATA_MOD_BUILDER%" --root "%REPO_ROOT%."
+%PYTHON_CMD% "%CONTENT_BUNDLE_BUILDER%" --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%" --language "%EXPORT_LANGUAGE%"
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%BATTLE_AI_PROJECT%" build
 if errorlevel 1 exit /b %errorlevel%
@@ -254,9 +256,31 @@ call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" build
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
-%PYTHON_CMD% "%PAINTING_PACK_BUILDER%"
-if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% "%PACK_BUILDER%" build --root "%REPO_ROOT%." --profile "%DEVELOPMENT_PROFILE%"
+exit /b %errorlevel%
+
+:mods_pack
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%ADVENTURE_PROJECT%" syncCobbreedingDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%BATTLE_AI_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%ADVENTURE_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%WORLD_BOOTSTRAP_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%PLAYER_MENU_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%EXPERIENCE_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%CASINO_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%POKEFINDER_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
+call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" assemble installDevelopmentPackJar --no-configuration-cache
+if errorlevel 1 exit /b %errorlevel%
+%PYTHON_CMD% "%PACK_BUILDER%" build --root "%REPO_ROOT%." --profile "%DEVELOPMENT_PROFILE%" --mods-only
 exit /b %errorlevel%
 
 :pack_server
@@ -284,9 +308,13 @@ if errorlevel 1 exit /b %errorlevel%
 exit /b %errorlevel%
 
 :builder_jar
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 %PYTHON_CMD% "%STRUCTURE_BUILDER_TOOL%" --root "%REPO_ROOT%." generate
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
+if errorlevel 1 exit /b %errorlevel%
+%PYTHON_CMD% "%CONTENT_BUNDLE_BUILDER%" --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%" --authoring structure-builder
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%STRUCTURE_BUILDER_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
@@ -295,6 +323,8 @@ if errorlevel 1 exit /b %errorlevel%
 exit /b 0
 
 :builder_sync
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 if "%~2"=="" (
     echo [ERROR] CurseForge builder instance path is required.
     echo Usage: build.bat builder-sync "^<CurseForge instance^>"
@@ -303,6 +333,8 @@ if "%~2"=="" (
 %PYTHON_CMD% "%STRUCTURE_BUILDER_TOOL%" --root "%REPO_ROOT%." generate
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
+if errorlevel 1 exit /b %errorlevel%
+%PYTHON_CMD% "%CONTENT_BUNDLE_BUILDER%" --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%" --authoring structure-builder
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%STRUCTURE_BUILDER_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
@@ -322,7 +354,11 @@ if errorlevel 1 exit /b %errorlevel%
 exit /b %errorlevel%
 
 :live_editor_jar
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
+if errorlevel 1 exit /b %errorlevel%
+%PYTHON_CMD% "%CONTENT_BUNDLE_BUILDER%" --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%" --authoring live-nbt-editor
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%LIVE_NBT_EDITOR_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
@@ -331,12 +367,16 @@ if errorlevel 1 exit /b %errorlevel%
 exit /b 0
 
 :live_editor_sync
+call "%GRADLEW%" -p "%CONTENT_RUNTIME_PROJECT%" assemble installDevelopmentJar
+if errorlevel 1 exit /b %errorlevel%
 if "%~2"=="" (
     echo [ERROR] CurseForge live editor instance path is required.
     echo Usage: build.bat live-editor-sync "^<CurseForge instance^>"
     exit /b 1
 )
 call "%GRADLEW%" -p "%THEME_BLOCKS_PROJECT%" build --no-configuration-cache
+if errorlevel 1 exit /b %errorlevel%
+%PYTHON_CMD% "%CONTENT_BUNDLE_BUILDER%" --root "%REPO_ROOT%." --project "%COBBLEVENTURE_PROJECT_PATH%" --authoring live-nbt-editor
 if errorlevel 1 exit /b %errorlevel%
 call "%GRADLEW%" -p "%LIVE_NBT_EDITOR_PROJECT%" build --no-configuration-cache
 if errorlevel 1 exit /b %errorlevel%
@@ -388,7 +428,9 @@ echo   validate-pack  Validate that dependencies are ready for CurseForge packag
 echo   web            Start the local content manager Web UI and API
 echo   api            Alias for web (kept for compatibility)
 echo   test           Run Python tests and compile the NeoForge modules
-echo   generate       Generate RCT trainers and in-game AI runtime profiles
+echo   mods-pack      Build JARs and a CurseForge ZIP without content
+echo   content        Build content bundle without compiling engine JARs
+echo   generate       Alias for content
 echo   spawns         Generate biome and generation filtered Cobblemon spawns
 echo   music          Build the selected local audio files as a Paxi resource pack
 echo   paintings      Build the Pokemon-themed vanilla painting resource pack

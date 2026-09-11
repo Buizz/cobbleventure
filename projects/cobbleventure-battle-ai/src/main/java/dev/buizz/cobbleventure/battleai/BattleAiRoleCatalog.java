@@ -110,7 +110,7 @@ final class BattleAiRoleCatalog {
     }
 
     private static JsonObject resource(String path) {
-        try (var stream = BattleAiRoleCatalog.class.getResourceAsStream(path)) {
+        try (var stream = dev.buizz.cobbleventure.content.ContentFiles.open("data/cobbleventure/catalogs" + path)) {
             if (stream == null) throw new IllegalStateException("전투 AI 역할 카탈로그가 없습니다: " + path);
             return JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
         } catch (Exception error) {

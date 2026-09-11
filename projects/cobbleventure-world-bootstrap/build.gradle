@@ -46,7 +46,6 @@ test {
     useJUnitPlatform()
 }
 
-sourceSets.main.resources.srcDir 'src/generated/resources'
 
 configurations {
     localRuntime
@@ -144,6 +143,9 @@ tasks.register('cleanDevelopmentFontResourcePacks', Delete) {
     description = 'Removes obsolete Pokemon BW font experiments from the Paxi directory.'
     delete layout.projectDirectory.file('run/config/paxi/resourcepacks/PokemonBW.zip')
     delete layout.projectDirectory.file('run/config/paxi/resourcepacks/PokemonBW-Minecraft.zip')
+    delete layout.projectDirectory.file('run/config/paxi/resourcepacks/Cobbleventure-Pokemon-Paintings.zip')
+    delete layout.projectDirectory.file('run/config/paxi/resourcepacks/Cobbleventure-Music.zip')
+    delete layout.projectDirectory.file('run/config/paxi/datapacks/zzz-cobbleventure-spawns.zip')
 }
 
 tasks.register('syncDevelopmentResourcePacks', Copy) {
@@ -151,7 +153,6 @@ tasks.register('syncDevelopmentResourcePacks', Copy) {
     group = 'cobbleventure development'
     description = 'Copies the Cobbleventure resource packs into the run directory.'
     from(rootProject.file('../../local-assets/PokemonBW-Caxton.zip'))
-    from(rootProject.file('../../local-assets/Cobbleventure-Pokemon-Paintings.zip'))
     into(file('run/config/paxi/resourcepacks'))
 }
 
@@ -205,8 +206,6 @@ tasks.named('runWorldPerformanceServer') {
 }
 
 processResources {
-    def contentProjectDir = file(System.getenv('COBBLEVENTURE_PROJECT_PATH') ?: rootProject.file('../../content-projects/cobbleventure-main'))
-    def contentDir = new File(contentProjectDir, 'content')
     def properties = [
         minecraft_version_range: minecraft_version_range,
         neo_version: neo_version,
@@ -217,55 +216,10 @@ processResources {
         mod_version: mod_version,
         cobblemon_version: cobblemonEffectiveVersion,
         cobblemon_version_range: cobblemonVersionRange,
-        export_language: System.getenv('COBBLEVENTURE_EXPORT_LANGUAGE') ?: 'ko_kr',
     ]
     inputs.properties properties
     filesMatching('META-INF/neoforge.mods.toml') {
         expand properties
-    }
-    filesMatching('data/cobbleventure/economy/export-language.txt') {
-        expand properties
-    }
-    from(new File(contentDir, 'catalogs/pokefinder-icons.json')) {
-        into 'data/cobbleventure'
-        rename { 'pokefinder_icons.json' }
-    }
-    from(new File(contentDir, 'caves')) {
-        into 'data/cobbleventure/caves'
-        include '**/*.json'
-    }
-    from(new File(contentDir, 'forests')) {
-        into 'data/cobbleventure/forests'
-        include '**/*.json'
-    }
-    from(new File(contentDir, 'underground_roads')) {
-        into 'data/cobbleventure/underground_roads'
-        include '**/*.json'
-    }
-    from(new File(contentDir, 'dungeons')) {
-        into 'data/cobbleventure/dungeons'
-        include '**/*.json'
-    }
-    from(new File(contentDir, 'dungeon_pieces')) {
-        into 'data/cobbleventure/dungeon_pieces'
-        include '**/*.json'
-    }
-    from(new File(contentDir, 'dungeon_plans')) {
-        into 'data/cobbleventure/dungeon_plans'
-        include '**/*.json'
-    }
-    from(new File(contentDir, 'catalogs/economy.json')) {
-        into 'data/cobbleventure/economy'
-        rename { 'catalog.json' }
-    }
-    from(new File(contentDir, 'catalogs/biome-profiles.json')) {
-        into 'data/cobbleventure/catalogs'
-    }
-    from(new File(contentDir, 'catalogs/pokemon-habitats.json')) {
-        into 'data/cobbleventure/catalogs'
-    }
-    from(new File(contentDir, 'catalogs/starter-settings.json')) {
-        into 'data/cobbleventure/catalogs'
     }
 }
 
@@ -317,4 +271,10 @@ tasks.register('installDevelopmentJar') {
 
 tasks.named('build') {
     finalizedBy 'installDevelopmentJar'
+}
+
+apply from: rootProject.file('../../gradle/external-content.gradle')
+
+dependencies {
+    implementation 'dev.buizz.cobbleventure:cobbleventure-content-runtime:1.0.0'
 }

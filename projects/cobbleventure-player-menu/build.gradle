@@ -1,102 +1,9 @@
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-
 plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.143'
 }
 
 apply from: rootProject.file('../../gradle/cobblemon-target.gradle')
-
-def fieldMoveNpcMapFile = layout.buildDirectory.file('generated/field-move-map/field-move-npcs.json')
-def bagConditionMapFile = layout.buildDirectory.file('generated/bag-conditions/bag-conditions.json')
-def contentProjectDir = file(System.getenv('COBBLEVENTURE_PROJECT_PATH') ?: rootProject.file('../../content-projects/cobbleventure-main'))
-def contentDir = new File(contentProjectDir, 'content')
-
-tasks.register('generateFieldMoveNpcMap') {
-    def npcSources = fileTree(new File(contentDir, 'source')) { include '**/*.json' }
-    def settlements = fileTree(new File(contentDir, 'settlements')) { include 'generation_*/*.json' }
-    inputs.files(npcSources, settlements)
-    outputs.file(fieldMoveNpcMapFile)
-    doLast {
-        def parser = new JsonSlurper()
-        def profiles = [:]
-        npcSources.files.sort().each { file ->
-            def npc = parser.parse(file)
-            def moves = (npc.events ?: []).collectMany { event ->
-                (event.commands ?: []).findAll { it.type == 'grant_field_move' }.collect { it.move }
-            }.findAll { it }.unique()
-            if (npc.id && moves) {
-                profiles[npc.id] = [
-                    name: npc.npc?.display_name?.ko_kr ?: npc.name?.ko_kr ?: npc.id,
-                    moves: moves,
-                ]
-            }
-        }
-
-        def bySettlement = [:]
-        settlements.files.sort().each { file ->
-            def settlement = parser.parse(file)
-            def profileIds = (settlement.npc_placement?.trainer_slots ?: []).collectMany { slot ->
-                (slot.members ?: []).collect { it.npc_profile }
-            }.findAll { it }.unique()
-            def entries = profileIds.findAll { profiles.containsKey(it) }.collect { profiles[it] }
-            if (settlement.id && entries) bySettlement[settlement.id] = entries
-        }
-
-        def output = fieldMoveNpcMapFile.get().asFile
-        output.parentFile.mkdirs()
-        output.setText(JsonOutput.prettyPrint(JsonOutput.toJson([settlements: bySettlement])) + System.lineSeparator(), 'UTF-8')
-    }
-}
-
-tasks.register('generateBagConditionMap') {
-    def contentJson = fileTree(contentDir) { include '**/*.json' }
-    inputs.files(contentJson)
-    outputs.file(bagConditionMapFile)
-    doLast {
-        def parser = new JsonSlurper()
-        def conditions = [:]
-        def canonical
-        canonical = { value ->
-            if (value instanceof Map) {
-                return value.keySet().sort().collectEntries { key -> [(key): canonical(value[key])] }
-            }
-            if (value instanceof Collection) return value.collect { canonical(it) }
-            return value
-        }
-        def objectiveFor = { prefix, key ->
-            byte[] digest = java.security.MessageDigest.getInstance('SHA-1')
-                .digest(key.getBytes(java.nio.charset.StandardCharsets.UTF_8))
-            String hash = digest.collect { String.format('%02x', it & 0xff) }.join()
-            prefix + hash.substring(0, 12)
-        }
-        def visit
-        visit = { value ->
-            if (value instanceof Map) {
-                if (value.type in ['item', 'has_item'] && value.item instanceof String) {
-                    int count = Math.max(1, (value.count ?: 1) as int)
-                    String key = value.item + '\u0000' + count
-                    String objective = objectiveFor('cvi_', key)
-                    conditions[objective] = [type: 'item', item: value.item, count: count]
-                } else if (value.type in ['variable', 'badge', 'pokemon', 'party_count']) {
-                    String normalized = JsonOutput.toJson(canonical(value))
-                    String objective = objectiveFor('cvc_', normalized)
-                    conditions[objective] = value
-                }
-                value.values().each { visit(it) }
-            } else if (value instanceof Collection) {
-                value.each { visit(it) }
-            }
-        }
-        contentJson.files.sort().each { file -> visit(parser.parse(file)) }
-
-        def output = bagConditionMapFile.get().asFile
-        output.parentFile.mkdirs()
-        output.setText(JsonOutput.prettyPrint(JsonOutput.toJson([conditions: conditions]))
-            + System.lineSeparator(), 'UTF-8')
-    }
-}
 
 version = mod_version
 group = mod_group_id
@@ -147,8 +54,6 @@ neoForge {
 }
 
 processResources {
-    dependsOn tasks.named('generateFieldMoveNpcMap')
-    dependsOn tasks.named('generateBagConditionMap')
     def properties = [
         minecraft_version_range: minecraft_version_range,
         neo_version: neo_version,
@@ -164,57 +69,6 @@ processResources {
     inputs.properties properties
     filesMatching('META-INF/neoforge.mods.toml') {
         expand properties
-    }
-    from(new File(contentDir, 'worlds')) {
-        into 'data/cobbleventure_player_menu/map'
-        include 'generation_*.json'
-    }
-    from(new File(contentDir, 'settlements')) {
-        into 'data/cobbleventure_player_menu/map/settlements'
-        include 'generation_*/*.json'
-    }
-    from(new File(contentDir, 'caves')) {
-        into 'data/cobbleventure_player_menu/map/caves'
-        include 'generation_*/*.json'
-    }
-    from(new File(contentDir, 'forests')) {
-        into 'data/cobbleventure_player_menu/map/forests'
-        include 'generation_*/*.json'
-    }
-    from(new File(contentDir, 'routes')) {
-        into 'data/cobbleventure_player_menu/map/routes'
-        include 'generation_*/*.json'
-    }
-    from(new File(contentDir, 'catalogs/biome-profiles.json')) {
-        into 'data/cobbleventure_player_menu/map/catalogs'
-    }
-    from(new File(contentDir, 'catalogs/pokemon-habitats.json')) {
-        into 'data/cobbleventure_player_menu/map/catalogs'
-    }
-    from(new File(contentDir, 'catalogs/league-progression.json')) {
-        into 'data/cobbleventure_player_menu/league'
-    }
-    from(new File(contentDir, 'catalogs/badges.json')) {
-        into 'data/cobbleventure_player_menu/league'
-    }
-    from(new File(contentDir, 'catalogs/gyms.json')) {
-        into 'data/cobbleventure_player_menu/league'
-    }
-    from(new File(contentDir, 'catalogs/trainer-roster.json')) {
-        into 'data/cobbleventure_player_menu/league'
-    }
-    from(new File(contentDir, 'catalogs/important-items.json')) {
-        into 'data/cobbleventure_player_menu/progression'
-    }
-    from(new File(contentDir, 'source/trainers/gym_leaders')) {
-        into 'data/cobbleventure_player_menu/league/npcs'
-        include '*.json'
-    }
-    from(fieldMoveNpcMapFile) {
-        into 'data/cobbleventure_player_menu/map'
-    }
-    from(bagConditionMapFile) {
-        into 'data/cobbleventure_player_menu/bag'
     }
 }
 
@@ -233,4 +87,10 @@ tasks.register('installDevelopmentJar', Copy) {
 
 tasks.named('build') {
     finalizedBy 'installDevelopmentJar'
+}
+
+apply from: rootProject.file('../../gradle/external-content.gradle')
+
+dependencies {
+    implementation 'dev.buizz.cobbleventure:cobbleventure-content-runtime:1.0.0'
 }

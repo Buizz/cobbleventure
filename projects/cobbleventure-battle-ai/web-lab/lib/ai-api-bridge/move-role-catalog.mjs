@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 
 const defaultCatalogUrl = new URL(
-  "../../../data/ai/ai-move-role-classification.json",
+  "../../../../../content-projects/cobbleventure-main/content/catalogs/battle-ai/ai-move-role-classification.json",
   import.meta.url,
 );
 

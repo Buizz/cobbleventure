@@ -9,3 +9,5 @@ plugins {
 }
 
 rootProject.name = 'cobbleventure-experience'
+
+includeBuild("../cobbleventure-content-runtime")

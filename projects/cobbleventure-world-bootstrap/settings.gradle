@@ -12,3 +12,5 @@ rootProject.name = 'cobbleventure-world-bootstrap'
 
 includeBuild('../cobbleventure-adventure')
 includeBuild('../cobbleventure-player-menu')
+
+includeBuild('../cobbleventure-content-runtime')

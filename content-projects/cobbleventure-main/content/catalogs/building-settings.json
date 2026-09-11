@@ -537,6 +537,7 @@
     "cobbleventure:league/kanto_league": {
       "placement_y_offset": 0,
       "structure_category": "league",
+      "music_track": "kanto.indigo_plateau",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -1018,6 +1019,7 @@
     "cobbleventure:interiors/hall_of_fame": {
       "placement_y_offset": 0,
       "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -1106,9 +1108,82 @@
       "structure_category": "gym_interior",
       "music_track": "facility.gym"
     },
+    "cobbleventure:interiors/leagues/kanto_lobby": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_elite_1": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_elite_2": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_elite_3": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_elite_4": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_champion": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
     "cobbleventure:league/indigo_plateau": {
       "placement_y_offset": 0,
       "structure_category": "league",
+      "music_track": "kanto.indigo_plateau",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},

@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.pokefinder.server;
 
+import dev.buizz.cobbleventure.content.ContentFiles;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -24,7 +25,7 @@ public final class RadarIconSettings {
     }
 
     private static Map<String, Entry> load() {
-        try (var stream = RadarIconSettings.class.getResourceAsStream(
+        try (var stream = ContentFiles.open(
             "/data/cobbleventure/pokefinder_icons.json"
         )) {
             if (stream == null) return Map.of();

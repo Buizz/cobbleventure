@@ -83,8 +83,10 @@ record DungeonGenerationRequirements(
             chamberCount = Math.min(chamberCount, ordinaryActorDemand);
         }
 
-        // Passage slots can host singles, but each cooperative pair needs its own chamber.
-        chamberCount = Math.max(chamberCount, cooperativeGroups);
+        // A large authored chamber can host several pairs. Count complete pairs,
+        // not one mandatory room per encounter (an odd spare slot cannot host one).
+        int pairsPerChamber = Math.max(1, chamberCapacity / 2);
+        chamberCount = Math.max(chamberCount, divideRoundUp(cooperativeGroups, pairsPerChamber));
 
         DungeonDefinition.Topology topology = definition.topology();
         int floorStructureMinimum = definition.vertical().mode().equals("discrete_floors")

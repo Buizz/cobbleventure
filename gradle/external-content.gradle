@@ -1,0 +1,18 @@
+// Authored content is delivered independently of engine builds.
+tasks.named('processResources') {
+    exclude 'data/**', 'assets/**', 'battle-ai/**', 'pack.mcmeta'
+}
+tasks.named('jar') {
+    exclude 'data/**', 'assets/**', 'battle-ai/**', 'pack.mcmeta'
+}
+def contentProfile = rootProject.name == 'cobbleventure-structure-builder' ? 'structure-builder' :
+    rootProject.name == 'cobbleventure-live-nbt-editor' ? 'live-nbt-editor' : 'development-placeholder'
+def externalContentDirectory = rootProject.file(
+    "../../pack/overrides/${contentProfile}/config/cobbleventure/content"
+).absolutePath
+tasks.withType(Test).configureEach {
+    systemProperty 'cobbleventure.contentDirectory', externalContentDirectory
+}
+neoForge.runs.configureEach {
+    systemProperty 'cobbleventure.contentDirectory', externalContentDirectory
+}

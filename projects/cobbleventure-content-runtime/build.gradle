@@ -1,0 +1,24 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.143'
+}
+group = 'dev.buizz.cobbleventure'
+version = '1.0.0'
+base { archivesName = 'cobbleventure-content-runtime' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+repositories { mavenCentral() }
+neoForge {
+    version = '21.1.248'
+    mods { cobbleventure_content_runtime { sourceSet(sourceSets.main) } }
+}
+tasks.register('installDevelopmentJar') {
+    dependsOn jar
+    doLast {
+        ['development-placeholder', 'structure-builder', 'live-nbt-editor'].each { profile ->
+            def destination = rootProject.file("../../pack/overrides/${profile}/mods")
+            delete fileTree(destination) { include 'cobbleventure-content-runtime-*.jar' }
+            copy { from tasks.jar; into destination }
+        }
+    }
+}
+apply from: rootProject.file('../../gradle/external-content.gradle')

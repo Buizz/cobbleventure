@@ -1,5 +1,5 @@
-import MOVE_ROLE_CATALOG from "../../data/ai/ai-move-role-classification.json" with { type: "json" };
-import POKEMON_ROLE_OVERRIDES from "../../data/ai/ai-pokemon-role-overrides.json" with { type: "json" };
+import MOVE_ROLE_CATALOG from "../../../../content-projects/cobbleventure-main/content/catalogs/battle-ai/ai-move-role-classification.json" with { type: "json" };
+import POKEMON_ROLE_OVERRIDES from "../../../../content-projects/cobbleventure-main/content/catalogs/battle-ai/ai-pokemon-role-overrides.json" with { type: "json" };
 import {
   analyzeSharedTeamProfileJson,
   evaluateActionReachabilityJson,

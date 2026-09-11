@@ -958,7 +958,7 @@ function switchPage(section) {
   if (activeNavigationItem) openNavigationGroup(activeNavigationItem.closest(".nav-group"));
   const contentSection = section === "dungeon-chambers" ? "dungeon-pieces" : section;
   $$(".page").forEach((page) => page.classList.toggle("is-active", page.id === contentSection));
-  const titles = { dashboard: "프로젝트 현황", trainers: "트레이너풀", "system-npcs": "시스템 NPC", battles: "배틀 프리셋", routes: "길 관리", league: "리그 운영 · 구성원", "league-facilities": "리그 운영 · 리그 시설", "trainer-card": "리그 운영 · 자동 카드", worlds: "세대별 월드맵", "starter-settings": "스타팅 설정", caves: "동굴 관리", dungeons: "던전 관리", "dungeon-chambers": "공동 관리", "dungeon-pieces": "던전 조각 관리", "underground-roads": "지하통로 관리", forests: "숲 관리", settlements: "마을 관리", gyms: "리그 운영 · 체육관 시설", "space-connections": "공간 연결 관계", structures: "NBT 건물 설정", "live-nbt-editor": "라이브 NBT 편집", biomes: "바이옴 관리", definitions: "아이템 · 진행 변수", economy: "상점 · 드롭 · NPC 제작", music: "음악 배정 · 기본값", "global-resources": "전역 리소스", "casino-config": "카지노 콘텐츠 설정", "pokefinder-icons": "포켓파인더 아이콘", builds: "빌드 및 검사" };
+  const titles = { dashboard: "프로젝트 현황", trainers: "트레이너풀", "system-npcs": "시스템 NPC", battles: "배틀 프리셋", routes: "길 관리", league: "리그 운영 · 구성원", "league-facilities": "리그 운영 · 리그 시설", "trainer-card": "리그 운영 · 자동 카드", worlds: "세대별 월드맵", "starter-settings": "스타팅 설정", caves: "동굴 관리", dungeons: "던전 관리", "dungeon-chambers": "공동 관리", "dungeon-pieces": "던전 조각 관리", "underground-roads": "지하통로 관리", forests: "숲 관리", settlements: "마을 관리", gyms: "리그 운영 · 체육관 시설", "space-connections": "공간 연결 관계", structures: "NBT 건물 설정", "live-nbt-editor": "라이브 NBT 편집", biomes: "바이옴 관리", definitions: "아이템 · 진행 변수", economy: "상점 · 드롭 · NPC 제작", music: "음악 배정 · 기본값", "global-resources": "전역 리소스", "casino-config": "카지노 콘텐츠 설정", "pokefinder-icons": "포켓파인더 아이콘", builds: "빌드 · 콘텐츠 교체" };
   $("#page-title").textContent = titles[section];
   $$('[data-league-workspace]').forEach(tab => {
     const active = tab.dataset.leagueWorkspace === section;
@@ -2312,7 +2312,8 @@ function loadSectionData(section, force = false) {
   if (section === "economy") return loadEconomy(force);
   if (section === "global-resources") return loadDialogueTheme(force);
   if (section === "casino-config") return Promise.all([loadGachaMachines(force), loadGachaRewardChoices(force), loadGachaItemGraphics()]);
-  if (section === "builds" || section === "live-nbt-editor") return loadStructureBuilder();
+  if (section === "builds") return loadContentDeployment();
+  if (section === "live-nbt-editor") return loadStructureBuilder();
   return Promise.resolve();
 }
 
@@ -5704,11 +5705,13 @@ function dungeonOrdinaryNpcDemand(document) {
   return fixed + generated;
 }
 
-function dungeonNpcChamberCandidates(document) {
+function dungeonSelectedChamberCandidates(document) {
   const selected = new Set(dungeonSpatialLayout(document).chamber_pieces || []);
-  const needsNpcCapacity = Boolean(document.npc_placement);
+  // A selected empty chamber is still terrain. NPC capacity is accounted for
+  // separately and must never silently remove it from the author's palette.
   return [...state.dungeonPieces.values()].filter((piece) => selected.has(piece.piece_id)
-    && (!needsNpcCapacity || dungeonPieceNpcCapacity(piece, document.npc_placement?.minimum_spacing) > 0));
+    && dungeonPieceSpatialKind(piece) === "chamber"
+    && (!document.terrain?.piece_pool || (piece.tags || []).includes(document.terrain.piece_pool)));
 }
 
 function dungeonPieceNpcCapacity(piece, minimumSpacing = 4) {
@@ -5736,15 +5739,19 @@ function dungeonGenerationRequirements(document, floorCountOverride) {
   const floorRange = dungeonRange(vertical.floor_count, [1, 1]);
   const floorCount = vertical.mode === "flat" ? 1
     : Math.max(1, Number(floorCountOverride || floorRange[1]));
-  const chambers = dungeonNpcChamberCandidates(document);
-  const capacities = chambers.map((piece) => dungeonPieceNpcCapacity(piece, document.npc_placement?.minimum_spacing));
+  const chambers = dungeonSelectedChamberCandidates(document);
+  const actorsPerEncounter = document.multiplayer?.mode === "cooperative" ? 2 : 1;
+  const capacityChambers = chambers.filter((piece) => dungeonPieceNpcCapacity(piece, document.npc_placement?.minimum_spacing) >= actorsPerEncounter);
+  const emptyChambers = chambers.filter((piece) => !capacityChambers.includes(piece));
+  const capacities = capacityChambers.map((piece) => dungeonPieceNpcCapacity(piece, document.npc_placement?.minimum_spacing));
   const chamberCapacity = capacities.length ? Math.min(...capacities) : 0;
-  let chamberCount = 0;
-  if (!document.npc_placement && chambers.length) chamberCount = floorCount;
-  else if (ordinaryActorDemand > 0 && chamberCapacity > 0) {
-    chamberCount = Math.max(Math.min(floorCount, ordinaryActorDemand), Math.ceil(ordinaryActorDemand / chamberCapacity));
-    chamberCount = Math.min(chamberCount, ordinaryActorDemand);
+  let npcChamberCount = 0;
+  if (document.npc_placement && ordinaryActorDemand > 0 && chamberCapacity > 0) {
+    npcChamberCount = Math.min(ordinaryActorDemand,
+      Math.max(Math.min(floorCount, ordinaryActorDemand), Math.ceil(ordinaryActorDemand / chamberCapacity)));
   }
+  const chamberCount = Math.max(chambers.length ? floorCount : 0,
+    npcChamberCount + (emptyChambers.length ? floorCount : 0));
   const requiredCapacity = !document.npc_placement ? 0
     : document.npc_placement.capacity_mode === "fixed"
     ? Math.max(actorDemand, Number(document.npc_placement.required_slots || 0)) : actorDemand;
@@ -5753,12 +5760,12 @@ function dungeonGenerationRequirements(document, floorCountOverride) {
   const topologyRange = dungeonRange(dungeonTopology(document).critical_path_rooms, [6, 8]);
   const baseCriticalMinimum = Math.max(topologyRange[0], floorStructureMinimum, chamberCadenceMinimum);
   const estimatedPassageCapacity = Math.max(0, baseCriticalMinimum - 3 - chamberCount);
-  const estimatedCapacity = chamberCount * chamberCapacity + estimatedPassageCapacity;
+  const estimatedCapacity = npcChamberCount * chamberCapacity + estimatedPassageCapacity;
   const additionalPassages = document.npc_placement ? Math.max(0, requiredCapacity - estimatedCapacity) : 0;
   return {
     actorDemand, ordinaryActorDemand, requiredCapacity,
     reservedCapacity: Math.max(0, requiredCapacity - actorDemand),
-    floorCount, chambers, chamberCapacity, chamberCount, additionalPassages,
+    floorCount, chambers, capacityChambers, emptyChambers, npcChamberCount, chamberCapacity, chamberCount, additionalPassages,
     criticalMinimum: baseCriticalMinimum + additionalPassages,
     criticalMaximum: Math.max(baseCriticalMinimum + additionalPassages, topologyRange[1] + additionalPassages),
   };
@@ -8016,6 +8023,10 @@ function dungeonPreviewPhysicalPlan(document, graph, algorithm, random) {
     }
     if (!selected) { errors.push(`${logicalLink.from + 1}번 공동과 ${logicalLink.to + 1}번 공동의 실제 포트 사이에 복도를 만들 수 없습니다.`); continue; }
     const route = selected.cells;
+    // Distinct logical edges may meet at their node, never merge midway through
+    // a corridor. Otherwise routing invents crossings and shortcuts not present
+    // in the progression graph.
+    route.slice(1, -1).forEach((position) => reserved.add(key(...position)));
     if (selected.from.id) {
       if (!usedFixedPorts.has(logicalLink.from)) usedFixedPorts.set(logicalLink.from, new Set());
       usedFixedPorts.get(logicalLink.from).add(selected.from.id);
@@ -8238,9 +8249,11 @@ function compileRuntimeNbtDungeonPlan(document, seed, random, attempt = 0) {
   const selectedChambers = requirements.chambers;
   const totalChamberTarget = requirements.chamberCount;
   const chamberTargets = Array.from({ length: floorCount }, () => 0);
+  const npcChamberTargets = Array.from({ length: floorCount }, () => 0);
   const chamberFloorOffset = floorCount > 1 ? Math.floor(random() * floorCount) : 0;
   for (let chamber = 0; chamber < totalChamberTarget; chamber += 1) {
     chamberTargets[(chamberFloorOffset + chamber) % floorCount] += 1;
+    if (chamber < requirements.npcChamberCount) npcChamberTargets[(chamberFloorOffset + chamber) % floorCount] += 1;
   }
   // Each floor has a compact but usable local route. Feature and chamber demand
   // can grow it, but floor count alone no longer creates ten-piece repetitions.
@@ -8286,8 +8299,10 @@ function compileRuntimeNbtDungeonPlan(document, seed, random, attempt = 0) {
     }
     const chamberTarget = chamberTargets[floor];
     const chamberSlots = ordinaryChamberSlots.slice(0, chamberTarget);
-    chamberSlots.forEach((node) => {
-      node.preferredPieceId = selectedChambers[Math.floor(floorRandom() * selectedChambers.length)].piece_id;
+    chamberSlots.forEach((node, index) => {
+      const candidates = index < npcChamberTargets[floor] ? requirements.capacityChambers
+        : requirements.emptyChambers.length ? requirements.emptyChambers : selectedChambers;
+      node.preferredPieceId = candidates[Math.floor(floorRandom() * candidates.length)].piece_id;
     });
     const landingCandidates = selectedChambers.filter((piece) => (piece.connectors || []).length >= 3);
     graph.nodes.filter((node) => node.stairLanding).forEach((node) => {
@@ -8416,7 +8431,8 @@ function compileRuntimeNbtDungeonPlan(document, seed, random, attempt = 0) {
 
 function runtimeNbtDungeonPlan(document, seed) {
   let lastPlan = null;
-  for (let attempt = 0; attempt < 16; attempt += 1) {
+  const maxAttempts = Math.max(1, Math.min(128, Number(document.plan?.max_attempts || 16)));
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
     const random = seededDungeonRandom(seed + attempt * 104729);
     const plan = compileRuntimeNbtDungeonPlan(document, seed, random, attempt);
     if (!plan) return null;
@@ -8641,9 +8657,9 @@ function runtimeDungeonContentMarkers(document, placements) {
     if (!candidates.length) return;
     candidates.sort((a, b) => (floorOccupancy.get(floorKey(placementByIndex.get(a[0]))) || 0)
       - (floorOccupancy.get(floorKey(placementByIndex.get(b[0]))) || 0)
-      || (roomOccupancy.get(a[0]) || 0) - (roomOccupancy.get(b[0]) || 0)
       || (entry.boss ? 0 : (isNpcChamber(placementByIndex.get(a[0])) ? 0 : 1))
       - (entry.boss ? 0 : (isNpcChamber(placementByIndex.get(b[0])) ? 0 : 1))
+      || (roomOccupancy.get(a[0]) || 0) - (roomOccupancy.get(b[0]) || 0)
       || separationFromAssigned(b[1]) - separationFromAssigned(a[1])
       || a[0] - b[0]);
     const [room, usableSlots] = candidates[0];
@@ -19617,39 +19633,43 @@ function updateEconomyView(field, value) {
   renderEconomy();
 }
 
+let buildBusy = false;
+const buildActions = [
+  { id: "pack", title: "전체 빌드", action: "전체 빌드", description: "엔진 JAR과 콘텐츠를 모두 빌드해 CurseForge 설치 ZIP으로 묶습니다." },
+  { id: "mods-pack", title: "모드팩 빌드", action: "모드팩 빌드", description: "JAR·모드만 빌드하고 설치 ZIP에 담습니다. 콘텐츠와 설정은 포함하지 않습니다." },
+  { id: "content", title: "콘텐츠 빌드", action: "콘텐츠 빌드", description: "트레이너·이벤트·월드 등 콘텐츠 ZIP을 생성합니다. 엔진 JAR은 재빌드하지 않습니다." },
+  { id: "content-install", title: "콘텐츠 교체", action: "인스턴스에 교체", description: "마지막으로 빌드한 콘텐츠와 관련 스킨을 아래 게임 인스턴스에 적용합니다." },
+];
 function renderBuildCommands() {
-  const descriptions = {
-    validate: "모든 콘텐츠와 의존성 Lock을 빠르게 검사합니다.", test: "콘텐츠 관리와 패키징 회귀 테스트를 실행합니다.",
-    "mod-ai": "선택한 Cobblemon 버전용 Battle AI 모드를 빌드합니다.",
-    "mod-adventure": "선택한 Cobblemon 버전용 Adventure 모드를 빌드합니다.",
-    "mod-bootstrap": "선택한 Cobblemon 버전용 월드 부트스트랩 모드를 빌드합니다.",
-    "mod-menu": "선택한 Cobblemon 버전용 플레이어 메뉴 모드를 빌드합니다.",
-    "mod-casino": "선택한 Cobblemon 버전용 카지노 애드온을 빌드합니다.",
-    "pack-smoke": "모드 없이 임포트 구조만 확인하는 ZIP을 만듭니다.", pack: "현재 설정으로 개발용 임포트 ZIP을 만듭니다.",
-    "pack-server": "서버·양쪽 모드와 서버 설정만 담은 NeoForge 서버 준비 ZIP을 만듭니다.",
-    "validate-pack": "실제 모드 파일과 버전이 모두 확정됐는지 검사합니다."
-  };
-  const targetSelect = $("#build-cobblemon-target");
-  const selectedTarget = targetSelect?.value || "1.8";
-  if (targetSelect) {
-    targetSelect.innerHTML = state.cobblemonBuildTargets.map((target) =>
-      `<option value="${escapeHtml(target.id)}">${escapeHtml(target.name)}</option>`
-    ).join("");
-    targetSelect.value = state.cobblemonBuildTargets.some((target) => target.id === selectedTarget)
-      ? selectedTarget : "1.8";
-  }
   const languageSelect = $("#build-export-language");
-  const selectedLanguage = languageSelect?.value || "ko_kr";
-  if (languageSelect) {
-    languageSelect.innerHTML = state.exportLanguages.map((language) =>
-      `<option value="${escapeHtml(language.id)}">${escapeHtml(language.name)} · ${escapeHtml(language.id)}</option>`
-    ).join("");
-    languageSelect.value = state.exportLanguages.some((language) => language.id === selectedLanguage)
-      ? selectedLanguage : "ko_kr";
-  }
-  $("#build-command-list").innerHTML = state.buildCommands.filter((command) => !["builder-world", "live-editor-world", "builder-install", "live-editor-install", "pack-server"].includes(command.id)).map((command) => `
-    <article class="build-command"><div><strong>${escapeHtml(command.id)}</strong><small>${escapeHtml(descriptions[command.id] || command.description)}</small></div><button class="button ${command.id.startsWith("pack") ? "primary" : "secondary"}" data-command="${escapeHtml(command.id)}">실행</button></article>`).join("");
-  $$("[data-command]").forEach((button) => button.addEventListener("click", () => runBuild(button.dataset.command)));
+  const selectedLanguage = languageSelect.value || "ko_kr";
+  languageSelect.innerHTML = state.exportLanguages.map((language) =>
+    `<option value="${escapeHtml(language.id)}">${escapeHtml(language.name)}</option>`).join("");
+  languageSelect.value = state.exportLanguages.some((language) => language.id === selectedLanguage) ? selectedLanguage : "ko_kr";
+  const allowed = new Set(state.buildCommands.map((command) => command.id));
+  $("#build-command-list").innerHTML = buildActions.filter((action) => allowed.has(action.id)).map((action) => `
+    <article class="build-command"><div><strong>${escapeHtml(action.title)}</strong><small>${escapeHtml(action.description)}</small></div><button class="button ${action.id === "pack" ? "primary" : "secondary"}" data-command="${action.id}" ${buildBusy || (action.id === "content-install" && !state.contentDeployment?.bundle_exists) ? "disabled" : ""}>${escapeHtml(action.action)}</button></article>`).join("");
+  $$("#build-command-list [data-command]").forEach((button) => button.addEventListener("click", () => runBuild(button.dataset.command)));
+}
+
+async function loadContentDeployment() {
+  const result = await request("/api/content-deployment");
+  if (!result.ok) throw new Error(result.data.error || "콘텐츠 설치 설정을 불러오지 못했습니다.");
+  state.contentDeployment = result.data;
+  const input = $("#content-instance-path");
+  if (document.activeElement !== input) input.value = result.data.instance_path || result.data.suggested_instance || "";
+  $("#content-instance-candidates").innerHTML = result.data.candidates.map((path) => `<option value="${escapeHtml(path)}"></option>`).join("");
+  $("#content-bundle-status").textContent = result.data.bundle_exists
+    ? `최근 콘텐츠 빌드: ${new Date(result.data.bundle_modified * 1000).toLocaleString()} · 교체 준비됨`
+    : "빌드한 콘텐츠가 없습니다. 콘텐츠 빌드를 먼저 실행하세요.";
+  renderBuildCommands();
+}
+
+async function saveContentInstance() {
+  const result = await request("/api/content-deployment", { method: "PUT", body: JSON.stringify({ instance_path: $("#content-instance-path").value.trim() }) });
+  if (!result.ok) throw new Error(result.data.error || "게임 인스턴스 경로를 저장하지 못했습니다.");
+  state.contentDeployment = result.data;
+  return result.data;
 }
 
 function renderStructureBuilder() {
@@ -19891,18 +19911,18 @@ async function saveStructureBuilderSettings() {
 async function importStructureBuilder() {
   const sourceCount = Number(state.structureBuilder?.source_count || 0);
   if (!confirm(`게임에서 내보낸 ${sourceCount}개 NBT를 검사한 뒤 content/structures의 변경 파일을 교체할까요?`)) return;
-  const buttons = $$("#builds button");
+  const buttons = $$("#live-nbt-editor button");
   buttons.forEach((button) => button.disabled = true);
-  $("#build-state").textContent = "NBT 가져오는 중";
-  $("#build-output").textContent = "월드의 내보내기 NBT를 검사하고 있습니다…";
+  $("#live-editor-build-state").textContent = "NBT 가져오는 중";
+  $("#live-editor-build-output").textContent = "월드의 내보내기 NBT를 검사하고 있습니다…";
   $("#project-loading-title").textContent = "게임 NBT를 가져오는 중입니다";
   showProjectLoading("1/3 · 월드에서 내보낸 NBT를 검사하고 있습니다…");
   let completed = false;
   let failedMessage = "";
   try {
     const result = await request("/api/structure-builder/import", { method: "POST", body: "{}" });
-    $("#build-output").textContent = result.data.output || result.data.error || "결과가 없습니다.";
-    $("#build-state").textContent = result.ok ? "성공" : "실패";
+    $("#live-editor-build-output").textContent = result.data.output || result.data.error || "결과가 없습니다.";
+    $("#live-editor-build-state").textContent = result.ok ? "성공" : "실패";
     if (!result.ok) throw new Error(result.data.error || "NBT 가져오기에 실패했습니다. 하단 실행 결과를 확인하세요.");
     updateProjectLoading("2/3 · 저장소와 게임용 구조물 리소스를 갱신했습니다…");
     lazyDataLoaded.structures = false;
@@ -19924,8 +19944,8 @@ async function importStructureBuilder() {
     if (preferred) await loadBuildingModel(preferred);
     completed = true;
   } catch (error) {
-    $("#build-output").textContent = error.message;
-    $("#build-state").textContent = "실패";
+    $("#live-editor-build-output").textContent = error.message;
+    $("#live-editor-build-state").textContent = "실패";
     failedMessage = error.message || "가져오기 결과를 확인해 주세요.";
   } finally {
     await loadStructureBuilder().catch((error) => toast(error.message));
@@ -19948,20 +19968,20 @@ async function importStructureBuilder() {
 
 async function syncStructureBuilder() {
   if (!confirm("Minecraft 게임을 완전히 종료했나요? 기존 건축 월드는 백업한 뒤 새 월드로 교체됩니다.")) return;
-  const buttons = $$("#builds button");
+  const buttons = $$("#live-nbt-editor button");
   buttons.forEach((button) => button.disabled = true);
-  $("#build-state").textContent = "건축 월드 생성 중";
-  $("#build-output").textContent = "최신 NBT로 건축 월드를 생성하고 인스턴스에 교체하고 있습니다…";
+  $("#live-editor-build-state").textContent = "건축 월드 생성 중";
+  $("#live-editor-build-output").textContent = "최신 NBT로 건축 월드를 생성하고 인스턴스에 교체하고 있습니다…";
   try {
     const result = await request("/api/structure-builder/sync", {
       method: "POST", body: "{}"
     });
-    $("#build-output").textContent = result.data.output || result.data.error || "결과가 없습니다.";
-    $("#build-state").textContent = result.ok ? "성공" : "실패";
+    $("#live-editor-build-output").textContent = result.data.output || result.data.error || "결과가 없습니다.";
+    $("#live-editor-build-state").textContent = result.ok ? "성공" : "실패";
     if (!result.ok) throw new Error(result.data.error || "건축 월드 갱신에 실패했습니다.");
     toast("건축 월드를 교체했습니다. 이제 게임을 실행하면 됩니다.");
   } catch (error) {
-    $("#build-state").textContent = "실패";
+    $("#live-editor-build-state").textContent = "실패";
     toast(error.message || "건축 월드 갱신에 실패했습니다.");
   } finally {
     await loadStructureBuilder().catch((error) => toast(error.message));
@@ -19971,26 +19991,36 @@ async function syncStructureBuilder() {
 }
 
 async function runBuild(command, targets = {}) {
+  if (buildBusy) return;
+  buildBusy = true;
+  if (command === "content-install") {
+    try { await saveContentInstance(); }
+    catch (error) { buildBusy = false; renderBuildCommands(); toast(error.message); return; }
+  }
+  const actionName = buildActions.find((action) => action.id === command)?.title || command;
   const language = $("#build-export-language")?.value || "ko_kr";
   const cobblemonTarget = $("#build-cobblemon-target")?.value || "1.8";
   const stateTarget = targets.state || "#build-state";
   const outputTarget = targets.output || "#build-output";
   const buttons = $$("#builds button, #live-nbt-editor button");
   buttons.forEach((button) => button.disabled = true);
-  $(stateTarget).textContent = `${command} · Cobblemon ${cobblemonTarget} 실행 중`;
+  $(stateTarget).textContent = `${actionName} 실행 중`;
   $(outputTarget).textContent = "작업이 끝날 때까지 잠시 기다려 주세요…";
   try {
     const result = await request("/api/build", { method: "POST", body: JSON.stringify({ command, language, cobblemon_target: cobblemonTarget }) });
     $(outputTarget).textContent = result.data.output || result.data.error || "결과가 없습니다.";
     $(stateTarget).textContent = result.ok ? "성공" : "실패";
-    toast(result.ok ? `${command} 작업을 완료했습니다.` : `${command} 작업을 확인해 주세요.`);
+    toast(result.ok ? `${actionName} 작업을 완료했습니다.` : `${actionName} 작업을 확인해 주세요.`);
     await loadDashboard();
+    await loadContentDeployment();
   } catch (error) {
     $(outputTarget).textContent = error.message;
     $(stateTarget).textContent = "연결 실패";
     toast("빌드 서버 연결을 확인해 주세요.");
   } finally {
+    buildBusy = false;
     buttons.forEach((button) => button.disabled = false);
+    renderBuildCommands();
     renderStructureBuilder();
   }
 }
@@ -20731,10 +20761,10 @@ $("#save-structure-builder-settings").addEventListener("click", saveStructureBui
 $("#save-live-editor-settings").addEventListener("click", saveStructureBuilderSettings);
 $("#refresh-structure-builder").addEventListener("click", () => loadStructureBuilder().catch((error) => toast(error.message)));
 $("#refresh-live-editor").addEventListener("click", () => loadStructureBuilder().catch((error) => toast(error.message)));
-$("#build-structure-builder").addEventListener("click", async () => { await runBuild("builder-world"); await loadStructureBuilder().catch((error) => toast(error.message)); });
-$("#build-server-pack").addEventListener("click", () => runBuild("pack-server"));
+$("#build-structure-builder").addEventListener("click", async () => { await runBuild("builder-world", { state: "#live-editor-build-state", output: "#live-editor-build-output" }); await loadStructureBuilder().catch((error) => toast(error.message)); });
+$("#save-content-instance").addEventListener("click", () => saveContentInstance().then(() => toast("게임 인스턴스 경로를 저장했습니다.")).catch((error) => toast(error.message)));
 $("#build-live-nbt-editor").addEventListener("click", async () => { await runBuild("live-editor-world", { state: "#live-editor-build-state", output: "#live-editor-build-output" }); await loadStructureBuilder().catch((error) => toast(error.message)); });
-$("#install-structure-builder").addEventListener("click", async () => { await runBuild("builder-install"); await loadStructureBuilder().catch((error) => toast(error.message)); });
+$("#install-structure-builder").addEventListener("click", async () => { await runBuild("builder-install", { state: "#live-editor-build-state", output: "#live-editor-build-output" }); await loadStructureBuilder().catch((error) => toast(error.message)); });
 $("#install-live-nbt-editor").addEventListener("click", async () => { await runBuild("live-editor-install", { state: "#live-editor-build-state", output: "#live-editor-build-output" }); await loadStructureBuilder().catch((error) => toast(error.message)); });
 $("#sync-structure-builder").addEventListener("click", syncStructureBuilder);
 $("#import-structure-builder").addEventListener("click", importStructureBuilder);

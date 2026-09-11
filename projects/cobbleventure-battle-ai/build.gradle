@@ -129,11 +129,7 @@ processResources {
     filesMatching('META-INF/neoforge.mods.toml') {
         expand properties
     }
-    from('data/ai') {
-        include 'ai-move-role-classification.json'
-        include 'ai-pokemon-role-overrides.json'
-        into 'battle-ai'
-    }
+
 }
 
 tasks.register('cleanInstalledDevelopmentJars', Delete) {
@@ -183,3 +179,6 @@ tasks.register('installDevelopmentJar') {
 tasks.named('build') {
     finalizedBy 'installDevelopmentJar'
 }
+
+dependencies { implementation 'dev.buizz.cobbleventure:cobbleventure-content-runtime:1.0.0' }
+apply from: rootProject.file('../../gradle/external-content.gradle')

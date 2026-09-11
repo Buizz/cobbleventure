@@ -67,7 +67,7 @@ final class DungeonFixedTemplateLayoutTest {
     }
 
     private JsonObject resource(String path) throws Exception {
-        var stream = getClass().getClassLoader().getResourceAsStream(path);
+        var stream = dev.buizz.cobbleventure.content.ContentFiles.open(path);
         assertTrue(stream != null, "Missing test resource: " + path);
         try (stream; var reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
             return JsonParser.parseReader(reader).getAsJsonObject();

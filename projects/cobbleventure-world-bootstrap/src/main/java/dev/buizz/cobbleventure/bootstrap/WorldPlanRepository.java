@@ -1,5 +1,7 @@
 package dev.buizz.cobbleventure.bootstrap;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
+import dev.buizz.cobbleventure.content.ContentFiles;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -26,13 +28,13 @@ final class WorldPlanRepository {
     }
 
     private static HexWorldPlan read(long seed) {
-        JsonObject world = readJson("hex_worlds/generation_1.json");
+        JsonObject world = readJson(CampaignContent.text("world_plan"));
         JsonObject boundaryProfiles = readJson("catalogs/boundary-profiles.json");
         Map<String, Integer> townRadii = new LinkedHashMap<>();
         for (JsonElement element : world.getAsJsonArray("settlements")) {
             String settlementId = element.getAsJsonObject().get("settlement").getAsString();
             String slug = settlementId.substring(settlementId.lastIndexOf('/') + 1);
-            JsonObject settlement = readJson("settlements/generation_1/" + slug + ".json");
+            JsonObject settlement = readJson(CampaignContent.text("settlement_directory") + slug + ".json");
             townRadii.put(settlementId, settlement.get("town_radius_cells").getAsInt());
         }
         return CobbleventureBootstrap.parseHexWorldPlan(
@@ -43,7 +45,7 @@ final class WorldPlanRepository {
 
     private static JsonObject readJson(String path) {
         String resourcePath = DATA_ROOT + path;
-        try (InputStream stream = WorldPlanRepository.class.getResourceAsStream(resourcePath)) {
+        try (InputStream stream = ContentFiles.open(resourcePath)) {
             if (stream == null) {
                 throw new IllegalStateException(
                     "Missing native world generation resource: " + resourcePath

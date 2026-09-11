@@ -19,14 +19,14 @@ final class CasinoInteriorStructureTest {
     @Test
     void authoredNpcPositionsHaveFloorSupport() throws Exception {
         CompoundTag structure;
-        try (InputStream input = getClass().getResourceAsStream(
+        try (InputStream input = dev.buizz.cobbleventure.content.ContentFiles.open(
             "/data/cobbleventure/structure/interiors/casino.nbt"
         )) {
             assertNotNull(input);
             structure = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
         }
 
-        try (InputStream input = getClass().getResourceAsStream(
+        try (InputStream input = dev.buizz.cobbleventure.content.ContentFiles.open(
             "/data/cobbleventure/structure_metadata/interiors/casino.structure.json"
         )) {
             assertNotNull(input);
@@ -56,13 +56,13 @@ final class CasinoInteriorStructureTest {
     @Test
     void authoredTeleportDestinationsHaveFloorSupport() throws Exception {
         CompoundTag structure;
-        try (InputStream input = getClass().getResourceAsStream(
+        try (InputStream input = dev.buizz.cobbleventure.content.ContentFiles.open(
             "/data/cobbleventure/structure/interiors/casino.nbt"
         )) {
             structure = NbtIo.readCompressed(input, NbtAccounter.unlimitedHeap());
         }
 
-        try (InputStream input = getClass().getResourceAsStream(
+        try (InputStream input = dev.buizz.cobbleventure.content.ContentFiles.open(
             "/data/cobbleventure/structure_metadata/interiors/casino.structure.json"
         )) {
             assertNotNull(input);

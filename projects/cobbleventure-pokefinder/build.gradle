@@ -33,6 +33,7 @@ dependencies {
 
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation "dev.buizz.cobbleventure:cobbleventure-player-menu:1.6.0"
     testImplementation cobblenavDependency
     testRuntimeOnly cobblemonBuildDependency
     testRuntimeOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20"
@@ -80,11 +81,6 @@ neoForge {
 }
 
 processResources {
-    def contentProjectDir = file(System.getenv('COBBLEVENTURE_PROJECT_PATH') ?: rootProject.file('../../content-projects/cobbleventure-main'))
-    from(new File(contentProjectDir, 'content/catalogs/pokefinder-icons.json')) {
-        into 'data/cobbleventure'
-        rename { 'pokefinder_icons.json' }
-    }
     def properties = [
         minecraft_version_range: minecraft_version_range,
         neo_version: neo_version,
@@ -116,4 +112,10 @@ tasks.register('installDevelopmentJar', Copy) {
 
 tasks.named('build') {
     finalizedBy 'installDevelopmentJar'
+}
+
+apply from: rootProject.file('../../gradle/external-content.gradle')
+
+dependencies {
+    implementation 'dev.buizz.cobbleventure:cobbleventure-content-runtime:1.0.0'
 }

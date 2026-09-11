@@ -6,7 +6,7 @@
 - 넓은 28×28 사각 회색 기단 위에 폭이 좁은 탑을 얹은 형태. 모서리 깎기는 상층에만 적용
 - 7개 층의 반복 창문, 밝은 기둥과 층간 띠, 팔각 테두리 위의 녹색 반구형 돔 (반지름·높이 각 11블록)
 - 외관 상층은 장식용이며 실제 던전 공간은 기존 던전 조각으로 생성
-- 입장 화면: `projects/cobbleventure-world-bootstrap/src/main/resources/assets/cobbleventure_bootstrap/textures/gui/dungeons/pokemon_tower.png`
+- 입장 화면: `content-projects/cobbleventure-main/content/resources/cobbleventure-world-bootstrap/assets/cobbleventure_bootstrap/textures/gui/dungeons/pokemon_tower.png`
 - 외관 미리보기: `docs/assets/pokemon_tower_preview.png` (블록 형상과 개략 색상, 게임 스크린샷 아님)
 
 재생성 및 검사:

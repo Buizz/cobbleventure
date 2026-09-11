@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.bootstrap;
 
+import dev.buizz.cobbleventure.content.CampaignContent;
 import com.google.gson.JsonObject;
 import dev.buizz.cobbleventure.playermenu.PlayerConditions;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ record GatePokemonConfig(
             width,
             number(collision, "height", Double.NaN, 0.5, 8),
             number(collision, "depth", Double.NaN, 0.5, 16),
-            resource(value, "completion_flag", "cobbleventure:flag/gate/" + gateId + "_cleared"),
+            resource(value, "completion_flag", CampaignContent.text("flag_gate_prefix") + gateId + "_cleared"),
             List.copyOf(activation), resource(value, "event_binding", null, false),
             resource(value, "activation_item", null, false)
         );
