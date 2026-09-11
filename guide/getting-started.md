@@ -23,7 +23,7 @@ Content Studio 자체는 Python 표준 라이브러리만 사용합니다. Java�
 이후 명령은 저장소 루트에서 실행합니다.
 
 ```powershell
-cd "프로젝트를 받은 폴더\cobbleverse-overhaul"
+cd "프로젝트를 받은 폴더\cobbleventure"
 ```
 
 ## 3. 첫 검증
@@ -95,4 +95,3 @@ py -3 tools\content-manager\content_manager.py api --root . --port 8766
 ### 외부 PC에서 접속하고 싶음
 
 지원하지 않습니다. 이 도구에는 사용자 인증이 없고 로컬 파일을 수정하므로 `127.0.0.1` 외부에 공개하면 안 됩니다.
-

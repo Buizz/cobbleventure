@@ -1,405 +1,185 @@
 # Cobbleventure
 
-`Cobbleventure(코블벤처)`는 세대별 어드벤처 월드와 PC 기반 개인 농장을 결합해 본가식 몬스터 수집 모험을 구현하는 독립 프로젝트입니다. `Cobble`과 `Adventure`를 합친 이름이며, 특정 모드팩에 종속되지 않습니다.
+**Cobbleventure(코블벤처)** 는 Cobblemon 위에서 자신만의 포켓몬 어드벤처를 만들고
+플레이할 수 있도록 게임 기능과 제작 도구를 함께 제공하는 프로젝트입니다.
 
-> 현재 상태: **기획 단계**
+코드를 직접 수정하는 대신 로컬 웹 도구인 **Content Studio**에서 NPC, 트레이너,
+리그, 월드맵, 마을, 던전, 포켓몬 출현과 경제 시스템을 구성하고, 검증된 게임용
+콘텐츠로 내보내는 작업 흐름을 지향합니다.
+
+> **개발 상태**
 >
-> 구현 목표 시기: **2027년 이후**
->
-> 게임 연동 기준: **Cobblemon 안정 버전 정식 출시 후 별도 어댑터에서 확정**
->
-> 현재 개발 기준: **Minecraft·NeoForge·Cobblemon 의존성이 없는 플랫폼 독립 코어 우선**
+> Cobbleventure는 현재 활발히 개발 중이며 완성된 정식 배포판이 아닙니다.
+> 데이터 형식과 기능이 바뀔 수 있고, 생성한 결과는 개발 환경에서 먼저 검증해야
+> 합니다. 현재 게임 빌드 기준은 Minecraft 1.21.1, NeoForge, Cobblemon 1.8입니다.
 
-## 문서
+> [대표 이미지 촬영 안내: Cobbleventure 로고와 함께 Content Studio 대시보드,
+> 월드맵, NPC 편집 화면이 한눈에 보이는 가로형 이미지. 개인 경로와 개발 로그는
+> 보이지 않도록 촬영]
 
-- [테스트용 치트 명령어 — 전체 목록과 사용 예시](docs/CHEAT_COMMANDS.md)
-- [Content Studio 사용자 가이드](guide/README.md)
-- [프로젝트 기획서](docs/PROJECT_PLAN.md)
-- [구현 설계 문서 안내](docs/implementation/README.md)
-- [콘텐츠 제작 및 CurseForge 빌드 파이프라인](docs/implementation/CONTENT_BUILD_PIPELINE.md)
-- [NBT 구조물 편집 가이드](docs/NBT_STRUCTURE_EDITING.md)
-- [JSON 데이터 카탈로그](docs/JSON_CATALOG.md)
-- [의존 모드 관리표](docs/MOD_DEPENDENCIES.md)
-- [선택 아키텍처와 비교 기록](docs/implementation/WORLD_ARCHITECTURE_OPTIONS.md)
-- [세대 월드 8지역 및 체육관 도시 생성](docs/implementation/WORLD_GENERATION.md)
-- [독립 건축 구조물 제작 월드](docs/implementation/STRUCTURE_BUILDER_WORLD.md)
-- [도시 포맷과 세대별 특수 시설](docs/implementation/CITY_FACILITIES.md)
-- [플레이어 원형 메뉴 설계](docs/implementation/PLAYER_MENU.md)
-- [Cobbleventure Core](projects/cobbleventure-core/README.md)
-- [Cobbleventure Battle AI 독립 모드·웹 실험실](projects/cobbleventure-battle-ai/README.md)
-- [Cobbleventure Adventure](projects/cobbleventure-adventure/README.md)
-- [Cobbleventure Player Menu](projects/cobbleventure-player-menu/README.md)
-- [Cobbleventure Experience](projects/cobbleventure-experience/README.md)
-- [트레이너 JSON 예제 데이터](trainer-data/README.md)
+## 무엇을 만들 수 있나요?
 
-## 개발 환경
+Content Studio는 여러 JSON 파일과 게임 리소스를 직접 찾아다니지 않고 하나의
+프로젝트로 관리할 수 있게 해 줍니다.
 
-현재 개발 도구를 모두 실행하려면 다음 환경이 필요합니다.
+- 포켓몬 팀, 기술, 특성, 도구, AI와 전투 규칙을 갖춘 트레이너
+- 외형, 행동, 대화, 선택지, 이벤트와 전투가 연결된 NPC
+- 체육관 관장, 사천왕, 챔피언, 배지와 레벨캡으로 구성된 리그
+- 마을, 도로, 관문, 숲, 동굴과 던전을 배치하는 세대별 월드맵
+- 바이옴, 시간, 날씨, 희귀도와 낚시 방식에 따른 포켓몬 출현
+- 상점, 드롭, 제작법, 연구, 보육과 같은 모험의 경제·성장 요소
+- 상황별 음악, 테마 건물, NPC 앵커와 실내 공간 연결
+- 콘텐츠 오류 검사, 게임용 콘텐츠 생성과 설치 패키지 빌드
 
-| 도구 | 최소 기준 | 사용 영역 |
-|------|-----------|-----------|
-| Windows PowerShell 또는 명령 프롬프트 | Windows 10/11 | 루트 BAT와 Gradle Wrapper 실행 |
-| Python | 3.10 이상 | 콘텐츠 검증과 데이터 관리 Web API |
-| Java JDK | 21 | Cobbleventure Core와 Battle AI 빌드 |
-| Node.js | 22.13.0 이상 | 전투 테스트 Web Lab |
-| npm | 사용 중인 Node.js에 포함된 버전 | Web Lab 의존성 설치·빌드·실행 |
+게임 엔진과 기본 콘텐츠는 분리되어 있습니다. 같은 Cobbleventure 기능을 사용하면서도
+자신만의 지역, 등장인물, 진행 순서와 전투 구성을 별도의 콘텐츠 프로젝트로
+관리할 수 있습니다.
 
-아래 명령은 특별한 설명이 없다면 저장소 루트에서 실행합니다.
+> [기능 이미지 촬영 안내: Content Studio의 월드맵 화면에서 마을과 길이 배치된
+> 모습. 왼쪽 메뉴와 현재 프로젝트 이름도 함께 보이도록 촬영]
+
+## Content Studio로 시작하기
+
+현재 제작 환경은 **Windows 10/11**을 기준으로 합니다. Content Studio 자체를
+실행하려면 [Python 3.10 이상](https://www.python.org/downloads/)만 필요합니다.
+전체 게임 팩이나 모드를 빌드할 때는 Java JDK 21과 Node.js가 추가로 필요합니다.
+
+### 1. 프로젝트 받기
+
+GitHub의 `Code → Download ZIP`으로 내려받아 쓰기 가능한 폴더에 압축을 풀거나,
+Git을 사용한다면 다음 명령으로 복제합니다.
 
 ```powershell
-cd E:\Source\repos\Buizz\cobbleverse-overhaul
+git clone https://github.com/Buizz/cobbleventure.git
+cd cobbleventure
 ```
 
-## 빠른 시작
+### 2. Content Studio 실행하기
 
-### 콘텐츠와 의존성 검사
-
-```bat
-build.bat validate
-```
-
-Cobblemon 1.8은 별도 시험 프로필로 관리합니다. `검증 성공: 오류 0개`가 표시되면
-콘텐츠 개발을 계속할 수 있습니다.
-
-### CurseForge 임포트 스모크 팩 생성
-
-정식 모드가 없는 상태에서도 CurseForge의 프로필 임포트 흐름을 먼저 확인할 수
-있습니다.
-
-```bat
-build.bat pack-smoke
-```
-
-성공하면 다음 파일이 생성됩니다.
-
-```text
-dist/cobbleventure-import-smoke-0.1.1-curseforge.zip
-dist/cobbleventure-import-smoke-0.1.1-curseforge.zip.sha256
-```
-
-스모크 팩에는 다음 항목만 들어 있습니다.
-
-- Minecraft 1.21.1
-- NeoForge 21.1.248
-- 외부 모드 0개
-- 테스트용 정사각형 팩 아이콘
-- overrides 임포트 확인용 텍스트와 팩 정보 JSON
-
-이 버전은 CurseForge 임포트 파이프라인 확인용으로 별도 고정한 값이며, Cobblemon
-1.8 정식팩의 버전을 확정한 것이 아닙니다.
-
-CurseForge 앱에서 다음 순서로 가져옵니다.
-
-1. Minecraft 화면에서 `Import`를 선택합니다.
-2. `Import Profile .zip` 또는 `Choose .zip file`을 선택합니다.
-3. `dist/cobbleventure-import-smoke-0.1.1-curseforge.zip`을 선택합니다.
-4. `Cobbleventure Import Smoke Test` 프로필이 생성되는지 확인합니다.
-5. 프로필 상세에서 Minecraft 1.21.1과 NeoForge가 선택되었는지 확인합니다.
-6. 테스트 아이콘이 프로필 이미지로 적용되는지 확인합니다.
-7. 가능하면 게임을 한 번 실행해 빈 NeoForge 프로필이 정상 시작되는지 확인합니다.
-
-임포트된 인스턴스의 `config/cobbleventure-import-smoke.txt`가 존재하면
-`overrides`도 정상 적용된 것입니다. `manifest.json`의 `image`는 ZIP 최상위의
-`icon.png`를 상대 경로로 가리킵니다. CurseForge는 import 임시 폴더에서 이 파일을
-찾아 프로필 이미지로 복사합니다. ZIP 안의 `overrides/icon.png`는 수동 지정용
-사본입니다. CurseForge의 공식 임포트 화면과 오류 기준은
-[Sharing Modpacks/Custom Profiles](https://support.curseforge.com/support/solutions/articles/9000197912)를
-참고합니다.
-
-### 임시 개발 팩 생성
-
-스모크 테스트보다 한 단계 위인 개발용 패키징 흐름은 다음 명령으로 확인합니다.
-
-```bat
-build.bat pack
-```
-
-이 명령은 일반 콘텐츠 검증을 먼저 통과한 뒤 다음 파일을 생성합니다.
-
-```text
-dist/cobbleventure-development-1.8-curseforge.zip
-dist/cobbleventure-development-1.8-curseforge.zip.sha256
-```
-
-현재 개발 팩은 Cobblemon 1.8을 유일한 활성 빌드 기준으로 사용합니다. RCT API,
-Radical Cobblemon Trainers, TBCS, Mega Showdown과 CobbleNav의 1.8 대응 버전을
-고정하며 자체 Pokefinder 확장도 CobbleNav 2.4.0 기준으로 함께 빌드합니다.
-
-개발 팩에는 Cobblemon 1.8과 CobbleDollars가 포함됩니다. 포켓몬센터와
-포켓몬상점은 출처를 기록한 수정본을 자체 리소스로 패키징하고, 백화점은 자체 제작
-구조물과 상점 카탈로그를 사용합니다. `build.bat pack`은 먼저
-무지하 전용 시작 바이옴·세대 차원을 생성하는 부트스트랩 Java 모드와
-인벤토리 키 기반 원형 플레이어 메뉴 모드를 빌드하고 함께 넣습니다. RCT와
-정식 Cobbleventure NeoForge 게임 어댑터의 나머지 기능은 아직 포함하지 않으며 ZIP 안의 팩
-정보에는 `production_ready: false`를 기록합니다.
-
-새 월드에 처음 입장하면 동굴·광맥·지하 구조물이 없는
-`cobbleventure:generation_1` 차원으로 플레이어를 옮깁니다. 전용
-`cobbleventure:starter_plains` 바이옴의 새 스폰에서 X/Z 각각 `+32` 블록 떨어진 지표면에
-자체 체육관을 중심으로 BCA 도로와 건물이 확장되는 Cobbleventure 시작 마을을
-배치합니다. 체육관은 공통 외관을 사용하고 관장 타입에 따라 지붕 색이 바뀌며,
-현재 시작 체육관은 바위 타입의 회색 지붕입니다. 이 기능은 정식 지역 플래너 전의 테스트용이며
-세부 동작과 저장 방식은
-[World Bootstrap 문서](projects/cobbleventure-world-bootstrap/README.md)를 참고합니다.
-
-### 전투 테스트 Web Lab 실행
-
-Windows에서는 Web Lab 폴더의 BAT 파일을 사용하는 방법이 가장 간단합니다.
-
-```powershell
-cd projects\cobbleventure-battle-ai\web-lab
-.\start.bat
-```
-
-탐색기에서
-`projects\cobbleventure-battle-ai\web-lab\start.bat`을 더블클릭해도 됩니다.
-`start.bat`은 다음 작업을 자동으로 처리합니다.
-
-- 최초 실행에서 `node_modules`가 없으면 `npm ci` 실행
-- 트레이너·다국어 데이터 동기화와 전투 메커니즘 검사
-- 개발 서버를 숨겨진 백그라운드 프로세스로 실행
-- 서버 준비를 최대 90초 동안 확인
-- 준비가 끝나면 기본 브라우저로 `http://localhost:3000` 열기
-
-트레이너 동기화와 메커니즘 감사가 함께 실행되므로 PC 상태에 따라 시작에
-수십 초가 걸릴 수 있습니다. 준비 확인이 끝날 때까지 `start.bat` 창을 닫지
-않습니다.
-
-실행 중에 `start.bat`을 다시 사용하면 서버를 중복으로 만들지 않고 기존 페이지를
-엽니다. 포트 `3000`을 다른 프로그램이 사용 중이면 해당 프로그램을 먼저
-종료해야 합니다.
-
-서버 상태와 시작 오류는 Web Lab 폴더의 다음 로컬 로그에서 확인합니다.
-
-```text
-.local-server.log
-.local-server-error.log
-```
-
-이 로그와 `.local-server.pid`는 로컬 실행 파일이므로 Git에 포함되지 않습니다.
-브라우저를 자동으로 열지 않으려면 `COBBLEVERSE_NO_BROWSER=1` 환경 변수를 설정한
-뒤 `start.bat`을 실행합니다.
-
-준비가 끝나면 다음 주소를 사용할 수 있습니다.
-
-- 전투 실험실: [http://localhost:3000](http://localhost:3000)
-- EvE 대량 전투 리포트: [http://localhost:3000/eve-report](http://localhost:3000/eve-report)
-
-`start.bat`으로 시작한 백그라운드 서버는 반드시 `stop.bat`으로 종료합니다.
-
-```powershell
-cd projects\cobbleventure-battle-ai\web-lab
-.\stop.bat
-```
-
-`stop.bat`은 `.local-server.pid`에 기록된 서버와 그 하위 Node 프로세스를 함께
-종료합니다. 이미 종료되어 있으면 오류 없이 종료된 상태라고 안내합니다.
-
-서버 출력을 터미널에서 직접 확인하며 개발하려면 BAT 대신 다음 명령을 사용합니다.
-
-```powershell
-cd projects\cobbleventure-battle-ai\web-lab
-npm ci
-npm run dev
-```
-
-수동으로 실행한 서버는 `stop.bat`이 아니라 실행 중인 터미널에서 `Ctrl+C`로
-종료합니다. `npm ci`는 최초 실행이나 `package-lock.json` 변경 후에만 다시
-실행하면 됩니다.
-
-### 데이터 관리 Python Web 실행
-
-저장소 루트에서 다음 명령을 실행합니다.
+프로젝트 폴더에서 `build.bat web`을 실행합니다.
 
 ```bat
 build.bat web
 ```
 
-`Cobbleventure Content Manager` 메시지가 출력되면 브라우저에서 다음 주소를
-엽니다.
+터미널에 서버 주소가 표시되면 브라우저에서
+[http://127.0.0.1:8765](http://127.0.0.1:8765)을 엽니다. 처음 실행하면 예제이자
+기본 콘텐츠인 `Cobbleventure Main` 프로젝트가 자동으로 열립니다.
 
-- 관리 화면: [http://127.0.0.1:8765/](http://127.0.0.1:8765/)
-- 상태 확인 API: [http://127.0.0.1:8765/health](http://127.0.0.1:8765/health)
-- 콘텐츠 검증 API: [http://127.0.0.1:8765/validate](http://127.0.0.1:8765/validate)
+> [실행 이미지 촬영 안내: `build.bat web` 실행 후 로컬 주소가 표시된 터미널과,
+> 브라우저에 열린 Content Studio 대시보드를 나란히 배치]
 
-관리 화면에서는 프로젝트 검증 상태를 확인하고, 트레이너와 마을을 새로 만들 수
-있습니다. 트레이너의 기본 정보·NPC 행동·마을 배치·AI·특수기믹·포켓몬 팀과
-마을의 이름·지역·차원·중심·경계·기본 NPC 배치 수치를 폼으로 수정할 수 있습니다.
-트레이너 클래스와 RCT 외형을 선택할 수 있고, 포켓몬 팀은 전투 Web Lab과 같은
-슬롯·집중 편집 화면에서 구성합니다.
-`validate`, `test`, `pack-smoke`, `pack`, `validate-pack`도 버튼으로 실행할 수
-있습니다. 저장 요청은 서버에서 다시 검증하며 오류가 있으면 원본 파일을
-덮어쓰지 않습니다.
-서버를 종료하려면 `Ctrl+C`를 누릅니다.
+Content Studio는 인증 기능이 없는 로컬 제작 도구입니다. 외부 네트워크에 공개하지
+말고 `127.0.0.1`에서만 사용하세요. 종료할 때는 실행한 터미널에서 `Ctrl+C`를
+누릅니다.
 
-포트를 바꾸어 직접 실행할 수도 있습니다.
+### 3. 나만의 콘텐츠 편집하기
 
-```powershell
-py -3 tools\content-manager\content_manager.py api --root . --port 8766
-```
+기본 프로젝트를 살펴보거나, `project.json`과 `content` 폴더가 있는 별도 프로젝트를
+상단의 **현재 프로젝트** 메뉴에서 불러올 수 있습니다. 예제를 보존하고 싶다면
+`content-projects/cobbleventure-main`을 복사하고 복사본의 `project.json`에서
+`id`와 `name`을 바꾼 뒤 편집하세요.
 
-인증 기능이 없는 로컬 제작 API이므로 `127.0.0.1` 이외의 주소로 공개하지
-않습니다.
+처음부터 모든 영역을 채울 필요는 없습니다. 작은 콘텐츠는 다음 순서로 시작하는
+것이 좋습니다.
 
-## 빌드와 테스트
+1. **배틀 프리셋**에서 포켓몬 팀과 전투 규칙을 만듭니다.
+2. **NPC**에서 외형과 대화를 만들고 배틀 프리셋을 연결합니다.
+3. **마을 프리셋** 또는 **월드맵**에 NPC와 플레이 공간을 배치합니다.
+4. 각 화면에서 **검증 후 저장**을 누릅니다.
+5. **대시보드**에서 **전체 검증**을 실행합니다.
 
-### 루트 `build.bat` 명령
+저장 요청은 서버에서 다시 검사됩니다. 오류가 있으면 원본 파일을 덮어쓰지 않고
+수정할 항목을 알려 줍니다. 콘텐츠 ID는 다른 문서가 참조하므로 처음 만들 때 의미가
+분명한 소문자 영문·숫자·밑줄 이름을 사용하는 것이 좋습니다.
 
-현재 `build.bat`은 콘텐츠 도구의 통합 진입점입니다. 아직 모든 Java 모드와
-CurseForge ZIP을 한 번에 만드는 전체 빌드 스크립트는 아닙니다.
+> [편집 이미지 촬영 안내: NPC 편집 화면에서 외형 미리보기, 대화, 연결된 배틀
+> 프리셋과 `검증 후 저장` 버튼이 함께 보이는 화면]
 
-| 명령 | 설명 | 현재 예상 결과 |
-|------|------|----------------|
-| `build.bat validate` | 의존성 Lock과 정규화 콘텐츠의 전투·대화·진행 참조 검사 | `draft` 경고를 허용하고 오류가 없으면 성공 |
-| `build.bat validate-pack` | Minecraft·NeoForge·활성 모드 버전과 CurseForge ID까지 엄격 검사 | 의존성 확정 전에는 실패가 정상 |
-| `build.bat web` | 데이터 관리용 Python Web 화면과 API 실행 | `127.0.0.1:8765`에서 종료할 때까지 실행 |
-| `build.bat api` | `build.bat web`의 호환용 별칭 | Web 화면과 API가 동일하게 실행됨 |
-| `build.bat test` | 콘텐츠/Web/팩 회귀 테스트와 Battle AI·Adventure·월드·플레이어 메뉴 Java 컴파일 | Python `unittest`와 Gradle 테스트가 모두 통과해야 함 |
-| `build.bat spawns` | 엑셀 편집표에서 바이옴·세대 조건이 적용된 Paxi 스폰 데이터팩 생성 | 개발 팩 overrides에 생성 ZIP과 검증 보고서 생성 |
-| `build.bat mod-ai` | 독립 Battle AI NeoForge 모드 빌드 | 개발 팩 `overrides/mods`에 Battle AI JAR 생성 |
-| `build.bat mod-adventure` | 전투·경제·귀환·필드 기술용 NeoForge 모드 빌드 | 개발 팩 `overrides/mods`에 Adventure JAR 생성 |
-| `build.bat mod-bootstrap` | 무지하 시작 바이옴·세대 차원·BCA 테스트 마을용 NeoForge Java 모드 빌드 | 체육관 NBT 생성 후 개발 팩 `overrides/mods`에 JAR 생성 |
-| `build.bat mod-menu` | 인벤토리 키 기반 원형 플레이어 메뉴 NeoForge 모드 빌드 | 개발 팩 `overrides/mods`에 JAR 생성 |
-| `build.bat pack-smoke` | 최소 CurseForge 임포트 테스트 ZIP 생성·재검증 | `dist`에 ZIP과 SHA-256 생성 |
-| `build.bat pack` | 일반 콘텐츠 검증 후 임시 개발 팩 생성 | 임포트 가능한 개발용 ZIP과 SHA-256 생성 |
-| `build.bat pack-server` | 개발 팩을 빌드한 뒤 서버·양쪽 모드와 서버 설정만 취합 | `dist`에 NeoForge 서버 준비 ZIP과 SHA-256 생성 |
-| `build.bat pack-release` | 정식 의존성·배포 준비 상태를 엄격 검사 | 현재는 누락 항목을 출력하고 실패하는 것이 정상 |
-| `build.bat builder-world` | 독립 건축 평지 월드와 경량 CurseForge 프로필 생성 | `dist`에 건축용 ZIP과 SHA-256 생성 |
-| `build.bat builder-import "<월드 경로>"` | 게임에서 내보낸 NBT를 활성 프로젝트의 `content/structures`에 반영 | 전체 관리 NBT의 완전성·크기 검사 후 변경 파일만 교체 |
+### 4. 검사하고 게임용 콘텐츠 만들기
 
-`build.bat`을 인자 없이 실행하면 사용 가능한 명령을 표시합니다. 자세한 검사
-규칙과 종료 코드는 [Content Manager 사용법](tools/content-manager/README.md)을
-참고합니다.
+일반 제작자는 Content Studio의 **빌드 · 콘텐츠 교체** 화면에서 버튼을 사용하는
+것이 가장 간단합니다.
 
-Web의 **빌드 작업** 화면과 `build.bat`은 모두 Cobblemon 1.8 정식 버전을 기준으로
-자체 모드, 클라이언트 개발 팩과 서버 준비 ZIP을 생성합니다. 이전 1.7.3 프로필은
-과거 결과 재현을 위한 참고 파일로만 보관하며 활성 빌드 선택지로 제공하지 않습니다.
+| 작업 | 사용 시점 | 결과 |
+|---|---|---|
+| 전체 검증 | 편집 중 수시로 | 잘못된 형식과 끊어진 참조를 찾음 |
+| 콘텐츠 빌드 | 콘텐츠 배포 전 | 엔진을 다시 빌드하지 않고 버전이 붙은 콘텐츠 ZIP 생성 |
+| 콘텐츠 교체 | 게임에서 시험할 때 | 선택한 콘텐츠를 지정한 게임 인스턴스에 안전하게 적용 |
+| 전체 빌드 | 엔진과 콘텐츠를 함께 시험할 때 | 자체 모드와 콘텐츠가 포함된 개발용 설치 ZIP 생성 |
 
-`pack-server` 결과에는 `server.properties`, JVM 메모리 기본값, EULA 확인 파일,
-서버 시작 스크립트와 `setup-server.ps1`이 포함됩니다. 설치 스크립트는 Java 21과
-CurseForge API 키를 사용해 고정된 NeoForge 및 서버용 외부 모드를 내려받습니다.
-EULA는 자동 동의하지 않으며 서버 운영자가 내용을 확인한 뒤 직접 변경해야 합니다.
+콘텐츠 교체는 외부 콘텐츠를 지원하는 Cobbleventure 엔진을 먼저 설치한 환경에서
+사용해야 합니다. 게임을 완전히 종료한 뒤 실행하며, 실패하면 기존 콘텐츠를
+복구하도록 설계되어 있습니다.
 
-### 플랫폼 독립 Java 프로젝트 빌드
-
-Battle AI를 빌드하고 테스트합니다.
-
-```powershell
-.\projects\cobbleventure-battle-ai\gradlew.bat `
-  -p .\projects\cobbleventure-battle-ai clean build
-```
-
-같은 Gradle Wrapper를 사용해 Cobbleventure Core를 빌드하고 테스트합니다.
-
-```powershell
-.\projects\cobbleventure-battle-ai\gradlew.bat `
-  -p .\projects\cobbleventure-core clean build
-```
-
-빌드 JAR은 각 하위 모듈의 `build/libs`에 생성됩니다. 현재 결과는 Minecraft에
-직접 설치하는 NeoForge 모드 JAR이 아니라 플랫폼 독립 라이브러리입니다.
-
-### 전투 Web Lab 빌드와 테스트
-
-`start.bat`과 `stop.bat`은 개발 서버를 편하게 켜고 끄는 도구입니다. 프로덕션
-빌드와 자동 테스트는 아래 npm 명령으로 별도 실행합니다.
-
-```powershell
-cd projects\cobbleventure-battle-ai\web-lab
-npm ci
-npm test
-```
-
-`npm test`는 데이터 동기화와 프로덕션 빌드를 수행한 뒤 렌더링, 트레이너 변환,
-전투 시나리오, Showdown 호환 엔진, 자체 전투 엔진과 AI 테스트를 실행합니다.
-
-프로덕션 형태로 직접 실행하려면 다음 명령을 사용합니다.
-
-```powershell
-npm run build
-npm start
-```
-
-### 전투 테스트 Web API
-
-전투 API는 별도 프로세스가 아니라 `npm run dev` 또는 `npm start`로 실행한 Web
-Lab 서버에 포함됩니다. 기본 주소는 `http://localhost:3000/api/...`입니다.
-
-| 메서드와 경로 | 역할 |
-|---------------|------|
-| `GET /api/battle-catalog` | 트레이너, 포켓몬과 편집 카탈로그 조회 |
-| `POST /api/scenarios` | 입력 데이터를 검증해 재현 가능한 전투 시나리오 생성 |
-| `POST /api/battles` | Showdown 호환 기준 엔진으로 전투 실행 |
-| `POST /api/native-battles` | Cobbleventure 자체 엔진으로 전투 실행 |
-| `POST /api/interactive-battles` | 턴 단위 상호작용 전투 세션 처리 |
-| `POST /api/battle-sweep` | 여러 전투를 실행해 EvE 결과 집계 |
-| `GET /api/pokemon-sprites` | Web Lab에서 사용하는 포켓몬 이미지 조회 |
-
-전투 요청 JSON은 웹 화면에서 생성·검증할 수 있습니다. API 계약과 전투 엔진의
-상세 범위는 [Battle AI 프로젝트 문서](projects/cobbleventure-battle-ai/README.md)를
-참고합니다.
-
-## CurseForge 패키징 명령의 구분
-
-| 명령 | 목적 | ZIP 생성 여부 |
-|------|------|---------------|
-| `pack-smoke` | CurseForge가 최소 manifest와 overrides를 받아들이는지 확인 | 항상 스모크 ZIP 생성 |
-| `pack` | 콘텐츠 검증부터 개발 ZIP 생성까지의 작업 흐름 확인 | 현재 임시 개발 ZIP 생성 |
-| `pack-release` | 정식 의존성과 공개 배포 준비가 완료됐는지 확인 | 현재는 차단되며 ZIP을 만들지 않음 |
-
-`pack-smoke`와 임시 `pack`은 정식 `dependencies.lock.json`을 확정한 것으로
-취급하지 않습니다. 둘 다 Minecraft 1.21.1과 NeoForge 21.1.248을 사용합니다.
-`pack-smoke`는 외부 모드가 없는 임포트 구조 시험이고, 임시 `pack`은
-CurseForge 외부 모드 6개와 직접 포함 JAR 2개(BCA 및 시작 마을
-부트스트랩)를 포함하는 플레이 테스트 팩입니다.
+명령줄을 선호한다면 저장소 루트에서 다음 명령을 사용할 수 있습니다.
 
 ```bat
-build.bat pack-release
+build.bat validate
+build.bat content
 ```
 
-현재 `pack-release`는 내부적으로 `validate-pack`을 실행합니다. RCT API와
-RCT의 버전·CurseForge project ID/file ID가 미정이므로 종료 코드
-`1`로 실패하고 ZIP을 생성하지 않는 것이 정상입니다. 의존성 Lock이 완성된
-뒤에는 이 명령에 외부 의존성 manifest 생성, 자체 JAR 취합, 라이선스와 공개
-배포 검사를 연결합니다.
+생성물은 `dist` 폴더에 저장됩니다. `build.bat pack`과 전체 테스트는 JDK 21,
+Node.js 및 빌드에 필요한 게임 의존성을 갖춘 개발 환경을 요구합니다.
 
-모든 ZIP 생성 명령은 결과를 다시 열어 `manifest.json`, `overrides/`, CRC,
-내부 경로와 프로필 값이 올바른지 검사합니다. 자세한 구조는
-[CurseForge Pack Builder 문서](tools/pack-builder/README.md)를 참고합니다.
+> [빌드 이미지 촬영 안내: `빌드 · 콘텐츠 교체` 화면에서 버전 입력란, 전체 검증,
+> 콘텐츠 빌드, 콘텐츠 교체 버튼과 최근 성공 결과가 함께 보이는 화면]
 
-## 현재 저장소 범위
+## 권장 제작 흐름
 
-현재는 기획 문서, 플랫폼 독립 지역 코어와 전투 AI, 트레이너 JSON 예제 데이터를 관리합니다. Minecraft·NeoForge·Cobblemon 연동 모드와 특정 트레이너 모드 어댑터는 대상 안정 버전을 확정한 뒤 추가합니다.
+콘텐츠가 서로 참조하기 때문에 규모가 큰 프로젝트는 다음 순서로 구성하면 오류를
+줄일 수 있습니다.
 
-의존성 방향은 항상 `게임 어댑터 → 플랫폼 독립 코어`로 유지합니다. 플랫폼 독립 코어는 Minecraft, NeoForge, Cobblemon 또는 특정 트레이너 모드 클래스를 참조하지 않습니다.
+`게임 데이터·음악 → 바이옴 → 배틀 프리셋 → NPC → 리그·건물 → 마을·던전 → 월드맵 → 경제·제작 → 전체 검증 → 콘텐츠 빌드`
 
-향후 구현 단계에서는 필요에 따라 다음 영역을 추가할 예정입니다.
+화면별 설명과 실제 입력 예시는 [Content Studio 사용자 가이드](guide/README.md)에서
+확인할 수 있습니다.
+
+## 문서 안내
+
+### 콘텐츠 제작자
+
+- [Content Studio 사용자 가이드](guide/README.md)
+- [처음 설치하고 실행하기](guide/getting-started.md)
+- [전체 콘텐츠 제작 흐름](guide/workflow.md)
+- [빌드와 콘텐츠 적용](guide/build-and-deploy.md)
+- [JSON 데이터 카탈로그](docs/JSON_CATALOG.md)
+- [NBT 구조물 편집 가이드](docs/NBT_STRUCTURE_EDITING.md)
+
+### 개발자와 기여자
+
+- [프로젝트 기획서](docs/PROJECT_PLAN.md)
+- [구현 설계 문서](docs/implementation/README.md)
+- [콘텐츠·엔진 분리 계약](docs/implementation/CONTENT_ENGINE_SEPARATION.md)
+- [콘텐츠 빌드 파이프라인](docs/implementation/CONTENT_BUILD_PIPELINE.md)
+- [의존 모드 관리표](docs/MOD_DEPENDENCIES.md)
+- [테스트용 치트 명령어](docs/CHEAT_COMMANDS.md)
+
+## 저장소 구성
 
 ```text
-projects/           플랫폼 독립 코어·전투 AI와 Adventure·World·UI 게임 모드
-content-projects/   폴더별 콘텐츠 프로젝트(기본값: cobbleventure-main)
-trainer-data/       외부 트레이너 JSON 원본 예제
-config-overrides/   기존 모드 설정 변경분
-structures/         체육관 도시 구조물 원본
-resources/          텍스처·번역·사운드 등 자체 리소스
-docs/               기획·설계·결정 기록
+content-projects/   Content Studio에서 여는 콘텐츠 프로젝트
+guide/              콘텐츠 제작자를 위한 화면별 사용 가이드
+projects/           Cobbleventure의 NeoForge 모드와 독립 코어
+tools/              Content Studio, 검증기와 패키징 도구
+pack/               게임 팩 프로필과 패키징 설정
+docs/               기획, 구현 설계와 기술 문서
 ```
+
+저장소에는 다른 프로젝트나 모드팩의 JAR, 개인 게임 폴더, 월드, 로그와 빌드 결과물을
+커밋하지 않습니다. 외부 모드는 각 배포처의 라이선스와 이용 조건을 따릅니다.
 
 ## 외부 그래픽 크레딧
 
-트레이너 카드의 뱃지 그래픽은 다음 픽셀 아트를 가공하여 사용합니다.
+트레이너 카드의 배지 그래픽은 다음 픽셀 아트를 가공하여 사용합니다.
 
-- 1~6세대: [JcFerggy, 16x16 Pokemon Badge Sprites: Gen 1-6](https://www.deviantart.com/jcferggy/art/16x16-Pokemon-Badge-Sprites-Gen-1-6-544204402). 원본 설명에 따라 하나지방 뱃지 기반 작업은 SoaringSkies0에게도 크레딧합니다.
-- 8세대 가라르: Cobbleverse Overhaul 프로젝트 자체 제작·편집본
+- 1~6세대: [JcFerggy, 16x16 Pokemon Badge Sprites: Gen 1-6](https://www.deviantart.com/jcferggy/art/16x16-Pokemon-Badge-Sprites-Gen-1-6-544204402). 원본 설명에 따라 하나지방 배지 기반 작업은 SoaringSkies0에게도 크레딧합니다.
+- 8세대 가라르: Cobbleventure 프로젝트 자체 제작·편집본
 - 9세대 팔데아: [ProfessorMorDBG, Paldea Badges demake large](https://www.deviantart.com/professormordbg/art/Paldea-Badges-demake-large-1142694862)
 
-제작자 허가 기록, 원본 보관 위치, 셀 좌표와 nearest-neighbour 가공 방식은 [뱃지 그래픽 출처 및 사용 기록](docs/asset-permissions/README.md)에서 관리합니다. 포켓몬 관련 명칭과 디자인의 권리는 각 권리자에게 있습니다.
+제작자 허가 기록, 원본 보관 위치와 nearest-neighbour 가공 방식은
+[그래픽 출처 및 사용 기록](docs/asset-permissions/README.md)에서 관리합니다.
 
-## 저장소 원칙
-
-- Cobbleverse를 포함한 타 모드팩이나 모드의 JAR 파일은 저장소에 넣지 않습니다.
-- 마인크래프트 실행 폴더, 월드, 로그, 크래시 보고서와 빌드 결과물은 커밋하지 않습니다.
-- 설정, JSON/TOML, 스크립트, 구조물 원본, 직접 제작한 리소스처럼 재현에 필요한 작업 파일을 관리합니다.
-- 대용량 바이너리 작업물이 늘어나면 Git LFS 도입 여부를 별도로 결정합니다.
-- 게임 어댑터 구현 착수 시점에 Cobblemon 안정 버전과 호환성 범위를 고정하고 문서화합니다.
-- Cobbleverse는 필수 기반이 아니라 필요할 때 제공하는 선택 호환성 프로필로 취급합니다.
+Pokémon, Minecraft, Cobblemon 및 문서에 언급된 타사 프로젝트의 명칭과 디자인에
+관한 권리는 각 권리자에게 있습니다. Cobbleventure는 해당 권리자들의 공식
+프로젝트가 아닙니다.

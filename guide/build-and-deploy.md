@@ -2,7 +2,7 @@
 
 ## 명령을 실행하는 두 가지 방법
 
-- 초보 사용자: Content Studio의 `빌드 작업` 탭에서 버튼을 누릅니다.
+- 초보 사용자: Content Studio의 `빌드 · 콘텐츠 교체` 탭에서 버튼을 누릅니다.
 - 개발자: 저장소 루트 터미널에서 `build.bat <명령>`을 실행합니다.
 
 두 방법은 같은 허용 명령을 사용합니다. 자세한 화면 사용법은 [빌드 작업 탭](pages/14-builds.md)을 참고하세요.
@@ -45,35 +45,19 @@ cobbleventure-development-<버전>-curseforge.zip.sha256
 
 [사진: dist 폴더의 개발 팩 ZIP과 SHA-256 파일]
 
-## Cobblemon 빌드 대상 전환
+## Cobblemon 빌드 대상
 
-기본 빌드 대상은 기존과 같은 Cobblemon `1.7.3`입니다. 공식 Discord에서 받은 NeoForge 1.8 스냅샷 JAR을 `.tmp\cobblemon-1.8-snapshot`에 두면 다음처럼 현재 PowerShell 세션만 1.8 대상으로 전환할 수 있습니다.
+현재 활성 빌드 대상은 Cobblemon `1.8`입니다. 빌드에 필요한 NeoForge JAR은
+`.tmp\cobblemon-1.8-release`에서 자동으로 찾습니다. 다른 위치의 JAR을 사용하려면
+현재 PowerShell 세션에서 절대 경로를 지정합니다.
 
 ```powershell
-$env:COBBLEVENTURE_COBBLEMON_TARGET = "1.8"
+$env:COBBLEVENTURE_COBBLEMON_JAR = "D:\mods\Cobblemon-neoforge-1.8.0.jar"
 .\build.bat test
-.\build.bat mod-menu
-.\build.bat mod-adventure
-.\build.bat mod-bootstrap
-.\build.bat mod-casino
 ```
 
-해당 폴더에 여러 스냅샷이 있으면 가장 최근 파일을 자동으로 사용합니다. 다른 위치의 JAR을 쓰려면 절대 경로를 지정합니다.
-
-```powershell
-$env:COBBLEVENTURE_COBBLEMON_JAR = "D:\mods\Cobblemon-neoforge-1.8.0-snapshot.jar"
-```
-
-1.8 대상으로 빌드하면 커스텀 모드의 컴파일 의존성과 생성된 `neoforge.mods.toml` 범위가 `[1.8.0,1.9)`로 전환됩니다. 기본 1.7.3 대상은 `[1.7.3,1.8)`을 유지합니다.
-
-현재 `pack\profiles\development-placeholder.json`과 외부 애드온 Lock은 아직 1.7.3 기준입니다. 따라서 1.8 상태의 `build.bat pack`은 서로 다른 버전이 섞인 ZIP을 만들지 않도록 의도적으로 중단됩니다. 먼저 위의 `test`와 `mod-*` 명령으로 자체 모드 호환성을 확인하고, 전체 팩 전환은 외부 애드온 검증과 별도 프로필 작업 후 진행합니다.
-
-작업을 마치고 기본 대상으로 돌아오려면 환경 변수를 제거합니다.
-
-```powershell
-Remove-Item Env:COBBLEVENTURE_COBBLEMON_TARGET
-Remove-Item Env:COBBLEVENTURE_COBBLEMON_JAR -ErrorAction SilentlyContinue
-```
+과거 1.7.3 프로필은 결과 재현을 위한 참고 자료로만 남아 있으며 활성 빌드 선택지가
+아닙니다. 빌드 대상과 외부 애드온 버전을 임의로 섞으면 호환성을 보장할 수 없습니다.
 
 ## CurseForge 임포트 확인
 
@@ -118,4 +102,3 @@ build.bat pack-smoke
 - 검증 실패: 출력된 프로젝트 상대 경로와 필드 이름 수정
 - ZIP 미생성: 이전 단계가 실패했는지 확인
 - 포트 충돌: 실행 중인 Content Studio 또는 Web Lab 종료
-
