@@ -66,6 +66,7 @@ __pycache__/
 
 # Local licensed/reference assets (never commit source audio)
 /local-assets/music/
+/local-assets/skins/
 /tools/painting-pack/source-sprites/
 
 # Local content projects; only the Git-managed main project is shared
