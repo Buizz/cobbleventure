@@ -26,11 +26,6 @@ public abstract class MegaShowdownRayquazaMixin {
     @Redirect(method = "canMega", at = @At(value = "INVOKE",
         target = "Ljava/util/List;get(I)Ljava/lang/Object;"), require = 1, allow = 1)
     private static Object cobbleventure$boundRayquazaMoveLookup(List<?> moves, int index) {
-        return moves.get(boundedMoveIndex(moves.size(), index));
-    }
-
-    static int boundedMoveIndex(int size, int requested) {
-        if (size <= 0) throw new IllegalArgumentException("Rayquaza moveset must not be empty");
-        return Math.min(requested, size - 1);
+        return moves.get(MegaShowdownMoveIndex.bounded(moves.size(), index));
     }
 }
