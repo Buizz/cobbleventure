@@ -510,6 +510,7 @@ public final class MapContent {
             Set<String> excluded = stringSet(settings, "excluded_species");
             BiomeInfo base = biomeHabitats.get(cell);
             if (base == null) continue;
+            if (base.id().equals("cobbleventure:no_natural_spawns")) continue;
             Map<String, Pokemon> selected = new LinkedHashMap<>();
             if (enabled && inheritBiome) {
                 for (Pokemon pokemon : base.pokemon()) {
