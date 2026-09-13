@@ -47,6 +47,16 @@ public final class CobbleventureBattleAIGameTests {
 
     private CobbleventureBattleAIGameTests() {}
 
+    @GameTest(template = "empty", batch = "battle_ai_commands", timeoutTicks = 100)
+    public static void aiBattleTestCommandIsRegistered(GameTestHelper helper) {
+        var root = helper.getLevel().getServer().getCommands().getDispatcher().getRoot();
+        helper.assertTrue(root.getChild(AIBattleTestCommand.PRIMARY_COMMAND) != null,
+                "Missing /" + AIBattleTestCommand.PRIMARY_COMMAND);
+        helper.assertTrue(root.getChild(AIBattleTestCommand.ALIAS_COMMAND) != null,
+                "Missing /" + AIBattleTestCommand.ALIAS_COMMAND);
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", batch = "battle_ai_basic", timeoutTicks = 21_000)
     public static void headlessExpertSearchBattleCompletes(GameTestHelper helper) {
         TracingBattleAI redAI = tracingAI("red", "aggressive");

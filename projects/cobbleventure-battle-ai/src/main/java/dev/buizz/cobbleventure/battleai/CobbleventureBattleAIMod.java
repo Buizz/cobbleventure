@@ -8,5 +8,6 @@ public final class CobbleventureBattleAIMod {
 
     public CobbleventureBattleAIMod() {
         CobbleventureBattleAIRegistration.register();
+        AIBattleTestCommand.register();
     }
 }
