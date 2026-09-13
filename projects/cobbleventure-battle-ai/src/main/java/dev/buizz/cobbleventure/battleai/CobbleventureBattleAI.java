@@ -26,6 +26,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class CobbleventureBattleAI extends RCTBattleAI {
     private final CobbleventureBattleAIConfig profile;
     private final Map<UUID, PendingBatonPass> pendingBatonPassTargets = new ConcurrentHashMap<>();
+    private volatile String lastDecisionSource = "rct_fallback";
+    private volatile String lastSearchFailure;
 
     CobbleventureBattleAI(
             CobbleventureBattleAIConfig profile,
@@ -61,6 +63,7 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
             pendingBatonPassTargets.remove(battleId);
         }
         if (usesJvmSearch() && moveset != null) {
+            lastSearchFailure = null;
             try {
                 CobblemonBattleSearch.PlannedResponse planned = CobblemonBattleSearch.plan(
                         active,
@@ -75,13 +78,27 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
                         pendingBatonPassTargets.put(battleId, new PendingBatonPass(
                                 planned.batonPassTarget(), battle.getBattleLog().size(), active.getPNX()));
                     }
+                    lastDecisionSource = "jvm_search";
                     return planned.response();
                 }
-            } catch (RuntimeException ignored) {
+                lastSearchFailure = planned == null
+                        ? "search returned no plan"
+                        : "search returned an invalid response";
+            } catch (RuntimeException exception) {
+                lastSearchFailure = exception.getClass().getName() + ": " + exception.getMessage();
                 // 불완전한 타 모드 전투 상태에서는 RCT의 검증된 기본 선택기로 안전 복귀한다.
             }
         }
+        lastDecisionSource = "rct_fallback";
         return super.choose(active, battle, side, moveset, forceSwitch);
+    }
+
+    String lastDecisionSource() {
+        return lastDecisionSource;
+    }
+
+    String lastSearchFailure() {
+        return lastSearchFailure;
     }
 
     private boolean usesJvmSearch() {

@@ -71,6 +71,18 @@ gradlew.bat test
 승률과 탐색 결정을 검증한다. 기존 Java 테스트는 전략 카탈로그 등 JVM 전용 경계를
 검증한다.
 
+클라이언트 없이 실제 Cobblemon/RCT 서버 전투 프로토콜과 `expert_search` AI 양쪽을
+검증하려면 저장소의 `projects/cobbleventure-battle-ai`에서 다음 GameTest를 실행한다.
+`integration_mods_dir`에는 Cobblemon, RCT API/모드와 필수 서버 의존 모드가 있어야 한다.
+
+```text
+gradlew.bat runGameTestServer -Pcobblemon_target=1.8 -Pintegration_mods_dir=../../.tmp/cobblemon-1.8-runtime/server/mods
+```
+
+이 테스트는 전투 계산과 AI 선택은 그대로 실행하고 클라이언트 전용 액션 연출만 생략한다.
+성공 여부와 양쪽의 턴별 Showdown 선택, 승자, 원본 전투 로그는
+`build/reports/battle-ai/headless-eve.json`에 기록된다.
+
 웹 실험실은 별도로 다음 명령으로 빌드, 서버 렌더링과 공식·컴퓨터 트레이너 JSON의 정규화를 검증한다.
 
 ```text

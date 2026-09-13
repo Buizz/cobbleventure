@@ -101,17 +101,103 @@ if (project.hasProperty('integration_mods_dir')) {
     }
 }
 
+evaluationDependsOn(':shared-ai-core')
+def sharedAiCoreProject = project(':shared-ai-core')
+def sharedAiCoreJvmCompilation = sharedAiCoreProject.kotlin.targets.jvm.compilations.main
+def sharedAiCoreModSourceSet = sourceSets.create('sharedAiCoreMod') {
+    output.dir(
+        [builtBy: sharedAiCoreProject.tasks.named('compileKotlinJvm')],
+        sharedAiCoreJvmCompilation.output.classesDirs
+    )
+}
+
 neoForge {
     version = project.neo_version
     runs {
         client { client() }
         server { server() }
-        gameTestServer { type = 'gameTestServer' }
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'cobbleventure.battleAiReport',
+                layout.buildDirectory.file('reports/battle-ai/headless-eve.json').get().asFile.absolutePath
+        }
     }
     mods {
-        "${mod_id}" { sourceSet(sourceSets.main) }
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+            sourceSet(sharedAiCoreModSourceSet)
+        }
     }
     addModdingDependenciesTo sourceSets.test
+}
+
+def generatedGameTestResources = layout.buildDirectory.dir('generated/resources/gameTest')
+def generatedHeadlessContent = layout.buildDirectory.dir('generated/headless-content')
+
+tasks.register('generateEmptyGameTestStructure') {
+    def structureFile = generatedGameTestResources.map {
+        it.file("data/${mod_id}/structure/empty.nbt")
+    }
+    outputs.dir(generatedGameTestResources)
+    doLast {
+        def output = structureFile.get().asFile
+        output.parentFile.mkdirs()
+        output.withOutputStream { raw ->
+            new java.util.zip.GZIPOutputStream(raw).withCloseable { gzip ->
+                new DataOutputStream(gzip).withCloseable { nbt ->
+                    nbt.writeByte(10) // root compound
+                    nbt.writeUTF('')
+
+                    nbt.writeByte(9) // size: [1, 1, 1]
+                    nbt.writeUTF('size')
+                    nbt.writeByte(3)
+                    nbt.writeInt(3)
+                    nbt.writeInt(1)
+                    nbt.writeInt(1)
+                    nbt.writeInt(1)
+
+                    nbt.writeByte(9) // entities: []
+                    nbt.writeUTF('entities')
+                    nbt.writeByte(10)
+                    nbt.writeInt(0)
+
+                    nbt.writeByte(9) // blocks: []
+                    nbt.writeUTF('blocks')
+                    nbt.writeByte(10)
+                    nbt.writeInt(0)
+
+                    nbt.writeByte(9) // palette: [{Name: "minecraft:air"}]
+                    nbt.writeUTF('palette')
+                    nbt.writeByte(10)
+                    nbt.writeInt(1)
+                    nbt.writeByte(8)
+                    nbt.writeUTF('Name')
+                    nbt.writeUTF('minecraft:air')
+                    nbt.writeByte(0)
+
+                    nbt.writeByte(3)
+                    nbt.writeUTF('DataVersion')
+                    nbt.writeInt(3955)
+                    nbt.writeByte(0)
+                }
+            }
+        }
+    }
+}
+
+tasks.register('prepareHeadlessBattleContent', Sync) {
+    dependsOn 'generateEmptyGameTestStructure'
+    from(rootProject.file('../../pack/overrides/development-placeholder/config/cobbleventure/content')) {
+        include 'content-manifest.json'
+        include 'pack.mcmeta'
+        include 'data/cobbleventure/catalogs/battle-ai/**'
+    }
+    from(generatedGameTestResources)
+    into(generatedHeadlessContent)
+}
+
+tasks.named('runGameTestServer') {
+    dependsOn 'prepareHeadlessBattleContent'
 }
 
 processResources {
@@ -184,3 +270,7 @@ tasks.named('build') {
 
 dependencies { implementation 'dev.buizz.cobbleventure:cobbleventure-content-runtime:1.0.0' }
 apply from: rootProject.file('../../gradle/external-content.gradle')
+
+neoForge.runs.named('gameTestServer') {
+    systemProperty 'cobbleventure.contentDirectory', generatedHeadlessContent.get().asFile.absolutePath
+}
