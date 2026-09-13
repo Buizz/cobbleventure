@@ -2179,6 +2179,82 @@ function setup(overrides = {}) {
   };
 }
 
+test("standard AI values Aurora Veil for a healthy team under snow", () => {
+  const auroraVeil = {
+    id: "auroraveil",
+    name: "Aurora Veil",
+    type: "Ice",
+    category: "Status",
+    accuracy: true,
+    pp: 20,
+    target: "allySide",
+    sideCondition: "auroraveil",
+  };
+  const freezeDry = {
+    id: "freezedry",
+    name: "Freeze-Dry",
+    type: "Ice",
+    category: "Special",
+    power: 70,
+    accuracy: 100,
+    pp: 20,
+  };
+  const moonblast = {
+    id: "moonblast",
+    name: "Moonblast",
+    type: "Fairy",
+    category: "Special",
+    power: 95,
+    accuracy: 100,
+    pp: 15,
+  };
+  const state = createSimpleBattle(
+    setup({
+      sides: [
+        {
+          name: "Lorelei",
+          team: [
+            pokemon({
+              id: "ninetalesalola",
+              name: "Ninetales-Alola",
+              level: 60,
+              types: ["Ice", "Fairy"],
+              ability: "snowwarning",
+              item: "lightclay",
+              stats: { ...pokemon().stats, hp: 148, specialAttack: 113, speed: 127 },
+              moves: [auroraVeil, freezeDry, moonblast],
+            }),
+            pokemon({ name: "Cloyster", types: ["Water", "Ice"] }),
+            pokemon({ name: "Mamoswine", types: ["Ice", "Ground"] }),
+            pokemon({ name: "Weavile", types: ["Dark", "Ice"] }),
+            pokemon({ name: "Lapras", types: ["Water", "Ice"] }),
+            pokemon({ name: "Froslass", types: ["Ice", "Ghost"] }),
+          ],
+        },
+        {
+          name: "Player",
+          team: [pokemon({ name: "Porygon2", stats: { ...pokemon().stats, hp: 180 } })],
+        },
+      ],
+    }),
+  );
+  state.field.weather = { id: "snow", turns: 5 };
+
+  const decision = chooseSimpleAiDecision(state, 0, "standard", "balanced");
+  const veil = decision.moveCandidates.find((candidate) => candidate.id === "auroraveil");
+  const bestAttack = Math.max(
+    ...decision.moveCandidates
+      .filter((candidate) => candidate.category !== "Status")
+      .map((candidate) => candidate.score),
+  );
+
+  assert.ok(veil.score > bestAttack, JSON.stringify(decision.moveCandidates, null, 2));
+  assert.equal(veil.screenSupportObserved, true);
+  assert.equal(veil.screenSupportLivingAllies, 6);
+  assert.equal(veil.screenSupportDuration, 8);
+  assert.equal(decision.command.move, veil.slot);
+});
+
 test("calculates the built-in type chart without Showdown", () => {
   assert.equal(typeMultiplier("Electric", ["Water", "Flying"]), 4);
   assert.equal(typeMultiplier("Electric", ["Ground"]), 0);

@@ -31,6 +31,7 @@ object SharedMoveFactEvaluator {
             add(ruleMove("rule.conditional_priority.repeat_failure", facts.firstNumber("conditionalPriorityAdaptPenalty", default = -2000.0)))
         }
         basicResourceRules(facts, moveId, damageMove, this)
+        screenSupportRules(facts, moveId, this)
         hazardRules(facts, moveId, this)
         saltCureRules(facts, moveId, this)
         residualStatusRules(facts, this)
@@ -42,6 +43,46 @@ object SharedMoveFactEvaluator {
         setupDisruptionRules(facts, moveId, this)
         setupThreatRules(facts, moveId, damageMove, this)
         addAll(existingResourceRules(facts))
+    }
+
+    private fun screenSupportRules(
+        facts: RuleFactBag,
+        moveId: String,
+        target: MutableList<CandidateAdjustment>,
+    ) = with(target) {
+        if (!facts.flag("screenSupportObserved") || moveId !in setOf("auroraveil", "lightscreen", "reflect")) return@with
+        if (facts.flag("screenSupportAlreadyActive")) {
+            add(ruleMove("rule.screen_support.already_active", -1000.0))
+            return@with
+        }
+        if (moveId == "auroraveil" && !facts.flag("screenSupportWeatherValid")) {
+            add(ruleMove("rule.screen_support.weather_required", -1000.0))
+            return@with
+        }
+        val knockoutBeforeAction = facts.number("opponentKnockoutBeforeActionProbability").coerceIn(0.0, 1.0)
+        if (knockoutBeforeAction >= 0.75) {
+            add(ruleMove("rule.screen_support.ko_before_screen", -420.0))
+            return@with
+        }
+        if (facts.flag("reliableKoAlternative") || facts.flag("computed.hasSafeImmediateKo")) {
+            add(ruleMove("rule.screen_support.take_safe_ko", -90.0))
+            return@with
+        }
+        val livingAllies = facts.firstNumber("screenSupportLivingAllies", default = 1.0).coerceAtLeast(1.0)
+        if (livingAllies <= 1.0) {
+            add(ruleMove("rule.screen_support.no_team_to_protect", -45.0))
+            return@with
+        }
+        val duration = facts.firstNumber("screenSupportDuration", default = 5.0).coerceIn(1.0, 8.0)
+        val incoming = facts.firstNumber("incomingDamageRatio", default = 0.0).coerceIn(0.0, 1.0)
+        val teamValue = minOf(25.0, (livingAllies - 1.0) * 5.0)
+        val durationValue = duration * 2.0
+        val pressureValue = minOf(18.0, incoming * 24.0)
+        val dualScreenValue = if (moveId == "auroraveil") 10.0 else 0.0
+        add(ruleMove(
+            "rule.screen_support.team_damage_reduction",
+            jsRound2(44.0 + teamValue + durationValue + pressureValue + dualScreenValue),
+        ))
     }
 
     fun adjustmentsJson(inputJson: String): String = codec.encodeToString(

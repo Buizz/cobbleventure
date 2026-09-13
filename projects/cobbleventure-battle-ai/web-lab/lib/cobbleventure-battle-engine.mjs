@@ -12883,8 +12883,32 @@ function automaticMoveCandidates(
             guardFollowupFailureProbability,
           ),
       );
+      const moveId = cleanId(displayMove.id);
+      const screenCondition = ["auroraveil", "lightscreen", "reflect"].includes(moveId)
+        ? moveId
+        : cleanId(displayMove.sideCondition);
+      const screenSupportMove = ["auroraveil", "lightscreen", "reflect"].includes(
+        screenCondition,
+      );
+      const screenSupportProfile = screenSupportMove
+        ? {
+            screenSupportObserved: true,
+            screenSupportAlreadyActive: Boolean(
+              state.sides[sideIndex].conditions?.[screenCondition],
+            ),
+            screenSupportWeatherValid:
+              screenCondition !== "auroraveil" ||
+              ["hail", "snow"].includes(effectiveWeather(state)),
+            screenSupportLivingAllies: state.sides[sideIndex].team.filter(
+              (member) => !member.fainted && member.hp > 0,
+            ).length,
+            screenSupportDuration:
+              cleanId(pokemon.item) === "lightclay" ? 8 : 5,
+          }
+        : {};
       const baseCandidate = {
         ...displayMove,
+        ...screenSupportProfile,
         willFail:
           isTruantLoafTurn(pokemon) ||
           isPrimordialSeaBlockedMove(state, displayMove) ||
@@ -12898,7 +12922,10 @@ function automaticMoveCandidates(
             !ignoresDefenderAbility(pokemon)) ||
           (displayMove.category === "Status" &&
             Boolean(candidateHazardConditionId(displayMove)) &&
-            candidateHazardLayerDelta({ ...displayMove, opponentHazards }) === 0),
+            candidateHazardLayerDelta({ ...displayMove, opponentHazards }) === 0) ||
+          (screenSupportMove &&
+            (screenSupportProfile.screenSupportAlreadyActive ||
+              !screenSupportProfile.screenSupportWeatherValid)),
         protectSuccessProbability: CONSECUTIVE_PROTECTION_MOVES.has(
           cleanId(displayMove.id),
         )
@@ -12982,6 +13009,7 @@ function automaticMoveCandidates(
         opponentConditionalPriorityFailureCount:
           conditionalPriorityFailureCount,
         ...statusMoveDisruptionProfile,
+        ...screenSupportProfile,
         ...offensiveStatusControlProfile,
         ...roomContext,
         activeRoleScore,
@@ -13110,6 +13138,7 @@ function automaticMoveCandidates(
           opponentConditionalPriorityThreat?.expectedDamage ?? 0,
         opponentConditionalPriorityFailureCount:
           conditionalPriorityFailureCount,
+        ...screenSupportProfile,
         ...offensiveStatusControlProfile,
         ...statusMoveDisruptionProfile,
         ...roomContext,

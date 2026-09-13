@@ -141,14 +141,20 @@ public final class CobbleventureBattleAIGameTests {
         TrainerBattleActor lorelei = actor(
                 "lorelei",
                 loreleiAI,
-                pokemon("cobblemon:ninetales", 60, Set.of("alolan"), "fire",
+                configuredPokemon("cobblemon:ninetales", 60, Set.of("alolan"), "fire",
+                        "snowwarning", "cobblemon:light_clay",
+                        "auroraveil", "freezedry", "moonblast", "encore"),
+                configuredPokemon("cobblemon:ninetales", 60, Set.of("alolan"), "fire",
+                        "snowwarning", "cobblemon:light_clay",
                         "auroraveil", "freezedry", "moonblast", "encore")
         );
         TrainerBattleActor challenger = actor(
                 "challenger",
                 challengerAI,
-                pokemon("cobblemon:charizard", 100,
-                        "flamethrower", "airslash", "dragonpulse", "slash")
+                pokemon("cobblemon:porygon2", 60,
+                        "triattack", "thunderbolt", "recover", "agility"),
+                pokemon("cobblemon:mawile", 60,
+                        "ironhead", "playrough", "crunch", "protect")
         );
 
         BattleStartResult result = BattleRegistry.startBattle(
@@ -183,13 +189,14 @@ public final class CobbleventureBattleAIGameTests {
             if (hasHeadlessChoiceRequest(lorelei) && hasHeadlessChoiceRequest(challenger)) {
                 driveHeadlessChoice(lorelei);
                 driveHeadlessChoice(challenger);
-            }
-            if (battle.getEnded() || winnerName(battle, lorelei, challenger) != null) {
-                completed.set(1);
-                restoreActionEffects(actionEffects, savedActionEffects);
                 List<Map<String, Object>> ninetalesDecisions = loreleiAI.decisions().stream()
                         .filter(decision -> "ninetales".equals(decision.get("species")))
                         .toList();
+                if (ninetalesDecisions.isEmpty()) {
+                    return;
+                }
+                completed.set(1);
+                restoreActionEffects(actionEffects, savedActionEffects);
                 helper.assertTrue(!ninetalesDecisions.isEmpty(),
                         "Alolan Ninetales made no choices");
                 helper.assertTrue(ninetalesDecisions.stream()
@@ -199,6 +206,11 @@ public final class CobbleventureBattleAIGameTests {
                                 .noneMatch(decision -> String.valueOf(decision.get("showdown"))
                                         .contains("terastallize")),
                         "Alolan Ninetales selected Terastallization: " + ninetalesDecisions);
+                Map<String, Object> opening = ninetalesDecisions.getFirst();
+                helper.assertTrue(String.valueOf(opening.get("showdown")).contains("move 1"),
+                        "Alolan Ninetales did not lead with Aurora Veil: " + opening);
+                helper.assertTrue("shared_screen_policy".equals(opening.get("source")),
+                        "Alolan Ninetales did not use the shared screen policy: " + opening);
                 helper.succeed();
                 return;
             }
@@ -293,6 +305,26 @@ public final class CobbleventureBattleAIGameTests {
         PokemonProperties properties = new PokemonProperties();
         properties.setSpecies(species);
         properties.setLevel(level);
+        properties.setMoves(List.of(moves));
+        return BattlePokemon.Companion.safeCopyOf(properties.create());
+    }
+
+    private static BattlePokemon configuredPokemon(
+            String species,
+            int level,
+            Set<String> aspects,
+            String teraType,
+            String ability,
+            String heldItem,
+            String... moves
+    ) {
+        PokemonProperties properties = new PokemonProperties();
+        properties.setSpecies(species);
+        properties.setLevel(level);
+        properties.setAspects(aspects);
+        properties.setTeraType(teraType);
+        properties.setAbility(ability);
+        properties.setHeldItem(heldItem);
         properties.setMoves(List.of(moves));
         return BattlePokemon.Companion.safeCopyOf(properties.create());
     }

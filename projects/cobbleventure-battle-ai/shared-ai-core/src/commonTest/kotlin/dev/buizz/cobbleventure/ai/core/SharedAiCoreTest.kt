@@ -11,6 +11,58 @@ import kotlin.test.assertTrue
 
 class SharedAiCoreTest {
     @Test
+    fun screenSupportRewardsAValidTeamWideAuroraVeil() {
+        val adjustments = SharedMoveFactEvaluator.adjustments(
+            RuleFactBag(
+                kind = "move",
+                numbers = mapOf(
+                    "screenSupportLivingAllies" to 6.0,
+                    "screenSupportDuration" to 8.0,
+                    "incomingDamageRatio" to 0.5,
+                    "opponentKnockoutBeforeActionProbability" to 0.1,
+                ),
+                flags = mapOf(
+                    "screenSupportObserved" to true,
+                    "screenSupportAlreadyActive" to false,
+                    "screenSupportWeatherValid" to true,
+                    "reliableKoAlternative" to false,
+                    "computed.hasSafeImmediateKo" to false,
+                ),
+                strings = mapOf("id" to "auroraveil", "category" to "Status"),
+            ),
+        )
+
+        val teamValue = adjustments.single {
+            it.code == "rule.screen_support.team_damage_reduction"
+        }
+        assertTrue(teamValue.weight > 100.0)
+    }
+
+    @Test
+    fun screenSupportRejectsAuroraVeilWithoutWeatherOrWhileActive() {
+        fun score(weatherValid: Boolean, alreadyActive: Boolean) =
+            SharedMoveFactEvaluator.adjustments(
+                RuleFactBag(
+                    kind = "move",
+                    numbers = mapOf("screenSupportLivingAllies" to 6.0),
+                    flags = mapOf(
+                        "screenSupportObserved" to true,
+                        "screenSupportAlreadyActive" to alreadyActive,
+                        "screenSupportWeatherValid" to weatherValid,
+                    ),
+                    strings = mapOf("id" to "auroraveil", "category" to "Status"),
+                ),
+            )
+
+        assertTrue(score(weatherValid = false, alreadyActive = false).any {
+            it.code == "rule.screen_support.weather_required" && it.weight == -1000.0
+        })
+        assertTrue(score(weatherValid = true, alreadyActive = true).any {
+            it.code == "rule.screen_support.already_active" && it.weight == -1000.0
+        })
+    }
+
+    @Test
     fun candidateScoringIsSharedByJvmAndJavaScript() {
         val move = SharedCandidateEvaluator.score(
             CandidateScoreInput(

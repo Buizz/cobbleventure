@@ -92,6 +92,24 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
                 // 불완전한 타 모드 전투 상태에서는 RCT의 검증된 기본 선택기로 안전 복귀한다.
             }
         }
+        if (!usesJvmSearch() && !forceSwitch && moveset != null) {
+            try {
+                CobblemonBattleSearch.PlannedResponse screenPlan =
+                        CobblemonBattleSearch.planScreenSupport(
+                                active, side, moveset, profile.difficulty(), profile.strategy());
+                if (screenPlan != null
+                        && screenPlan.response().isValid(active, moveset, false)) {
+                    lastDecisionSource = "shared_screen_policy";
+                    return screenPlan.response();
+                }
+                if (screenPlan != null) {
+                    lastSearchFailure = "shared_screen_policy produced an invalid response: "
+                            + screenPlan.response().toShowdownString(active, moveset);
+                }
+            } catch (RuntimeException exception) {
+                lastSearchFailure = exception.getClass().getName() + ": " + exception.getMessage();
+            }
+        }
         lastDecisionSource = "rct_fallback";
         return super.choose(active, battle, side, moveset, forceSwitch);
     }

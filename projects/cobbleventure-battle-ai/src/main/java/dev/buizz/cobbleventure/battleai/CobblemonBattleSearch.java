@@ -221,6 +221,58 @@ final class CobblemonBattleSearch implements SearchRuntime {
                 response, decision, batonTarget, forceSwitch ? null : runtime.trace(decision));
     }
 
+    static PlannedResponse planScreenSupport(
+            ActiveBattlePokemon active,
+            BattleSide side,
+            ShowdownMoveset moveset,
+            String difficulty,
+            String strategy
+    ) {
+        boolean hasScreen = moveset.getMoves().stream()
+                .filter(InBattleMove::canBeUsed)
+                .map(InBattleMove::getId)
+                .map(CobblemonBattleSearch::normalizedId)
+                .anyMatch(id -> id.equals("auroraveil") || id.equals("lightscreen") || id.equals("reflect"));
+        if (!hasScreen) return null;
+        Team own = team(side, active);
+        BattleSide oppositeSide = side.getOppositeSide();
+        ActiveBattlePokemon opposite = oppositeSide.getActivePokemon().stream()
+                .filter(ActiveBattlePokemon::hasPokemon).findFirst().orElse(null);
+        if (opposite == null || own.members.isEmpty()) return null;
+        Team enemy = team(oppositeSide, opposite);
+        CobblemonBattleSearch model = new CobblemonBattleSearch(
+                new Team[]{own, enemy}, rootMoves(active, moveset), List.of(), difficulty, strategy, false,
+                ShowdownBattleLogObservation.parse(active.getBattle().getBattleLog()));
+        State state = model.initialState();
+        String stateId = model.remember(state);
+        List<SearchAction> moveCandidates = model.candidates(stateId, 0).stream()
+                .filter(action -> "move".equals(action.getKind()))
+                .toList();
+        SearchAction selected = moveCandidates.stream()
+                .filter(action -> {
+                    String id = normalizedId(underlyingMoveId(action.getId()));
+                    return id.equals("auroraveil") || id.equals("lightscreen") || id.equals("reflect");
+                })
+                .max(Comparator.comparingDouble(SearchAction::getScore))
+                .orElse(null);
+        if (selected == null) return null;
+        String selectedMove = normalizedId(underlyingMoveId(selected.getId()));
+        String weather = state.field.getWeather() == null ? "" : normalizedId(state.field.getWeather().getId());
+        boolean validAuroraWeather = !selectedMove.equals("auroraveil")
+                || weather.equals("hail") || weather.equals("snow")
+                || normalizedId(pokemonAbility(own.members.get(own.activeIndex))).equals("snowwarning");
+        if (!validAuroraWeather
+                || state.sideConditions.get(0).containsKey(selectedMove)
+                || living(state.hp[0]) <= 1
+                || selected.getOpponentKnockoutBeforeActionProbability() >= 0.75
+                || moveCandidates.stream().anyMatch(candidate ->
+                        !candidate.getStatusMove()
+                                && candidate.getGuaranteedKnockout()
+                                && candidate.getSuccessProbability() >= 0.85)) return null;
+        ShowdownActionResponse response = model.toResponse(selected, opposite);
+        return response == null ? null : new PlannedResponse(response, null, null, null);
+    }
+
     private ShowdownActionResponse toResponse(SearchAction selected, ActiveBattlePokemon opponent) {
         String id = selected.getId();
         if (id.startsWith(SWITCH_PREFIX)) {
@@ -523,6 +575,15 @@ final class CobblemonBattleSearch implements SearchRuntime {
                 : hazardIndex >= 0
                         ? Set.of("hazardset")
                         : !projectedSelfBoosts.isEmpty() ? Set.of("setupboost") : Set.of();
+        boolean screenSupport = normalized.equals("auroraveil")
+                || normalized.equals("lightscreen") || normalized.equals("reflect");
+        String weather = state.field.getWeather() == null ? "" : normalizedId(state.field.getWeather().getId());
+        boolean screenAlreadyActive = state.sideConditions.get(sideIndex).containsKey(normalized);
+        boolean screenWeatherValid = !normalized.equals("auroraveil")
+                || weather.equals("hail") || weather.equals("snow")
+                || normalizedId(pokemonAbility(attacker)).equals("snowwarning");
+        int screenDuration = normalizedId(state.heldItems.get(sideIndex).get(attackerIndex)).endsWith("lightclay")
+                ? 8 : 5;
         List<CandidateAdjustment> moveRules = SharedMoveFactEvaluator.INSTANCE.adjustments(
                 new RuleFactBag(
                         "move",
@@ -577,7 +638,9 @@ final class CobblemonBattleSearch implements SearchRuntime {
                                 Map.entry("recoveryExpectedIncomingDamage",
                                         recovery.getRecoveryExpectedIncomingDamage()),
                                 Map.entry("recoveryNetHpChange", recovery.getRecoveryNetHpChange()),
-                                Map.entry("survivalProbability", reachability.getSurvivalProbability())),
+                                Map.entry("survivalProbability", reachability.getSurvivalProbability()),
+                                Map.entry("screenSupportLivingAllies", (double) living(state.hp[sideIndex])),
+                                Map.entry("screenSupportDuration", (double) screenDuration)),
                         Map.ofEntries(
                                 Map.entry("computed.hasSafeImmediateKo", safeImmediateKo),
                                 Map.entry("computed.safeFinisher", guaranteedKo && accuracy >= 1.0),
@@ -615,7 +678,11 @@ final class CobblemonBattleSearch implements SearchRuntime {
                                 Map.entry("roleComplete", roleProgress.getRoleComplete()),
                                 Map.entry("canReachNextAction", reachability.getCanReachNextAction()),
                                 Map.entry("safePivot", reachability.getSafePivot()),
-                                Map.entry("forceSwitch", false)),
+                                Map.entry("forceSwitch", false),
+                                Map.entry("screenSupportObserved", screenSupport),
+                                Map.entry("screenSupportAlreadyActive", screenAlreadyActive),
+                                Map.entry("screenSupportWeatherValid", screenWeatherValid),
+                                Map.entry("reliableKoAlternative", safeImmediateKo && !guaranteedKo)),
                         Map.ofEntries(
                                 Map.entry("id", normalized),
                                 Map.entry("moveId", normalized),
@@ -1821,6 +1888,12 @@ final class CobblemonBattleSearch implements SearchRuntime {
 
     static String itemId(BattlePokemon pokemon) {
         return pokemonItem(pokemon).toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
+    }
+
+    private static String normalizedId(String value) {
+        if (value == null) return "";
+        String unqualified = value.substring(value.lastIndexOf(':') + 1);
+        return unqualified.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
     }
 
     private static double ratio(double numerator, double denominator) {
