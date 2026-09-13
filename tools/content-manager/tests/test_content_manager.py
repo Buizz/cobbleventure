@@ -7285,6 +7285,128 @@ class ContentManagerTests(unittest.TestCase):
         self.assertTrue(result["success"])
         self.assertIn("cobbleventure-battle-lab-portable.zip", result["artifact"])
 
+    def test_dashboard_opens_battle_lab_with_existing_launcher(self) -> None:
+        page = (CORE_ROOT / "tools/content-manager/web/index.html").read_text(encoding="utf-8")
+        script = (CORE_ROOT / "tools/content-manager/web/app.js").read_text(encoding="utf-8")
+        completed = mock.Mock(stdout="Cobbleventure Battle Lab started", stderr="", returncode=0)
+        with (
+            mock.patch.object(content_manager.os, "name", "nt"),
+            mock.patch.object(
+                content_manager.shutil,
+                "which",
+                side_effect=lambda command: "C:/Tools/pwsh.exe" if command == "pwsh" else None,
+            ),
+            mock.patch.object(content_manager.subprocess, "run", return_value=completed) as runner,
+            mock.patch.object(
+                content_manager,
+                "_battle_lab_status",
+                return_value={"running": True, "url": "http://localhost:3000", "pid_recorded": True},
+            ),
+        ):
+            result = content_manager._open_battle_lab(CORE_ROOT.resolve())
+
+        command = runner.call_args.args[0]
+        self.assertIn('id="open-battle-lab"', page)
+        self.assertIn('id="restart-battle-lab"', page)
+        self.assertIn('id="stop-battle-lab"', page)
+        self.assertIn('request("/api/battle-lab/open"', script)
+        self.assertIn('request("/api/battle-lab/status"', script)
+        self.assertIn('controlBattleLab("restart")', script)
+        self.assertIn('controlBattleLab("stop")', script)
+        self.assertEqual("C:/Tools/pwsh.exe", command[0])
+        self.assertTrue(command[-1].endswith("web-lab\\scripts\\start-local.ps1"))
+        self.assertEqual(300, runner.call_args.kwargs["timeout"])
+        self.assertEqual("http://localhost:3000", result["url"])
+        self.assertTrue(result["running"])
+
+    def test_battle_lab_restart_stops_then_starts_without_browser(self) -> None:
+        stopped = {"running": False, "url": "http://localhost:3000", "pid_recorded": False}
+        started = {"running": True, "url": "http://localhost:3000", "pid_recorded": True}
+        with mock.patch.object(
+            content_manager,
+            "_run_battle_lab_script",
+            side_effect=[stopped, started],
+        ) as runner:
+            result = content_manager._restart_battle_lab(CORE_ROOT.resolve())
+
+        self.assertEqual(
+            [
+                mock.call(CORE_ROOT.resolve(), "stop-local.ps1"),
+                mock.call(CORE_ROOT.resolve(), "start-local.ps1", no_browser=True),
+            ],
+            runner.call_args_list,
+        )
+        self.assertEqual(started, result)
+
+    def test_battle_lab_open_api_uses_local_launcher(self) -> None:
+        server = content_manager.ThreadingHTTPServer(
+            ("127.0.0.1", 0), content_manager.create_handler(CORE_ROOT)
+        )
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        expected = {"opened": True, "url": "http://localhost:3000", "output": "ready"}
+        try:
+            request = urllib.request.Request(
+                f"http://127.0.0.1:{server.server_port}/api/battle-lab/open",
+                data=b"{}",
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            with mock.patch.object(content_manager, "_open_battle_lab", return_value=expected) as launcher:
+                with urllib.request.urlopen(request) as response:
+                    payload = json.load(response)
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+
+        launcher.assert_called_once_with(CORE_ROOT.resolve())
+        self.assertEqual(expected, payload)
+
+    def test_battle_lab_control_apis_report_status_restart_and_stop(self) -> None:
+        server = content_manager.ThreadingHTTPServer(
+            ("127.0.0.1", 0), content_manager.create_handler(CORE_ROOT)
+        )
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        status = {"running": True, "url": "http://localhost:3000", "pid_recorded": True}
+        stopped = {"running": False, "url": "http://localhost:3000", "pid_recorded": False}
+        try:
+            with mock.patch.object(content_manager, "_battle_lab_status", return_value=status) as checker:
+                with urllib.request.urlopen(
+                    f"http://127.0.0.1:{server.server_port}/api/battle-lab/status"
+                ) as response:
+                    status_payload = json.load(response)
+            with mock.patch.object(content_manager, "_restart_battle_lab", return_value=status) as restarter:
+                request = urllib.request.Request(
+                    f"http://127.0.0.1:{server.server_port}/api/battle-lab/restart",
+                    data=b"{}",
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                with urllib.request.urlopen(request) as response:
+                    restart_payload = json.load(response)
+            with mock.patch.object(content_manager, "_stop_battle_lab", return_value=stopped) as stopper:
+                request = urllib.request.Request(
+                    f"http://127.0.0.1:{server.server_port}/api/battle-lab/stop",
+                    data=b"{}",
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                with urllib.request.urlopen(request) as response:
+                    stop_payload = json.load(response)
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+
+        checker.assert_called_once_with(CORE_ROOT.resolve())
+        restarter.assert_called_once_with(CORE_ROOT.resolve())
+        stopper.assert_called_once_with(CORE_ROOT.resolve())
+        self.assertEqual(status, status_payload)
+        self.assertEqual(status, restart_payload)
+        self.assertEqual(stopped, stop_payload)
+
     def test_build_log_decoder_supports_mixed_utf8_and_cp949_lines(self) -> None:
         output = (
             "[INFO] UTF-8 빌드 시작\n".encode("utf-8")

@@ -1085,6 +1085,76 @@ async function loadDashboard() {
   state.exportLanguages = data.export_languages || [{ id: "ko_kr", name: "한국어" }, { id: "en_us", name: "English (US)" }];
   state.cobblemonBuildTargets = data.cobblemon_build_targets || [{ id: "1.8", name: "1.8 정식 버전" }];
   renderBuildCommands();
+  await refreshBattleLabStatus();
+}
+
+function renderBattleLabStatus(running, label = "") {
+  const status = $(".battle-lab-status");
+  const statusLabel = $("#battle-lab-status-label");
+  const restartButton = $("#restart-battle-lab");
+  const stopButton = $("#stop-battle-lab");
+  if (!status || !statusLabel) return;
+  status.classList.toggle("is-running", running === true);
+  status.classList.toggle("is-unknown", running === null);
+  statusLabel.textContent = label || (running ? "서버 실행 중" : "서버 중지됨");
+  restartButton.disabled = false;
+  stopButton.disabled = running !== true;
+}
+
+async function refreshBattleLabStatus() {
+  const result = await request("/api/battle-lab/status");
+  if (!result.ok) {
+    renderBattleLabStatus(null, "상태 확인 불가");
+    return;
+  }
+  renderBattleLabStatus(Boolean(result.data.running));
+}
+
+async function openBattleLab() {
+  const button = $("#open-battle-lab");
+  const buttons = [button, $("#restart-battle-lab"), $("#stop-battle-lab")];
+  if (!button || buttons.some((item) => item?.dataset.busy === "true")) return;
+  buttons.forEach((item) => { if (item) { item.disabled = true; item.dataset.busy = "true"; } });
+  const label = button.querySelector("strong");
+  const original = label.textContent;
+  label.textContent = "전투 서버 여는 중…";
+  try {
+    const result = await request("/api/battle-lab/open", { method: "POST", body: "{}" });
+    if (!result.ok) throw new Error(result.data.error || "전투 웹을 열지 못했습니다.");
+    renderBattleLabStatus(Boolean(result.data.running));
+    toast("AI 전투 웹을 열었습니다.");
+  } catch (error) {
+    toast(error.message || "전투 웹을 열지 못했습니다.");
+  } finally {
+    label.textContent = original;
+    buttons.forEach((item) => { if (item) delete item.dataset.busy; });
+    const running = $(".battle-lab-status")?.classList.contains("is-running") || false;
+    button.disabled = false;
+    $("#restart-battle-lab").disabled = false;
+    $("#stop-battle-lab").disabled = !running;
+  }
+}
+
+async function controlBattleLab(action) {
+  const buttons = [$("#open-battle-lab"), $("#restart-battle-lab"), $("#stop-battle-lab")];
+  if (buttons.some((button) => button?.dataset.busy === "true")) return;
+  buttons.forEach((button) => { if (button) { button.disabled = true; button.dataset.busy = "true"; } });
+  renderBattleLabStatus(null, action === "restart" ? "재시작 중…" : "종료 중…");
+  try {
+    const result = await request(`/api/battle-lab/${action}`, { method: "POST", body: "{}" });
+    if (!result.ok) throw new Error(result.data.error || "전투 웹을 제어하지 못했습니다.");
+    renderBattleLabStatus(Boolean(result.data.running));
+    toast(action === "restart" ? "AI 전투 웹을 재시작했습니다." : "AI 전투 웹을 종료했습니다.");
+  } catch (error) {
+    toast(error.message || "전투 웹을 제어하지 못했습니다.");
+    await refreshBattleLabStatus();
+  } finally {
+    buttons.forEach((button) => { if (button) delete button.dataset.busy; });
+    const running = $(".battle-lab-status")?.classList.contains("is-running") || false;
+    $("#open-battle-lab").disabled = false;
+    $("#restart-battle-lab").disabled = false;
+    $("#stop-battle-lab").disabled = !running;
+  }
 }
 
 function renderActiveProject() {
@@ -21160,6 +21230,9 @@ $("#definitions").addEventListener("input", handleDefinitionInput);
 $("#definitions").addEventListener("change", handleDefinitionInput);
 $("#definitions").addEventListener("click", handleDefinitionClick);
 $("#validate-repository").addEventListener("click", loadDashboard);
+$("#open-battle-lab").addEventListener("click", openBattleLab);
+$("#restart-battle-lab").addEventListener("click", () => controlBattleLab("restart"));
+$("#stop-battle-lab").addEventListener("click", () => controlBattleLab("stop"));
 $("#validate-trainer").addEventListener("click", () => validateDocument("trainers"));
 $("#save-trainer").addEventListener("click", () => saveDocument("trainers"));
 $("#delete-trainer").addEventListener("click", () => deleteManagedDocument("trainers"));

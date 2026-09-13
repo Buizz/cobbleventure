@@ -12008,6 +12008,104 @@ def _build_process_environment(project_root: Path) -> dict[str, str]:
     }
 
 
+def _battle_lab_root(core_root: Path) -> Path:
+    battle_lab_root = (
+        core_root
+        / "projects"
+        / "cobbleventure-battle-ai"
+        / "web-lab"
+    ).resolve()
+    try:
+        battle_lab_root.relative_to(core_root.resolve())
+    except ValueError as error:
+        raise ValueError("전투 웹 경로가 저장소 밖을 가리킵니다.") from error
+    return battle_lab_root
+
+
+def _battle_lab_status(core_root: Path) -> dict[str, Any]:
+    """Return whether the repository-owned Battle Lab is responding locally."""
+    battle_lab_root = _battle_lab_root(core_root)
+    url = "http://localhost:3000"
+    running = False
+    try:
+        with urllib_request.urlopen(url, timeout=1) as response:
+            body = response.read(256 * 1024).decode("utf-8", errors="replace")
+        running = "Cobbleventure Battle Lab" in body
+    except (OSError, urllib_error.URLError, ValueError):
+        pass
+    return {
+        "running": running,
+        "url": url,
+        "pid_recorded": (battle_lab_root / ".local-server.pid").is_file(),
+    }
+
+
+def _run_battle_lab_script(
+    core_root: Path, script_name: str, *, no_browser: bool = False
+) -> dict[str, Any]:
+    if script_name not in {"start-local.ps1", "stop-local.ps1"}:
+        raise ValueError("허용되지 않은 전투 웹 제어 명령입니다.")
+    battle_lab_root = _battle_lab_root(core_root)
+    script = (battle_lab_root / "scripts" / script_name).resolve()
+    try:
+        script.relative_to(battle_lab_root)
+    except ValueError as error:
+        raise ValueError("전투 웹 제어 스크립트 경로가 올바르지 않습니다.") from error
+    if os.name != "nt":
+        raise ValueError("전투 웹 제어는 Windows 관리 서버에서 지원합니다.")
+    if not script.is_file():
+        raise ValueError(f"전투 웹 제어 스크립트를 찾을 수 없습니다: {script}")
+    powershell = shutil.which("pwsh") or shutil.which("powershell")
+    if not powershell:
+        raise ValueError("PowerShell 실행 파일을 찾을 수 없습니다.")
+    command = [
+        powershell, "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(script)
+    ]
+    if no_browser:
+        command.append("-NoBrowser")
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=battle_lab_root,
+            capture_output=True,
+            timeout=300,
+            check=False,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+        )
+    except subprocess.TimeoutExpired as error:
+        details = "\n".join(
+            part.strip() for part in (
+                _decode_build_output(error.stdout), _decode_build_output(error.stderr)
+            ) if part and part.strip()
+        )
+        suffix = f"\n{details}" if details else ""
+        raise RuntimeError(f"전투 웹 서버 제어 시간이 초과되었습니다.{suffix}") from error
+    output = "\n".join(
+        part.strip() for part in (
+            _decode_build_output(completed.stdout), _decode_build_output(completed.stderr)
+        ) if part.strip()
+    )
+    if completed.returncode != 0:
+        raise RuntimeError(output or "전투 웹 제어 스크립트가 실패했습니다.")
+    return {**_battle_lab_status(core_root), "output": output}
+
+
+def _open_battle_lab(core_root: Path) -> dict[str, Any]:
+    """Start the local battle lab and open it after its health check succeeds."""
+    return {**_run_battle_lab_script(core_root, "start-local.ps1"), "opened": True}
+
+
+def _stop_battle_lab(core_root: Path) -> dict[str, Any]:
+    """Stop only the Battle Lab process recorded by its launcher."""
+    return _run_battle_lab_script(core_root, "stop-local.ps1")
+
+
+def _restart_battle_lab(core_root: Path) -> dict[str, Any]:
+    """Restart Battle Lab without opening an additional browser tab."""
+    _stop_battle_lab(core_root)
+    return _run_battle_lab_script(core_root, "start-local.ps1", no_browser=True)
+
+
 def _run_build(
     core_root: Path, project_root: Path, command: str, language: str = "ko_kr",
     cobblemon_target: str = "1.8",
@@ -16201,6 +16299,9 @@ def create_handler(
             if request.path == "/health":
                 self._json(200, {"status": "ok", "service": "cobbleventure-content-manager"})
                 return
+            if request.path == "/api/battle-lab/status":
+                self._json(200, _battle_lab_status(core_root))
+                return
             if request.path == "/api/project":
                 self._json(
                     200,
@@ -16786,6 +16887,24 @@ def create_handler(
                     self._json(200, {"opened": True, "path": str(directory)})
                 except (OSError, ValueError) as error:
                     self._json(400, {"error": f"빌드 폴더를 열지 못했습니다: {error}"})
+                return
+            if request.path == "/api/battle-lab/open":
+                try:
+                    self._json(200, _open_battle_lab(core_root))
+                except (OSError, RuntimeError, ValueError) as error:
+                    self._json(500, {"error": str(error)})
+                return
+            if request.path == "/api/battle-lab/restart":
+                try:
+                    self._json(200, _restart_battle_lab(core_root))
+                except (OSError, RuntimeError, ValueError) as error:
+                    self._json(500, {"error": str(error)})
+                return
+            if request.path == "/api/battle-lab/stop":
+                try:
+                    self._json(200, _stop_battle_lab(core_root))
+                except (OSError, RuntimeError, ValueError) as error:
+                    self._json(500, {"error": str(error)})
                 return
             if request.path == "/api/skin-overrides":
                 try:
