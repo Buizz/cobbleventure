@@ -65,13 +65,13 @@ public record CobbleventureBattleAIConfig(
         );
     }
 
-    private static double selectMargin(String difficulty) {
+    static double selectMargin(String difficulty) {
         return switch (difficulty) {
             case "novice" -> 0.40;
             case "standard" -> 0.20;
             case "advanced" -> 0.10;
             case "expert" -> 0.05;
-            case "expert_winrate", "expert_search", "cheater" -> 0.0;
+            case "expert_winrate", "expert_search", "cheater" -> 1.0e-9;
             default -> 0.20;
         };
     }

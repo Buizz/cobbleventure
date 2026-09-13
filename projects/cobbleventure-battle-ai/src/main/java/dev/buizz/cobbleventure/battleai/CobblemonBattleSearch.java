@@ -238,8 +238,11 @@ final class CobblemonBattleSearch implements SearchRuntime {
         String showdownMove = moveId.substring(MOVE_PREFIX.length());
         RootMove root = rootMoves.stream().filter(move -> move.showdownId.equals(showdownMove)).findFirst().orElse(null);
         if (root == null) return null;
-        String target = root.target instanceof ActiveBattlePokemon targetPokemon
-                ? targetPokemon.getPNX() : opponent.getPNX();
+        String target = root.target == null
+                ? null
+                : root.target instanceof ActiveBattlePokemon targetPokemon
+                        ? targetPokemon.getPNX()
+                        : opponent.getPNX();
         return new MoveActionResponse(root.showdownId, target, gimmick);
     }
 
@@ -1628,7 +1631,10 @@ final class CobblemonBattleSearch implements SearchRuntime {
                 source = active.getBattlePokemon().getMoveSet().getMoves().get(index);
             }
             if (source == null) continue;
-            Targetable target = move.getTargets(active).stream().findFirst().orElse(active.getOppositeOpponent());
+            List<Targetable> legalTargets = move.getTargets(active);
+            Targetable target = legalTargets == null
+                    ? null
+                    : legalTargets.stream().findFirst().orElse(active.getOppositeOpponent());
             result.add(new RootMove(move.getId(), source, target));
         }
         return result;
