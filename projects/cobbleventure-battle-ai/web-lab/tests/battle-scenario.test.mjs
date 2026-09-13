@@ -248,6 +248,46 @@ test("applies the RCT Tera target policy to the designated member", () => {
   );
 });
 
+test("keeps Lorelei's Alolan Ninetales out of the Tera candidate pool", () => {
+  const result = createBattleScenario(
+    {
+      mode: "pve",
+      seed: 151,
+      battleEngine: "cobbleventure",
+      sides: [
+        {
+          source: "custom",
+          team: [
+            {
+              species: "charizard",
+              level: 60,
+              moves: ["flamethrower"],
+            },
+          ],
+        },
+        { source: "preset", trainerId: "kanto_league_lorelei" },
+      ],
+    },
+    index.trainers,
+    itemResolver,
+  );
+
+  assert.equal(result.ok, true);
+  const lorelei = result.scenario.sides[1];
+  assert.equal(lorelei.ai.data.teraTarget, "mamoswine");
+  assert.equal(
+    lorelei.team.find((member) => member.species === "ninetales").gimmicks
+      .teraEligible,
+    false,
+  );
+  assert.deepEqual(
+    lorelei.team
+      .filter((member) => member.gimmicks.teraEligible)
+      .map((member) => member.species),
+    ["mamoswine"],
+  );
+});
+
 test("does not require the in-game canTera flag for virtual battles", () => {
   const result = createBattleScenario(
     {

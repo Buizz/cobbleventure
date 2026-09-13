@@ -4657,6 +4657,7 @@ def validate_content_file(path: Path) -> tuple[str | None, list[Issue]]:
         battle_format = battle.get("format")
         if battle_format not in BATTLE_FORMAT_TYPES:
             _issue(issues, "error", path, "$.battle.format", "지원하지 않는 배틀 포맷입니다.")
+        tera_target: str | None = None
         battle_ai = _require_object(battle.get("ai"), issues, path, "$.battle.ai")
         if battle_ai is not None:
             if battle_ai.get("controller") != "cobbleventure":
@@ -4668,6 +4669,15 @@ def validate_content_file(path: Path) -> tuple[str | None, list[Issue]]:
                 _issue(issues, "error", path, "$.battle.ai.strategy", "지원하지 않는 AI 전략입니다.")
             options = _require_object(battle_ai.get("options"), issues, path, "$.battle.ai.options")
             if options is not None:
+                raw_tera_target = options.get("tera_target")
+                if raw_tera_target is not None:
+                    if not isinstance(raw_tera_target, str) or not (
+                        CHOICE_ID.fullmatch(raw_tera_target)
+                        or RESOURCE_ID.fullmatch(raw_tera_target)
+                    ):
+                        _issue(issues, "error", path, "$.battle.ai.options.tera_target", "유효한 포켓몬 종 ID여야 합니다.")
+                    else:
+                        tera_target = raw_tera_target.rsplit(":", 1)[-1]
                 cheat_probability = options.get("cheat_probability")
                 if difficulty == "cheater":
                     if (
@@ -4821,6 +4831,16 @@ def validate_content_file(path: Path) -> tuple[str | None, list[Issue]]:
                                 _issue(issues, "error", path, f"{pokemon_path}.{stats_key}.{stat}", f"0부터 {maximum} 사이의 정수여야 합니다.")
                         if stats_key == "evs" and sum(v for v in stats.values() if isinstance(v, int) and not isinstance(v, bool)) > 510:
                             _issue(issues, "error", path, f"{pokemon_path}.evs", "EV 합계는 510 이하여야 합니다.")
+            if tera_target is not None:
+                team_species = {
+                    pokemon.get("species", "").rsplit(":", 1)[-1]
+                    for pokemon in team
+                    if isinstance(pokemon, dict) and isinstance(pokemon.get("species"), str)
+                }
+                if tera_target not in team_species:
+                    _issue(issues, "error", path, "$.battle.ai.options.tera_target", "테라스탈 대상은 전투 팀에 포함되어야 합니다.")
+                if mechanics is None or mechanics.get("terastallization") is not True:
+                    _issue(issues, "error", path, "$.battle.ai.options.tera_target", "테라스탈 대상을 지정하려면 테라스탈을 허용해야 합니다.")
 
     rewards = root.get("rewards")
     if rewards is not None:
@@ -13014,6 +13034,8 @@ def export_rct_trainer(document: dict[str, Any]) -> dict[str, Any]:
     }
     if ai["difficulty"] == "cheater":
         ai_data["cheatProbability"] = ai["options"]["cheat_probability"]
+    if ai["options"].get("tera_target"):
+        ai_data["teraTarget"] = ai["options"]["tera_target"]
     result: dict[str, Any] = {
         "name": document.get("name", {}).get("ko_kr") or document["id"],
         "ai": {"type": ai["controller"], "data": ai_data},
@@ -13042,6 +13064,8 @@ def export_ai_runtime_profile(document: dict[str, Any]) -> dict[str, Any]:
     options: dict[str, Any] = {}
     if ai["difficulty"] == "cheater":
         options["cheatProbability"] = ai["options"]["cheat_probability"]
+    if ai["options"].get("tera_target"):
+        options["teraTarget"] = ai["options"]["tera_target"]
     return {
         "schemaVersion": 1,
         "trainerId": document["battle"]["trainer_id"],

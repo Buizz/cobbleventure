@@ -90,7 +90,9 @@
                 "controller": "cobbleventure",
                 "difficulty": "standard",
                 "strategy": "balanced",
-                "options": {}
+                "options": {
+                  "tera_target": "mamoswine"
+                }
               },
               "level_mode": "fixed",
               "rules": {

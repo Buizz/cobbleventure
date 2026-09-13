@@ -4439,6 +4439,31 @@ class ContentManagerTests(unittest.TestCase):
         )
         self.assertTrue(any("지원하는 포켓몬 타입" in issue.message for issue in issues))
 
+    def test_tera_target_must_be_an_enabled_team_member(self) -> None:
+        root = PROJECT_ROOT
+        source = json.loads(
+            (root / "content" / "battles" / "examples" / "ai_test.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        source["battle"]["ai"]["options"]["tera_target"] = "rattata"
+        _, issues = content_manager._validate_payload(
+            source, content_manager.validate_battle_preset_file
+        )
+        self.assertTrue(any("테라스탈을 허용" in issue.message for issue in issues))
+
+        source["battle"]["mechanics"]["terastallization"] = True
+        _, issues = content_manager._validate_payload(
+            source, content_manager.validate_battle_preset_file
+        )
+        self.assertEqual([], issues)
+
+        source["battle"]["ai"]["options"]["tera_target"] = "mamoswine"
+        _, issues = content_manager._validate_payload(
+            source, content_manager.validate_battle_preset_file
+        )
+        self.assertTrue(any("전투 팀에 포함" in issue.message for issue in issues))
+
     def test_starter_town_is_valid(self) -> None:
         root = PROJECT_ROOT
         settlement_id, issues = content_manager.validate_settlement_file(
@@ -5788,6 +5813,20 @@ class ContentManagerTests(unittest.TestCase):
         self.assertEqual("cobbleventure", rct["ai"]["type"])
         self.assertEqual(0.35, rct["ai"]["data"]["cheatProbability"])
         self.assertEqual(0.35, runtime["options"]["cheatProbability"])
+
+    def test_tera_target_is_exported_for_rct_and_runtime_use(self) -> None:
+        root = PROJECT_ROOT
+        source = content_manager.load_json(
+            root / "content" / "battles" / "examples" / "ai_test.json"
+        )
+        source["battle"]["mechanics"]["terastallization"] = True
+        source["battle"]["ai"]["options"]["tera_target"] = "rattata"
+
+        rct = content_manager.export_rct_trainer(source)
+        runtime = content_manager.export_ai_runtime_profile(source)
+
+        self.assertEqual("rattata", rct["ai"]["data"]["teraTarget"])
+        self.assertEqual("rattata", runtime["options"]["teraTarget"])
 
     def test_enabled_battle_mechanics_are_exported_to_rct_pokemon_gimmicks(self) -> None:
         root = PROJECT_ROOT

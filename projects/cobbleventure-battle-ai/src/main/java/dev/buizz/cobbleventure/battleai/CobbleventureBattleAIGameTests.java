@@ -24,11 +24,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,7 +47,7 @@ public final class CobbleventureBattleAIGameTests {
 
     private CobbleventureBattleAIGameTests() {}
 
-    @GameTest(template = "empty", timeoutTicks = 21_000)
+    @GameTest(template = "empty", batch = "battle_ai_basic", timeoutTicks = 21_000)
     public static void headlessExpertSearchBattleCompletes(GameTestHelper helper) {
         TracingBattleAI redAI = tracingAI("red", "aggressive");
         TracingBattleAI blueAI = tracingAI("blue", "defensive");
@@ -89,14 +89,13 @@ public final class CobbleventureBattleAIGameTests {
         primeHeadlessActive(red);
         primeHeadlessActive(blue);
         AtomicInteger completed = new AtomicInteger();
-        Map<TrainerBattleActor, Object> drivenRequests = new IdentityHashMap<>();
         helper.onEachTick(() -> {
             if (completed.get() != 0) {
                 return;
             }
             if (hasHeadlessChoiceRequest(red) && hasHeadlessChoiceRequest(blue)) {
-                driveHeadlessChoice(red, drivenRequests);
-                driveHeadlessChoice(blue, drivenRequests);
+                driveHeadlessChoice(red);
+                driveHeadlessChoice(blue);
             }
             if (battle.getEnded() || winnerName(battle, red, blue) != null) {
                 completed.set(1);
@@ -123,6 +122,84 @@ public final class CobbleventureBattleAIGameTests {
         });
     }
 
+    @GameTest(template = "empty", batch = "battle_ai_lorelei", timeoutTicks = 21_000)
+    public static void headlessLoreleiLeadRejectsNinetalesTera(GameTestHelper helper) {
+        TracingBattleAI loreleiAI = tracingAI(
+                "lorelei", "standard", "balanced", "mamoswine", true);
+        TracingBattleAI challengerAI = tracingAI(
+                "challenger", "expert_search", "aggressive", null, false);
+        TrainerBattleActor lorelei = actor(
+                "lorelei",
+                loreleiAI,
+                pokemon("cobblemon:ninetales", 60, Set.of("alolan"), "fire",
+                        "auroraveil", "freezedry", "moonblast", "encore")
+        );
+        TrainerBattleActor challenger = actor(
+                "challenger",
+                challengerAI,
+                pokemon("cobblemon:charizard", 100,
+                        "flamethrower", "airslash", "dragonpulse", "slash")
+        );
+
+        BattleStartResult result = BattleRegistry.startBattle(
+                headlessSinglesFormat(),
+                new BattleSide(lorelei),
+                new BattleSide(challenger),
+                true
+        );
+        if (result instanceof ErroredBattleStart error) {
+            helper.fail("Lorelei battle creation failed: " + error.getErrors());
+            return;
+        }
+        if (!(result instanceof SuccessfulBattleStart success)) {
+            helper.fail("Unknown battle creation result: " + result.getClass().getName());
+            return;
+        }
+
+        PokemonBattle battle = success.getBattle();
+        battle.setMute(true);
+        Map<ResourceLocation, ActionEffectTimeline> actionEffects =
+                ActionEffects.INSTANCE.getActionEffects();
+        Map<ResourceLocation, ActionEffectTimeline> savedActionEffects =
+                new LinkedHashMap<>(actionEffects);
+        actionEffects.clear();
+        primeHeadlessActive(lorelei);
+        primeHeadlessActive(challenger);
+        AtomicInteger completed = new AtomicInteger();
+        helper.onEachTick(() -> {
+            if (completed.get() != 0) {
+                return;
+            }
+            if (hasHeadlessChoiceRequest(lorelei) && hasHeadlessChoiceRequest(challenger)) {
+                driveHeadlessChoice(lorelei);
+                driveHeadlessChoice(challenger);
+            }
+            if (battle.getEnded() || winnerName(battle, lorelei, challenger) != null) {
+                completed.set(1);
+                restoreActionEffects(actionEffects, savedActionEffects);
+                List<Map<String, Object>> ninetalesDecisions = loreleiAI.decisions().stream()
+                        .filter(decision -> "ninetales".equals(decision.get("species")))
+                        .toList();
+                helper.assertTrue(!ninetalesDecisions.isEmpty(),
+                        "Alolan Ninetales made no choices");
+                helper.assertTrue(ninetalesDecisions.stream()
+                                .allMatch(decision -> decision.get("teraAvailable") == null),
+                        "Alolan Ninetales remained eligible to Terastallize: " + ninetalesDecisions);
+                helper.assertTrue(ninetalesDecisions.stream()
+                                .noneMatch(decision -> String.valueOf(decision.get("showdown"))
+                                        .contains("terastallize")),
+                        "Alolan Ninetales selected Terastallization: " + ninetalesDecisions);
+                helper.succeed();
+                return;
+            }
+            if (helper.getTick() >= FAILURE_REPORT_TICK) {
+                completed.set(1);
+                restoreActionEffects(actionEffects, savedActionEffects);
+                helper.fail("Lorelei headless battle timed out");
+            }
+        });
+    }
+
     private static void primeHeadlessActive(TrainerBattleActor actor) {
         if (actor.getActivePokemon().size() != 1 || actor.getPokemonList().isEmpty()) {
             throw new IllegalStateException("Headless singles actor has an unexpected team layout");
@@ -139,16 +216,10 @@ public final class CobbleventureBattleAIGameTests {
         actionEffects.putAll(savedActionEffects);
     }
 
-    private static void driveHeadlessChoice(
-            TrainerBattleActor actor,
-            Map<TrainerBattleActor, Object> drivenRequests
-    ) {
+    private static void driveHeadlessChoice(TrainerBattleActor actor) {
         if (actor.getRequest() == null
-                || actor.getRequest().getActive() == null) {
-            return;
-        }
-        Object request = actor.getRequest();
-        if (drivenRequests.put(actor, request) == request) {
+                || actor.getRequest().getActive() == null
+                || !actor.getMustChoose()) {
             return;
         }
         if (actor.getActivePokemon().stream().noneMatch(ActiveBattlePokemon::hasPokemon)) {
@@ -175,11 +246,23 @@ public final class CobbleventureBattleAIGameTests {
     }
 
     private static TracingBattleAI tracingAI(String side, String strategy) {
+        return tracingAI(side, "expert_search", strategy, null, false);
+    }
+
+    private static TracingBattleAI tracingAI(
+            String side,
+            String difficulty,
+            String strategy,
+            String teraTarget,
+            boolean allowsTerastallization
+    ) {
         BattleAI delegate = new CobbleventureBattleAIConfig(
-                "expert_search",
+                difficulty,
                 strategy,
                 null,
-                new CobbleventureBattleAIConfig.Mechanics()
+                teraTarget,
+                new CobbleventureBattleAIConfig.Mechanics(
+                        false, false, false, allowsTerastallization)
         ).createBattleAI();
         return new TracingBattleAI(side, delegate);
     }
@@ -200,6 +283,22 @@ public final class CobbleventureBattleAIGameTests {
         PokemonProperties properties = new PokemonProperties();
         properties.setSpecies(species);
         properties.setLevel(level);
+        properties.setMoves(List.of(moves));
+        return BattlePokemon.Companion.safeCopyOf(properties.create());
+    }
+
+    private static BattlePokemon pokemon(
+            String species,
+            int level,
+            Set<String> aspects,
+            String teraType,
+            String... moves
+    ) {
+        PokemonProperties properties = new PokemonProperties();
+        properties.setSpecies(species);
+        properties.setLevel(level);
+        properties.setAspects(aspects);
+        properties.setTeraType(teraType);
         properties.setMoves(List.of(moves));
         return BattlePokemon.Companion.safeCopyOf(properties.create());
     }
@@ -316,9 +415,16 @@ public final class CobbleventureBattleAIGameTests {
             decision.put("side", side);
             decision.put("turn", battle.getTurn());
             decision.put("active", active.getPNX());
+            decision.put("species", active.hasPokemon()
+                    ? active.getBattlePokemon().getOriginalPokemon()
+                            .getSpecies().getResourceIdentifier().getPath()
+                    : null);
             decision.put("forcedSwitch", forceSwitch);
             decision.put("type", response.getType().name());
             decision.put("showdown", response.toShowdownString(active, moveset));
+            decision.put("teraAvailable", moveset == null
+                    ? null
+                    : moveset.getCanTerastallize());
             if (delegate instanceof CobbleventureBattleAI cobbleventureAI) {
                 decision.put("source", cobbleventureAI.lastDecisionSource());
                 if (cobbleventureAI.lastSearchFailure() != null) {

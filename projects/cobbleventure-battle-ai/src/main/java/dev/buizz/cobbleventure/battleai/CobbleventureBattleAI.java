@@ -133,31 +133,51 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
         }
         if (!mechanics.allowsTerastallization()) {
             moveset.setCanTerastallize(null);
-        } else {
-            resolveAutomaticTeraType(active);
+            return;
+        }
+        if (!isConfiguredTeraTarget(active)) {
+            moveset.setCanTerastallize(null);
+            return;
+        }
+        String automaticTeraType = resolveAutomaticTeraType(active);
+        if (automaticTeraType != null) {
+            // The Showdown request has already been created at this point. Updating only RCT's
+            // trainer gimmick map is too late for the current decision, so update both views.
+            moveset.setCanTerastallize(automaticTeraType);
         }
     }
 
-    private static void resolveAutomaticTeraType(ActiveBattlePokemon active) {
+    private boolean isConfiguredTeraTarget(ActiveBattlePokemon active) {
+        if (profile.teraTarget() == null || !active.hasPokemon()) {
+            return profile.teraTarget() == null;
+        }
+        String species = active.getBattlePokemon().getOriginalPokemon()
+                .getSpecies().getResourceIdentifier().getPath();
+        return profile.teraTarget().equalsIgnoreCase(species);
+    }
+
+    private static String resolveAutomaticTeraType(ActiveBattlePokemon active) {
         if (!active.hasPokemon()) {
-            return;
+            return null;
         }
         Pokemon pokemon = active.getBattlePokemon().getOriginalPokemon();
-        RCTApi.getInstances()
+        return RCTApi.getInstances()
                 .map(entry -> entry.getValue().getTrainerRegistry().getByOT(pokemon, TrainerNPC.class))
                 .filter(trainer -> trainer != null)
                 .findFirst()
-                .ifPresent(trainer -> {
+                .map(trainer -> {
                     Gimmicks gimmicks = trainer.getGimmicks().of(pokemon);
                     if (gimmicks.tera() == null || !"auto".equalsIgnoreCase(gimmicks.tera())) {
-                        return;
+                        return null;
                     }
                     String primaryType = pokemon.getPrimaryType().getName();
                     trainer.getGimmicks().to(
                             pokemon,
                             new Gimmicks(primaryType, gimmicks.dynamax(), gimmicks.gmax())
                     );
-                });
+                    return primaryType;
+                })
+                .orElse(null);
     }
 
     private record PendingBatonPass(UUID target, int logCursor, String position) {}

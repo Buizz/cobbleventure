@@ -8,6 +8,7 @@ public record CobbleventureBattleAIConfig(
         String difficulty,
         String strategy,
         Double cheatProbability,
+        String teraTarget,
         Mechanics mechanics
 ) {
     public record Mechanics(
@@ -38,12 +39,13 @@ public record CobbleventureBattleAIConfig(
     }
 
     public CobbleventureBattleAIConfig() {
-        this("standard", "balanced", null, new Mechanics());
+        this("standard", "balanced", null, null, new Mechanics());
     }
 
     public CobbleventureBattleAIConfig {
         difficulty = normalized(difficulty, "standard");
         strategy = normalized(strategy, "balanced");
+        teraTarget = normalizedOptional(teraTarget);
         mechanics = mechanics == null ? new Mechanics() : mechanics;
         if (cheatProbability != null) {
             cheatProbability = Math.max(0.0, Math.min(1.0, cheatProbability));
@@ -81,6 +83,17 @@ public record CobbleventureBattleAIConfig(
             return fallback;
         }
         return value.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private static String normalizedOptional(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        String normalized = value.trim().toLowerCase(Locale.ROOT);
+        int namespaceSeparator = normalized.indexOf(':');
+        return namespaceSeparator >= 0
+                ? normalized.substring(namespaceSeparator + 1)
+                : normalized;
     }
 
     private record StrategyBias(

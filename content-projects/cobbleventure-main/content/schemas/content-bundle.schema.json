@@ -207,7 +207,8 @@
               "type": "object",
               "additionalProperties": false,
               "properties": {
-                "cheat_probability": { "type": "number", "minimum": 0, "maximum": 1 }
+                "cheat_probability": { "type": "number", "minimum": 0, "maximum": 1 },
+                "tera_target": { "type": "string", "pattern": "^(?:[a-z0-9_.-]+:)?[a-z0-9_.-]+$" }
               }
             }
           },

@@ -19,6 +19,16 @@ OWNER = 'cobbleventure:league/indigo_plateau'
 
 
 class KantoLeagueTests(unittest.TestCase):
+    def test_lorelei_tera_target_reaches_generated_rct_profile(self):
+        lorelei = leagues.generated_encounters(PROJECT)[0]['battle']
+        exported = cm.export_rct_trainer({
+            'id': lorelei['battle']['trainer_id'],
+            'name': lorelei['name'],
+            'battle': lorelei['battle'],
+        })
+
+        self.assertEqual('mamoswine', exported['ai']['data']['teraTarget'])
+
     def test_generated_trainers_emit_the_identity_used_by_battle_positioning(self):
         from generate_easy_npc_presets import npc_identity_tag_fragment
         encounters = leagues.generated_encounters(PROJECT)
