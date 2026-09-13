@@ -247,9 +247,15 @@ object SharedAiCore {
         evaluations.sortWith { left, right -> evaluationOrder.compare(left.value, right.value) }
         val gap = if (evaluations.size > 1) evaluations[0].value.searchValue - evaluations[1].value.searchValue
             else Double.POSITIVE_INFINITY
-        val beam = if (exactOwnAction != null) evaluations.take(1)
-            else if (gap <= CONTINUATION_BEAM_GAP) evaluations.take(2)
-            else emptyList()
+        val beam = if (exactOwnAction != null) evaluations.take(1) else {
+            val result = if (gap <= CONTINUATION_BEAM_GAP) evaluations.take(2).toMutableList()
+                else mutableListOf()
+            val heuristicEvaluation = evaluations.firstOrNull { it.action.id == heuristic.id }
+            if (heuristicEvaluation != null && result.none { it.action.id == heuristic.id }) {
+                if (result.isEmpty()) result += heuristicEvaluation else result[result.lastIndex] = heuristicEvaluation
+            }
+            result
+        }
         beam.forEach { candidate ->
             val outcome = candidate.outcomes.sortedWith(
                 compareByDescending<MutableOutcome> { it.probability }.thenBy { it.winProbability },

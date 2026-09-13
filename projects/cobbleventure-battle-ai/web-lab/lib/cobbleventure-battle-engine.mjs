@@ -66,6 +66,7 @@ import {
   evaluateSharedPostHitJson,
   evaluateSharedSwitchPhaseJson,
   evaluateSharedTimedEffectJson,
+  evaluateScreenFieldAdvantageJson,
   extractBattleValueSideJson,
   generateSharedSearchActionsJson,
   legalSharedSearchCandidatesJson,
@@ -79,7 +80,7 @@ import {
   toSharedTurnCommands,
 } from "./shared-battle-state-adapter.mjs";
 
-const ENGINE_VERSION = "0.9.7";
+const ENGINE_VERSION = "0.9.8";
 const DEFAULT_MAX_TURNS = 200;
 const DEFAULT_FIELD_DURATION = 5;
 const SECOND_TURN_SEARCH_DISCOUNT = 0.72;
@@ -14104,12 +14105,40 @@ function simpleBattleStateValueSnapshot(
   const ownActive = activePokemon(state, sideIndex);
   const enemyActive = activePokemon(state, opponentSide);
   const matchupMetrics = simpleTeamMatchupMetrics(state, sideIndex, cacheKey);
-  const fieldAdvantage =
+  const environmentFieldAdvantage =
     (fieldSwitchSynergy(state, sideIndex, ownActive, enemyActive)
       .fieldSynergyValue -
       fieldSwitchSynergy(state, opponentSide, enemyActive, ownActive)
         .fieldSynergyValue) /
     4;
+  const screenConditions = (conditions) =>
+    Object.fromEntries(
+      Object.entries(conditions ?? {})
+        .filter(([id]) => ["auroraveil", "lightscreen", "reflect"].includes(cleanId(id)))
+        .map(([id, effect]) => [
+          cleanId(id),
+          {
+            id: cleanId(id),
+            turns: Number(effect?.turns ?? 0),
+            persistent: effect?.turns == null,
+          },
+        ]),
+    );
+  const screenFieldAdvantage = JSON.parse(
+    evaluateScreenFieldAdvantageJson(
+      JSON.stringify({
+        ownConditions: screenConditions(ownSide.conditions),
+        opponentConditions: screenConditions(enemySide.conditions),
+        ownLivingCount: ownSide.team.filter(
+          (member) => !member.fainted && member.hp > 0,
+        ).length,
+        opponentLivingCount: enemySide.team.filter(
+          (member) => !member.fainted && member.hp > 0,
+        ).length,
+      }),
+    ),
+  );
+  const fieldAdvantage = environmentFieldAdvantage + screenFieldAdvantage;
 
   const result = {
     own: simpleBattleValueSide(

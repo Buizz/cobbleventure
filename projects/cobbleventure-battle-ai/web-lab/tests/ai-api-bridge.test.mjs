@@ -1171,6 +1171,37 @@ test("weights move role classification according to AI strategy", () => {
     "swordsdance",
   );
 
+  const forcedExplorationRng = { nextIndex: () => 0 };
+  const decisiveAttack = {
+    ...tackle,
+    slot: 1,
+    id: "decisiveattack",
+    expectedDamage: 120,
+  };
+  const weakAttack = {
+    ...tackle,
+    slot: 2,
+    id: "weakattack",
+    expectedDamage: 10,
+  };
+  assert.equal(
+    selectAiMoveCandidate([decisiveAttack, weakAttack], {
+      difficulty: "standard",
+      strategy: "balanced",
+      rng: forcedExplorationRng,
+    }).id,
+    "decisiveattack",
+  );
+  const closeAttack = { ...decisiveAttack, slot: 2, id: "closeattack", expectedDamage: 116 };
+  assert.equal(
+    selectAiMoveCandidate([decisiveAttack, closeAttack], {
+      difficulty: "standard",
+      strategy: "balanced",
+      rng: forcedExplorationRng,
+    }).id,
+    "closeattack",
+  );
+
   const trace = createAiMoveTrace({
     turn: 1,
     side: 0,

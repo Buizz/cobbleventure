@@ -44,6 +44,7 @@ import dev.buizz.cobbleventure.ai.core.RuleFactBag;
 import dev.buizz.cobbleventure.ai.core.SearchAction;
 import dev.buizz.cobbleventure.ai.core.SearchDecision;
 import dev.buizz.cobbleventure.ai.core.SearchRuntime;
+import dev.buizz.cobbleventure.ai.core.ScreenFieldValueInput;
 import dev.buizz.cobbleventure.ai.core.SharedProjectedSearchAction;
 import dev.buizz.cobbleventure.ai.core.SharedSearchCandidateGenerator;
 import dev.buizz.cobbleventure.ai.core.SharedSearchCandidateObservation;
@@ -1526,8 +1527,15 @@ final class CobblemonBattleSearch implements SearchRuntime {
         int ownLiving = living(state.hp[sideIndex]);
         int opponentLiving = living(state.hp[opponent]);
         String terminal = ownLiving == 0 ? "loss" : opponentLiving == 0 ? "win" : null;
+        double screenFieldAdvantage = SharedBattleObservation.INSTANCE.screenFieldAdvantage(
+                new ScreenFieldValueInput(
+                        state.sideConditions.get(sideIndex),
+                        state.sideConditions.get(opponent),
+                        ownLiving,
+                        opponentLiving));
         BattleValueState value = new BattleValueState(
-                valueSide(state, sideIndex), valueSide(state, opponent), 0.0, 0.9, terminal);
+                valueSide(state, sideIndex), valueSide(state, opponent),
+                screenFieldAdvantage, 0.9, terminal);
         return SharedAiCore.INSTANCE.estimateWinProbability(value, 0.0, 1.0).getProbability();
     }
 

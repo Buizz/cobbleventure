@@ -48,6 +48,7 @@ export {
   evaluateSwitchRuleFactsJson,
   evaluateSharedSwitchMatchupJson,
   evaluateSharedSearchFieldCombatJson,
+  evaluateScreenFieldAdvantageJson,
   evaluateThreatCountersJson,
   extractBattleValueSideJson,
   generateSharedSearchActionsJson,

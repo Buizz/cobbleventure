@@ -2457,7 +2457,12 @@ export function selectAiMoveCandidate(
     return ranked[rng.nextIndex(Math.min(3, ranked.length))];
   }
   if (difficulty === "standard" && ranked.length > 1) {
-    return ranked[rng.nextIndex(4) === 0 ? 1 : 0];
+    const scoreGap = Number(ranked[0].score ?? 0) - Number(ranked[1].score ?? 0);
+    const explorationGap = Math.max(
+      8,
+      Math.abs(Number(ranked[0].score ?? 0)) * 0.15,
+    );
+    if (scoreGap <= explorationGap && rng.nextIndex(4) === 0) return ranked[1];
   }
   return ranked[0];
 }

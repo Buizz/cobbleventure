@@ -29,6 +29,14 @@ data class BattleValueSideInput(
     val sweepPotential: Double = 0.0,
 )
 
+@Serializable
+data class ScreenFieldValueInput(
+    val ownConditions: Map<String, SharedSearchTimedEffect> = emptyMap(),
+    val opponentConditions: Map<String, SharedSearchTimedEffect> = emptyMap(),
+    val ownLivingCount: Int = 1,
+    val opponentLivingCount: Int = 1,
+)
+
 object SharedBattleObservation {
     fun valueSide(input: BattleValueSideInput): BattleValueSide {
         val living = input.members.filter { it.living }
@@ -55,10 +63,42 @@ object SharedBattleObservation {
     fun valueSideJson(inputJson: String): String = codec.encodeToString(
         valueSide(codec.decodeFromString<BattleValueSideInput>(inputJson)),
     )
+
+    fun screenFieldAdvantage(input: ScreenFieldValueInput): Double =
+        screenFieldValue(input.ownConditions, input.ownLivingCount) -
+            screenFieldValue(input.opponentConditions, input.opponentLivingCount)
+
+    fun screenFieldAdvantageJson(inputJson: String): String = codec.encodeToString(
+        screenFieldAdvantage(codec.decodeFromString<ScreenFieldValueInput>(inputJson)),
+    )
+
+    private fun screenFieldValue(
+        conditions: Map<String, SharedSearchTimedEffect>,
+        livingCount: Int,
+    ): Double {
+        val livingFactor = (0.5 + livingCount.coerceIn(1, 6) / 12.0).coerceAtMost(1.0)
+        return conditions.entries.sumOf { (rawId, effect) ->
+            val id = rawId.lowercase().replace(Regex("[^a-z0-9]"), "")
+            val baseValue = when (id) {
+                "auroraveil" -> 18.0
+                "lightscreen", "reflect" -> 10.0
+                else -> 0.0
+            }
+            if (baseValue == 0.0 || (!effect.persistent && effect.turns <= 0)) 0.0 else {
+                val durationFactor = if (effect.persistent) 1.0
+                    else (0.5 + effect.turns.coerceIn(0, 5) / 10.0).coerceIn(0.5, 1.0)
+                baseValue * livingFactor * durationFactor
+            }
+        }
+    }
 }
 
 @JsExport
 fun extractBattleValueSideJson(inputJson: String): String =
     SharedBattleObservation.valueSideJson(inputJson)
+
+@JsExport
+fun evaluateScreenFieldAdvantageJson(inputJson: String): String =
+    SharedBattleObservation.screenFieldAdvantageJson(inputJson)
 
 private fun finiteObservation(value: Double): Double = if (value.isFinite()) value else 0.0

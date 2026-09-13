@@ -11,6 +11,31 @@ import kotlin.test.assertTrue
 
 class SharedAiCoreTest {
     @Test
+    fun screenFieldAdvantageValuesAuroraVeilForTheProtectedTeam() {
+        val advantage = SharedBattleObservation.screenFieldAdvantage(
+            ScreenFieldValueInput(
+                ownConditions = mapOf(
+                    "auroraveil" to SharedSearchTimedEffect("auroraveil", turns = 8),
+                ),
+                ownLivingCount = 6,
+                opponentLivingCount = 6,
+            ),
+        )
+        val reversed = SharedBattleObservation.screenFieldAdvantage(
+            ScreenFieldValueInput(
+                opponentConditions = mapOf(
+                    "auroraveil" to SharedSearchTimedEffect("auroraveil", turns = 8),
+                ),
+                ownLivingCount = 6,
+                opponentLivingCount = 6,
+            ),
+        )
+
+        assertEquals(18.0, advantage)
+        assertEquals(-18.0, reversed)
+    }
+
+    @Test
     fun screenSupportRewardsAValidTeamWideAuroraVeil() {
         val adjustments = SharedMoveFactEvaluator.adjustments(
             RuleFactBag(

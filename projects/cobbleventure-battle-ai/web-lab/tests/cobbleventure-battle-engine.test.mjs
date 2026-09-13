@@ -2253,6 +2253,45 @@ test("standard AI values Aurora Veil for a healthy team under snow", () => {
   assert.equal(veil.screenSupportLivingAllies, 6);
   assert.equal(veil.screenSupportDuration, 8);
   assert.equal(decision.command.move, veil.slot);
+
+  const searchDecision = chooseSimpleAiDecision(
+    state,
+    0,
+    "expert_search",
+    "balanced",
+  );
+  const searchedVeil = searchDecision.moveCandidates.find(
+    (candidate) => candidate.id === "auroraveil",
+  );
+  assert.equal(searchDecision.command.move, searchedVeil.slot);
+  assert.equal(searchDecision.diagnostics.scoreWinner.id, "auroraveil");
+  assert.ok(
+    searchedVeil.searchEvaluation.outcomes.some(
+      (outcome) => outcome.continuation,
+    ),
+    JSON.stringify(searchedVeil.searchEvaluation, null, 2),
+  );
+});
+
+test("Aurora Veil halves ordinary damage in the virtual battle", () => {
+  const state = createSimpleBattle(setup());
+  const attacker = state.sides[0].team[0];
+  const defender = state.sides[1].team[0];
+  const move = attacker.moves[0];
+  const unscreened = calculateDamageRange(attacker, defender, move, {
+    state,
+    attackerSide: 0,
+    defenderSide: 1,
+  }).maximum;
+  state.sides[1].conditions.auroraveil = { id: "auroraveil", turns: 5 };
+  const screened = calculateDamageRange(attacker, defender, move, {
+    state,
+    attackerSide: 0,
+    defenderSide: 1,
+  }).maximum;
+
+  assert.ok(screened < unscreened);
+  assert.ok(screened <= Math.ceil(unscreened / 2));
 });
 
 test("calculates the built-in type chart without Showdown", () => {
