@@ -4,7 +4,10 @@ import test from "node:test";
 
 const catalog = JSON.parse(
   await readFile(
-    new URL("../../data/ai/ai-move-role-classification.json", import.meta.url),
+    new URL(
+      "../../../../content-projects/cobbleventure-main/content/catalogs/battle-ai/ai-move-role-classification.json",
+      import.meta.url,
+    ),
     "utf8",
   ),
 );

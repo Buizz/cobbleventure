@@ -191,6 +191,10 @@ final class CobblemonBattleSearch implements SearchRuntime {
                 ShowdownBattleLogObservation.parse(active.getBattle().getBattleLog()));
         State state = model.initialState();
         String stateId = model.remember(state);
+        String algorithm = "expert_winrate".equals(difficulty) ? "win_rate" : "two_turn";
+        int maxNodes = "win_rate".equals(algorithm) ? 8 : 10;
+        RecordingSearchRuntime runtime = new RecordingSearchRuntime(
+                model, algorithm, stateId, 0, maxNodes, model.stateNamespace);
 
         SearchDecision decision;
         if (forceSwitch) {
@@ -199,10 +203,10 @@ final class CobblemonBattleSearch implements SearchRuntime {
                     .max(Comparator.comparingDouble(SearchAction::getScore)).orElse(null);
             decision = selected == null ? null : new SearchDecision(selected, false, List.of(), 0, 0, false, 1);
         } else if ("expert_winrate".equals(difficulty)) {
-            decision = SharedAiCore.INSTANCE.decideWinRate(stateId, 0, 8, model);
+            decision = SharedAiCore.INSTANCE.decideWinRate(stateId, 0, maxNodes, runtime);
         } else {
             decision = SharedAiCore.INSTANCE.decideTwoTurn(
-                    stateId, 0, 10, model, null, null, model.stateNamespace);
+                    stateId, 0, maxNodes, runtime, null, null, model.stateNamespace);
         }
         if (decision == null || decision.getSelected() == null) return null;
         ShowdownActionResponse response = model.toResponse(decision.getSelected(), opposite);
@@ -213,7 +217,8 @@ final class CobblemonBattleSearch implements SearchRuntime {
             int targetIndex = model.batonPassTargetIndex(state, 0, state.active[0]);
             if (targetIndex >= 0) batonTarget = own.members.get(targetIndex).getUuid();
         }
-        return response == null ? null : new PlannedResponse(response, decision, batonTarget);
+        return response == null ? null : new PlannedResponse(
+                response, decision, batonTarget, forceSwitch ? null : runtime.trace(decision));
     }
 
     private ShowdownActionResponse toResponse(SearchAction selected, ActiveBattlePokemon opponent) {
@@ -1825,8 +1830,104 @@ final class CobblemonBattleSearch implements SearchRuntime {
     record PlannedResponse(
             ShowdownActionResponse response,
             SearchDecision decision,
-            UUID batonPassTarget
+            UUID batonPassTarget,
+            SearchReplayTrace replayTrace
     ) {}
+    record SearchReplayTrace(
+            int schemaVersion,
+            String algorithm,
+            String initialStateId,
+            int sideIndex,
+            int maxNodes,
+            String transitionCacheNamespace,
+            List<CandidateCall> candidates,
+            List<TransitionCall> transitions,
+            List<WinProbabilityCall> winProbabilities,
+            List<TerminalCall> terminals,
+            String selectedActionId
+    ) {}
+    record CandidateCall(String stateId, int sideIndex, List<SearchAction> actions) {}
+    record TransitionCall(
+            String stateId,
+            String sideZeroActionId,
+            String sideOneActionId,
+            String nextStateId
+    ) {}
+    record WinProbabilityCall(String stateId, int sideIndex, double value) {}
+    record TerminalCall(String stateId, boolean value) {}
+
+    private static final class RecordingSearchRuntime implements SearchRuntime {
+        private final SearchRuntime delegate;
+        private final String algorithm;
+        private final String initialStateId;
+        private final int sideIndex;
+        private final int maxNodes;
+        private final String transitionCacheNamespace;
+        private final List<CandidateCall> candidates = new ArrayList<>();
+        private final List<TransitionCall> transitions = new ArrayList<>();
+        private final List<WinProbabilityCall> winProbabilities = new ArrayList<>();
+        private final List<TerminalCall> terminals = new ArrayList<>();
+
+        private RecordingSearchRuntime(
+                SearchRuntime delegate,
+                String algorithm,
+                String initialStateId,
+                int sideIndex,
+                int maxNodes,
+                String transitionCacheNamespace
+        ) {
+            this.delegate = delegate;
+            this.algorithm = algorithm;
+            this.initialStateId = initialStateId;
+            this.sideIndex = sideIndex;
+            this.maxNodes = maxNodes;
+            this.transitionCacheNamespace = transitionCacheNamespace;
+        }
+
+        @Override
+        public List<SearchAction> candidates(String stateId, int requestedSideIndex) {
+            List<SearchAction> result = List.copyOf(delegate.candidates(stateId, requestedSideIndex));
+            candidates.add(new CandidateCall(stateId, requestedSideIndex, result));
+            return result;
+        }
+
+        @Override
+        public String transition(String stateId, String sideZeroActionId, String sideOneActionId) {
+            String result = delegate.transition(stateId, sideZeroActionId, sideOneActionId);
+            transitions.add(new TransitionCall(
+                    stateId, sideZeroActionId, sideOneActionId, result));
+            return result;
+        }
+
+        @Override
+        public double winProbability(String stateId, int requestedSideIndex) {
+            double result = delegate.winProbability(stateId, requestedSideIndex);
+            winProbabilities.add(new WinProbabilityCall(stateId, requestedSideIndex, result));
+            return result;
+        }
+
+        @Override
+        public boolean terminal(String stateId) {
+            boolean result = delegate.terminal(stateId);
+            terminals.add(new TerminalCall(stateId, result));
+            return result;
+        }
+
+        private SearchReplayTrace trace(SearchDecision decision) {
+            return new SearchReplayTrace(
+                    1,
+                    algorithm,
+                    initialStateId,
+                    sideIndex,
+                    maxNodes,
+                    transitionCacheNamespace,
+                    List.copyOf(candidates),
+                    List.copyOf(transitions),
+                    List.copyOf(winProbabilities),
+                    List.copyOf(terminals),
+                    decision.getSelected() == null ? null : decision.getSelected().getId());
+        }
+    }
     private record AttackProfile(double damage, double priority) {
         private static final AttackProfile NONE = new AttackProfile(0.0, 0.0);
     }

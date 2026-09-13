@@ -83,6 +83,18 @@ gradlew.bat runGameTestServer -Pcobblemon_target=1.8 -Pintegration_mods_dir=../.
 성공 여부와 양쪽의 턴별 Showdown 선택, 승자, 원본 전투 로그는
 `build/reports/battle-ai/headless-eve.json`에 기록된다.
 
+GameTest가 기록한 JVM 탐색 콜백을 WEB의 JavaScript 공유 코어에서 재생해 양쪽이
+같은 행동을 선택하는지 비교하려면 서버 테스트가 끝난 뒤 다음 명령을 실행한다.
+
+```text
+cd web-lab
+npm run parity:minecraft
+```
+
+비교기는 모든 `searchReplay` 결정의 JVM·WEB 행동 ID를 대조하며, 리플레이가 없거나
+하나라도 다르면 실패 코드로 종료한다. 이 검증은 전투 결과만 비교하는 것이 아니라
+동일한 후보와 상태 전이에 대한 두 런타임의 AI 판단 일치를 확인한다.
+
 웹 실험실은 별도로 다음 명령으로 빌드, 서버 렌더링과 공식·컴퓨터 트레이너 JSON의 정규화를 검증한다.
 
 ```text

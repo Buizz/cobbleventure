@@ -28,6 +28,7 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
     private final Map<UUID, PendingBatonPass> pendingBatonPassTargets = new ConcurrentHashMap<>();
     private volatile String lastDecisionSource = "rct_fallback";
     private volatile String lastSearchFailure;
+    private volatile CobblemonBattleSearch.SearchReplayTrace lastSearchReplayTrace;
 
     CobbleventureBattleAI(
             CobbleventureBattleAIConfig profile,
@@ -64,6 +65,7 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
         }
         if (usesJvmSearch() && moveset != null) {
             lastSearchFailure = null;
+            lastSearchReplayTrace = null;
             try {
                 CobblemonBattleSearch.PlannedResponse planned = CobblemonBattleSearch.plan(
                         active,
@@ -78,6 +80,7 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
                         pendingBatonPassTargets.put(battleId, new PendingBatonPass(
                                 planned.batonPassTarget(), battle.getBattleLog().size(), active.getPNX()));
                     }
+                    lastSearchReplayTrace = planned.replayTrace();
                     lastDecisionSource = "jvm_search";
                     return planned.response();
                 }
@@ -99,6 +102,10 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
 
     String lastSearchFailure() {
         return lastSearchFailure;
+    }
+
+    CobblemonBattleSearch.SearchReplayTrace lastSearchReplayTrace() {
+        return lastSearchReplayTrace;
     }
 
     private boolean usesJvmSearch() {

@@ -324,6 +324,9 @@ public final class CobbleventureBattleAIGameTests {
                 if (cobbleventureAI.lastSearchFailure() != null) {
                     decision.put("searchFailure", cobbleventureAI.lastSearchFailure());
                 }
+                if (cobbleventureAI.lastSearchReplayTrace() != null) {
+                    decision.put("searchReplay", cobbleventureAI.lastSearchReplayTrace());
+                }
             }
             decisions.add(decision);
             return response;
