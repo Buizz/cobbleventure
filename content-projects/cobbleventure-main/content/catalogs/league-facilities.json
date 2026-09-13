@@ -47,11 +47,15 @@
       "lobby": {
         "structure": "cobbleventure:interiors/leagues/kanto_lobby",
         "entry": "entry",
-        "exit": "exit",
-        "leave": "leave",
+        "exit": "entry",
+        "leave": "door",
         "fixed_npcs": {
           "nurse": "cobbleventure:npc/pokemon_center_nurse",
-          "shop": "cobbleventure:npc/pokemart_clerk"
+          "shop": "cobbleventure:npc/pokemart_clerk",
+          "fly_instructor": "cobbleventure:npc/rewards/field_move_fly_instructor",
+          "league_attendant": "cobbleventure:npc/league/indigo_plateau_attendant",
+          "league_challenger": "cobbleventure:npc/league/indigo_plateau_challenger",
+          "league_veteran": "cobbleventure:npc/league/indigo_plateau_veteran"
         },
         "fixed_pokemon": {
           "chansey": "chansey level=30 female"
@@ -1324,9 +1328,9 @@
       ],
       "hall": {
         "structure": "cobbleventure:interiors/hall_of_fame",
-        "entry": "hall_entry",
+        "entry": "hall_exit",
         "exit": "hall_exit",
-        "advance": "hall_next_generation"
+        "advance_npc": "npc"
       },
       "generation": 1,
       "next_generation": 2,

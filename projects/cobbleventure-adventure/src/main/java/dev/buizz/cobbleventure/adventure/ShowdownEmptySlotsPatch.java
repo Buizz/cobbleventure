@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
+import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,11 +15,16 @@ public final class ShowdownEmptySlotsPatch {
     private ShowdownEmptySlotsPatch() {}
 
     public static String replace(String source, String before, String after) {
+        return replace(source, before, after, List.of());
+    }
+
+    public static String replace(String source, String before, String after, List<String> legacy) {
         if (source.contains(after)) return source;
-        if (!source.contains(before)) {
-            throw new IllegalStateException("Unsupported Showdown empty-slot patch target: " + before);
+        for (String previous : legacy) {
+            if (source.contains(previous)) return source.replace(previous, after);
         }
-        return source.replace(before, after);
+        if (source.contains(before)) return source.replace(before, after);
+        throw new IllegalStateException("Unsupported Showdown empty-slot patch target: " + before);
     }
 
     public static void apply() {
@@ -37,7 +43,12 @@ public final class ShowdownEmptySlotsPatch {
                 String updated = original;
                 for (var rule : entry.getValue().getAsJsonArray()) {
                     var value = rule.getAsJsonObject();
-                    updated = replace(updated, value.get("from").getAsString(), value.get("to").getAsString());
+                    List<String> legacy = value.has("legacy")
+                        ? value.getAsJsonArray("legacy").asList().stream()
+                            .map(element -> element.getAsString()).toList()
+                        : List.of();
+                    updated = replace(updated, value.get("from").getAsString(),
+                        value.get("to").getAsString(), legacy);
                 }
                 if (!updated.equals(original)) changed.put(path, updated);
             }

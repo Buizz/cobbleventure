@@ -1,0 +1,74 @@
+{
+  "$schema": "../../schemas/npc-event-script.schema.json",
+  "schema_version": 4,
+  "id": "cobbleventure:npc/hall_guide",
+  "enabled": true,
+  "name": {
+    "ko_kr": "전당 안내원",
+    "en_us": "Hall Guide"
+  },
+  "description": {
+    "ko_kr": "명예의 전당에서 다음 세대 이동을 안내합니다."
+  },
+  "tags": [
+    "service",
+    "hall_of_fame",
+    "building_runtime"
+  ],
+  "placement_profile": {
+    "classification": "ambient",
+    "preferred_biomes": [],
+    "automatic_town_placement": false,
+    "automatic_route_placement": false
+  },
+  "npc": {
+    "display_name": {
+      "ko_kr": "전당 안내원",
+      "en_us": "Hall Guide"
+    },
+    "role": "default",
+    "trainer_class": "cobbleventure:trainer_class/pokemart_clerk",
+    "appearance": {
+      "source": "custom",
+      "type": "skin",
+      "resource": "cobbleventure:trainer_skin/pokemart_clerk_male",
+      "arm_model": "classic"
+    },
+    "behavior": {
+      "movement": "stationary",
+      "look_at_player": true,
+      "invulnerable": true,
+      "collision": true
+    }
+  },
+  "event_runtime": {
+    "engine": "cves_v5",
+    "authoring": "custom",
+    "script_id": "cobbleventure:event_script/facilities/hall_guide"
+  },
+  "event_design": {
+    "mode": "easy_npc_events"
+  },
+  "events": [
+    {
+      "id": "on_interact",
+      "trigger": {
+        "type": "interact",
+        "range": 4
+      },
+      "commands": [
+        {
+          "type": "dialogue",
+          "id": "welcome",
+          "speaker": "npc",
+          "text": {
+            "ko_kr": "리그 제패를 축하합니다. 다음 세대의 모험을 안내해 드리겠습니다."
+          }
+        },
+        {
+          "type": "end"
+        }
+      ]
+    }
+  ]
+}

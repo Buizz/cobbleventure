@@ -2861,13 +2861,21 @@ def _package_hex_worlds(root: Path, output: Path, settlements: list[tuple[Path, 
         if route_id in route_presets:
             raise ModBuildError(f"중복 길 프리셋 ID입니다: {route_id}")
         automatic = route.get("automatic_npc_placement") if isinstance(route.get("automatic_npc_placement"), dict) else {}
+        npc_placement_enabled = route.get("npc_placement_enabled", True) is not False
         packaged_route = copy.deepcopy(route)
-        if automatic.get("enabled") is True:
+        if npc_placement_enabled and automatic.get("enabled") is True:
             scaling = route.get("level_scaling", {})
             level = round((int(scaling.get("minimum_level", 3)) + int(scaling.get("maximum_level", 7))) / 2) if scaling.get("mode") == "fixed" else max(1, 5 + int(scaling.get("offset", 0)))
             packaged_route["automatic_npc_candidates"] = _resolved_trainer_ids(
                 npc_profiles, automatic, level=level, biomes=set(), target="route",
             )[:int(automatic.get("count", 0))]
+        elif not npc_placement_enabled:
+            packaged_route["npc_placements"] = []
+            packaged_route["automatic_npc_placement"] = copy.deepcopy(automatic)
+            packaged_route["automatic_npc_placement"]["enabled"] = False
+            packaged_route["automatic_npc_candidates"] = []
+        else:
+            packaged_route.pop("automatic_npc_candidates", None)
         route_presets[route_id] = packaged_route
         route_target = _inside(
             root,
@@ -2912,15 +2920,21 @@ def _package_hex_worlds(root: Path, output: Path, settlements: list[tuple[Path, 
                 raise ModBuildError(f"월드맵이 존재하지 않는 길 프리셋을 참조합니다: {preset_id}")
             corridor = preset.get("corridor") if isinstance(preset.get("corridor"), dict) else {}
             route_type = str(preset.get("route_type", "road"))
+            npc_placement_enabled = preset.get("npc_placement_enabled", True) is not False
+            npc_placements = copy.deepcopy(preset.get("npc_placements", [])) if npc_placement_enabled else []
+            automatic_npc_placement = copy.deepcopy(preset.get("automatic_npc_placement", {"enabled": False, "count": 0}))
+            if not npc_placement_enabled:
+                automatic_npc_placement["enabled"] = False
+            automatic_npc_candidates = copy.deepcopy(preset.get("automatic_npc_candidates", [])) if npc_placement_enabled else []
             resolved = {
                 "surface_style": "natural" if route_type == "trail" else route_type,
                 "corridor_width_blocks": corridor.get("width_blocks", 12),
                 "edge_noise": corridor.get("edge_noise", 0),
                 "pokemon_spawns": copy.deepcopy(preset.get("pokemon_spawns", {})),
                 "level_scaling": copy.deepcopy(preset.get("level_scaling", {"mode": "world", "offset": 0})),
-                "npc_placements": copy.deepcopy(preset.get("npc_placements", [])),
-                "automatic_npc_placement": copy.deepcopy(preset.get("automatic_npc_placement", {"enabled": False, "count": 0})),
-                "automatic_npc_candidates": copy.deepcopy(preset.get("automatic_npc_candidates", [])),
+                "npc_placements": npc_placements,
+                "automatic_npc_placement": automatic_npc_placement,
+                "automatic_npc_candidates": automatic_npc_candidates,
             }
             if route_type == "log_bridge":
                 resolved["log_bridge_layout"] = copy.deepcopy(preset.get("log_bridge_layout", {"pattern": "straight", "detour_blocks": 18}))
@@ -2938,9 +2952,9 @@ def _package_hex_worlds(root: Path, output: Path, settlements: list[tuple[Path, 
             resolved["edge_noise"] = corridor.get("edge_noise", 0)
             resolved["pokemon_spawns"] = copy.deepcopy(preset.get("pokemon_spawns", {}))
             resolved["level_scaling"] = copy.deepcopy(preset.get("level_scaling", {"mode": "world", "offset": 0}))
-            resolved["npc_placements"] = copy.deepcopy(preset.get("npc_placements", []))
-            resolved["automatic_npc_placement"] = copy.deepcopy(preset.get("automatic_npc_placement", {"enabled": False, "count": 0}))
-            resolved["automatic_npc_candidates"] = copy.deepcopy(preset.get("automatic_npc_candidates", []))
+            resolved["npc_placements"] = npc_placements
+            resolved["automatic_npc_placement"] = automatic_npc_placement
+            resolved["automatic_npc_candidates"] = automatic_npc_candidates
             if route_type == "log_bridge":
                 resolved["log_bridge_layout"] = copy.deepcopy(preset.get("log_bridge_layout", {"pattern": "straight", "detour_blocks": 18}))
             else:

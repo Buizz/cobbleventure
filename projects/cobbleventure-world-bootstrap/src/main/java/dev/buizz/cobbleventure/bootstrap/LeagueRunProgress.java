@@ -12,8 +12,8 @@ record LeagueRunProgress(int completed, int stages, boolean relay) {
 
     boolean cleared() { return completed == stages; }
 
-    boolean redirectsLobbyToHall(boolean arrivingFromHall) {
-        return cleared() && !arrivingFromHall;
+    boolean redirectsLobbyToHall(boolean returningFromLeagueRoom) {
+        return cleared() && !returningFromLeagueRoom;
     }
 
     LeagueRunProgress win(int stage) {

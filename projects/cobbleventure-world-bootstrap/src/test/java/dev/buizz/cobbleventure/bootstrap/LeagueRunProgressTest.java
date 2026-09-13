@@ -43,7 +43,7 @@ final class LeagueRunProgressTest {
     }
 
     @Test
-    void clearedLobbyAdmissionRedirectsButHallExitDoesNotBounceBack() {
+    void clearedLobbyAdmissionRedirectsButReturnsFromRoomsDoNotBounceBack() {
         var cleared = new LeagueRunProgress(5, 5, true);
         assertTrue(cleared.redirectsLobbyToHall(false));
         assertFalse(cleared.redirectsLobbyToHall(true));

@@ -72,7 +72,10 @@ class MusicCatalogTest(unittest.TestCase):
 
     def test_indigo_plateau_tile_and_split_rooms_share_the_league_theme(self) -> None:
         tracks = {track["id"]: track["source_file"] for track in self.catalog["tracks"]}
-        self.assertEqual("another-red-bgm/PWT.ogg", tracks["kanto.indigo_plateau"])
+        self.assertEqual(
+            "download/151. The Pokémon League.ogg",
+            tracks["kanto.indigo_plateau"],
+        )
 
         world = json.loads(
             (PROJECT_ROOT / "content/worlds/generation_1.json").read_text(encoding="utf-8")

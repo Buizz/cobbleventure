@@ -1,0 +1,21 @@
+# 중앙 배치 오브젝트의 도로 연결
+
+`center_placement: true` 또는 `placement_anchor: center`는 NBT 중심 배치를 유지한다.
+월드 connection의 `from` 또는 `to`가 해당 오브젝트 ID를 가리킬 때 도로 끝점을 연결한다.
+
+입구 선택 우선순위:
+1. NBT의 `cobbleventure:road_anchor` 직소 하나
+2. `.structure.json`의 `door` 마커
+3. `.structure.json`의 `transition` 마커
+4. 기존 던전 호환을 위한 `interaction_point` 마커 (발전소의 `dungeon_entry`)
+
+실제 문 블록을 임의로 탐색하지 않는다. 마커가 없으면 기존 도로 끝점을 유지한다.
+건물 회전과 중심을 유지하고 마커의 로컬 좌표를 월드 좌표로 변환한다.
+도로는 건물 외곽과 도로 폭을 고려하여 우회한 뒤 입구 앞에서 진입한다.
+도로 중심선과 bounds를 함께 갱신하여 지형·노면 생성에서 동일한 경로를 사용한다.
+
+발전소 진입로 `power_plant_access`는 기존 길 셀 `(11,-2)`에서 발전소 `(12,-2)`로 연결한다.
+인접 `route_custom_16` 프리셋을 재사용하므로 기존 출현 풀과 레벨 설정을 그대로 따른다.
+발전소 NBT 내부의 자연 출현 억제 설정은 유지한다.
+
+기존 생성 월드의 배치 완료 표식은 자동 삭제하지 않는다. 기존 월드는 재생성 후 확인한다.

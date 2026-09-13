@@ -15,7 +15,8 @@
     "display_name": { "$ref": "#/$defs/localized_text" },
     "auto_name": { "type": "boolean", "default": true },
     "enabled": { "type": "boolean" },
-    "route_type": { "enum": ["road", "trail", "water", "log_bridge"] },
+    "npc_placement_enabled": { "type": "boolean", "default": true },
+    "route_type": { "enum": ["road", "trail", "water", "log_bridge", "league_arch"] },
     "log_bridge_layout": {
       "type": "object",
       "additionalProperties": false,
@@ -67,6 +68,7 @@
       "additionalProperties": false,
       "required": ["inherit_biome", "excluded_species", "additions", "level_overrides"],
       "properties": {
+        "enabled": { "type": "boolean", "default": true },
         "inherit_biome": { "type": "boolean" },
         "excluded_species": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/resource_id" } },
         "additions": { "type": "array", "items": { "$ref": "#/$defs/pokemon_addition" } },

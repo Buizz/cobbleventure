@@ -42,14 +42,18 @@ class KantoLeagueTests(unittest.TestCase):
             blocks = {tuple(b['pos']): nbt['palette'][b['state']]['Name'] for b in nbt['blocks']}
             cls.rooms[room['structure']] = (nbt, anchors, blocks)
 
-    def test_next_generation_has_separate_portal_and_an_enabled_house_start(self):
+    def test_next_generation_uses_guide_and_an_enabled_house_start(self):
         runtime = self.runtime['runtime_league']
         self.assertEqual((1, 2, 'travel_test'),
                          (runtime['generation'], runtime['next_generation'], runtime['generation_travel_mode']))
         hall = runtime['rooms'][-1]
-        self.assertNotEqual(hall['exit'], hall['advance'])
+        self.assertEqual('hall_exit', hall['entry'])
+        self.assertNotIn('advance', hall)
         _, anchors, blocks = self.rooms[hall['structure']]
-        self.assertEqual('minecraft:barrier', blocks[tuple(anchors[hall['advance']]['position'])])
+        self.assertEqual('npc_position', anchors[hall['advance_npc']]['type'])
+        self.assertEqual('cobbleventure:npc/hall_guide', self.runtime['fixed_npcs']['league_kanto_hall:npc'])
+        self.assertNotIn('hall_entry', anchors)
+        self.assertNotIn('hall_next_generation', anchors)
         start = next(g for g in leagues.read(CONTENT / 'catalogs/starter-settings.json')['generations'] if g['generation'] == 2)
         self.assertTrue(start['enabled'])
         self.assertEqual(('slot', 'room_1', 'start'),
@@ -75,7 +79,7 @@ class KantoLeagueTests(unittest.TestCase):
             data['leagues'][0]['next_generation'] = value
             with self.subTest(value=value), self.assertRaises(ValueError):
                 leagues.validate(data, self.available)
-        for field, value in [('advance', 'hall_entry'), ('advance', self.league['hall']['exit'])]:
+        for field, value in [('advance_npc', 'missing'), ('advance_npc', self.league['hall']['exit']), ('advance', self.league['hall']['exit'])]:
             data = copy.deepcopy(self.catalog)
             data['leagues'][0]['hall'][field] = value
             with self.assertRaises(ValueError):
@@ -85,16 +89,69 @@ class KantoLeagueTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             leagues.validate(self.catalog, available)
 
+    def test_hall_guide_requires_choice_and_compiles_travel_command(self):
+        source = (CONTENT / 'events/cobbleventure/facilities/hall_guide.cves').read_text(encoding='utf-8')
+        compiled = compile_program(parse(source), 'cobbleventure:event_script/facilities/hall_guide', load_project_catalog(PROJECT))
+        self.assertIn('cobbleventure_league next_generation', json.dumps(compiled))
+        self.assertIn('choice', source)
+        self.assertIn('아직 이곳에 머무른다', source)
+        self.assertIn('그대로 가지고 이동', source)
+        hall = self.league['hall']
+        _, anchors, blocks = self.rooms[hall['structure']]
+        x, y, z = anchors[hall['entry']]['safe_spawn']
+        self.assertEqual('minecraft:air', blocks.get((x, y, z), 'minecraft:air'))
+        self.assertEqual('minecraft:air', blocks.get((x, y + 1, z), 'minecraft:air'))
+        self.assertNotEqual('minecraft:air', blocks.get((x, y - 1, z), 'minecraft:air'))
+
     def test_single_exterior_door_generates_return_without_a_return_marker(self):
         authored = copy.deepcopy(self.authored)
         building = authored['buildings'][OWNER]
         building['door_routes'] = {'exterior:door': {'space': 'lobby', 'door': 'entry'}}
         compiled = leagues.compile_settings(authored, self.catalog)['buildings'][OWNER]
-        self.assertEqual({'space': 'exterior', 'door': 'door'}, compiled['door_routes']['lobby:leave'])
+        self.assertEqual({'space': 'exterior', 'door': 'door'}, compiled['door_routes']['lobby:door'])
         self.assertEqual({'exterior:door'}, set(building['door_routes']))
         building['door_routes']['exterior:other_door'] = {'space': 'lobby', 'door': 'entry'}
         with self.assertRaisesRegex(ValueError, '입구 연결 하나'):
             leagues.compile_settings(authored, self.catalog)
+
+    def test_lobby_challenge_transition_is_also_the_return_destination(self):
+        lobby = self.league['lobby']
+        self.assertEqual(('entry', 'door', 'entry'), (lobby['entry'], lobby['leave'], lobby['exit']))
+        _, anchors, blocks = self.rooms[lobby['structure']]
+        self.assertNotIn('leave', anchors)
+        self.assertEqual('door', anchors['door']['type'])
+        self.assertEqual('transition', anchors['entry']['type'])
+        x, y, z = anchors['entry']['safe_spawn']
+        self.assertEqual('minecraft:air', blocks.get((x, y, z), 'minecraft:air'))
+        self.assertEqual('minecraft:air', blocks.get((x, y + 1, z), 'minecraft:air'))
+        self.assertNotIn(blocks.get((x, y - 1, z), 'minecraft:air'), ('minecraft:air', 'minecraft:water', 'minecraft:lava'))
+        routes = self.runtime['door_routes']
+        self.assertEqual({'space': 'lobby', 'door': 'entry'}, routes['exterior:door'])
+        self.assertEqual({'space': 'exterior', 'door': 'door'}, routes['lobby:door'])
+        self.assertEqual({'space': 'league_kanto_elite_1', 'door': 'entry'}, routes['lobby:entry'])
+
+    def test_lobby_places_fly_instructor_and_three_league_residents_on_safe_markers(self):
+        lobby = self.league['lobby']
+        _, anchors, blocks = self.rooms[lobby['structure']]
+        assignments = {
+            'fly_instructor': 'cobbleventure:npc/rewards/field_move_fly_instructor',
+            'league_attendant': 'cobbleventure:npc/league/indigo_plateau_attendant',
+            'league_challenger': 'cobbleventure:npc/league/indigo_plateau_challenger',
+            'league_veteran': 'cobbleventure:npc/league/indigo_plateau_veteran',
+        }
+        self.assertEqual(assignments, {key: lobby['fixed_npcs'][key] for key in assignments})
+        for marker, npc in assignments.items():
+            with self.subTest(marker=marker, npc=npc):
+                anchor = anchors[marker]
+                self.assertEqual('npc_position', anchor['type'])
+                x, y, z = anchor['position']
+                self.assertEqual('minecraft:air', blocks.get((x, y, z), 'minecraft:air'))
+                self.assertEqual('minecraft:air', blocks.get((x, y + 1, z), 'minecraft:air'))
+                self.assertNotEqual('minecraft:air', blocks.get((x, y - 1, z), 'minecraft:air'))
+                self.assertEqual(npc, self.runtime['fixed_npcs'][f'lobby:{marker}'])
+
+        world = leagues.read(CONTENT / 'worlds/generation_1.json')
+        self.assertFalse(any(item.get('id') == 'indigo_plateau_fly_guide' for item in world['objects']))
 
     def test_external_authoring_connects_only_lobby_and_compilation_is_pure(self):
         exterior = self.authored['buildings'][OWNER]
@@ -103,7 +160,7 @@ class KantoLeagueTests(unittest.TestCase):
         self.assertFalse(exterior['fixed_npcs'])
         self.assertNotIn('runtime_league', exterior)
         self.assertEqual(7, len(self.runtime['interiors']))
-        self.assertEqual(9, len(self.runtime['door_routes']))
+        self.assertEqual(14, len(self.runtime['door_routes']))
         leagues.validate(self.catalog, self.available)
 
     def test_rooms_are_command_free_and_markers_are_safe(self):
@@ -124,7 +181,7 @@ class KantoLeagueTests(unittest.TestCase):
                         self.assertEqual('minecraft:air', blocks[x, y + 1, z], anchor)
                         self.assertNotIn(blocks[x, y - 1, z], ('minecraft:air', 'minecraft:water', 'minecraft:lava'))
 
-    def test_route_chain_uses_arrival_only_destinations_and_hall_then_lobby(self):
+    def test_route_chain_uses_configured_destinations_and_hall_then_lobby(self):
         rooms = self.runtime['runtime_league']['rooms']
         self.assertEqual([-1, 0, 1, 2, 3, 4, 5], [r['stage'] for r in rooms])
         self.assertEqual(8, len(self.runtime['runtime_league']['conditions']))
@@ -132,7 +189,7 @@ class KantoLeagueTests(unittest.TestCase):
             target = rooms[(i + 1) % len(rooms)]
             route = self.runtime['door_routes'][f'{room["key"]}:{room["exit"]}']
             self.assertEqual({'space': target['key'], 'door': target['entry']}, route)
-            self.assertEqual('arrival', self.rooms[target['structure']][1][target['entry']]['type'])
+            self.assertEqual('transition', self.rooms[target['structure']][1][target['entry']]['type'])
             self.assertEqual(64, len(room['revision']))
         self.assertEqual('cobbleventure:interiors/hall_of_fame', rooms[-1]['structure'])
 
@@ -142,6 +199,20 @@ class KantoLeagueTests(unittest.TestCase):
             self.assertEqual(room['npc'], self.runtime['fixed_npcs'][f'{room["key"]}:opponent'])
             self.assertNotIn(f'{room["key"]}:opponent_battle_player', self.runtime['fixed_npcs'])
         self.assertEqual('chansey level=30 female', self.runtime['fixed_pokemon']['lobby:chansey'])
+
+    def test_every_stage_entry_is_a_portal_back_to_lobby_without_advancing(self):
+        for room in self.runtime['runtime_league']['rooms'][1:-1]:
+            _, anchors, blocks = self.rooms[room['structure']]
+            self.assertEqual('transition', anchors['entry']['type'])
+            self.assertEqual([31, 3, 58], anchors['entry']['position'])
+            for x in range(30, 33):
+                for y in range(2, 5):
+                    self.assertEqual('minecraft:barrier', blocks[x, y, 58])
+            self.assertEqual({'space': 'lobby', 'door': 'entry'}, self.runtime['door_routes'][room['key'] + ':entry'])
+            x, y, z = anchors['entry']['safe_spawn']
+            self.assertIn(blocks[x, y, z], ('minecraft:air', 'minecraft:light'))
+            self.assertEqual('minecraft:air', blocks[x, y + 1, z])
+            self.assertNotIn(blocks[x, y - 1, z], ('minecraft:air', 'minecraft:barrier', 'minecraft:water', 'minecraft:lava'))
 
     def test_events_can_replay_without_permanent_flags_blocking_a_new_run(self):
         catalog = load_project_catalog(PROJECT)
@@ -206,9 +277,9 @@ class KantoLeagueTests(unittest.TestCase):
 
     def test_missing_return_uses_the_existing_external_entrance(self):
         settings = copy.deepcopy(self.authored)
-        settings['buildings'][OWNER]['door_routes'].pop('lobby:leave', None)
+        settings['buildings'][OWNER]['door_routes'].pop('lobby:door', None)
         compiled = leagues.compile_settings(settings, self.catalog)['buildings'][OWNER]
-        self.assertEqual({'space': 'exterior', 'door': 'door'}, compiled['door_routes']['lobby:leave'])
+        self.assertEqual({'space': 'exterior', 'door': 'door'}, compiled['door_routes']['lobby:door'])
 
     def test_graph_roundtrip_keeps_only_lobby_connections(self):
         with tempfile.TemporaryDirectory() as directory:

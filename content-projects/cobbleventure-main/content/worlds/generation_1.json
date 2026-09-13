@@ -1866,18 +1866,6 @@
     },
     {
       "q": -2,
-      "r": -1,
-      "biome": "minecraft:plains",
-      "boundary_profile": "cobbleventure:boundary/earthwork",
-      "terrain_profile": {
-        "base_height_offset": 0,
-        "height_variation": 3,
-        "noise_scale_blocks": 96,
-        "connection_height": 0
-      }
-    },
-    {
-      "q": -2,
       "r": 0,
       "biome": "minecraft:plains",
       "boundary_profile": "cobbleventure:boundary/earthwork",
@@ -2221,7 +2209,7 @@
         "base_height_offset": 10,
         "height_variation": 3,
         "noise_scale_blocks": 88,
-        "connection_height": 2
+        "connection_height": 4
       },
       "access_requirement": "cobbleventure:field_move/rock_climb"
     },
@@ -2234,7 +2222,7 @@
         "base_height_offset": 0,
         "height_variation": 3,
         "noise_scale_blocks": 96,
-        "connection_height": 7
+        "connection_height": 4
       }
     },
     {
@@ -2247,6 +2235,10 @@
         "height_variation": 3,
         "noise_scale_blocks": 96,
         "connection_height": 0
+      },
+      "pokemon_habitat": {
+        "source": "route",
+        "route_id": "route_viridian_forest_north"
       }
     },
     {
@@ -2259,6 +2251,26 @@
         "height_variation": 3,
         "noise_scale_blocks": 96,
         "connection_height": 0
+      },
+      "pokemon_habitat": {
+        "source": "route",
+        "route_id": "route_viridian_forest_north"
+      }
+    },
+    {
+      "q": -2,
+      "r": -1,
+      "biome": "minecraft:plains",
+      "boundary_profile": "cobbleventure:boundary/earthwork",
+      "terrain_profile": {
+        "base_height_offset": 0,
+        "height_variation": 3,
+        "noise_scale_blocks": 96,
+        "connection_height": 0
+      },
+      "pokemon_habitat": {
+        "source": "route",
+        "route_id": "route_viridian_forest_north"
       }
     }
   ],
@@ -2894,15 +2906,18 @@
     {
       "id": "route_custom_05",
       "route_preset": "cobbleventure:route/route_custom_05",
-      "to": "indigo_plateau",
       "anchors": [
         {
           "q": -8,
           "r": 4
         },
         {
+          "q": -7,
+          "r": 0
+        },
+        {
           "q": -6,
-          "r": -2
+          "r": -1
         }
       ],
       "cells": [
@@ -2929,10 +2944,6 @@
         {
           "q": -6,
           "r": -1
-        },
-        {
-          "q": -6,
-          "r": -2
         }
       ],
       "corridor_width_blocks": 12,
@@ -3776,6 +3787,66 @@
         "x": 0,
         "z": 32
       }
+    },
+    {
+      "id": "power_plant_access",
+      "display_name": "돌산터널 - 발전소 길",
+      "route_preset": "cobbleventure:route/route_custom_16",
+      "to": "rocket_power_plant",
+      "anchors": [
+        {
+          "q": 11,
+          "r": -2
+        },
+        {
+          "q": 12,
+          "r": -2
+        }
+      ],
+      "cells": [
+        {
+          "q": 11,
+          "r": -2
+        },
+        {
+          "q": 12,
+          "r": -2
+        }
+      ],
+      "corridor_width_blocks": 12,
+      "edge_noise": 0,
+      "surface_style": "road",
+      "pathfinding": "explicit"
+    },
+    {
+      "id": "route_custom_23",
+      "route_preset": "cobbleventure:route/route_custom_23",
+      "anchors": [
+        {
+          "q": -6,
+          "r": -2
+        },
+        {
+          "q": -6,
+          "r": -1
+        }
+      ],
+      "cells": [
+        {
+          "q": -6,
+          "r": -2
+        },
+        {
+          "q": -6,
+          "r": -1
+        }
+      ],
+      "corridor_width_blocks": 12,
+      "edge_noise": 0,
+      "surface_style": "road",
+      "pathfinding": "explicit",
+      "display_name": "석영고원 - 상록시티 길",
+      "from": "indigo_plateau"
     }
   ],
   "forest_entrances": [
@@ -3868,7 +3939,9 @@
       "rotation": 0,
       "properties": {
         "terrain_fit": "foundation",
-        "suppress_natural_spawns": true
+        "suppress_natural_spawns": true,
+        "center_placement": true,
+        "placement_anchor": "center"
       },
       "connections": [
         {
@@ -4201,32 +4274,6 @@
         "npc": "easy_npc:preset/encounter/viridian_gatekeeper__v5.npc.snbt"
       },
       "resource": "cobbleventure:gate/default_gate"
-    },
-    {
-      "id": "indigo_plateau_fly_guide",
-      "type": "gate",
-      "anchor": {
-        "q": -6,
-        "r": -1
-      },
-      "rotation": 0,
-      "properties": {
-        "facing": "north",
-        "center_placement": "npc",
-        "surrounding_type": "natural",
-        "wall_block": "minecraft:stone_bricks",
-        "tree_log": "minecraft:spruce_log",
-        "tree_leaves": "minecraft:spruce_leaves",
-        "wall_thickness": 5,
-        "wall_height": 7,
-        "passage_width": 11,
-        "barrier_height": 24,
-        "condition_mode": "all",
-        "conditions": [],
-        "deny_message": "석영고원 비행 안내 NPC입니다.",
-        "deny_dialog": "greeting",
-        "npc": "easy_npc:preset/encounter/field_move_fly_instructor__v5.npc.snbt"
-      }
     },
     {
       "id": "vermilion_east_snorlax",

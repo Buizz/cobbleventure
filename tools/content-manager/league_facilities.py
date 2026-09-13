@@ -87,7 +87,7 @@ def validate(data, available, validate_condition=None):
             require(isinstance(room, dict), '방 설정은 객체여야 합니다.')
             base = {'structure', 'entry', 'exit'}
             extra = {'id', 'role', 'trainer', 'npc_anchor'} if is_stage else ({'leave', 'fixed_npcs', 'fixed_pokemon'} if i == 0 else set())
-            allowed = base | extra | ({'advance'} if i == len(stages) + 1 else set())
+            allowed = base | extra | ({'advance', 'advance_npc'} if i == len(stages) + 1 else set())
             require(base | extra <= set(room) <= allowed, f'{lid}: 방 설정 필드를 확인하세요 ({i}).')
             structure = room.get('structure')
             require(isinstance(structure, str) and structure in available['structures'], f'{lid}: 없는 내부 NBT입니다: {structure}')
@@ -98,11 +98,18 @@ def validate(data, available, validate_condition=None):
 
             def anchor(key, types):
                 require(isinstance(key, str) and key in anchors and anchors[key].get('type') in types, f'{structure}: 올바른 {"/".join(types)} 마커가 필요합니다: {key}')
-            anchor(room['entry'], ('arrival', 'interior_spawn'))
+            anchor(room['entry'], ('arrival', 'interior_spawn', 'door', 'transition'))
             anchor(room['exit'], ('door', 'transition'))
+            if is_stage:
+                require(room['entry'] != room['exit'], '전투 방의 입구와 출구는 구분하세요.')
             if i == len(stages) + 1 and travel_mode == 'travel_test':
-                anchor(room.get('advance'), ('door', 'transition'))
-                require(room['advance'] != room['exit'], '다음 세대 이동과 로비 복귀 출구를 구분하세요.')
+                require(('advance' in room) != ('advance_npc' in room), '다음 세대 이동은 NPC 또는 출구 하나만 지정하세요.')
+                if 'advance_npc' in room:
+                    anchor(room['advance_npc'], ('npc_position',))
+                    require('cobbleventure:npc/hall_guide' in available['npcs'], '명예의 전당 안내원 NPC가 필요합니다.')
+                else:
+                    anchor(room.get('advance'), ('door', 'transition'))
+                    require(room['advance'] != room['exit'], '다음 세대 이동과 로비 복귀 출구를 구분하세요.')
             if is_stage:
                 sid = room['id']
                 require(isinstance(sid, str) and re.fullmatch(r'[a-z0-9_-]+', sid) and sid not in stage_ids and sid != 'hall', f'{lid}: 중복 없는 단계 ID가 필요합니다 (hall은 명예의 전당 예약어).')
@@ -201,6 +208,8 @@ def compile_settings(settings, data, source_root=None):
                     raise ValueError(f'리그 생성 공간 이름과 충돌합니다: {key}')
                 building.setdefault('interiors', []).append({'key': key, 'structure': room['structure']})
                 runtime_room = {k: copy.deepcopy(v) for k, v in room.items() if k != 'trainer'}
+                if 'advance_npc' in room:
+                    building['fixed_npcs'][f'{key}:{room["advance_npc"]}'] = 'cobbleventure:npc/hall_guide'
                 if 'trainer' in room:
                     runtime_room['npc'] = npc_id(league, room)
                     building['fixed_npcs'][f'{key}:{room["npc_anchor"]}'] = runtime_room['npc']
@@ -213,6 +222,8 @@ def compile_settings(settings, data, source_root=None):
             for index, room in enumerate(rows):
                 next_room = rows[index + 1] if index + 1 < len(rows) else rows[0]
                 routes[f'{room["key"]}:{room["exit"]}'] = {'space': next_room['key'], 'door': next_room['entry']}
+                if 0 <= room['stage'] < len(league['stages']):
+                    routes[f'{room["key"]}:{room["entry"]}'] = {'space': lobby_key, 'door': lobby['entry']}
             building['runtime_league'] = {k: copy.deepcopy(league[k]) for k in ('id', 'mode', 'condition_mode', 'conditions', 'locked_dialogue')}
             building['runtime_league']['rooms'] = rows
             for key in ('generation', 'next_generation', 'generation_travel_mode'):

@@ -292,6 +292,7 @@ VALID_CLASSIFICATIONS = {
 BUILD_COMMANDS = {
     "content": "콘텐츠 빌드",
     "content-install": "인스턴스 콘텐츠 교체",
+    "battle-lab-zip": "AI 전투 테스트 공유용 ZIP 생성",
     "mods-pack": "모드팩 빌드 · 콘텐츠 제외",
     "validate": "콘텐츠와 의존성 검사",
     "test": "Python 도구 회귀 테스트",
@@ -1159,13 +1160,15 @@ def validate_hex_worlds(
                 _issue(issues, "error", path, f"{connection_path}.edge_noise", "0 이상 0.35 이하의 통로 경계 굴곡값이 필요합니다.")
             if connection.get("terrain_profile") is not None:
                 validate_terrain(connection.get("terrain_profile"), path, f"{connection_path}.terrain_profile")
-            if connection.get("surface_style") not in {"road", "natural", "water", "log_bridge"}:
-                _issue(issues, "error", path, f"{connection_path}.surface_style", "road, natural, water, log_bridge 중 하나가 필요합니다.")
+            if connection.get("surface_style") not in {"road", "natural", "water", "log_bridge", "league_arch"}:
+                _issue(issues, "error", path, f"{connection_path}.surface_style", "road, natural, water, log_bridge, league_arch 중 하나가 필요합니다.")
             pokemon_spawns = connection.get("pokemon_spawns")
             if pokemon_spawns is not None:
                 if not isinstance(pokemon_spawns, dict):
                     _issue(issues, "error", path, f"{connection_path}.pokemon_spawns", "길 포켓몬 설정은 객체여야 합니다.")
                 else:
+                    if "enabled" in pokemon_spawns and not isinstance(pokemon_spawns.get("enabled"), bool):
+                        _issue(issues, "error", path, f"{connection_path}.pokemon_spawns.enabled", "포켓몬 출현 사용 여부는 boolean이어야 합니다.")
                     if not isinstance(pokemon_spawns.get("inherit_biome"), bool):
                         _issue(issues, "error", path, f"{connection_path}.pokemon_spawns.inherit_biome", "기존 바이옴 포켓몬 사용 여부가 필요합니다.")
                     excluded = pokemon_spawns.get("excluded_species")
@@ -1806,10 +1809,11 @@ def _apply_route_encounter_locations(locations, connections, route_documents, po
                 settings = route.get("pokemon_spawns")
             if not isinstance(settings, dict):
                 settings = {}
+            route_enabled = settings.get("enabled", True) is not False
             pool = settings if method == "land" else settings.get("encounter_pools", {}).get(method)
             if not isinstance(pool, dict):
                 continue
-            enabled = method == "land" or pool.get("enabled", True) is not False
+            enabled = route_enabled and (method == "land" or pool.get("enabled", True) is not False)
             inherited = pool.get("inherit_biome", True) is not False
             ids = [species for species in base_ids
                    if inherited and method != "headbutt" and species not in pool.get("excluded_species", [])]
@@ -8959,8 +8963,8 @@ def validate_route_file(path: Path) -> tuple[str | None, list[Issue]]:
         _issue(issues, "error", path, "$.display_name", "길 프리셋 이름을 하나 이상 입력해야 합니다.")
     if not isinstance(data.get("enabled"), bool):
         _issue(issues, "error", path, "$.enabled", "사용 여부는 true 또는 false여야 합니다.")
-    if data.get("route_type") not in {"road", "trail", "water", "log_bridge"}:
-        _issue(issues, "error", path, "$.route_type", "길 종류는 road, trail, water, log_bridge 중 하나여야 합니다.")
+    if data.get("route_type") not in {"road", "trail", "water", "log_bridge", "league_arch"}:
+        _issue(issues, "error", path, "$.route_type", "길 종류는 road, trail, water, log_bridge, league_arch 중 하나여야 합니다.")
     bridge_layout = data.get("log_bridge_layout")
     if bridge_layout is not None:
         if not isinstance(bridge_layout, dict):
@@ -9009,6 +9013,8 @@ def validate_route_file(path: Path) -> tuple[str | None, list[Issue]]:
     if not isinstance(pokemon, dict):
         _issue(issues, "error", path, "$.pokemon_spawns", "포켓몬 출현 설정이 필요합니다.")
     else:
+        if "enabled" in pokemon and not isinstance(pokemon.get("enabled"), bool):
+            _issue(issues, "error", path, "$.pokemon_spawns.enabled", "포켓몬 출현 사용 여부는 boolean이어야 합니다.")
         if not isinstance(pokemon.get("inherit_biome"), bool):
             _issue(issues, "error", path, "$.pokemon_spawns.inherit_biome", "바이옴 포켓몬 상속 여부가 필요합니다.")
         for field in ("excluded_species", "additions", "level_overrides"):
@@ -9049,6 +9055,8 @@ def validate_route_file(path: Path) -> tuple[str | None, list[Issue]]:
             pokemon.get("time_overrides"), issues, path, "$.pokemon_spawns.time_overrides"
         )
 
+    if "npc_placement_enabled" in data and not isinstance(data.get("npc_placement_enabled"), bool):
+        _issue(issues, "error", path, "$.npc_placement_enabled", "NPC 배치 사용 여부는 boolean이어야 합니다.")
     placements = data.get("npc_placements")
     if not isinstance(placements, list):
         _issue(issues, "error", path, "$.npc_placements", "NPC 배치 목록은 배열이어야 합니다.")
@@ -10313,7 +10321,7 @@ def _list_documents(root: Path, category: str) -> list[dict[str, Any]]:
                 summary["route_type"] = data.get("route_type", "road")
                 summary["auto_name"] = data.get("auto_name", True)
                 summary["corridor_width_blocks"] = data.get("corridor", {}).get("width_blocks", 12)
-                summary["npc_count"] = len(data.get("npc_placements", []))
+                summary["npc_count"] = 0 if data.get("npc_placement_enabled", True) is False else len(data.get("npc_placements", []))
                 summary["pokemon_spawns"] = data.get("pokemon_spawns", {})
             elif category == "settlements":
                 summary["biome"] = world_biomes.get(data.get("id"), "minecraft:plains")
@@ -11838,12 +11846,14 @@ def _route_template(slug: str, name: str) -> dict[str, Any]:
         "corridor": {"width_blocks": 12, "edge_noise": 0},
         "level_scaling": {"mode": "world", "offset": 0},
         "pokemon_spawns": {
+            "enabled": True,
             "inherit_biome": True,
             "excluded_species": [],
             "additions": [],
             "level_overrides": [],
             "time_overrides": [],
         },
+        "npc_placement_enabled": True,
         "automatic_npc_placement": {"enabled": False, "count": 0, "use_biome_defaults": True, "direct_trainers": []},
         "npc_placements": [],
     }
@@ -12000,6 +12010,79 @@ def _run_build(
         except (OSError, ValueError, RuntimeError, zipfile.BadZipFile) as error:
             return {"command": command, "description": BUILD_COMMANDS[command], "success": False,
                 "return_code": None, "output": f"[ERROR] 콘텐츠 교체 실패: {error}"}
+    if command == "battle-lab-zip":
+        script = (
+            core_root
+            / "projects"
+            / "cobbleventure-battle-ai"
+            / "web-lab"
+            / "scripts"
+            / "create-portable-zip.ps1"
+        )
+        archive = core_root / "dist" / "cobbleventure-battle-lab-portable.zip"
+        powershell = shutil.which("pwsh") or shutil.which("powershell")
+        if not script.is_file():
+            return {
+                "command": command,
+                "description": BUILD_COMMANDS[command],
+                "success": False,
+                "return_code": None,
+                "output": f"[ERROR] 공유용 ZIP 생성 스크립트를 찾을 수 없습니다: {script}",
+            }
+        if not powershell:
+            return {
+                "command": command,
+                "description": BUILD_COMMANDS[command],
+                "success": False,
+                "return_code": None,
+                "output": "[ERROR] PowerShell 실행 파일을 찾을 수 없습니다.",
+            }
+        try:
+            completed = subprocess.run(
+                [
+                    powershell,
+                    "-NoProfile",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    str(script),
+                    "-OutputPath",
+                    str(archive),
+                ],
+                cwd=core_root,
+                env=_build_process_environment(project_root),
+                capture_output=True,
+                timeout=300,
+                check=False,
+            )
+            stdout = _decode_build_output(completed.stdout)
+            stderr = _decode_build_output(completed.stderr)
+            output = "\n".join(part.strip() for part in (stdout, stderr) if part.strip())
+            return {
+                "command": command,
+                "description": BUILD_COMMANDS[command],
+                "success": completed.returncode == 0,
+                "return_code": completed.returncode,
+                "artifact": str(archive),
+                "output": output or f"공유용 ZIP 생성 완료: {archive}",
+            }
+        except subprocess.TimeoutExpired as error:
+            output = "\n".join(
+                part.strip()
+                for part in (
+                    _decode_build_output(error.stdout),
+                    _decode_build_output(error.stderr),
+                )
+                if part.strip()
+            )
+            return {
+                "command": command,
+                "description": BUILD_COMMANDS[command],
+                "success": False,
+                "return_code": None,
+                "artifact": str(archive),
+                "output": f"5분 제한 시간을 초과했습니다.\n{output}",
+            }
     special_target: tuple[Path, bool] | None = None
     if command in SPECIAL_PACK_INSTALLS:
         try:
@@ -16204,7 +16287,7 @@ def create_handler(
                         "validation": result.as_json(),
                         "build_commands": [
                             {"id": command, "description": BUILD_COMMANDS[command]}
-                            for command in ("pack", "mods-pack", "content", "content-install")
+                            for command in ("pack", "mods-pack", "content", "content-install", "battle-lab-zip")
                         ] if active_project.is_default else [],
                         "export_languages": [
                             {"id": language, "name": name}

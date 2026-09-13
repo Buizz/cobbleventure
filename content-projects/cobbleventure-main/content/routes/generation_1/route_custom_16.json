@@ -3,8 +3,8 @@
   "schema_version": 1,
   "id": "cobbleventure:route/route_custom_16",
   "display_name": {
-    "ko_kr": "블루시티 - 돌산터널 길",
-    "en_us": "블루시티 - 돌산터널 길"
+    "ko_kr": "돌산터널 - 발전소 길",
+    "en_us": "돌산터널 - 발전소 길"
   },
   "auto_name": true,
   "enabled": true,

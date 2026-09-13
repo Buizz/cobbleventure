@@ -10,22 +10,6 @@
   },
   "anchors": [
     {
-      "id": "hall_entry",
-      "label": "hall_entry",
-      "type": "arrival",
-      "position": [
-        16,
-        1,
-        24
-      ],
-      "safe_spawn": [
-        16,
-        1,
-        24
-      ],
-      "facing": "north"
-    },
-    {
       "id": "hall_exit",
       "label": "hall_exit",
       "type": "transition",
@@ -42,20 +26,15 @@
       "facing": "south"
     },
     {
-      "id": "hall_next_generation",
-      "label": "hall_next_generation",
-      "type": "transition",
+      "id": "npc",
+      "label": "npc",
+      "type": "npc_position",
       "position": [
-        8,
-        2,
-        16
-      ],
-      "safe_spawn": [
-        8,
+        16,
         1,
-        19
+        12
       ],
-      "facing": "north"
+      "facing": "south"
     }
   ]
 }

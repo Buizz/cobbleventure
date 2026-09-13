@@ -7,7 +7,7 @@ event interact(range: 4) {
 
   page default {
     say npc {
-      ko_kr: "석영고원에 처음 도착했구나. 먼 길을 다시 걸어 내려갈 필요가 없도록 공중날기를 허가해 줄게."
+      ko_kr: "석영고원 로비까지 잘 찾아왔구나. 먼 길을 다시 걸어 내려갈 필요가 없도록 공중날기를 허가해 줄게."
     }
     id "grant/field_move" grant_field_move fly -> granted
     id "grant/state" set_flag "cobbleventure:flag/rewards/field_move/fly" true

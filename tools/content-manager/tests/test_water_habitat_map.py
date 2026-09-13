@@ -66,6 +66,29 @@ class WaterHabitatMapTests(unittest.TestCase):
             self.assertNotIn("good_rod", result["encounters"])
             self.assertEqual(not town, "land" in result["encounters"])
 
+    def test_disabled_route_keeps_authored_pools_but_exposes_no_encounters(self):
+        cell = {"q": 0, "r": 0}
+        locations = {(0, 0): {**cell, "kind": "biome", "biome": "minecraft:river", "pokemon_ids": ["base"], "count": 1}}
+        routes = [{"id": "disabled", "cells": [cell], "pokemon_spawns": {
+            "enabled": False,
+            "inherit_biome": True,
+            "excluded_species": [],
+            "additions": [{"species": "land"}],
+            "encounter_pools": {
+                "surf": {"enabled": True, "inherit_biome": True, "additions": [{"species": "fish"}]},
+            },
+        }}]
+
+        content_manager._apply_route_encounter_locations(
+            locations, routes, {}, dict.fromkeys(("base", "land", "fish"))
+        )
+
+        result = locations[(0, 0)]
+        self.assertEqual([], result["encounters"]["land"]["pokemon_ids"])
+        self.assertEqual([], result["encounters"]["surf"]["pokemon_ids"])
+        self.assertFalse(result["encounters"]["land"]["enabled"])
+        self.assertFalse(result["encounters"]["surf"]["enabled"])
+
 
 if __name__ == "__main__":
     unittest.main()

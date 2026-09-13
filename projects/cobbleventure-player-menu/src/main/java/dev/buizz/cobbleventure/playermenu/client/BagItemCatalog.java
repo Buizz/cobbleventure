@@ -1,5 +1,6 @@
 package dev.buizz.cobbleventure.playermenu.client;
 
+import dev.buizz.cobbleventure.playermenu.BagTechnicalMachines;
 import dev.buizz.cobbleventure.playermenu.CobbleventurePlayerMenu;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,6 +24,10 @@ final class BagItemCatalog {
     private static final TagKey<Item> KEY_ITEMS = TagKey.create(
         Registries.ITEM,
         ResourceLocation.fromNamespaceAndPath(CobbleventurePlayerMenu.MOD_ID, "key_items")
+    );
+    private static final TagKey<Item> MACHINES = TagKey.create(
+        Registries.ITEM,
+        ResourceLocation.fromNamespaceAndPath(CobbleventurePlayerMenu.MOD_ID, "machines")
     );
 
     private BagItemCatalog() {}
@@ -93,7 +98,7 @@ final class BagItemCatalog {
     }
 
     enum Category {
-        ALL("all"), RECOVERY("recovery"), BALLS("balls"), BATTLE("battle"),
+        ALL("all"), RECOVERY("recovery"), BALLS("balls"), MACHINES("machines"), BATTLE("battle"),
         MATERIALS("materials"), KEY_ITEMS("key_items");
 
         private final String id;
@@ -113,14 +118,26 @@ final class BagItemCatalog {
                 case RECOVERY -> stack.has(DataComponents.FOOD)
                     || containsAny(path, "potion", "heal", "revive", "ether", "elixir", "berry", "candy", "rice_cake");
                 case BALLS -> namespace.equals("cobblemon") && (path.endsWith("_ball") || path.contains("poke_ball"));
+                case MACHINES -> isTechnicalMachine(stack, namespace, path);
                 case BATTLE -> stack.isDamageableItem()
                     || containsAny(path, "sword", "bow", "shield", "vest", "band", "specs", "scarf", "gem");
                 case KEY_ITEMS -> stack.is(BagItemCatalog.KEY_ITEMS)
                     || containsAny(path, "pokedex", "exp_share", "key", "badge", "map", "compass");
                 case MATERIALS -> !RECOVERY.matches(stack) && !BALLS.matches(stack)
-                    && !BATTLE.matches(stack) && !KEY_ITEMS.matches(stack);
+                    && !MACHINES.matches(stack) && !BATTLE.matches(stack) && !KEY_ITEMS.matches(stack);
                 case ALL -> true;
             };
+        }
+
+        private static boolean isTechnicalMachine(
+            ItemStack stack, String namespace, String path
+        ) {
+            return stack.is(BagItemCatalog.MACHINES)
+                || BagTechnicalMachines.isTechnicalMachine(stack)
+                || namespace.equals("tmcraft")
+                || path.equals("technical_machine")
+                || path.startsWith("tm_")
+                || path.startsWith("tr_");
         }
 
         private static boolean containsAny(String value, String... candidates) {

@@ -1,0 +1,7 @@
+event interact(range: 4) {
+  page default {
+    say npc {
+      ko_kr: "사천왕에게 도전하면 쉽게 돌아올 수 없네. 저마다 다른 방식으로 단련된 강자들이니, 한 가지 전법만 믿고 들어가서는 안 될 걸세."
+    }
+  }
+}

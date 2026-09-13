@@ -34,16 +34,16 @@
 exterior:door -> lobby:entry
 ```
 
-별도 외부 복귀 마커는 필요 없다. 빌드 시 `lobby:leave -> exterior:door`를 자동 생성하며,
+별도 외부 복귀 마커는 필요 없다. 빌드 시 `lobby:door -> exterior:door`를 자동 생성하며,
 문의 안전한 바깥 위치(`safe_spawn`)로 돌아온다. 여러 외부 입구를 연결할 때만 복귀할 문을
 명시해야 한다. 명시한 연결은 자동 역방향 연결보다 우선한다.
 
-임시 외관 정문에는 `door`라는 transition 마커 하나를 둔다. 위치는 `[65, 27, 56]`, 안전 복귀점은 `[65, 25, 66]`이며, 정문의 폭 10·높이 6·깊이 2 배리어에 접근하면 로비로 이동한다. 기존 탑의 외부 연결은 해제하고 새 외관에 `exterior:door -> lobby:entry`만 연결했다. 로비 복귀는 컴파일러가 자동 생성한다.
+외관 정문의 `door`는 로비의 `entry` 트랜지션에 연결한다. 로비 도착 시 해당 트랜지션의 안전 위치를 사용한다. 로비의 `door`는 외부 복귀에 사용한다. 별도 도착 마커나 이름이 `exit`인 로비 마커는 필요 없다.
 
 재현 스크립트는 `tools/structure-builder/generate_indigo_plateau.py`이다. 기본 실행은 기존 파일 덮어쓰기를 거부하고, 일반 콘텐츠 빌드는 저장된 NBT만 사용하므로 이후 수작업 건축을 보존한다.
 
 외부 건물에는 엘리트 방·챔피언 방·명예의 전당을 직접 연결하지 않는다.
-로비의 `exit`부터 명예의 전당까지는 리그 설정으로 자동 생성되며, 일반 연결 화면에서는 숨긴다.
+로비의 `entry` 도전 트랜지션부터 명예의 전당까지는 리그 설정으로 자동 생성되며, 일반 연결 화면에서는 숨긴다.
 로비 NBT를 바꾸거나 연결된 리그를 삭제·ID 변경할 때는 먼저 외부 로비 연결을 해제한다.
 
 ## 분리된 방 NBT와 마커
@@ -65,9 +65,8 @@ NBT를 직접 편집할 수 있고, 원본 탑과 편집한 방을 자동으로 
 로비에서 사용할 이름:
 
 ```text
-entry       arrival       입장 위치
-exit        transition    리그 도전 / 이어하기
-leave       transition    외부 건물 복귀
+door        door          외부 건물 복귀
+entry       transition    리그 도전 / 이어하기 및 로비 도착점
 nurse       npc_position  간호순
 shop        npc_position  상점 NPC
 chansey     npc_position  럭키
@@ -76,7 +75,7 @@ chansey     npc_position  럭키
 모든 엘리트·챔피언 방에서 공통으로 사용할 이름:
 
 ```text
-entry                   arrival       방 입장 위치
+entry                   transition    방 입장 및 역방향 도전 포기
 exit                    transition    승리 후 다음 방
 opponent                npc_position  상대 NPC
 opponent_battle_player  arrival       플레이어 전투 위치
@@ -85,7 +84,7 @@ opponent_battle_player  arrival       플레이어 전투 위치
 명예의 전당:
 
 ```text
-hall_entry  arrival       챔피언 방에서 도착
+npc         npc_position  전당 안내원: 다음 세대 설명 및 이동 선택
 hall_exit   transition    로비로 자유롭게 복귀 (클리어 유지)
 ```
 
@@ -168,11 +167,28 @@ NPC·배틀·CVES 이벤트·바인딩은 빌드 시 자동 생성한다. ID는 
 ## 다음 세대 이동 테스트
 
 세대 맵 하나가 하나의 회차다. 현재 칸토 리그는 `generation: 1`, `next_generation: 2`,
-`generation_travel_mode: travel_test`로 설정했다. 전당의 `hall_next_generation`은 2세대
-시작마을의 플레이어 집 `room_1:start`로 이동한다. `hall_exit`는 계속 로비로 돌아간다.
+`generation_travel_mode: travel_test`로 설정했다. 전당의 `npc` 마커에 전당 안내원을 배치한다.
+대화에서 새 회차와 현재 테스트의 자산 유지 정책을 설명하고, 이동을 선택하면 2세대
+시작마을의 플레이어 집 `room_1:start`로 이동한다. 취소하면 이동하지 않는다.
+`hall_exit`의 안전 위치를 전당 도착점으로 겸용하며, 출구 접촉 시 로비로 돌아간다.
+삭제된 `hall_entry`와 `hall_next_generation`은 사용하지 않는다.
+`cobbleventure_league next_generation` 명령은 현재 전당의 리그 설정을 사용하며,
+전당 내부에 있는지·리그 클리어 여부·다음 세대 활성 상태를 서버에서 검사한다.
 테스트에서는 모든 아이템·포켓몬을 유지하며, 정식 전당 등록/자산 분리는 아직 설계 단계다.
 설정과 왕복 확인 방법은 [회차별 프로필 설계](PLAYTHROUGH_PROFILES.md#2세대-이동-테스트-설정)를 참고한다.
 
 ### 4방향 컨셉 기반 외관 개정
 
 `docs/assets/indigo-plateau/concept-four-views.png`를 건축 참고로 사용한다. 세 겹의 석축과 화단이 측면과 후면까지 이어지며, 앞쪽 중앙 계단은 폭 26블록을 유지한다. 창·장식의 곡선과 세부 표현은 마인크래프트 블록 격자에 맞춰 해석했다. 마커의 X/Z와 로비 연결은 유지하고, 높아진 기단에 맞춰 Y만 12블록 올렸다.
+
+## 전투 방 입구로 도전 포기
+
+엘리트 1~4와 챔피언 방은 `entry`·`exit` 트랜지션을 사용한다.
+앞방 `exit` → 다음 방 `entry`의 안전 위치로 이동하며, 도착만으로 역방향 이동이 발동하지 않는다.
+각 방의 `entry` 배리어에 접근하면 현재 도전을 종료하고 로비 `entry`의 안전 위치로 돌아온다.
+릴레이는 진행도를 초기화하고, 이어하기는 마지막 승리까지 유지한다. 클리어 기록은 유지한다.
+전투 중에는 이동할 수 없다. 포기 복귀는 자동 명예의 전당 이동을 일으키지 않는다.
+
+엘리트 2~4와 챔피언의 입구는 엘리트 1과 같은 `[30..32, 2..4, 58]`의 3×3 배리어다.
+건물과 NPC 마커는 유지한다. 원본 백업은 `backups/league-entries/20260912-161509`에 있다.
+엘리트 1의 안전 도착 높이는 기존 바닥·카펫과 겹치지 않도록 Y=3으로 보정했다.

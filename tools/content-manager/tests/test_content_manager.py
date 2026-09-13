@@ -1289,6 +1289,7 @@ class ContentManagerTests(unittest.TestCase):
     def test_direct_pokemon_additions_can_force_evolved_spawns(self) -> None:
         script = (CORE_ROOT / "tools/content-manager/web/app.js").read_text(encoding="utf-8")
         styles = (CORE_ROOT / "tools/content-manager/web/styles.css").read_text(encoding="utf-8")
+        html = (CORE_ROOT / "tools/content-manager/web/index.html").read_text(encoding="utf-8")
         schemas = [
             json.loads((PROJECT_ROOT / f"content/schemas/{name}.schema.json").read_text(encoding="utf-8"))
             for name in ("cave", "forest", "route", "hex-world")
@@ -1296,27 +1297,28 @@ class ContentManagerTests(unittest.TestCase):
 
         self.assertIn("진화형 유지", script)
         self.assertIn("data-${target}-spawn-as-evolved", script)
-        self.assertIn("function pokemonCardEditButton", script)
-        self.assertIn('editing ? "완료" : "수정"', script)
+        self.assertIn("function renderPokemonDetailEditor", script)
+        self.assertIn("function handlePokemonDetailChange", script)
         self.assertIn("function pokemonCardLevelLabel", script)
         self.assertIn("function pokemonCardLevelFields", script)
         self.assertIn("기본 레벨로 되돌리기", script)
         self.assertIn('<i aria-hidden="true">–</i>', script)
         self.assertIn('title="목록에서 제거"', script)
         self.assertIn('aria-label="출현 가중치"', script)
-        self.assertIn("pokemon-card-edit-heading", script)
+        self.assertIn("pokemon-detail-heading", script)
         self.assertIn("pokemon-card-identity", script)
         self.assertIn("pokemon-card-open", script)
         self.assertIn("is-excluded", script)
         self.assertIn("pokemon-card-meta", script)
         self.assertIn("활성화하면 ${species.length}종이 출현 후보", script)
-        self.assertIn("grid-template-columns:56px minmax(0,1fr)", styles)
-        self.assertIn(".route-current-pokemon-group .route-pokemon-type-badges { flex-wrap:nowrap", styles)
+        self.assertIn("grid-template-columns:62px minmax(0,1fr)", styles)
+        self.assertIn(".route-current-pokemon-group .route-pokemon-type-badges { flex-wrap:wrap", styles)
         self.assertIn("padding:0; border:0", styles)
-        self.assertIn(".route-biome-pokemon-card.is-editing", styles)
+        self.assertIn(".pokemon-detail-editor", styles)
+        self.assertIn(".route-biome-pokemon-card.is-selected", styles)
         self.assertIn(".route-biome-pokemon-card.is-excluded", styles)
-        self.assertIn(".pokemon-card-edit-controls", styles)
-        self.assertIn("@keyframes pokemon-card-flip-in", styles)
+        self.assertIn(".pokemon-detail-controls", styles)
+        self.assertIn("카드에는 핵심 정보만 표시합니다", html)
         self.assertEqual(False, schemas[0]["$defs"]["pokemon_addition"]["properties"]["spawn_as_evolved"]["default"])
         self.assertEqual(False, schemas[1]["$defs"]["pokemon_addition"]["properties"]["spawn_as_evolved"]["default"])
         self.assertEqual(False, schemas[2]["$defs"]["pokemon_addition"]["properties"]["spawn_as_evolved"]["default"])
@@ -2891,8 +2893,46 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn("function syncRouteEndpointAnchors", script)
         self.assertIn("syncRoutesForEndpoint(node.settlement)", script)
         self.assertIn("이동한 연결 위치에 맞춰 길 끝점을 자동 보정했습니다.", script)
-        self.assertIn("index === 0 && selectedRoute?.from", script)
-        self.assertIn("index === anchors.length - 1 && selectedRoute?.to", script)
+        self.assertIn("const locked = Boolean(endpointId && routeEndpointAnchor(endpointId));", script)
+        self.assertNotIn("index === 0 && selectedRoute?.from", script)
+        self.assertNotIn("index === anchors.length - 1 && selectedRoute?.to", script)
+
+    def test_indigo_plateau_route_endpoint_can_be_disconnected_and_reconnected(self) -> None:
+        script = (CORE_ROOT / "tools/content-manager/web/app.js").read_text(encoding="utf-8")
+        markup = (CORE_ROOT / "tools/content-manager/web/index.html").read_text(encoding="utf-8")
+        world = json.loads((
+            PROJECT_ROOT / "content/worlds/generation_1.json"
+        ).read_text(encoding="utf-8"))
+        route = next(
+            connection
+            for connection in world["connections"]
+            if connection.get("to") == "indigo_plateau"
+        )
+        plateau = next(
+            entry for entry in world["objects"] if entry.get("id") == "indigo_plateau"
+        )
+
+        self.assertEqual("structure", plateau["type"])
+        self.assertEqual(route["anchors"][-1], plateau["anchor"])
+        self.assertFalse(any(
+            node.get("settlement") == route["to"] for node in world["settlements"]
+        ))
+        self.assertFalse(any(
+            entrance.get("id") == route["to"]
+            for entrance in world["cave_entrances"] + world["forest_entrances"]
+        ))
+        self.assertIn(
+            "const locked = Boolean(endpointId && routeEndpointAnchor(endpointId));",
+            script,
+        )
+        self.assertIn("function updateRouteEndpoint(side, endpointId)", script)
+        self.assertIn('data-disconnect-route-endpoint=', script)
+        self.assertIn("delete route[side]", script)
+        self.assertIn('data-route-endpoint=', script)
+        self.assertIn('id="route-endpoint-list"', markup)
+        self.assertIn("연결을 끊으면 끝 앵커를 자유롭게 옮길 수 있습니다.", markup)
+        self.assertIn("syncRoutesForEndpoint(object.id)", script)
+        self.assertIn("연결을 끊고 이동할까요?", script)
 
     def test_world_pokemon_map_includes_cave_and_forest_spawn_locations(self) -> None:
         result = content_manager.world_pokemon_map(PROJECT_ROOT, 1)
@@ -3743,6 +3783,16 @@ class ContentManagerTests(unittest.TestCase):
         self.assertIn("encounter-pokemon-icon-list", styles)
         self.assertIn("grid-template-columns: repeat(auto-fill,54px)", styles)
         self.assertIn("width: 48px; height: 48px", styles)
+
+    def test_route_settings_have_non_destructive_pokemon_and_npc_toggles(self) -> None:
+        page = (CORE_ROOT / "tools/content-manager/web/index.html").read_text(encoding="utf-8")
+        script = (CORE_ROOT / "tools/content-manager/web/app.js").read_text(encoding="utf-8")
+
+        self.assertIn('name="pokemonSpawnEnabled"', page)
+        self.assertIn('name="npcPlacementEnabled"', page)
+        self.assertIn("route.pokemon_spawns.enabled = route.pokemon_spawns.enabled !== false", script)
+        self.assertIn("preset.npc_placement_enabled = form.elements.npcPlacementEnabled.checked", script)
+        self.assertIn("저장된 설정 ${species.length}종", script)
 
     def test_world_level_overrides_are_saved_and_validated(self) -> None:
         root = PROJECT_ROOT
@@ -7165,6 +7215,37 @@ class ContentManagerTests(unittest.TestCase):
         self.assertEqual("1.8", result["cobblemon_target"])
         self.assertIn("로컬 음원 자동 갱신", result["output"])
 
+    def test_battle_lab_portable_zip_uses_dedicated_packager(self) -> None:
+        completed = mock.Mock(
+            stdout="Portable ZIP created: archive.zip",
+            stderr="",
+            returncode=0,
+        )
+        with (
+            mock.patch.object(
+                content_manager.shutil,
+                "which",
+                side_effect=lambda command: "C:/Tools/pwsh.exe" if command == "pwsh" else None,
+            ),
+            mock.patch.object(
+                content_manager.subprocess, "run", return_value=completed
+            ) as runner,
+            mock.patch.object(content_manager, "sync_local_music_catalog") as music_sync,
+        ):
+            result = content_manager._run_build(
+                CORE_ROOT.resolve(), PROJECT_ROOT.resolve(), "battle-lab-zip"
+            )
+
+        command = runner.call_args.args[0]
+        self.assertEqual("C:/Tools/pwsh.exe", command[0])
+        self.assertIn("create-portable-zip.ps1", command[5])
+        self.assertEqual("-OutputPath", command[6])
+        self.assertTrue(command[7].endswith("dist\\cobbleventure-battle-lab-portable.zip"))
+        self.assertEqual(300, runner.call_args.kwargs["timeout"])
+        music_sync.assert_not_called()
+        self.assertTrue(result["success"])
+        self.assertIn("cobbleventure-battle-lab-portable.zip", result["artifact"])
+
     def test_build_log_decoder_supports_mixed_utf8_and_cp949_lines(self) -> None:
         output = (
             "[INFO] UTF-8 빌드 시작\n".encode("utf-8")
@@ -7516,8 +7597,9 @@ class ContentManagerTests(unittest.TestCase):
         for control in ('build-structure-builder', 'install-structure-builder', 'save-structure-builder-settings'):
             self.assertLess(live_page, markup.index(f'id="{control}"'))
             self.assertLess(markup.index(f'id="{control}"'), builds_page)
-        for command in ('pack', 'mods-pack', 'content', 'content-install'):
+        for command in ('pack', 'mods-pack', 'content', 'content-install', 'battle-lab-zip'):
             self.assertIn(f'id: "{command}"', script)
+        self.assertIn('action: "공유용 ZIP 만들기"', script)
         self.assertIn('runBuild("builder-install",', script)
         self.assertIn('runBuild("live-editor-install"', script)
         self.assertIn('state: "#live-editor-build-state"', script)

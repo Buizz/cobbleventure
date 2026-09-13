@@ -295,7 +295,7 @@
         "edge_noise": { "type": "number", "minimum": 0, "maximum": 0.35 },
         "boundary_profile": { "$ref": "#/$defs/resource_id" },
         "terrain_profile": { "$ref": "#/$defs/terrain_profile" },
-        "surface_style": { "enum": ["road", "natural", "water", "log_bridge"] },
+        "surface_style": { "enum": ["road", "natural", "water", "log_bridge", "league_arch"] },
         "log_bridge_layout": {
           "type": "object",
           "additionalProperties": false,
@@ -331,6 +331,7 @@
       "additionalProperties": false,
       "required": ["inherit_biome", "excluded_species", "additions"],
       "properties": {
+        "enabled": { "type": "boolean", "default": true },
         "inherit_biome": { "type": "boolean" },
         "excluded_species": {
           "type": "array",

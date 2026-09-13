@@ -1,0 +1,59 @@
+{
+  "$schema": "../../schemas/npc-event-script.schema.json",
+  "schema_version": 4,
+  "id": "cobbleventure:npc/league/indigo_plateau_veteran",
+  "enabled": true,
+  "name": {
+    "ko_kr": "석영고원 베테랑"
+  },
+  "description": {
+    "ko_kr": "석영고원의 사천왕 도전에 대해 조언하는 베테랑 트레이너입니다."
+  },
+  "tags": [
+    "league",
+    "veteran",
+    "manual_placement"
+  ],
+  "placement_profile": {
+    "classification": "ambient",
+    "preferred_biomes": [],
+    "automatic_town_placement": false,
+    "automatic_route_placement": false
+  },
+  "npc": {
+    "display_name": {
+      "ko_kr": "베테랑 트레이너"
+    },
+    "role": "default",
+    "trainer_class": "cobbleventure:trainer_class/veteran_male",
+    "appearance": {
+      "source": "custom",
+      "type": "skin",
+      "resource": "cobbleventure:trainer_skin/veteran_male"
+    },
+    "behavior": {
+      "movement": "stationary",
+      "look_at_player": true,
+      "invulnerable": true,
+      "collision": true
+    }
+  },
+  "event_runtime": {
+    "engine": "cves_v5",
+    "authoring": "preset",
+    "script_id": "cobbleventure:event_script/league/indigo_plateau_veteran"
+  },
+  "event_design": {
+    "mode": "preset",
+    "preset": {
+      "type": "simple",
+      "initial_trigger": {
+        "type": "interact",
+        "range": 4
+      },
+      "first_text": {
+        "ko_kr": "사천왕에게 도전하면 쉽게 돌아올 수 없네. 저마다 다른 방식으로 단련된 강자들이니, 한 가지 전법만 믿고 들어가서는 안 될 걸세."
+      }
+    }
+  }
+}

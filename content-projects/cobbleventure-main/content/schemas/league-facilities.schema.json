@@ -224,6 +224,9 @@
           "properties": {
             "advance": {
               "$ref": "#/$defs/anchor"
+            },
+            "advance_npc": {
+              "$ref": "#/$defs/anchor"
             }
           }
         },

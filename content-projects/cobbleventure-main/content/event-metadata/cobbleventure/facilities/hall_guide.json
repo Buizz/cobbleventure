@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "display_name": "전당 안내원",
+  "description": "다음 세대 이동 안내와 선택",
+  "category": "system",
+  "tags": [
+    "명예의 전당",
+    "세대 이동"
+  ]
+}

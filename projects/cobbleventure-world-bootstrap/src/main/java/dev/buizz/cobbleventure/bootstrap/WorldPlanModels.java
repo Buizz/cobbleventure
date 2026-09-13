@@ -141,6 +141,7 @@ final class WorldPlanModels {
     }
 
     record RoutePokemonSpawns(
+        boolean enabled,
         boolean inheritBiome, Set<String> excludedSpecies,
         List<RoutePokemonAddition> additions,
         Map<String, PokemonLevelOverride> levelOverrides,
@@ -149,7 +150,7 @@ final class WorldPlanModels {
     ) {
         static RoutePokemonSpawns inherited() {
             return new RoutePokemonSpawns(
-                true, Set.of(), List.of(), Map.of(), Map.of(), Map.of()
+                true, true, Set.of(), List.of(), Map.of(), Map.of(), Map.of()
             );
         }
 
@@ -157,10 +158,15 @@ final class WorldPlanModels {
             if (method == null || method.equals("land")) {
                 return new RoutePokemonPool(
                     inheritBiome, excludedSpecies, additions, levelOverrides, timeOverrides,
-                    true, 1.0D
+                    enabled, 1.0D
                 );
             }
-            return encounterPools.get(method);
+            RoutePokemonPool pool = encounterPools.get(method);
+            if (enabled || pool == null || !pool.enabled()) return pool;
+            return new RoutePokemonPool(
+                pool.inheritBiome(), pool.excludedSpecies(), pool.additions(),
+                pool.levelOverrides(), pool.timeOverrides(), false, pool.triggerChance()
+            );
         }
     }
 

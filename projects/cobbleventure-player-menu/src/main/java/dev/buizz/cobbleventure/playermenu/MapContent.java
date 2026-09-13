@@ -498,13 +498,14 @@ public final class MapContent {
             RouteEncounter route = explicit.getOrDefault(cell, town ? null : paths.get(cell));
             if (route == null) continue;
             JsonObject settings = route.settings();
+            boolean routeEnabled = booleanValue(settings, "enabled", true);
             if (!land) {
                 if (!settings.has("encounter_pools")) continue;
                 JsonObject pools = settings.getAsJsonObject("encounter_pools");
                 if (!pools.has(method)) continue;
                 settings = pools.getAsJsonObject(method);
             }
-            boolean enabled = land || booleanValue(settings, "enabled", true);
+            boolean enabled = routeEnabled && (land || booleanValue(settings, "enabled", true));
             boolean inheritBiome = booleanValue(settings, "inherit_biome", true) && !method.equals("headbutt");
             Set<String> excluded = stringSet(settings, "excluded_species");
             BiomeInfo base = biomeHabitats.get(cell);

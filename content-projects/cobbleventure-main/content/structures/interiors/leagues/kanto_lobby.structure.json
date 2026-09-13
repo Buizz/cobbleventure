@@ -43,19 +43,69 @@
       "facing": "north"
     },
     {
-      "id": "entry",
-      "label": "entry",
-      "type": "arrival",
+      "id": "fly_instructor",
+      "label": "fly_instructor",
+      "type": "npc_position",
       "position": [
-        31,
+        24,
         1,
-        43
+        49
       ],
-      "facing": "south"
+      "facing": "east"
     },
     {
-      "id": "exit",
-      "label": "exit",
+      "id": "league_attendant",
+      "label": "league_attendant",
+      "type": "npc_position",
+      "position": [
+        39,
+        1,
+        49
+      ],
+      "facing": "west"
+    },
+    {
+      "id": "league_challenger",
+      "label": "league_challenger",
+      "type": "npc_position",
+      "position": [
+        25,
+        1,
+        45
+      ],
+      "facing": "east"
+    },
+    {
+      "id": "league_veteran",
+      "label": "league_veteran",
+      "type": "npc_position",
+      "position": [
+        38,
+        1,
+        45
+      ],
+      "facing": "west"
+    },
+    {
+      "id": "door",
+      "label": "door",
+      "type": "door",
+      "position": [
+        31,
+        2,
+        4
+      ],
+      "safe_spawn": [
+        31,
+        2,
+        5
+      ],
+      "door_facing": "north",
+      "safe_side": "south"
+    },
+    {
+      "id": "entry",
+      "label": "entry",
       "type": "transition",
       "position": [
         31,
@@ -65,25 +115,9 @@
       "safe_spawn": [
         31,
         11,
-        56
+        54
       ],
       "facing": "south"
-    },
-    {
-      "id": "leave",
-      "label": "leave",
-      "type": "transition",
-      "position": [
-        25,
-        2,
-        43
-      ],
-      "safe_spawn": [
-        25,
-        1,
-        46
-      ],
-      "facing": "north"
     }
   ]
 }

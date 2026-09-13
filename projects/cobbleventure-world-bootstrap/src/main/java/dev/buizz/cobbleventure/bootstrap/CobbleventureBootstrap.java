@@ -1820,7 +1820,7 @@ public final class CobbleventureBootstrap {
         return world.paths().stream()
             .filter(path -> entrance.id().equals(path.from())
                 || entrance.id().equals(path.to()))
-            .filter(path -> path.surfaceStyle().equals("road"))
+            .filter(path -> isRoadSurface(path.surfaceStyle()))
             .findFirst()
             .orElse(null);
     }
@@ -7196,7 +7196,14 @@ public final class CobbleventureBootstrap {
     }
 
     private static boolean isNaturalRock(ServerLevel level, BlockPos position) {
-        return level.getBlockState(position).is(BlockTags.BASE_STONE_OVERWORLD);
+        return isRockClimbSurface(level.getBlockState(position));
+    }
+
+    static boolean isRockClimbSurface(BlockState state) {
+        return state.is(BlockTags.BASE_STONE_OVERWORLD)
+            || RockClimbTerrainPolicy.isNaturalCover(
+                BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString()
+            );
     }
 
     private static boolean enforceWhirlpoolAccess(
@@ -7367,6 +7374,12 @@ public final class CobbleventureBootstrap {
                             context.getSource().getPlayerOrException(),
                             StringArgumentType.getString(context, "vendor")
                         ))))
+        );
+        event.getDispatcher().register(
+            Commands.literal("cobbleventure_league")
+                .then(Commands.literal("next_generation")
+                    .executes(context -> LeagueRuntimeSystem.travelToNextGeneration(
+                        context.getSource().getPlayerOrException()) ? 1 : 0))
         );
         event.getDispatcher().register(
             Commands.literal("cobbleventure_field_move")
@@ -8360,7 +8373,7 @@ public final class CobbleventureBootstrap {
         settlementPlans.forEach((id, plan) -> townRadii.put(id, plan.townRadiusCells()));
         long seed = nativeWorldSeed(level, root);
         return attachCaveDestinations(
-            level, parseHexWorldPlan(root, townRadii, profiles, seed)
+            level, CenterStructureRoads.connect(level, parseHexWorldPlan(root, townRadii, profiles, seed))
         );
     }
 
@@ -9678,6 +9691,12 @@ public final class CobbleventureBootstrap {
         profiler.finishPhase("sealed-outer-decoration");
         progress.update(83, "직접 배치 길 생성 중");
         drawHexRoads(level, world);
+        for (ConnectionPath route : world.paths()) {
+            if (!route.surfaceStyle().equals("league_arch")) continue;
+            List<RoadArchPlacement.Point> points = route.centerline().stream()
+                .map(point -> new RoadArchPlacement.Point(point.x(), point.z())).toList();
+            RoadArchPlacement.place(level, points);
+        }
         profiler.finishPhase("route-rendering");
     }
 
@@ -9876,7 +9895,7 @@ public final class CobbleventureBootstrap {
                 world, selected.sample(), selected.point().x(), selected.point().z(), groundY
             ) ? Blocks.SAND.defaultBlockState() : surfaceBlock(selected.sample().biome());
             boolean expectedSurface = renderedSurface.is(expectedSurfaceState.getBlock())
-                || (selected.sample().surfaceStyle().equals("road")
+                || (isRoadSurface(selected.sample().surfaceStyle())
                     && renderedSurface.is(Blocks.COBBLESTONE));
             if (!expectedSurface) {
                 throw new IllegalStateException(
@@ -10097,7 +10116,7 @@ public final class CobbleventureBootstrap {
             world, selected.sample(), selected.point().x(), selected.point().z(), groundY
         ) ? Blocks.SAND.defaultBlockState() : surfaceBlock(selected.sample().biome());
         boolean expectedSurface = renderedSurface.is(expectedSurfaceState.getBlock())
-            || (selected.sample().surfaceStyle().equals("road")
+            || (isRoadSurface(selected.sample().surfaceStyle())
                 && renderedSurface.is(Blocks.COBBLESTONE));
         if (!expectedSurface) {
             return false;
@@ -11043,7 +11062,7 @@ public final class CobbleventureBootstrap {
     static int terrainGroundY(
         HexWorldPlan world, TerrainSample sample, double x, double z
     ) {
-        if (sample.kind().equals("route") && (sample.surfaceStyle().equals("road")
+        if (sample.kind().equals("route") && (isRoadSurface(sample.surfaceStyle())
             || (sample.surfaceStyle().equals("log_bridge")
                 && !logBridgeOverOceanAt(
                     world, (int) Math.floor(x), (int) Math.floor(z)
@@ -11108,7 +11127,7 @@ public final class CobbleventureBootstrap {
                 world, x + offset[0], z + offset[1]
             );
             if (nearby == null || isAquatic(nearby)
-                || nearby.surfaceStyle().equals("road")
+                || isRoadSurface(nearby.surfaceStyle())
                 || "cobbleventure:field_move/rock_climb".equals(
                     nearby.accessRequirement()
                 )) {
@@ -11276,7 +11295,7 @@ public final class CobbleventureBootstrap {
         HexWorldPlan world, TerrainSample sample, double x, double z, int groundY
     ) {
         return !isAquatic(sample)
-            && !sample.surfaceStyle().equals("road")
+            && !isRoadSurface(sample.surfaceStyle())
             && groundY < WATER_SURFACE_Y
             && hasNearbyOcean(world, x, z, 10)
             && !hasNearbyWorldEdge(world, x, z, 12);
@@ -11286,7 +11305,7 @@ public final class CobbleventureBootstrap {
         HexWorldPlan world, TerrainSample sample, double x, double z, int groundY
     ) {
         return !isAquatic(sample)
-            && !sample.surfaceStyle().equals("road")
+            && !isRoadSurface(sample.surfaceStyle())
             && groundY <= WATER_SURFACE_Y + SHORE_SAND_HEIGHT_BLOCKS
             && distanceToAquaticTerrain(world, x, z, SHORE_SAND_WIDTH_BLOCKS)
                 <= SHORE_SAND_WIDTH_BLOCKS
@@ -11609,7 +11628,7 @@ public final class CobbleventureBootstrap {
     }
 
     static boolean isAquatic(TerrainSample sample) {
-        if (sample.surfaceStyle().equals("road")) {
+        if (isRoadSurface(sample.surfaceStyle())) {
             return false;
         }
         return sample.surfaceStyle().equals("water")
@@ -11633,7 +11652,7 @@ public final class CobbleventureBootstrap {
         if (biome.contains("badlands")) {
             return Blocks.RED_SAND.defaultBlockState();
         }
-        if (biome.contains("mountain") || biome.contains("windswept")) {
+        if (RockClimbTerrainPolicy.usesStoneFiller(biome)) {
             return Blocks.STONE.defaultBlockState();
         }
         return Blocks.DIRT.defaultBlockState();
@@ -11781,7 +11800,7 @@ public final class CobbleventureBootstrap {
         BlockState surface = logBridge
             ? bridgeOverOcean ? Blocks.GRAVEL.defaultBlockState()
                 : roadSurfaceBlock(world, sample, x, z)
-            : sample.surfaceStyle().equals("road") && !aquatic
+            : isRoadSurface(sample.surfaceStyle()) && !aquatic
             ? roadSurfaceBlock(world, sample, x, z)
             : sandyShore ? Blocks.SAND.defaultBlockState()
             : surfaceBlock(biome);
@@ -14189,6 +14208,10 @@ public final class CobbleventureBootstrap {
         return false;
     }
 
+    private static boolean isRoadSurface(String style) {
+        return style.equals("road") || style.equals("league_arch");
+    }
+
     private static void drawHexRoads(ServerLevel level, HexWorldPlan world) {
         for (ConnectionPath connection : world.paths()) {
             List<Point> centerline = connection.centerline();
@@ -14209,7 +14232,7 @@ public final class CobbleventureBootstrap {
                 drawLogBridge(level, world, connection, connection.bridgeCenterline());
                 continue;
             }
-            if (!connection.surfaceStyle().equals("road")) {
+            if (!isRoadSurface(connection.surfaceStyle())) {
                 continue;
             }
             for (int index = 1; index < centerline.size(); index++) {
@@ -15260,7 +15283,7 @@ public final class CobbleventureBootstrap {
                     int z = gridZ + Math.floorMod((int) (memberSeed >>> 32), 5) - 2;
                     TerrainSample sample = terrainAt(world, x + 0.5D, z + 0.5D);
                     if (sample == null || !sample.kind().equals("surrounding")
-                        || isAquatic(sample) || sample.surfaceStyle().equals("road")) {
+                        || isAquatic(sample) || isRoadSurface(sample.surfaceStyle())) {
                         continue;
                     }
                     int groundY = terrainGroundY(world, sample, x, z);
@@ -15307,7 +15330,7 @@ public final class CobbleventureBootstrap {
                 int z = gridZ + Math.floorMod((int) (seed >>> 37), 13) - 6;
                 TerrainSample sample = terrainAt(world, x + 0.5D, z + 0.5D);
                 if (sample == null || !sample.kind().equals("surrounding")
-                    || isAquatic(sample) || sample.surfaceStyle().equals("road")) {
+                    || isAquatic(sample) || isRoadSurface(sample.surfaceStyle())) {
                     continue;
                 }
                 int chance = openBiomeTreeChance(sample.biome());
@@ -15471,7 +15494,7 @@ public final class CobbleventureBootstrap {
             for (int z = bounds.minZ(); z <= bounds.maxZ(); z++) {
                 TerrainSample sample = terrainAt(world, x + 0.5D, z + 0.5D);
                 if (sample == null || (!sample.kind().equals("town")
-                    && !(sample.kind().equals("route") && sample.surfaceStyle().equals("road")))) {
+                    && !(sample.kind().equals("route") && isRoadSurface(sample.surfaceStyle())))) {
                     continue;
                 }
                 int groundY = terrainGroundY(world, sample, x, z);
@@ -15599,7 +15622,7 @@ public final class CobbleventureBootstrap {
         HexWorldPlan world, TerrainSample sample, int x, int z
     ) {
         int choice = roadSurfaceChoice(world, x, z);
-        if (sample.kind().equals("route") && (sample.surfaceStyle().equals("road")
+        if (sample.kind().equals("route") && (isRoadSurface(sample.surfaceStyle())
             || (sample.surfaceStyle().equals("log_bridge")
                 && !logBridgeOverOceanAt(world, x, z)))) {
             Direction stairDirection = roadColumnPlan(

@@ -1,3 +1,7 @@
+param(
+    [string]$OutputPath = ""
+)
+
 $ErrorActionPreference = "Stop"
 
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
@@ -6,8 +10,13 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 $webLabRoot = Split-Path -Parent $PSScriptRoot
 $battleAiRoot = Split-Path -Parent $webLabRoot
 $repositoryRoot = (Resolve-Path (Join-Path $battleAiRoot "..\..")).Path
-$releaseDirectory = Join-Path $webLabRoot "releases"
-$archivePath = Join-Path $releaseDirectory "cobbleventure-battle-lab-portable.zip"
+$defaultReleaseDirectory = Join-Path $webLabRoot "releases"
+$archivePath = if ([string]::IsNullOrWhiteSpace($OutputPath)) {
+    Join-Path $defaultReleaseDirectory "cobbleventure-battle-lab-portable.zip"
+} else {
+    [System.IO.Path]::GetFullPath($OutputPath)
+}
+$releaseDirectory = Split-Path -Parent $archivePath
 $stageRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("cobbleventure-battle-lab-package-" + [guid]::NewGuid().ToString("N"))
 $packageRoot = Join-Path $stageRoot "cobbleventure-battle-lab"
 $portableBattleAiRoot = Join-Path $packageRoot "projects\cobbleventure-battle-ai"

@@ -1,0 +1,164 @@
+{
+  "$schema": "../../schemas/route.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:route/route_custom_23",
+  "display_name": {
+    "ko_kr": "석영고원",
+    "en_us": "석영고원"
+  },
+  "auto_name": false,
+  "enabled": true,
+  "route_type": "road",
+  "corridor": {
+    "width_blocks": 12,
+    "edge_noise": 0
+  },
+  "level_scaling": {
+    "mode": "world",
+    "offset": 0
+  },
+  "pokemon_spawns": {
+    "inherit_biome": false,
+    "excluded_species": [],
+    "additions": [
+      {
+        "species": "cobblemon:machop",
+        "min_level": 32,
+        "max_level": 34,
+        "weight": 60,
+        "spawn_as_evolved": false
+      },
+      {
+        "species": "cobblemon:geodude",
+        "min_level": 32,
+        "max_level": 34,
+        "weight": 60,
+        "spawn_as_evolved": false
+      },
+      {
+        "species": "cobblemon:onix",
+        "min_level": 40,
+        "max_level": 48,
+        "weight": 80,
+        "spawn_as_evolved": false
+      },
+      {
+        "species": "cobblemon:zubat",
+        "min_level": 32,
+        "max_level": 34,
+        "weight": 30,
+        "spawn_as_evolved": false
+      },
+      {
+        "species": "cobblemon:arbok",
+        "min_level": 44,
+        "max_level": 46,
+        "weight": 15,
+        "spawn_as_evolved": true
+      },
+      {
+        "species": "cobblemon:golbat",
+        "min_level": 44,
+        "max_level": 46,
+        "weight": 15,
+        "spawn_as_evolved": true
+      },
+      {
+        "species": "cobblemon:marowak",
+        "min_level": 44,
+        "max_level": 48,
+        "weight": 15,
+        "spawn_as_evolved": true
+      },
+      {
+        "species": "cobblemon:machoke",
+        "min_level": 44,
+        "max_level": 48,
+        "weight": 15,
+        "spawn_as_evolved": true
+      },
+      {
+        "species": "cobblemon:primeape",
+        "min_level": 42,
+        "max_level": 42,
+        "weight": 10,
+        "spawn_as_evolved": true
+      }
+    ],
+    "level_overrides": [
+      {
+        "species": "cobblemon:machop",
+        "min_level": 32,
+        "max_level": 34
+      },
+      {
+        "species": "cobblemon:geodude",
+        "min_level": 32,
+        "max_level": 34
+      },
+      {
+        "species": "cobblemon:onix",
+        "min_level": 40,
+        "max_level": 48
+      },
+      {
+        "species": "cobblemon:zubat",
+        "min_level": 32,
+        "max_level": 34
+      },
+      {
+        "species": "cobblemon:arbok",
+        "min_level": 44,
+        "max_level": 46
+      },
+      {
+        "species": "cobblemon:golbat",
+        "min_level": 44,
+        "max_level": 46
+      },
+      {
+        "species": "cobblemon:marowak",
+        "min_level": 44,
+        "max_level": 48
+      },
+      {
+        "species": "cobblemon:machoke",
+        "min_level": 44,
+        "max_level": 48
+      },
+      {
+        "species": "cobblemon:primeape",
+        "min_level": 42,
+        "max_level": 42
+      }
+    ],
+    "time_overrides": [],
+    "encounter_pools": {}
+  },
+  "npc_placements": [],
+  "automatic_npc_placement": {
+    "enabled": true,
+    "count": 12,
+    "use_biome_defaults": false,
+    "direct_trainers": [
+      "cobbleventure:npc/firered_pokemaniac_dawson",
+      "cobbleventure:npc/firered_juggler_nelson",
+      "cobbleventure:npc/firered_juggler_gregory",
+      "cobbleventure:npc/firered_tamer_vincent",
+      "cobbleventure:npc/firered_black_belt_daisuke",
+      "cobbleventure:npc/firered_cooltrainer_george",
+      "cobbleventure:npc/firered_cooltrainer_colby",
+      "cobbleventure:npc/firered_cooltrainer_rolando",
+      "cobbleventure:npc/firered_cooltrainer_caroline",
+      "cobbleventure:npc/firered_cooltrainer_alexa",
+      "cobbleventure:npc/firered_cooltrainer_naomi",
+      "cobbleventure:npc/firered_cool_couple_ray_tyra"
+    ],
+    "trigger_override": "proximity",
+    "trainer_trigger_overrides": {}
+  },
+  "log_bridge_layout": {
+    "pattern": "straight",
+    "detour_blocks": 18
+  }
+}

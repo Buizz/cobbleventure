@@ -1,6 +1,7 @@
 package dev.buizz.cobbleventure.bootstrap;
 
 import com.google.gson.JsonObject;
+import dev.buizz.cobbleventure.adventure.PokemonCenterDefeatReturn;
 import dev.buizz.cobbleventure.adventure.event.EventBattleBridge;
 import dev.buizz.cobbleventure.adventure.event.NpcBattleResolvedEvent;
 import dev.buizz.cobbleventure.playermenu.BattlePositioningEvent;
@@ -108,6 +109,17 @@ final class LeagueRuntimeSystem {
         return false;
     }
 
+    static boolean travelToNextGeneration(ServerPlayer player) {
+        for (Instance instance : INSTANCES.values()) {
+            Room room = instance.containing(player);
+            if (room != null && room.stage == instance.stages()) {
+                return travelToNextGeneration(player, instance.nextGeneration);
+            }
+        }
+        message(player, "명예의 전당에서 안내원에게 말을 걸어 주세요.");
+        return false;
+    }
+
     static Route route(ServerPlayer player, BuildingRuntimeSystem.DoorTarget target) {
         for (Instance instance : INSTANCES.values()) {
             Room destination = instance.rooms.stream().filter(room ->
@@ -118,7 +130,8 @@ final class LeagueRuntimeSystem {
             CompoundTag state = state(player, instance);
             LeagueRunProgress progress = progress(state, instance);
             if (destination.stage == -1) {
-                if (progress.redirectsLobbyToHall(source != null && source.stage == instance.stages())) {
+                boolean leavingChallenge = source != null && source.stage >= 0 && source.stage < instance.stages();
+                if (progress.redirectsLobbyToHall(source != null && source.stage >= 0)) {
                     return new Route(target(target, instance.stage(instance.stages())), () -> {
                         write(player, instance, progress, false);
                         ATTEMPTS.remove(player.getUUID());
@@ -131,6 +144,11 @@ final class LeagueRuntimeSystem {
                 return new Route(target, () -> {
                     write(player, instance, progress.interrupt(), false);
                     ATTEMPTS.remove(player.getUUID());
+                    RETURNS.remove(player.getUUID());
+                    if (leavingChallenge) message(player, progress.cleared()
+                        ? "리그 로비로 돌아왔습니다. 클리어 기록은 유지됩니다."
+                        : instance.relay ? "리그 도전을 포기했습니다. 다음 도전은 첫 방부터 시작합니다."
+                        : "리그 도전을 포기했습니다. 다음 도전은 마지막으로 승리한 방 다음부터 이어집니다.");
                 });
             }
             if (!progress.cleared() && (source == null || source.stage == -1) && !instance.allows(player)) {
@@ -300,6 +318,11 @@ final class LeagueRuntimeSystem {
 
     private static void tick(ServerTickEvent.Post event) {
         for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
+            // Both battle-result handlers have run by this tick. Defeat recovery owns the
+            // destination; also discard queued lobby returns so they cannot fire after healing.
+            if (suppressLobbyReturnForRecovery(player.getUUID(),
+                PokemonCenterDefeatReturn.hasDefeatRecovery(player),
+                RETURNS)) continue;
             if (AuthoredBattlePositions.inBattle(player)) continue;
             Instance pending = RETURNS.get(player.getUUID());
             if (pending != null && returnToLobby(player, pending)) RETURNS.remove(player.getUUID());
@@ -316,6 +339,14 @@ final class LeagueRuntimeSystem {
                 }
             }
         }
+    }
+
+    static boolean suppressLobbyReturnForRecovery(
+        UUID playerId, boolean recovering, Map<UUID, ?> pendingReturns
+    ) {
+        if (!recovering) return false;
+        pendingReturns.remove(playerId);
+        return true;
     }
 
     private static boolean returnToLobby(ServerPlayer player, Instance instance) {

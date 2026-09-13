@@ -21,10 +21,11 @@
     [target.trainer, source.trainer] = [source.trainer, target.trainer];
   }
   function supportsRoom(anchors, room) {
-    const required = [[room.entry, ['arrival', 'interior_spawn']], [room.exit, ['transition', 'door']]];
+    const required = [[room.entry, ['arrival', 'interior_spawn', 'door', 'transition']], [room.exit, ['transition', 'door']]];
     if (room.npc_anchor) required.push([room.npc_anchor, ['npc_position']], [`${room.npc_anchor}_battle_player`, ['arrival', 'npc_position']]);
     if (room.leave) required.push([room.leave, ['transition', 'door']]);
     if (room.advance) required.push([room.advance, ['transition', 'door']]);
+    if (room.advance_npc) required.push([room.advance_npc, ['npc_position']]);
     for (const slot of [...Object.keys(room.fixed_npcs || {}), ...Object.keys(room.fixed_pokemon || {})]) required.push([slot, ['npc_position']]);
     return required.every(([name, types]) => (anchors || []).some(anchor => (anchor.id || anchor.label) === name && types.includes(anchor.type)));
   }

@@ -132,6 +132,13 @@ public final class PokemonCenterDefeatReturn {
         );
     }
 
+    /** True until defeat recovery finishes, including arrival, healing, and retry delays. */
+    public static boolean hasDefeatRecovery(ServerPlayer player) {
+        UUID playerId = player.getUUID();
+        return player.getPersistentData().getBoolean(RECOVERY_REQUIRED)
+            || PENDING_RETURNS.containsKey(playerId) || ACTIVE_RECOVERIES.containsKey(playerId);
+    }
+
     static boolean blocksNewNpcEvents(
         boolean pendingReturn, boolean activeRecovery, boolean teleported
     ) {

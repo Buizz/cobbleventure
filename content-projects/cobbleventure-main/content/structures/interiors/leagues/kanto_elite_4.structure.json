@@ -34,13 +34,18 @@
     {
       "id": "entry",
       "label": "entry",
-      "type": "arrival",
+      "type": "transition",
       "position": [
         31,
-        2,
-        53
+        3,
+        58
       ],
-      "facing": "north"
+      "facing": "south",
+      "safe_spawn": [
+        31,
+        2,
+        56
+      ]
     },
     {
       "id": "exit",

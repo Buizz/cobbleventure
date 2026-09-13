@@ -194,6 +194,7 @@ final class WorldPlanParser {
             }
         }
         return new RoutePokemonSpawns(
+            !value.has("enabled") || value.get("enabled").getAsBoolean(),
             land.inheritBiome(), land.excludedSpecies(), land.additions(),
             land.levelOverrides(), land.timeOverrides(), Map.copyOf(encounterPools)
         );
@@ -247,7 +248,7 @@ final class WorldPlanParser {
             !value.has("inherit_biome") || value.get("inherit_biome").getAsBoolean(),
             Set.copyOf(excluded), List.copyOf(additions), Map.copyOf(levelOverrides),
             Map.copyOf(timeOverrides),
-            legacyLandPool || !value.has("enabled") || value.get("enabled").getAsBoolean(),
+            !value.has("enabled") || value.get("enabled").getAsBoolean(),
             value.has("trigger_chance")
                 ? value.get("trigger_chance").getAsDouble() : 1.0D
         );

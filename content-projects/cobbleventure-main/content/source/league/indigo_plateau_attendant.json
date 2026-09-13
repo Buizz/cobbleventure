@@ -1,0 +1,60 @@
+{
+  "$schema": "../../schemas/npc-event-script.schema.json",
+  "schema_version": 4,
+  "id": "cobbleventure:npc/league/indigo_plateau_attendant",
+  "enabled": true,
+  "name": {
+    "ko_kr": "석영고원 접수원"
+  },
+  "description": {
+    "ko_kr": "석영고원 로비에서 포켓몬리그 도전을 안내합니다."
+  },
+  "tags": [
+    "league",
+    "guide",
+    "manual_placement"
+  ],
+  "placement_profile": {
+    "classification": "ambient",
+    "preferred_biomes": [],
+    "automatic_town_placement": false,
+    "automatic_route_placement": false
+  },
+  "npc": {
+    "display_name": {
+      "ko_kr": "리그 접수원"
+    },
+    "role": "default",
+    "trainer_class": "cobbleventure:trainer_class/pokemart_clerk",
+    "appearance": {
+      "source": "custom",
+      "type": "skin",
+      "resource": "cobbleventure:trainer_skin/pokemart_clerk_male",
+      "arm_model": "classic"
+    },
+    "behavior": {
+      "movement": "stationary",
+      "look_at_player": true,
+      "invulnerable": true,
+      "collision": true
+    }
+  },
+  "event_runtime": {
+    "engine": "cves_v5",
+    "authoring": "preset",
+    "script_id": "cobbleventure:event_script/league/indigo_plateau_attendant"
+  },
+  "event_design": {
+    "mode": "preset",
+    "preset": {
+      "type": "simple",
+      "initial_trigger": {
+        "type": "interact",
+        "range": 4
+      },
+      "first_text": {
+        "ko_kr": "여기는 포켓몬리그 접수처입니다. 앞의 문 너머에서는 사천왕과 연달아 승부하게 됩니다. 포켓몬의 회복과 준비를 마친 뒤 도전해 주세요."
+      }
+    }
+  }
+}

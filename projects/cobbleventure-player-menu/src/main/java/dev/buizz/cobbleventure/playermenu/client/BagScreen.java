@@ -15,6 +15,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.lwjgl.glfw.GLFW;
 
 /** 검색, 포켓 분류와 실제 인벤토리 조작을 제공하는 가방 화면. */
@@ -835,10 +837,13 @@ public final class BagScreen extends Screen {
 
     private final class CategoryButton extends AbstractButton {
         private final BagItemCatalog.Category buttonCategory;
+        private final ItemStack icon;
 
         private CategoryButton(BagItemCatalog.Category category, int x, int y, int width, int height) {
             super(x, y, width, height, category.title());
             this.buttonCategory = category;
+            this.icon = categoryIcon(category);
+            setTooltip(Tooltip.create(getMessage()));
         }
 
         @Override
@@ -865,14 +870,39 @@ public final class BagScreen extends Screen {
             }
             graphics.fill(getX() + 8, getY() + getHeight() - 1,
                 getX() + getWidth() - 8, getY() + getHeight(), SEPARATOR_COLOR);
-            String label = font.plainSubstrByWidth(getMessage().getString(), getWidth() - 6);
-            graphics.drawString(font, label,
-                getX() + (getWidth() - font.width(label)) / 2,
-                getY() + (getHeight() - 8) / 2, style.text(), false);
+            String label = getWidth() >= 38
+                ? font.plainSubstrByWidth(getMessage().getString(), getWidth() - 23)
+                : "";
+            int contentWidth = 16 + (label.isBlank() ? 0 : 2 + font.width(label));
+            int contentX = getX() + (getWidth() - contentWidth) / 2;
+            graphics.renderItem(icon, contentX, getY() + 3);
+            if (!label.isBlank()) {
+                graphics.drawString(font, label, contentX + 18,
+                    getY() + (getHeight() - 8) / 2, style.text(), false);
+            }
         }
 
         @Override
         protected void updateWidgetNarration(NarrationElementOutput output) { defaultButtonNarrationText(output); }
+    }
+
+    private static ItemStack categoryIcon(BagItemCatalog.Category category) {
+        return switch (category) {
+            case ALL -> new ItemStack(Items.CHEST);
+            case RECOVERY -> registeredIcon("cobblemon:potion", Items.APPLE);
+            case BALLS -> registeredIcon("cobblemon:poke_ball", Items.SNOWBALL);
+            case MACHINES -> registeredIcon("cobblemon:technical_machine", Items.MUSIC_DISC_13);
+            case BATTLE -> registeredIcon("cobblemon:x_attack", Items.IRON_SWORD);
+            case MATERIALS -> registeredIcon("cobblemon:red_apricorn", Items.IRON_INGOT);
+            case KEY_ITEMS -> registeredIcon("cobbleventure_player_menu:world_map", Items.COMPASS);
+        };
+    }
+
+    private static ItemStack registeredIcon(String itemId, net.minecraft.world.item.Item fallback) {
+        ResourceLocation id = ResourceLocation.tryParse(itemId);
+        return id != null && BuiltInRegistries.ITEM.containsKey(id)
+            ? new ItemStack(BuiltInRegistries.ITEM.get(id))
+            : new ItemStack(fallback);
     }
 
     private final class ItemSlotButton extends AbstractButton {

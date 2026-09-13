@@ -1,0 +1,393 @@
+[
+  {
+    "Name": "create:cut_ochrum_bricks"
+  },
+  {
+    "Name": "minecraft:red_terracotta"
+  },
+  {
+    "Name": "minecraft:dirt"
+  },
+  {
+    "Name": "minecraft:grass_block",
+    "Properties": {
+      "snowy": "false"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "true",
+      "south": "true",
+      "north": "false",
+      "west": "false",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "true",
+      "south": "true",
+      "north": "true",
+      "west": "false",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "true",
+      "south": "false",
+      "north": "true",
+      "west": "false",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "true",
+      "south": "true",
+      "north": "false",
+      "west": "true",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "true",
+      "south": "true",
+      "north": "true",
+      "west": "true",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "true",
+      "south": "false",
+      "north": "true",
+      "west": "true",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "false",
+      "south": "true",
+      "north": "false",
+      "west": "true",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "false",
+      "south": "true",
+      "north": "true",
+      "west": "true",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "false",
+      "south": "false",
+      "north": "true",
+      "west": "true",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "true",
+      "south": "false",
+      "north": "false",
+      "west": "false",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "false",
+      "south": "false",
+      "north": "false",
+      "west": "true",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "create:framed_glass"
+  },
+  {
+    "Name": "minecraft:black_concrete"
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "true",
+      "south": "false",
+      "north": "false",
+      "west": "false",
+      "axis": "x"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "false",
+      "south": "false",
+      "north": "false",
+      "west": "true",
+      "axis": "x"
+    }
+  },
+  {
+    "Name": "create:small_ochrum_bricks"
+  },
+  {
+    "Name": "create:small_ochrum_brick_slab",
+    "Properties": {
+      "waterlogged": "false",
+      "type": "double"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "east": "true",
+      "south": "false",
+      "north": "false",
+      "west": "true",
+      "axis": "y"
+    }
+  },
+  {
+    "Name": "minecraft:air"
+  },
+  {
+    "Name": "minecraft:dirt_path"
+  },
+  {
+    "Name": "minecraft:waxed_oxidized_copper_trapdoor",
+    "Properties": {
+      "half": "top",
+      "waterlogged": "false",
+      "powered": "false",
+      "facing": "west",
+      "open": "true"
+    }
+  },
+  {
+    "Name": "minecraft:waxed_oxidized_copper_trapdoor",
+    "Properties": {
+      "half": "top",
+      "waterlogged": "false",
+      "powered": "false",
+      "facing": "north",
+      "open": "true"
+    }
+  },
+  {
+    "Name": "minecraft:waxed_oxidized_copper_trapdoor",
+    "Properties": {
+      "half": "top",
+      "waterlogged": "false",
+      "powered": "false",
+      "facing": "south",
+      "open": "true"
+    }
+  },
+  {
+    "Name": "minecraft:waxed_oxidized_copper_trapdoor",
+    "Properties": {
+      "half": "top",
+      "waterlogged": "false",
+      "powered": "false",
+      "facing": "east",
+      "open": "true"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_bulbasaur",
+    "Properties": {
+      "half": "upper",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_squirtle",
+    "Properties": {
+      "half": "upper",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_pikachu",
+    "Properties": {
+      "half": "upper",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_charmander",
+    "Properties": {
+      "half": "upper",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_ancient",
+    "Properties": {
+      "half": "upper",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "create:framed_glass_door",
+    "Properties": {
+      "hinge": "left",
+      "half": "upper",
+      "visible": "true",
+      "powered": "false",
+      "facing": "north",
+      "open": "false"
+    }
+  },
+  {
+    "Name": "create:framed_glass_door",
+    "Properties": {
+      "hinge": "right",
+      "half": "upper",
+      "visible": "true",
+      "powered": "false",
+      "facing": "north",
+      "open": "false"
+    }
+  },
+  {
+    "Name": "create:small_ochrum_brick_stairs",
+    "Properties": {
+      "half": "bottom",
+      "waterlogged": "false",
+      "shape": "straight",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "create:small_ochrum_brick_stairs",
+    "Properties": {
+      "half": "bottom",
+      "waterlogged": "false",
+      "shape": "straight",
+      "facing": "north"
+    }
+  },
+  {
+    "Name": "create:small_ochrum_brick_slab",
+    "Properties": {
+      "waterlogged": "false",
+      "type": "top"
+    }
+  },
+  {
+    "Name": "create:small_ochrum_brick_stairs",
+    "Properties": {
+      "half": "top",
+      "waterlogged": "false",
+      "shape": "straight",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "create:small_ochrum_brick_stairs",
+    "Properties": {
+      "half": "top",
+      "waterlogged": "false",
+      "shape": "straight",
+      "facing": "north"
+    }
+  },
+  {
+    "Name": "create:small_ochrum_brick_slab",
+    "Properties": {
+      "waterlogged": "false",
+      "type": "bottom"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_bulbasaur",
+    "Properties": {
+      "half": "lower",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_squirtle",
+    "Properties": {
+      "half": "lower",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_pikachu",
+    "Properties": {
+      "half": "lower",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_charmander",
+    "Properties": {
+      "half": "lower",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "cobblefurnies:statue_ancient",
+    "Properties": {
+      "half": "lower",
+      "facing": "south"
+    }
+  },
+  {
+    "Name": "create:framed_glass_door",
+    "Properties": {
+      "hinge": "left",
+      "half": "lower",
+      "visible": "true",
+      "powered": "false",
+      "facing": "north",
+      "open": "false"
+    }
+  },
+  {
+    "Name": "create:framed_glass_door",
+    "Properties": {
+      "hinge": "right",
+      "half": "lower",
+      "visible": "true",
+      "powered": "false",
+      "facing": "north",
+      "open": "false"
+    }
+  },
+  {
+    "Name": "create:ochrum_pillar",
+    "Properties": {
+      "axis": "y",
+      "east": "false",
+      "west": "false",
+      "north": "false",
+      "south": "false"
+    }
+  }
+]

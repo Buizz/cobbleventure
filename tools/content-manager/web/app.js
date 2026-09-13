@@ -2983,6 +2983,7 @@ function routeEndpointAnchor(endpointId) {
   return state.worldLayout?.settlements?.find((node) => node.settlement === endpointId)?.anchor
     || state.worldLayout?.cave_entrances?.find((node) => node.id === endpointId)?.anchor
     || state.worldLayout?.forest_entrances?.find((node) => node.id === endpointId)?.anchor
+    || state.worldLayout?.objects?.find((node) => node.id === endpointId && node.type !== "gate")?.anchor
     || null;
 }
 function routeEndpointEntrance(endpointId) {
@@ -3193,7 +3194,7 @@ function renderHexMapFrame() {
       const endpointId = index === 0 ? (draft?.from || selectedRoute?.from) : index === anchors.length - 1 ? (draft?.to || selectedRoute?.to) : null;
       const entrance = routeEndpointEntrance(endpointId);
       const { x, y } = entrance ? entranceMapPoint(entrance) : hexPoint(anchor.q, anchor.r);
-      const locked = Boolean((draft && index === 0 && draft.from) || (!draft && ((index === 0 && selectedRoute?.from) || (index === anchors.length - 1 && selectedRoute?.to))));
+      const locked = Boolean(endpointId && routeEndpointAnchor(endpointId));
       return `<g class="route-anchor${endpoint ? " endpoint" : ""}${locked ? " is-locked" : ""}" data-route-anchor-route="${escapeHtml(routeId)}" data-route-anchor-index="${index}" transform="translate(${x} ${y})" role="button" aria-label="길 앵커 ${index + 1}${locked ? " 연결 위치 연동" : " 이동"}"><circle r="8"></circle><circle r="3"></circle><text y="-12">${index + 1}</text></g>`;
     }).join("");
     if (draft || !selectedRoute || !anchors.length) return renderedAnchors;
@@ -3779,12 +3780,49 @@ function updateGateOptionVisibility() {
 function selectedRoute() {
   return (state.worldLayout?.connections || []).find((entry) => entry.id === state.selectedRouteId) || null;
 }
+function routeEndpointOptions(selected = "") {
+  const option = (id, label) => `<option value="${escapeHtml(id)}"${id === selected ? " selected" : ""}>${escapeHtml(label)}</option>`;
+  const groups = [
+    ["마을", (state.worldLayout?.settlements || []).map((node) => [node.settlement, `${settlementSummary(node.settlement)?.name || node.settlement} · 마을`])],
+    ["동굴·지하통로 입구", (state.worldLayout?.cave_entrances || []).map((entry) => [entry.id, `${entry.underground_road ? undergroundRoadSummary(entry.underground_road)?.name || entry.underground_road : caveSummary(entry.cave)?.name || entry.cave} · 입구`])],
+    ["숲 입구", (state.worldLayout?.forest_entrances || []).map((entry) => [entry.id, `${forestSummary(entry.forest)?.name || entry.forest} · 입구`])],
+    ["NBT 오브젝트", (state.worldLayout?.objects || []).filter((entry) => entry.type !== "gate").map((entry) => [entry.id, `${worldObjectDisplayName(entry)} · 오브젝트`])],
+  ];
+  const known = groups.some(([, entries]) => entries.some(([id]) => id === selected));
+  return `<option value="">연결 없음 · 직접 좌표</option>${selected && !known ? option(selected, `${selected} · 현재 연결`) : ""}${groups.map(([label, entries]) => entries.length ? `<optgroup label="${escapeHtml(label)}">${entries.map(([id, name]) => option(id, name)).join("")}</optgroup>` : "").join("")}`;
+}
+function updateRouteEndpoint(side, endpointId) {
+  const route = selectedRoute();
+  if (!route || !new Set(["from", "to"]).has(side)) return;
+  const otherSide = side === "from" ? "to" : "from";
+  if (endpointId && route[otherSide] === endpointId) {
+    toast("하나의 길에서 시작점과 끝점을 같은 대상에 연결할 수 없습니다.");
+    renderRouteInspector(route);
+    return;
+  }
+  if (!endpointId) {
+    if (!route[side]) return;
+    delete route[side];
+    markWorldDirty(); renderWorldLayout();
+    toast(`${side === "from" ? "시작" : "끝"} 연결을 끊었습니다. 이제 끝 앵커를 자유롭게 이동할 수 있습니다.`);
+    return;
+  }
+  route[side] = endpointId;
+  const target = routeEndpointAnchor(endpointId);
+  const anchors = connectionAnchors(route).map((anchor) => ({ q: anchor.q, r: anchor.r }));
+  if (target && anchors.length >= 2) anchors[side === "from" ? 0 : anchors.length - 1] = { ...target };
+  route.anchors = anchors;
+  route.cells = routeCellsFromAnchors(anchors);
+  route.pathfinding = "explicit";
+  markWorldDirty(); renderWorldLayout();
+  toast(`${side === "from" ? "시작" : "끝"}점을 ${routePlaceFromId(endpointId)?.name || endpointId}에 연결했습니다.`);
+}
 function routeDisplayName(route) {
   if (route && routeSummary(route.route_preset)?.auto_name !== false) return generatedRouteNames(route).ko_kr;
   return route?.display_name || route?.id || "길";
 }
 function routeSurfaceLabel(surface) {
-  return ({ road: "도로", natural: "자연 통로", water: "수로", log_bridge: "통나무다리" })[surface] || surface || "도로";
+  return ({ road: "도로", natural: "자연 통로", water: "수로", log_bridge: "통나무다리", league_arch: "리그 아치길" })[surface] || surface || "도로";
 }
 function routePlaceFromId(endpointId) {
   if (!endpointId) return null;
@@ -3869,6 +3907,7 @@ async function persistAutomaticRouteNames() {
 }
 function ensureRoutePokemonSettings(route) {
   route.pokemon_spawns ||= { inherit_biome: true, excluded_species: [], additions: [] };
+  route.pokemon_spawns.enabled = route.pokemon_spawns.enabled !== false;
   route.pokemon_spawns.inherit_biome = route.pokemon_spawns.inherit_biome !== false;
   route.pokemon_spawns.excluded_species ||= [];
   route.pokemon_spawns.additions ||= [];
@@ -4106,32 +4145,78 @@ function pokemonCardIdentityMarkup(name, dex) {
   return `<div class="pokemon-card-identity">${dex ? `<img loading="lazy" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${dex}.png" alt="">` : "<span></span>"}<b class="route-pokemon-name">${escapeHtml(name)}</b></div>`;
 }
 function basePokemonCardMarkup(entry, enabled, settings, target, defaultRange) {
-  const editing = pokemonCardIsEditing(target, "base", entry.id);
+  const selected = pokemonCardIsEditing(target, "base", entry.id);
   const status = enabled ? "포함" : "제외";
-  if (editing) return `<article class="route-biome-pokemon-card is-editing ${enabled ? "is-enabled" : "is-excluded"}">${pokemonCardEditHeading(pokemonMapEntryName(entry), entry.dex_number, target, "base", entry.id)}<div class="pokemon-card-edit-controls"><button type="button" class="pokemon-card-state-control" data-${target}-biome-species="${escapeHtml(entry.id)}" aria-pressed="${enabled}" ${settings.inherit_biome ? "" : "disabled"}>${enabled ? "출현에서 제외" : "출현에 포함"}</button>${pokemonTimeField(settings, entry.id, target)}${pokemonCardLevelFields(settings, entry.id, target, defaultRange)}</div></article>`;
-  return `<article class="route-biome-pokemon-card ${enabled ? "is-enabled" : "is-excluded"}" data-${target}-pokemon-card-open="${escapeHtml(pokemonCardEditKey("base", entry.id))}" title="클릭하여 수정">${pokemonCardIdentityMarkup(pokemonMapEntryName(entry), entry.dex_number)}${routePokemonCardCopy(entry, false)}<div class="pokemon-card-meta"><span>${status} · ${pokemonTimeLabel(settings, entry.id, entry)}</span><span>${pokemonCardLevelLabel(settings, entry.id, defaultRange)}</span></div></article>`;
+  return `<button type="button" class="route-biome-pokemon-card ${enabled ? "is-enabled" : "is-excluded"}${selected ? " is-selected" : ""}" data-${target}-pokemon-card-open="${escapeHtml(pokemonCardEditKey("base", entry.id))}" title="상세 설정 열기">${pokemonCardIdentityMarkup(pokemonMapEntryName(entry), entry.dex_number)}${routePokemonCardCopy(entry, false)}<div class="pokemon-card-meta"><span>${status} · ${pokemonTimeLabel(settings, entry.id, entry)}</span><span>${pokemonCardLevelLabel(settings, entry.id, defaultRange)}</span></div></button>`;
 }
 function directPokemonCardMarkup(addition, index, attribute, settings, target, defaultRange) {
   const entry = worldPokemonById().get(addition.species), dex = entry?.dex_number;
   const copy = entry ? routePokemonCardCopy(entry, false) : `<div class="route-pokemon-card-copy"><small>${escapeHtml(addition.species)}</small></div>`;
-  const editing = pokemonCardIsEditing(target, "direct", addition.species);
+  const selected = pokemonCardIsEditing(target, "direct", addition.species);
   const evolvedLabel = addition.spawn_as_evolved ? " · 진화형 유지" : "";
   const name = entry ? pokemonMapEntryName(entry) : addition.species;
-  if (editing) {
-    const removeAction = `<button type="button" class="pokemon-card-remove-action" ${attribute}="${index}" title="목록에서 제거" aria-label="${escapeHtml(name)} 직접 추가에서 제거">×</button>`;
-    return `<article class="route-biome-pokemon-card is-direct-added is-editing">${pokemonCardEditHeading(name, dex, target, "direct", addition.species, removeAction)}<div class="pokemon-card-edit-controls"><label class="pokemon-evolved-spawn-toggle" title="레벨이 낮아도 지정한 진화형 그대로 출현"><input type="checkbox" data-${target}-spawn-as-evolved="${index}" ${addition.spawn_as_evolved ? "checked" : ""}><span>진화형 유지</span></label><label class="pokemon-spawn-weight" title="같은 조우 풀 안에서의 상대 출현 가중치"><span aria-hidden="true">⚖</span><input type="number" min="1" max="10000" value="${Math.max(1, Number(addition.weight || 1))}" aria-label="출현 가중치" data-${target}-spawn-weight="${index}"></label>${pokemonTimeField(settings, addition.species, target)}${pokemonCardLevelFields(settings, addition.species, target, defaultRange)}</div></article>`;
-  }
-  return `<article class="route-biome-pokemon-card is-direct-added" data-${target}-pokemon-card-open="${escapeHtml(pokemonCardEditKey("direct", addition.species))}" title="클릭하여 수정">${pokemonCardIdentityMarkup(name, dex)}${copy}<div class="pokemon-card-meta"><span>가중치 ${Math.max(1, Number(addition.weight || 1))}${evolvedLabel} · ${pokemonTimeLabel(settings, addition.species, entry)}</span><span>${pokemonCardLevelLabel(settings, addition.species, defaultRange)}</span></div></article>`;
+  return `<button type="button" class="route-biome-pokemon-card is-direct-added${selected ? " is-selected" : ""}" data-${target}-pokemon-card-open="${escapeHtml(pokemonCardEditKey("direct", addition.species))}" title="상세 설정 열기">${pokemonCardIdentityMarkup(name, dex)}${copy}<div class="pokemon-card-meta"><span>⚖ ${Math.max(1, Number(addition.weight || 1))}${evolvedLabel} · ${pokemonTimeLabel(settings, addition.species, entry)}</span><span>${pokemonCardLevelLabel(settings, addition.species, defaultRange)}</span></div></button>`;
 }
-function renderPokemonLevelEditor(target, settings, defaultRange) {
-  const species = state[`${target}PokemonLevelSpecies`], editor = $(`#${target}-pokemon-level-editor`);
-  editor.hidden = !species;
-  if (!species) return;
-  const entry = worldPokemonById().get(species), override = pokemonLevelOverride(settings, species);
-  $(`#${target}-pokemon-level-name`).textContent = `${entry ? pokemonMapEntryName(entry) : species} 개별 레벨`;
-  $(`#${target}-pokemon-level-min`).value = override?.min_level ?? defaultRange.min;
-  $(`#${target}-pokemon-level-max`).value = override?.max_level ?? defaultRange.max;
-  $(`#${target}-pokemon-level-reset`).disabled = !override;
+function renderPokemonDetailEditor(target, settings, defaultRange) {
+  const editor = $(`#${target}-pokemon-level-editor`);
+  const key = state[`${target}PokemonEditingCard`];
+  editor.hidden = !key;
+  if (!key) { editor.innerHTML = ""; return; }
+  const separator = key.indexOf(":"), kind = key.slice(0, separator), species = key.slice(separator + 1);
+  const entry = worldPokemonById().get(species), name = entry ? pokemonMapEntryName(entry) : species;
+  const additionIndex = kind === "direct" ? settings.additions.findIndex((item) => item.species === species) : -1;
+  const addition = additionIndex >= 0 ? settings.additions[additionIndex] : null;
+  if (kind === "direct" && !addition) { state[`${target}PokemonEditingCard`] = null; editor.hidden = true; editor.innerHTML = ""; return; }
+  const excluded = new Set(settings.excluded_species || []), enabled = settings.inherit_biome && !excluded.has(species);
+  const sourceLabel = kind === "direct" ? "직접 추가" : "바이옴 기본";
+  const sprite = entry?.dex_number ? `<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${entry.dex_number}.png" alt="">` : "";
+  const sourceControl = kind === "direct"
+    ? `<label class="pokemon-evolved-spawn-toggle"><input type="checkbox" data-${target}-spawn-as-evolved="${additionIndex}" ${addition.spawn_as_evolved ? "checked" : ""}><span>진화형 그대로 출현</span></label><label class="pokemon-detail-weight"><span>가중치</span><input type="number" min="1" max="10000" value="${Math.max(1, Number(addition.weight || 1))}" aria-label="출현 가중치" data-${target}-spawn-weight="${additionIndex}"></label>`
+    : `<button type="button" class="pokemon-card-state-control" data-${target}-biome-species="${escapeHtml(species)}" aria-pressed="${enabled}" ${settings.inherit_biome ? "" : "disabled"}>${enabled ? "이 포켓몬 출현 제외" : "이 포켓몬 출현 포함"}</button>`;
+  const remove = kind === "direct" ? `<button type="button" class="pokemon-detail-remove" data-remove-${target}-pokemon="${additionIndex}" title="목록에서 제거">목록에서 제거</button>` : "";
+  editor.innerHTML = `<header class="pokemon-detail-heading"><div class="pokemon-detail-identity">${sprite}<span><em>${sourceLabel}</em><strong>${escapeHtml(name)}</strong><small>${entry?.dex_number ? `No.${String(entry.dex_number).padStart(4, "0")} · ` : ""}${escapeHtml(species)}</small></span></div><button type="button" class="pokemon-detail-close" data-${target}-pokemon-card-done="${escapeHtml(key)}" aria-label="상세 설정 닫기">×</button></header><div class="pokemon-detail-controls${kind === "direct" ? " is-direct" : ""}">${sourceControl}${pokemonTimeField(settings, species, target)}${pokemonCardLevelFields(settings, species, target, defaultRange)}${remove}</div>`;
+}
+function handlePokemonDetailClick(event, target, render) {
+  if (handlePokemonCardEditAction(event, target, render) || handlePokemonCardLevelAction(event, target, render)) return;
+  const settings = target === "route" ? routePokemonSettings() : encounterSettings();
+  if (!settings) return;
+  const biome = event.target.closest(`[data-${target}-biome-species]`);
+  if (biome) {
+    const species = biome.getAttribute(`data-${target}-biome-species`);
+    const excluded = new Set(settings.excluded_species || []);
+    if (excluded.has(species)) excluded.delete(species); else excluded.add(species);
+    settings.excluded_species = [...excluded].sort();
+    render();
+    return;
+  }
+  const remove = event.target.closest(`[data-remove-${target}-pokemon]`);
+  if (!remove) return;
+  const index = Number(remove.getAttribute(`data-remove-${target}-pokemon`));
+  const [removed] = settings.additions.splice(index, 1);
+  if (removed) {
+    settings.level_overrides = settings.level_overrides.filter((item) => item.species !== removed.species);
+    settings.time_overrides = settings.time_overrides.filter((item) => item.species !== removed.species);
+  }
+  state[`${target}PokemonEditingCard`] = null;
+  render();
+}
+function handlePokemonDetailChange(event, target, render) {
+  if (handlePokemonTimeAction(event, target, render) || handlePokemonCardLevelAction(event, target, render)) return;
+  const settings = target === "route" ? routePokemonSettings() : encounterSettings();
+  if (!settings) return;
+  const evolved = event.target.closest(`[data-${target}-spawn-as-evolved]`);
+  if (evolved) {
+    const addition = settings.additions[Number(evolved.getAttribute(`data-${target}-spawn-as-evolved`))];
+    if (addition) addition.spawn_as_evolved = evolved.checked;
+    render();
+    return;
+  }
+  const weight = event.target.closest(`[data-${target}-spawn-weight]`);
+  if (weight) {
+    const addition = settings.additions[Number(weight.getAttribute(`data-${target}-spawn-weight`))];
+    if (addition) addition.weight = Math.max(1, Math.min(10000, Math.round(Number(weight.value || 1))));
+    render();
+  }
 }
 function routeDefaultPokemonLevelRange(route) {
   const levels = connectionPath(route).map((cell) => levelOverrideAt(cell.q, cell.r)?.average_level).filter(Number.isFinite);
@@ -4162,7 +4247,7 @@ function renderEncounterPokemonDialog() {
   $("#encounter-biome-pokemon-count").textContent = `${baseEntries.length}종`; $("#encounter-direct-pokemon-count").textContent = `${directEntries.length}종`;
   $("#encounter-custom-pokemon-count").textContent = `${settings.additions.length}종 추가됨`;
   renderEncounterPokemonPicker();
-  renderPokemonLevelEditor("encounter", settings, { min: settings.minimum_level, max: settings.maximum_level });
+  renderPokemonDetailEditor("encounter", settings, { min: settings.minimum_level, max: settings.maximum_level });
   baseList.scrollTop = baseScrollTop; directList.scrollTop = directScrollTop;
   renderEncounterSummary(target);
 }
@@ -4243,6 +4328,11 @@ function renderRouteInspector(route) {
   const effectiveCount = routeEffectivePokemonIds(route).length;
   const anchors = connectionAnchors(route);
   const insertingAnchors = state.routeAnchorInsertRouteId === route.id;
+  $("#route-endpoint-list").innerHTML = [["from", "시작점"], ["to", "끝점"]].map(([side, label]) => `
+    <div class="route-endpoint-row">
+      <label><span>${label}</span><select data-route-endpoint="${side}">${routeEndpointOptions(route[side] || "")}</select></label>
+      <button type="button" data-disconnect-route-endpoint="${side}" ${route[side] ? "" : "disabled"}>연결 끊기</button>
+    </div>`).join("");
   $("#route-anchor-count").textContent = `${anchors.length}개`;
   $("#toggle-route-anchor-insert").classList.toggle("is-active", insertingAnchors);
   $("#toggle-route-anchor-insert").textContent = insertingAnchors ? "완료" : "＋ 앵커 추가";
@@ -4255,8 +4345,8 @@ function renderRouteInspector(route) {
     : `기존 바이옴 미사용 · ${settings.additions.length}종만 직접 출현`;
   $("#edit-route-pokemon").disabled = Boolean(preset);
   if (preset) $("#route-pokemon-description").textContent = `${preset.name || preset.id} 길 설정에서 관리 · NPC ${Number(preset.npc_count || 0)}명`;
-  const fromName = route.from ? settlementSummary(route.from)?.name || route.from : "직접 시작";
-  const toName = route.to ? settlementSummary(route.to)?.name || route.to : "직접 종료";
+  const fromName = route.from ? routePlaceFromId(route.from)?.name || route.from : "직접 시작";
+  const toName = route.to ? routePlaceFromId(route.to)?.name || route.to : "직접 종료";
   $("#route-summary").innerHTML = `<b>${escapeHtml(routeDisplayName(route))}</b><span>${escapeHtml(fromName)} → ${escapeHtml(toName)}</span><small>${preset ? `${escapeHtml(preset.name || preset.id)} 길 설정 · ` : "길 설정 미지정 · "}${escapeHtml(routeSurfaceLabel(form.elements.surfaceStyle.value))} · ${cells.length}칸 · 폭 ${Number(form.elements.corridorWidth.value)}블록</small>`;
 }
 
@@ -4523,7 +4613,7 @@ function renderRoutePokemonDialog() {
   $("#route-biome-pokemon-count").textContent = `${baseEntries.length}종`; $("#route-direct-pokemon-count").textContent = `${directEntries.length}종`;
   $("#route-custom-pokemon-count").textContent = `${settings.additions.length}종 추가됨`;
   renderRoutePokemonPicker();
-  renderPokemonLevelEditor("route", settings, route ? routeDefaultPokemonLevelRange(route) : { min: 1, max: 100 });
+  renderPokemonDetailEditor("route", settings, route ? routeDefaultPokemonLevelRange(route) : { min: 1, max: 100 });
   baseList.scrollTop = baseScrollTop;
   directList.scrollTop = directScrollTop;
 }
@@ -4839,7 +4929,7 @@ async function cloneRoutePresetForDraft(draft, connection) {
   const result = await request("/api/routes/clone", { method: "POST", body: JSON.stringify({ source_id: draft.source_route_preset, slug: draft.id, name: generatedName, generation: `generation_${state.selectedGeneration}` }) });
   if (!result.ok || !result.data.document) { showIssues("#world-layout-issues", result.data); toast(result.data.error || "기존 길을 복사하지 못했습니다."); return false; }
   const document = result.data.document;
-  state.routes.push({ path: result.data.path, id: document.id, name: document.display_name?.ko_kr || document.id, auto_name: document.auto_name !== false, enabled: document.enabled !== false, route_type: document.route_type || "road", corridor_width_blocks: Number(document.corridor?.width_blocks || 12), npc_count: document.npc_placements?.length || 0, pokemon_spawns: structuredClone(document.pokemon_spawns || {}) });
+  state.routes.push({ path: result.data.path, id: document.id, name: document.display_name?.ko_kr || document.id, auto_name: document.auto_name !== false, enabled: document.enabled !== false, route_type: document.route_type || "road", corridor_width_blocks: Number(document.corridor?.width_blocks || 12), npc_count: document.npc_placement_enabled === false ? 0 : (document.npc_placements?.length || 0), pokemon_spawns: structuredClone(document.pokemon_spawns || {}) });
   state.routes.sort((left, right) => left.name.localeCompare(right.name, "ko", { numeric: true }));
   return true;
 }
@@ -5212,14 +5302,15 @@ function toggleRouteAnchorInsertion() {
 
 function beginRouteAnchorDrag(event, routeId, index, locked) {
   event.preventDefault(); event.stopPropagation();
-  if (locked) {
-    const route = state.worldLayout.connections.find((entry) => entry.id === routeId);
-    if (route && syncRouteEndpointAnchors(route)) {
-      markWorldDirty(); renderWorldLayout(); toast("이동한 연결 위치에 맞춰 길 끝점을 자동 보정했습니다.");
-    } else toast("이 끝점은 연결된 마을이나 동굴 입구의 위치를 자동으로 따라갑니다.");
-    return;
-  }
   const owner = routeId === "__draft__" ? state.routeDraft : state.worldLayout.connections.find((entry) => entry.id === routeId);
+  if (!owner) return;
+  if (locked) {
+    const anchors = connectionAnchors(owner);
+    const side = index === 0 ? "from" : index === anchors.length - 1 ? "to" : null;
+    if (!side || !confirm(`이 끝점은 '${routePlaceFromId(owner[side])?.name || owner[side]}'에 연결되어 있습니다. 연결을 끊고 이동할까요?`)) return;
+    delete owner[side];
+    if (routeId !== "__draft__") markWorldDirty();
+  }
   const anchors = (owner?.anchors?.length ? owner.anchors : connectionAnchors(owner || {})).map((anchor) => ({ ...anchor }));
   state.routeAnchorDrag = { pointerId: event.pointerId, routeId, index, moved: false, previewAnchors: anchors };
   $("#world-hex-map").setPointerCapture?.(event.pointerId);
@@ -5317,6 +5408,7 @@ function finishObjectDrag(event) {
     ? { ...(object.properties || {}) }
     : worldObjectPlacementProperties(object.resource, target.q, target.r, object.properties);
   if (Object.keys(properties).length) object.properties = properties;
+  syncRoutesForEndpoint(object.id);
   state.selectedHex = { ...target }; state.selectedEntrance = null; state.selectedObjectId = object.id; state.selectedRouteId = null;
   state.suppressMapClick = true; setTimeout(() => { state.suppressMapClick = false; }, 0);
   markWorldDirty(); renderWorldLayout();
@@ -9265,7 +9357,7 @@ function renderSharedTrainerPopulation(scope) {
   }
   const triggerControl = scope === "settlement" ? "" : `<label><span>지역 기본 조우 정책</span><select data-trainer-population-field="trigger_override"><option value="proximity">승리 전 자동 도전 → 승리 후 말 걸기 (기본)</option><option value="interact">항상 플레이어가 말 걸기</option><option value="preset">NPC 행동 프리셋 사용</option></select></label>`;
   const assignedMarkup = value.direct_trainers.map((trainerId) => assignedTrainerMarkup(scope, trainerId)).join("");
-  container.innerHTML = `<div class="shared-trainer-controls"><label class="toggle"><input type="checkbox" data-trainer-population-field="enabled" ${value.enabled ? "checked" : ""}><span>트레이너 배치 사용</span></label><label class="toggle"><input type="checkbox" data-trainer-population-field="use_biome_defaults" ${value.use_biome_defaults ? "checked" : ""}><span>바이옴 기본 트레이너 사용</span></label><label><span>최대 배치 수</span><input type="number" min="0" max="${scope === "route" ? 32 : 128}" data-trainer-population-field="${countKey}" value="${Number(value[countKey] || 0)}"></label>${triggerControl}</div><div class="shared-trainer-direct"><header><div><strong>직접 지정</strong><small>지정한 트레이너만 표시됩니다. 검색 창에서 여러 명을 추가할 수 있습니다.</small></div><button type="button" class="button secondary" data-open-trainer-assignment="${scope}">＋ 트레이너 추가</button></header><div class="trainer-pool-assigned">${assignedMarkup || '<span class="trainer-pool-empty">직접 지정된 트레이너가 없습니다.</span>'}</div></div>`;
+  container.innerHTML = `<div class="shared-trainer-controls"><label class="toggle"><input type="checkbox" data-trainer-population-field="enabled" ${value.enabled ? "checked" : ""}><span>${scope === "route" ? "자동 트레이너 배치 사용" : "트레이너 배치 사용"}</span></label><label class="toggle"><input type="checkbox" data-trainer-population-field="use_biome_defaults" ${value.use_biome_defaults ? "checked" : ""}><span>바이옴 기본 트레이너 사용</span></label><label><span>최대 배치 수</span><input type="number" min="0" max="${scope === "route" ? 32 : 128}" data-trainer-population-field="${countKey}" value="${Number(value[countKey] || 0)}"></label>${triggerControl}</div><div class="shared-trainer-direct"><header><div><strong>직접 지정</strong><small>지정한 트레이너만 표시됩니다. 검색 창에서 여러 명을 추가할 수 있습니다.</small></div><button type="button" class="button secondary" data-open-trainer-assignment="${scope}">＋ 트레이너 추가</button></header><div class="trainer-pool-assigned">${assignedMarkup || '<span class="trainer-pool-empty">직접 지정된 트레이너가 없습니다.</span>'}</div></div>`;
   const triggerSelect = container.querySelector('[data-trainer-population-field="trigger_override"]');
   if (triggerSelect) triggerSelect.value = value.trigger_override;
   container.querySelectorAll("[data-direct-trainer-policy]").forEach((select) => {
@@ -9471,12 +9563,15 @@ function renderRoutePreset() {
   preset.level_scaling ||= { mode: "world", offset: 0 }; preset.npc_placements ||= [];
   preset.automatic_npc_placement ||= { enabled: false, count: 0, use_biome_defaults: true, direct_trainers: [] };
   preset.pokemon_spawns ||= { inherit_biome: true, excluded_species: [], additions: [], level_overrides: [] };
+  preset.npc_placement_enabled = preset.npc_placement_enabled !== false;
   preset.auto_name = preset.auto_name !== false;
   const route = (state.worldLayout?.connections || []).find((entry) => entry.route_preset === preset.id);
   if (preset.auto_name && route) preset.display_name = generatedRouteNames(route);
   form.elements.id.value = preset.id || ""; form.elements.nameKo.value = preset.display_name.ko_kr || ""; form.elements.nameEn.value = preset.display_name.en_us || "";
   form.elements.autoName.checked = preset.auto_name;
   form.elements.enabled.checked = preset.enabled !== false; form.elements.routeType.value = preset.route_type || "road";
+  form.elements.pokemonSpawnEnabled.checked = preset.pokemon_spawns.enabled !== false;
+  form.elements.npcPlacementEnabled.checked = preset.npc_placement_enabled;
   form.elements.bridgePattern.value = preset.log_bridge_layout.pattern || "straight";
   form.elements.bridgeDetourBlocks.value = Number(preset.log_bridge_layout.detour_blocks || 18);
   form.elements.widthBlocks.value = Number(preset.corridor.width_blocks || 12); form.elements.edgeNoise.value = Number(preset.corridor.edge_noise || 0);
@@ -9493,14 +9588,21 @@ function renderRoutePreset() {
   const settings = ensureRoutePokemonSettings(preset);
   const baseCount = settings.inherit_biome && route ? routeBasePokemonIds(route).filter((id) => !settings.excluded_species.includes(id)).length : 0;
   const species = [...new Set([...(settings.inherit_biome && route ? routeBasePokemonIds(route).filter((id) => !settings.excluded_species.includes(id)) : []), ...settings.additions.map((entry) => entry.species)])];
-  $("#route-preset-pokemon-count").textContent = `${species.length}종`;
-  $("#route-preset-pokemon-description").textContent = `${settings.inherit_biome ? `통과 바이옴 ${baseCount}종 사용` : "통과 바이옴 미사용"} · 직접 추가 ${settings.additions.length}종 · 제외 ${settings.excluded_species.length}종`;
+  $("#route-preset-pokemon-count").textContent = settings.enabled ? `${species.length}종` : "사용 안 함";
+  $("#route-preset-pokemon-description").textContent = settings.enabled
+    ? `${settings.inherit_biome ? `통과 바이옴 ${baseCount}종 사용` : "통과 바이옴 미사용"} · 직접 추가 ${settings.additions.length}종 · 제외 ${settings.excluded_species.length}종`
+    : `저장된 설정 ${species.length}종 · 다시 켜면 그대로 복원됩니다.`;
   const iconList = $("#route-preset-pokemon-icons"), byId = worldPokemonById(), levelRange = routePresetPokemonLevelRange(preset, route);
   iconList.innerHTML = species.length
     ? species.map((id) => encounterPokemonIconMarkup(settings, id, byId, levelRange)).join("")
     : '<span class="encounter-pokemon-icon-empty">현재 설정에 해당하는 서식 포켓몬이 없습니다.</span>';
+  $("#route-pokemon-settings").classList.toggle("is-feature-disabled", !settings.enabled);
+  iconList.classList.toggle("is-disabled", !settings.enabled);
   renderRouteNpcList();
   renderTrainerPopulationPreview("route");
+  $("#route-npc-settings").classList.toggle("is-feature-disabled", !preset.npc_placement_enabled);
+  if (!preset.npc_placement_enabled) $("#route-auto-npc-preview").textContent = "NPC 배치 사용 안 함 · 저장된 자동 배치 설정은 유지됩니다.";
+  $("#route-npc-settings").querySelectorAll("[data-route-feature-content] input, [data-route-feature-content] select, [data-route-feature-content] button").forEach((element) => { element.disabled = !preset.npc_placement_enabled; });
 }
 
 function updateRoutePresetFromForm() {
@@ -9509,6 +9611,8 @@ function updateRoutePresetFromForm() {
   const route = (state.worldLayout?.connections || []).find((entry) => entry.route_preset === preset.id);
   preset.display_name = preset.auto_name && route ? generatedRouteNames(route) : { ko_kr: form.elements.nameKo.value.trim(), en_us: form.elements.nameEn.value.trim() };
   preset.enabled = form.elements.enabled.checked; preset.route_type = form.elements.routeType.value;
+  ensureRoutePokemonSettings(preset).enabled = form.elements.pokemonSpawnEnabled.checked;
+  preset.npc_placement_enabled = form.elements.npcPlacementEnabled.checked;
   preset.log_bridge_layout = {
     pattern: form.elements.bridgePattern.value,
     detour_blocks: Math.max(6, Math.min(24, Number(form.elements.bridgeDetourBlocks.value) || 18)),
@@ -19815,12 +19919,14 @@ const buildActions = [
   { id: "mods-pack", title: "모드팩 빌드", action: "모드팩 빌드", description: "JAR·모드만 빌드하고 설치 ZIP에 담습니다. 콘텐츠와 설정은 포함하지 않습니다." },
   { id: "content", title: "콘텐츠 빌드", action: "콘텐츠 빌드", description: "트레이너·이벤트·월드 등 콘텐츠 ZIP을 생성합니다. 엔진 JAR은 재빌드하지 않습니다." },
   { id: "content-install", title: "콘텐츠 교체", action: "인스턴스에 교체", description: "선택한 버전의 콘텐츠와 관련 스킨을 아래 게임 인스턴스에 적용합니다." },
+  { id: "battle-lab-zip", title: "AI 전투 테스트 공유", action: "공유용 ZIP 만들기", description: "AI 전투 테스트 웹 프로그램과 실행 스크립트를 다른 PC에서 실행할 수 있는 ZIP으로 묶습니다." },
 ];
 function previewArtifactNames() {
   const jar = $("#build-jar-version").value.trim() || state.contentDeployment?.versions?.jar_version || "1.0.0";
   const content = $("#build-content-version").value.trim() || state.contentDeployment?.versions?.content_version || "1.0.0";
   return { pack: `cobbleventure-full-jar-${jar}-content-${content}.zip`, "mods-pack": `cobbleventure-mods-${jar}.zip`,
-    content: `cobbleventure-content-${content}.zip`, "content-install": `cobbleventure-content-${content}.zip` };
+    content: `cobbleventure-content-${content}.zip`, "content-install": `cobbleventure-content-${content}.zip`,
+    "battle-lab-zip": "cobbleventure-battle-lab-portable.zip" };
 }
 function renderBuildCommands() {
   const languageSelect = $("#build-export-language");
@@ -20199,7 +20305,7 @@ async function syncStructureBuilder() {
 async function runBuild(command, targets = {}) {
   if (buildBusy) return;
   buildBusy = true;
-  if (buildActions.some((action) => action.id === command)) {
+  if (buildActions.some((action) => action.id === command && action.id !== "battle-lab-zip")) {
     try { await saveArtifactVersions(); }
     catch (error) {
       buildBusy = false;
@@ -21547,9 +21653,8 @@ $("#encounter-direct-pokemon-list").addEventListener("change", (event) => {
     renderEncounterPokemonDialog();
   }
 });
-$("#encounter-pokemon-level-apply").addEventListener("click", () => applyPokemonLevelOverride("encounter"));
-$("#encounter-pokemon-level-reset").addEventListener("click", () => resetPokemonLevelOverride("encounter"));
-$("#encounter-pokemon-level-close").addEventListener("click", () => { state.encounterPokemonLevelSpecies = null; renderEncounterPokemonDialog(); });
+$("#encounter-pokemon-level-editor").addEventListener("click", (event) => handlePokemonDetailClick(event, "encounter", renderEncounterPokemonDialog));
+$("#encounter-pokemon-level-editor").addEventListener("change", (event) => handlePokemonDetailChange(event, "encounter", renderEncounterPokemonDialog));
 $("#encounter-pokemon-dialog").addEventListener("close", () => { const target = state.encounterPokemonTarget; if (target) renderEncounterSummary(target); state.encounterPokemonTarget = null; state.encounterPokemonEditingCard = null; });
 $("#close-encounter-pokemon").addEventListener("click", () => $("#encounter-pokemon-dialog").close());
 $("#forest-form").addEventListener("click", handleForestEditorClick);
@@ -21596,6 +21701,14 @@ $("#entrance-inspector-form").addEventListener("change", handleEntranceInspector
 $("#delete-selected-entrance").addEventListener("click", deleteSelectedEntrance);
 $("#route-inspector-form").addEventListener("input", handleRouteInspectorInput);
 $("#route-inspector-form").elements.displayName.addEventListener("change", handleRouteInspectorInput);
+$("#route-endpoint-list").addEventListener("change", (event) => {
+  const select = event.target.closest("[data-route-endpoint]");
+  if (select) updateRouteEndpoint(select.dataset.routeEndpoint, select.value);
+});
+$("#route-endpoint-list").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-disconnect-route-endpoint]");
+  if (button) updateRouteEndpoint(button.dataset.disconnectRouteEndpoint, "");
+});
 $("#toggle-route-anchor-insert").addEventListener("click", toggleRouteAnchorInsertion);
 $("#edit-route-pokemon").addEventListener("click", () => openRoutePokemonDialog("world"));
 $('[data-edit-tile-habitat]').addEventListener("click", () => openRoutePokemonDialog("tile"));
@@ -21693,9 +21806,8 @@ $("#route-direct-pokemon-list").addEventListener("change", (event) => {
     renderRoutePokemonDialog();
   }
 });
-$("#route-pokemon-level-apply").addEventListener("click", () => applyPokemonLevelOverride("route"));
-$("#route-pokemon-level-reset").addEventListener("click", () => resetPokemonLevelOverride("route"));
-$("#route-pokemon-level-close").addEventListener("click", () => { state.routePokemonLevelSpecies = null; renderRoutePokemonDialog(); });
+$("#route-pokemon-level-editor").addEventListener("click", (event) => handlePokemonDetailClick(event, "route", renderRoutePokemonDialog));
+$("#route-pokemon-level-editor").addEventListener("change", (event) => handlePokemonDetailChange(event, "route", renderRoutePokemonDialog));
 $("#clear-tile").addEventListener("click", clearSelectedTile);
 $("#open-selected-management").addEventListener("click", () => openSelectedManagement().catch((error) => toast(error.message)));
 $$('[data-pokemon-map-tab]').forEach((button) => button.addEventListener("click", () => { state.pokemonMapTab = button.dataset.pokemonMapTab; renderWorldPokemonPanel(); }));

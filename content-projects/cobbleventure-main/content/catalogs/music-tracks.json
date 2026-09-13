@@ -40,9 +40,11 @@
       "id": "kanto.indigo_plateau",
       "sound_event": "music.kanto.indigo_plateau",
       "resource": "music/kanto/indigo_plateau",
-      "source_file": "another-red-bgm/PWT.ogg",
+      "source_file": "download/151. The Pokémon League.ogg",
       "category": "league",
-      "usage": "석영고원 및 관동 포켓몬리그 내부"
+      "usage": "석영고원 및 관동 포켓몬리그 내부",
+      "album": "Pokémon HeartGold & SoulSilver Original Soundtrack",
+      "author": "Hitomi Sato"
     },
     {
       "id": "facility.building",

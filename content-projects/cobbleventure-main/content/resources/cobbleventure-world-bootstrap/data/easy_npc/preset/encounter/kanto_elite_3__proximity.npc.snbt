@@ -23,7 +23,7 @@
     PersistenceRequired:1b,
     PresetUUID:[I;-2068735573,-62170546,-2137616673,1993909511],
     SkinData:{Type:"CUSTOM",UUID:[I;1173017104,671504662,-1518377743,1948534074] },
-    Tags:["cobbleventure_regional_npc","cves_binding/cobbleventure/league/kanto_elite_3"],
+    Tags:["cobbleventure_regional_npc","cves_binding/cobbleventure/league/kanto_elite_3","cobbleventure_npc/cobbleventure/npc/league/kanto_elite_3"],
     VariantType:"STEVE",
     id:"easy_npc:humanoid"
   }

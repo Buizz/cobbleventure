@@ -44,3 +44,19 @@ test('facility page uses shared sticky header and five trainer and room slots', 
   assert.doesNotMatch(source, /data-edit-team|data-add-stage|data-field="entry"|data-field="npc_anchor"|외형 리소스/);
   assert.match(source, /window\.LeagueFacilityUi\.chooseStructure/);
 });
+
+test('lobby can share its physical door for arrival and return', () => {
+  const {supportsRoom} = functions('supportsRoom');
+  const room = {entry:'door', leave:'door', exit:'entry'};
+  const anchors = [{id:'door',type:'door'}, {id:'entry',type:'transition'}];
+  assert.equal(supportsRoom(anchors, room), true);
+  assert.equal(supportsRoom(anchors.slice(1), room), false);
+});
+
+test('hall shares its exit for arrival and requires the travel guide marker', () => {
+  const {supportsRoom} = functions('supportsRoom');
+  const room = {entry:'hall_exit', exit:'hall_exit', advance_npc:'npc'};
+  const anchors = [{id:'hall_exit',type:'transition'}, {id:'npc',type:'npc_position'}];
+  assert.equal(supportsRoom(anchors, room), true);
+  assert.equal(supportsRoom(anchors.slice(0,1), room), false);
+});

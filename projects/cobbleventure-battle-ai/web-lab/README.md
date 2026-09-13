@@ -125,6 +125,14 @@ npm test
 캐시할 수 있으므로, 시작 명령이 실패했다면 실행 중인 서버를 종료하고 다시
 시작한다.
 
+### 다른 PC에 공유
+
+콘텐츠 관리 웹의 `팩 빌드 · 인스턴스 설치` 화면에서
+`AI 전투 테스트 공유`의 `공유용 ZIP 만들기`를 누르면 저장소의 `dist` 폴더에
+`cobbleventure-battle-lab-portable.zip`이 생성된다. 받은 사람은 ZIP을 풀고
+`START-WEB-LAB.bat`을 실행하면 된다. 첫 실행에는 Node.js 22.13 이상과 npm
+패키지를 내려받기 위한 인터넷 연결이 필요하다.
+
 모드 구성이 변경되었을 때는 먼저 저장소 최상위의
 [`tools/cobblemon-item-catalog`](../../../tools/cobblemon-item-catalog/README.md)
 생성기를 실행해야 한다.

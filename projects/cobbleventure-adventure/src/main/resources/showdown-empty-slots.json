@@ -1,12 +1,42 @@
 {
   "sim/battle.js": [
-    {"from": "for (const pokemon of side.active) {", "to": "for (const pokemon of side.active) { if (!pokemon) continue; // CV empty active slot"},
-    {"from": "for (let i = 0; i < side.active.length; i++) {", "to": "for (let i = 0; i < side.active.length; i++) { if (!side.pokemon[i]) continue; // CV absent starter slot"}
+    {
+      "from": "for (const pokemon of side.active) {",
+      "to": "for (const pokemon of side.active) { if (!pokemon && side.battle.gameType === \"doubles\" && side.pokemon.length === 1) continue; // CV underfilled doubles empty active slot",
+      "legacy": ["for (const pokemon of side.active) { if (!pokemon) continue; // CV empty active slot"]
+    },
+    {
+      "from": "for (let i = 0; i < side.active.length; i++) {",
+      "to": "for (let i = 0; i < side.active.length; i++) { if (!side.pokemon[i] && side.battle.gameType === \"doubles\" && side.pokemon.length === 1) continue; // CV underfilled doubles absent starter slot",
+      "legacy": ["for (let i = 0; i < side.active.length; i++) { if (!side.pokemon[i]) continue; // CV absent starter slot"]
+    }
   ],
   "sim/side.js": [
-    {"from": "(this.active[index].fainted || this.active[index].volatiles[\"commanding\"])", "to": "(!this.active[index] || this.active[index].fainted || this.active[index].volatiles[\"commanding\"])"},
-    {"from": "!this.active[index].switchFlag", "to": "!this.active[index]?.switchFlag"},
-    {"from": "if (pokemon.switchFlag) {", "to": "if (pokemon?.switchFlag) {"},
-    {"from": "JSON.stringify(update)", "to": "JSON.stringify(update, (key, value) => key === \"active\" && Array.isArray(value) ? Array.from(value, moveset => moveset ?? {moves: []}) : value)"}
+    {
+      "from": "(this.active[index].fainted || this.active[index].volatiles[\"commanding\"])",
+      "to": "((!this.active[index] && this.battle.gameType === \"doubles\" && this.pokemon.length === 1) || this.active[index].fainted || this.active[index].volatiles[\"commanding\"])",
+      "legacy": ["(!this.active[index] || this.active[index].fainted || this.active[index].volatiles[\"commanding\"])"]
+    },
+    {
+      "from": "!this.active[index].switchFlag",
+      "to": "((!this.active[index] && this.battle.gameType === \"doubles\" && this.pokemon.length === 1) || !this.active[index].switchFlag)",
+      "legacy": ["!this.active[index]?.switchFlag"]
+    },
+    {
+      "from": "if (pokemon.switchFlag) {",
+      "to": "if (!pokemon && !(this.battle.gameType === \"doubles\" && this.pokemon.length === 1)) throw new Error(\"Unexpected empty active slot\"); if (pokemon?.switchFlag) {",
+      "legacy": ["if (pokemon?.switchFlag) {"]
+    },
+    {
+      "from": "JSON.stringify(update)",
+      "to": "JSON.stringify(update, (key, value) => key === \"active\" && Array.isArray(value) ? Array.from(value, (moveset, index) => moveset ?? (this.battle.gameType === \"doubles\" && this.pokemon.length === 1 && !this.pokemon[index] ? {moves: []} : null)) : value)",
+      "legacy": ["JSON.stringify(update, (key, value) => key === \"active\" && Array.isArray(value) ? Array.from(value, moveset => moveset ?? {moves: []}) : value)"]
+    }
+  ],
+  "sim/pokemon.js": [
+    {
+      "from": "for (const foeActive of this.side.foe.active) {",
+      "to": "for (const foeActive of this.side.foe.active) { if (!foeActive && this.battle.gameType === \"doubles\" && this.side.foe.pokemon.length === 1) continue; // CV underfilled doubles empty foe slot"
+    }
   ]
 }

@@ -32,17 +32,6 @@
       "facing": "north"
     },
     {
-      "id": "entry",
-      "label": "entry",
-      "type": "arrival",
-      "position": [
-        31,
-        2,
-        53
-      ],
-      "facing": "north"
-    },
-    {
       "id": "exit",
       "label": "exit",
       "type": "transition",
@@ -55,6 +44,22 @@
         31,
         12,
         55
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "entry",
+      "label": "entry",
+      "type": "transition",
+      "position": [
+        31,
+        3,
+        58
+      ],
+      "safe_spawn": [
+        31,
+        3,
+        56
       ],
       "facing": "south"
     }

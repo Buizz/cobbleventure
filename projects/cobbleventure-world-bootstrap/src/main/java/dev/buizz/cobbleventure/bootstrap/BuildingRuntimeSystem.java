@@ -1373,13 +1373,15 @@ final class BuildingRuntimeSystem {
             if (settings.runtimeLeague.has("generation_travel_mode")
                 && settings.runtimeLeague.get("generation_travel_mode").getAsString().equals("travel_test")) {
                 JsonObject hall = settings.runtimeLeague.getAsJsonArray("rooms").asList().getLast().getAsJsonObject();
-                SpaceInstance space = spaces.get(hall.get("key").getAsString());
-                Anchor advance = space.metadata.anchors.stream()
-                    .filter(anchor -> anchor.id.equals(hall.get("advance").getAsString()))
-                    .findFirst().orElseThrow();
-                registerConnectionTrigger(space, advance, new DoorTarget(space.level.dimension(), space.origin,
-                    List.of(), "all", List.of(), List.of(), true, null, null,
-                    settings.runtimeLeague.get("next_generation").getAsInt()));
+                if (hall.has("advance")) {
+                    SpaceInstance space = spaces.get(hall.get("key").getAsString());
+                    Anchor advance = space.metadata.anchors.stream()
+                        .filter(anchor -> anchor.id.equals(hall.get("advance").getAsString()))
+                        .findFirst().orElseThrow();
+                    registerConnectionTrigger(space, advance, new DoorTarget(space.level.dimension(), space.origin,
+                        List.of(), "all", List.of(), List.of(), true, null, null,
+                        settings.runtimeLeague.get("next_generation").getAsInt()));
+                }
             }
         }
         boolean isDaycare = exteriorStructure.equals(DAYCARE_STRUCTURE);

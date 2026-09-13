@@ -65,6 +65,31 @@ final class WorldPlanParserTest {
     }
 
     @Test
+    void disablesEveryEncounterMethodWithoutDiscardingAuthoredPokemon() {
+        var root = JsonParser.parseString("""
+            {"connections": [{"id":"route_disabled", "corridor_width_blocks":12,
+              "surface_style":"road", "cells":[{"q":0,"r":0}],
+              "pokemon_spawns":{"enabled":false,"inherit_biome":true,
+                "excluded_species":[],"additions":[
+                  {"species":"cobblemon:pidgey","min_level":2,"max_level":5}
+                ],"encounter_pools":{"old_rod":{"enabled":true,
+                  "inherit_biome":false,"excluded_species":[],"additions":[],
+                  "level_overrides":[],"trigger_chance":1.0}}}
+            }]}
+            """).getAsJsonObject();
+        String boundaryId = "cobbleventure:boundary/dense_tree_line";
+        var boundary = new WorldPlanModels.BoundaryProfile(boundaryId, "tree", 1, 1, 1,
+            "solid", "minecraft:stone", List.of(), null);
+
+        var spawns = WorldPlanParser.connections(root, Map.of(boundaryId, boundary))
+            .getFirst().pokemonSpawns();
+
+        assertEquals(1, spawns.additions().size());
+        assertEquals(false, spawns.pool("land").enabled());
+        assertEquals(false, spawns.pool("old_rod").enabled());
+    }
+
+    @Test
     void parsesBarrierTransitionForCaveEntrance() {
         var root = JsonParser.parseString("""
             {
