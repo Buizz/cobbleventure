@@ -68,7 +68,10 @@
       }
     },
     {
-      "species": "urshifu-rapidstrike",
+      "species": "urshifu",
+      "aspects": [
+        "rapid_strike-style"
+      ],
       "gender": "FEMALE",
       "gimmicks": {
         "dynamax": true,

@@ -146,9 +146,11 @@
         },
         {
           "slot": 3,
-          "species": "urshifu-rapidstrike",
+          "species": "urshifu",
           "resolvedSpecies": "Urshifu-Rapid-Strike",
-          "aspects": [],
+          "aspects": [
+            "rapid_strike-style"
+          ],
           "gimmicks": {
             "dynamax": true,
             "gmax": true

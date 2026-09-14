@@ -191,8 +191,11 @@ test("builds the prioritized custom and RCT trainer index", async () => {
   assert.equal(payload.trainers[0].entry.type, "official-player");
   assert.equal(payload.trainers[0].entry.priority, 1000);
   const dbingsuUrshifu = payload.trainers[0].team.find(
-    (member) => member.species === "urshifu-rapidstrike",
+    (member) =>
+      member.species === "urshifu" &&
+      member.aspects.includes("rapid_strike-style"),
   );
+  assert.equal(dbingsuUrshifu.resolvedSpecies, "Urshifu-Rapid-Strike");
   assert.deepEqual(dbingsuUrshifu.gimmicks, {
     dynamax: true,
     gmax: true,

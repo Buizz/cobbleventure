@@ -34,6 +34,9 @@ final class AIBattleTestCommandTest {
             assertEquals("DBingsu 공식 엔트리", root.get("name").getAsString());
             assertEquals(6, team.size());
             assertEquals("porygon2", team.get(0).getAsJsonObject().get("species").getAsString());
+            var urshifu = team.get(2).getAsJsonObject();
+            assertEquals("urshifu", urshifu.get("species").getAsString());
+            assertEquals("rapid_strike-style", urshifu.getAsJsonArray("aspects").get(0).getAsString());
             assertEquals("blaziken", team.get(5).getAsJsonObject().get("species").getAsString());
         }
     }
