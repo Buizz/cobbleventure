@@ -1,26 +1,41 @@
 package dev.buizz.cobbleventure.battleai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.gson.JsonParser;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import net.minecraft.world.phys.Vec3;
 import org.junit.jupiter.api.Test;
 
 final class AIBattleTestCommandTest {
     @Test
-    void playerIsLeftAndLoreleiRuntimeTrainerIsRight() {
+    void loreleiRuntimeTrainerUsesStableUniqueId() {
         UUID playerId = UUID.fromString("11111111-1111-1111-1111-111111111111");
         UUID opponentId = UUID.fromString("22222222-2222-2222-2222-222222222222");
         String runtimeId = AIBattleTestCommand.runtimeTrainerId(playerId, opponentId);
 
-        assertEquals(
-                "tbcs battle GEN_9_SINGLES " + playerId
-                        + " vs " + opponentId + " as " + runtimeId,
-                AIBattleTestCommand.battleCommand(playerId, opponentId, runtimeId)
-        );
         assertTrue(runtimeId.startsWith("cobbleventure_battle_ai:test/lorelei/"));
         assertEquals("expert_search", AIBattleTestCommand.TEST_DIFFICULTY);
+    }
+
+    @Test
+    void packagedLeftEntryMatchesWebOfficialPreset() throws Exception {
+        try (var stream = AIBattleTestCommandTest.class.getResourceAsStream(
+                AIBattleTestPlayerPreset.TEAM_RESOURCE)) {
+            assertNotNull(stream);
+            var root = JsonParser.parseReader(
+                    new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
+            var team = root.getAsJsonArray("team");
+
+            assertEquals("DBingsu 공식 엔트리", root.get("name").getAsString());
+            assertEquals(6, team.size());
+            assertEquals("porygon2", team.get(0).getAsJsonObject().get("species").getAsString());
+            assertEquals("blaziken", team.get(5).getAsJsonObject().get("species").getAsString());
+        }
     }
 
     @Test

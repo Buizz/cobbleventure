@@ -218,6 +218,16 @@ processResources {
         expand properties
     }
 
+    from(rootProject.file('../../trainer-data/entries/custom/dbingsu-server-party.json')) {
+        into 'data/cobbleventure_battle_ai/test-presets'
+    }
+
+}
+
+tasks.named('jar') {
+    from(rootProject.file('../../trainer-data/entries/custom/dbingsu-server-party.json')) {
+        into 'data/cobbleventure_battle_ai/test-presets'
+    }
 }
 
 tasks.register('cleanInstalledDevelopmentJars', Delete) {
