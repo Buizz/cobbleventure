@@ -137,9 +137,44 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
             }
         }
         lastDecisionSource = "rct_fallback";
-        ShowdownActionResponse response = super.choose(active, battle, side, moveset, forceSwitch);
-        logDecision(active, battle, moveset, forceSwitch, response, lastSearchReplayTrace);
-        return response;
+        ShowdownActionResponse rctResponse;
+        try {
+            rctResponse = super.choose(active, battle, side, moveset, forceSwitch);
+        } catch (RuntimeException exception) {
+            if (!forceSwitch) throw exception;
+            ShowdownActionResponse recovered = recoverForcedSwitch(active, moveset, true, null);
+            if (recovered == null) throw exception;
+            lastSearchFailure = "RCT forced-switch selection failed: "
+                    + exception.getClass().getName() + ": " + exception.getMessage();
+            lastDecisionSource = "forced_switch_recovery";
+            logDecision(active, battle, moveset, true, recovered, null);
+            return recovered;
+        }
+
+        ShowdownActionResponse recovered = recoverForcedSwitch(active, moveset, forceSwitch, rctResponse);
+        if (recovered != rctResponse) {
+            lastSearchFailure = "RCT produced an invalid forced-switch response: "
+                    + (rctResponse == null ? "null" : rctResponse.getType().name());
+            lastDecisionSource = "forced_switch_recovery";
+        }
+        logDecision(active, battle, moveset, forceSwitch, recovered, lastSearchReplayTrace);
+        return recovered;
+    }
+
+    private static ShowdownActionResponse recoverForcedSwitch(
+            ActiveBattlePokemon active,
+            ShowdownMoveset moveset,
+            boolean forceSwitch,
+            ShowdownActionResponse proposed
+    ) {
+        return ForcedSwitchRecovery.select(
+                forceSwitch,
+                proposed,
+                response -> response.isValid(active, moveset, forceSwitch),
+                () -> active.getActor().getPokemonList().stream()
+                        .map(pokemon -> (ShowdownActionResponse) new SwitchActionResponse(
+                                pokemon.getUuid()))
+        );
     }
 
     String lastDecisionSource() {
