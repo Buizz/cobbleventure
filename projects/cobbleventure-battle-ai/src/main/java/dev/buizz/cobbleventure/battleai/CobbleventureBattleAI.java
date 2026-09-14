@@ -63,7 +63,7 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
         } else {
             pendingBatonPassTargets.remove(battleId);
         }
-        if (usesJvmSearch() && moveset != null) {
+        if (usesIndependentDecisionEngine() && moveset != null) {
             lastSearchFailure = null;
             lastSearchReplayTrace = null;
             try {
@@ -92,7 +92,7 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
                 // 불완전한 타 모드 전투 상태에서는 RCT의 검증된 기본 선택기로 안전 복귀한다.
             }
         }
-        if (!usesJvmSearch() && !forceSwitch && moveset != null) {
+        if (!usesIndependentDecisionEngine() && !forceSwitch && moveset != null) {
             try {
                 CobblemonBattleSearch.PlannedResponse screenPlan =
                         CobblemonBattleSearch.planScreenSupport(
@@ -126,11 +126,19 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
         return lastSearchReplayTrace;
     }
 
-    private boolean usesJvmSearch() {
-        return switch (profile.difficulty()) {
-            case "expert_winrate", "expert_search", "cheater" -> true;
-            default -> false;
-        };
+    CobbleventureBattleAI withDifficulty(String difficulty) {
+        CobbleventureBattleAIConfig overridden = new CobbleventureBattleAIConfig(
+                difficulty,
+                profile.strategy(),
+                profile.cheatProbability(),
+                profile.teraTarget(),
+                profile.mechanics()
+        );
+        return new CobbleventureBattleAI(overridden, overridden.rctConfig());
+    }
+
+    private boolean usesIndependentDecisionEngine() {
+        return CobbleventureBattleAIConfig.usesIndependentDecisionEngine(profile.difficulty());
     }
 
     private void applyMechanicPolicy(

@@ -28,6 +28,7 @@ final class AIBattleTestCommand {
     static final String PRIMARY_COMMAND = "ai_battle_test";
     static final String ALIAS_COMMAND = "aibattletest";
     static final String LORELEI_TRAINER_ID = "rctmod:kanto_elite_1";
+    static final String TEST_DIFFICULTY = "expert_search";
     private static final String TBCS_REGISTRY = "tbcs";
     private static final long PENDING_RETENTION_TICKS = 20L * 30L;
     private static final Map<String, PendingOpponent> PENDING = new ConcurrentHashMap<>();
@@ -93,7 +94,7 @@ final class AIBattleTestCommand {
                             + LORELEI_TRAINER_ID));
             return 0;
         }
-        if (!(authored.getBattleAI() instanceof CobbleventureBattleAI)) {
+        if (!(authored.getBattleAI() instanceof CobbleventureBattleAI authoredAI)) {
             source.sendFailure(Component.literal(
                     "칸나 트레이너에 Cobbleventure AI가 연결되어 있지 않습니다. 콘텐츠 빌드를 확인해 주세요."));
             return 0;
@@ -105,8 +106,8 @@ final class AIBattleTestCommand {
             return 0;
         }
 
-        TrainerNPC runtimeTrainer = new TrainerNPC(authored);
-        runtimeTrainer.setEntity(opponent);
+        TrainerNPC runtimeTrainer = AIBattleTestTrainerFactory.create(
+                authored, authoredAI, opponent, TEST_DIFFICULTY);
         String runtimeId = runtimeTrainerId(player.getUUID(), opponent.getUUID());
         ensureBattleListener(api);
         registry.registerNPC(runtimeId, runtimeTrainer);
@@ -124,7 +125,8 @@ final class AIBattleTestCommand {
                 source.getServer().createCommandSourceStack().withPermission(2), command);
 
         source.sendSuccess(() -> Component.literal(
-                "AI 배틀 테스트를 시작합니다: 현재 파티(왼쪽) vs 칸나(오른쪽)"), false);
+                "AI 배틀 테스트를 시작합니다: 현재 파티(왼쪽) vs 칸나(오른쪽), AI="
+                        + TEST_DIFFICULTY), false);
         return 1;
     }
 

@@ -20,6 +20,7 @@ final class AIBattleTestCommandTest {
                 AIBattleTestCommand.battleCommand(playerId, opponentId, runtimeId)
         );
         assertTrue(runtimeId.startsWith("cobbleventure_battle_ai:test/lorelei/"));
+        assertEquals("expert_search", AIBattleTestCommand.TEST_DIFFICULTY);
     }
 
     @Test

@@ -192,17 +192,27 @@ final class CobblemonBattleSearch implements SearchRuntime {
                 ShowdownBattleLogObservation.parse(active.getBattle().getBattleLog()));
         State state = model.initialState();
         String stateId = model.remember(state);
-        String algorithm = "expert_winrate".equals(difficulty) ? "win_rate" : "two_turn";
-        int maxNodes = "win_rate".equals(algorithm) ? 8 : 10;
+        String algorithm = CobbleventureBattleAIConfig.decisionAlgorithm(difficulty);
+        int maxNodes = switch (algorithm) {
+            case "win_rate" -> 8;
+            case "two_turn" -> 10;
+            default -> 1;
+        };
         RecordingSearchRuntime runtime = new RecordingSearchRuntime(
                 model, algorithm, stateId, 0, maxNodes, model.stateNamespace);
 
         SearchDecision decision;
         if (forceSwitch) {
-            SearchAction selected = model.candidates(stateId, 0).stream()
+            SearchAction selected = runtime.candidates(stateId, 0).stream()
                     .filter(action -> "switch".equals(action.getKind()))
                     .max(Comparator.comparingDouble(SearchAction::getScore)).orElse(null);
             decision = selected == null ? null : new SearchDecision(selected, false, List.of(), 0, 0, false, 1);
+        } else if ("heuristic".equals(algorithm)) {
+            SearchAction selected = runtime.candidates(stateId, 0).stream()
+                    .max(Comparator.comparingDouble(SearchAction::getScore)).orElse(null);
+            decision = selected == null
+                    ? null
+                    : new SearchDecision(selected, false, List.of(), 0, 0, false, 1);
         } else if ("expert_winrate".equals(difficulty)) {
             decision = SharedAiCore.INSTANCE.decideWinRate(stateId, 0, maxNodes, runtime);
         } else {

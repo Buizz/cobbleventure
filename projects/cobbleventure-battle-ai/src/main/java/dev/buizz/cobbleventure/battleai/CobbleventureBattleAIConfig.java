@@ -78,6 +78,21 @@ public record CobbleventureBattleAIConfig(
         };
     }
 
+    static boolean usesIndependentDecisionEngine(String difficulty) {
+        return switch (difficulty) {
+            case "expert", "expert_winrate", "expert_search", "cheater" -> true;
+            default -> false;
+        };
+    }
+
+    static String decisionAlgorithm(String difficulty) {
+        return switch (difficulty) {
+            case "expert" -> "heuristic";
+            case "expert_winrate" -> "win_rate";
+            default -> "two_turn";
+        };
+    }
+
     private static String normalized(String value, String fallback) {
         if (value == null || value.isBlank()) {
             return fallback;
