@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "wochien-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0,
+      "condition": {
+        "biomes": [
+          "cobbleverse:custom_spawn/grasswither_shrine"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "wochien",
+      "level": "65-70",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

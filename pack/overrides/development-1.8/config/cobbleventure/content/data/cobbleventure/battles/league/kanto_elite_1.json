@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "id": "cobbleventure:battle/league/kanto_elite_1",
+  "enabled": true,
+  "name": {
+    "ko_kr": "칸나"
+  },
+  "battle": {
+    "format": "GEN_9_SINGLES",
+    "battle_type": "singles",
+    "ai": {
+      "controller": "cobbleventure",
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "options": {
+        "tera_target": "mamoswine"
+      }
+    },
+    "level_mode": "fixed",
+    "rules": {
+      "can_forfeit": true,
+      "max_item_uses": 99
+    },
+    "bag": [
+      {
+        "item": "cobblemon:full_restore",
+        "quantity": 1
+      }
+    ],
+    "mechanics": {
+      "mega_evolution": false,
+      "z_move": false,
+      "dynamax": false,
+      "terastallization": true
+    },
+    "team": [
+      {
+        "species": "cobblemon:ninetales",
+        "level": 60,
+        "form": null,
+        "aspects": [
+          "alolan"
+        ],
+        "gender": "female",
+        "nature": "timid",
+        "ability": "snowwarning",
+        "held_item": "cobblemon:light_clay",
+        "gimmick": null,
+        "moves": [
+          "auroraveil",
+          "freezedry",
+          "moonblast",
+          "encore"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 50,
+          "attack": 0,
+          "defense": 100,
+          "special_attack": 6,
+          "special_defense": 100,
+          "speed": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:cloyster",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "jolly",
+        "ability": "skilllink",
+        "held_item": "cobblemon:kings_rock",
+        "gimmick": null,
+        "moves": [
+          "waterfall",
+          "iciclespear",
+          "rockblast",
+          "shellsmash"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "attack": 252,
+          "speed": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:mamoswine",
+        "level": 60,
+        "form": null,
+        "aspects": [
+          "hisuian"
+        ],
+        "gender": "female",
+        "nature": "adamant",
+        "ability": "thickfat",
+        "held_item": "cobblemon:sitrus_berry",
+        "gimmick": null,
+        "moves": [
+          "highhorsepower",
+          "rockslide",
+          "iceshard",
+          "fissure"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 252,
+          "attack": 252,
+          "defense": 6
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:weavile",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "jolly",
+        "ability": "pressure",
+        "held_item": "cobblemon:expert_belt",
+        "gimmick": null,
+        "moves": [
+          "tripleaxel",
+          "iceshard",
+          "nightslash",
+          "swordsdance"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "speed": 252,
+          "attack": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:lapras",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "female",
+        "nature": "adamant",
+        "ability": "shellarmor",
+        "held_item": "cobblemon:leftovers",
+        "gimmick": null,
+        "moves": [
+          "freezedry",
+          "sparklingaria",
+          "thunder",
+          "sheercold"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 252,
+          "special_defense": 252,
+          "defense": 6
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:froslass",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "female",
+        "nature": "timid",
+        "ability": "cursedbody",
+        "held_item": "mega_showdown:froslassite",
+        "gimmick": null,
+        "moves": [
+          "blizzard",
+          "shadowball",
+          "thunderbolt",
+          "willowisp"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "speed": 252,
+          "special_attack": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      }
+    ],
+    "trainer_id": "cobbleventure:trainer/league/kanto_elite_1"
+  }
+}

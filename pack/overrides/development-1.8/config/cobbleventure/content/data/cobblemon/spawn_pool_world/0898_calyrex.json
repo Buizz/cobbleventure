@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "calyrex-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0,
+      "condition": {
+        "biomes": [
+          "cobbleverse:custom_spawn"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "calyrex",
+      "level": "50-70",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

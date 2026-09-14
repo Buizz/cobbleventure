@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "dolliv-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.44,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_grassland"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "dolliv",
+      "level": "25-35",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    }
+  ]
+}

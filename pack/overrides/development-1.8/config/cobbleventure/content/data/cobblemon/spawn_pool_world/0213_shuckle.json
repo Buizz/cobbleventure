@@ -1,0 +1,198 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "shuckle-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "shuckle",
+      "level": "16-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "maxY": 9,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ]
+      }
+    },
+    {
+      "id": "shuckle-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "shuckle",
+      "level": "16-51",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "maxY": 9,
+        "minLureLevel": 1,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ]
+      }
+    },
+    {
+      "id": "shuckle-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "maxSkyLight": 7,
+        "minLureLevel": 1,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "shuckle",
+      "level": "16-51",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "maxY": 9,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "minLureLevel": 3
+        },
+        "multiplier": 3.0
+      }
+    },
+    {
+      "id": "shuckle-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 9,
+        "minSkyLight": 0,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "shuckle",
+      "level": "16-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ]
+      }
+    },
+    {
+      "id": "shuckle-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 9,
+        "minSkyLight": 0,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "shuckle",
+      "level": "16-51",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "shuckle-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 9,
+        "minLureLevel": 1,
+        "minSkyLight": 0,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "shuckle",
+      "level": "16-51",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "minLureLevel": 3
+        },
+        "multiplier": 3.0
+      }
+    }
+  ]
+}

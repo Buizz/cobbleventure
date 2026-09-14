@@ -1,0 +1,87 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "charcadet-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 92,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_nether"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "charcadet",
+      "level": "1-26",
+      "spawnablePositionType": "grounded",
+      "drops": {
+        "amount": 3,
+        "entries": [
+          {
+            "item": "minecraft:blaze_rod",
+            "quantityRange": "0-1"
+          },
+          {
+            "item": "cobblemon:charcoal_stick",
+            "percentage": 2.5
+          },
+          {
+            "item": "cobblemon:rawst_berry",
+            "percentage": 2.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "charcadet-2",
+      "presets": [
+        "ruined_portal"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 18.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "charcadet",
+      "level": "1-26",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "charcadet-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 9.2,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "structures": [
+          "#aether:dungeons"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "charcadet",
+      "level": "1-26",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

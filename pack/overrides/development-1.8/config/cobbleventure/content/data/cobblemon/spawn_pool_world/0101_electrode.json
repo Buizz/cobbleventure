@@ -1,0 +1,127 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "electrode-1",
+      "presets": [
+        "natural",
+        "urban"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "electrode",
+      "level": "30-49",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "isThundering": true
+        },
+        "multiplier": 5.0
+      }
+    },
+    {
+      "id": "electrode-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "electrode",
+      "level": "30-49",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "isThundering": true
+        },
+        "multiplier": 5.0
+      }
+    },
+    {
+      "id": "electrode-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 16,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "neededNearbyBlocks": [
+          "minecraft:lightning_rod"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "electrode",
+      "level": "30-49",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "isThundering": true
+        },
+        "multiplier": 5.0
+      }
+    },
+    {
+      "id": "electrode-hisuian-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "neededNearbyBlocks": [
+          "#cobblemon:apricorns"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "electrode hisuian",
+      "level": "30-49",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "isThundering": true
+        },
+        "multiplier": 5.0
+      }
+    }
+  ]
+}

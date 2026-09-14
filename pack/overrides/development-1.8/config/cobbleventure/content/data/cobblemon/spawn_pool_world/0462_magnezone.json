@@ -1,0 +1,60 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "magnezone-1",
+      "presets": [
+        "redstone"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "magnezone",
+      "level": "42-54",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    },
+    {
+      "id": "magnezone-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.01,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_sandy"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "magnezone",
+      "level": "42-54",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "isThundering": true
+        },
+        "multiplier": 5.0
+      }
+    }
+  ]
+}

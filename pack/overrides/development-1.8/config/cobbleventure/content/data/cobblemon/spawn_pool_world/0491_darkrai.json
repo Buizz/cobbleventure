@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "darkrai-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0,
+      "condition": {
+        "biomes": [
+          "cobbleverse:custom_spawn/newmoon_island"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "darkrai",
+      "level": "40-65",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

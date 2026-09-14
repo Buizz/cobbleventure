@@ -1,0 +1,680 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/gym_leaders/koga",
+  "source_digest": "341b1dc67cfe087fb28b16e8c9493cc337dcf3e01d9cf5db9e43d324e91e1388",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:runtime/npc_instance_defeated"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "힘만으로는 모든 승부를 이길 수 없다. 변화무쌍한 전술을 익혀 더 높은 경지로 나아가거라."
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "후하하하! 어린 트레이너가 감히 닌자의 길에 도전하는가!"
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "독은 서서히 숨통을 조이고, 잠은 반격할 틈마저 빼앗는다."
+          },
+          "next": 4,
+          "await": true,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "독타입 포켓몬이 펼치는 공포의 비술을 견뎌 보아라!"
+          },
+          "next": 5,
+          "await": true,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/gym_leader/koga"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "result",
+          "operation_id": "cobbleventure:event_script/gym_leaders/koga/challenge/battle",
+          "next": 6,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 7,
+          "else": 16
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/koga/victory/set_instance_defeated",
+          "next": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/gym/kanto/koga/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/koga/victory/set_defeated",
+          "next": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "op": "command",
+          "command": "give_money",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 4300
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/koga/victory/give_money",
+          "next": 10
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "op": "command",
+          "command": "grant_badge",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:badge/kanto/soul"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/koga/victory/grant_badge",
+          "next": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/grant_field_move",
+          "op": "command",
+          "command": "grant_field_move",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "surf"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": "surf_granted",
+          "operation_id": "cobbleventure:event_script/gym_leaders/koga/victory/grant_field_move",
+          "next": 12
+        },
+        {
+          "address": 12,
+          "instruction_id": "victory/set_level_cap",
+          "op": "command",
+          "command": "set_level_cap",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 43
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/koga/victory/set_level_cap",
+          "next": 13
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "흥! 네 실력과 인내를 인정하마."
+          },
+          "next": 14,
+          "await": true,
+          "resume": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then/s7",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "연분홍배지를 받아라. 이제 파도타기의 비술도 다룰 자격이 있다."
+          },
+          "next": 15,
+          "await": true,
+          "resume": 15
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/then_end",
+          "op": "jump",
+          "target": 17
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "맹독은 시간이 흐를수록 깊어지는 법. 조급함을 버리고 다시 수련해 오너라!"
+          },
+          "next": 17,
+          "await": true,
+          "resume": 17
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 97,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 157,
+              "line": 3,
+              "column": 65
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 161,
+              "line": 4,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 183,
+              "line": 6,
+              "column": 5
+            },
+            "end": {
+              "offset": 224,
+              "line": 6,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 229,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 271,
+              "line": 7,
+              "column": 47
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 276,
+              "line": 8,
+              "column": 5
+            },
+            "end": {
+              "offset": 314,
+              "line": 8,
+              "column": 43
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "stable_id": "challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 319,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 402,
+              "line": 9,
+              "column": 88
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 407,
+              "line": 10,
+              "column": 5
+            },
+            "end": {
+              "offset": 1037,
+              "line": 21,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "stable_id": "victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 442,
+              "line": 11,
+              "column": 7
+            },
+            "end": {
+              "offset": 536,
+              "line": 11,
+              "column": 101
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "stable_id": "victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 543,
+              "line": 12,
+              "column": 7
+            },
+            "end": {
+              "offset": 627,
+              "line": 12,
+              "column": 91
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "stable_id": "victory/give_money",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 634,
+              "line": 13,
+              "column": 7
+            },
+            "end": {
+              "offset": 673,
+              "line": 13,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "stable_id": "victory/grant_badge",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 680,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 749,
+              "line": 14,
+              "column": 76
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/grant_field_move",
+          "stable_id": "victory/grant_field_move",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 756,
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "offset": 823,
+              "line": 15,
+              "column": 74
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "victory/set_level_cap",
+          "stable_id": "victory/set_level_cap",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 830,
+              "line": 16,
+              "column": 7
+            },
+            "end": {
+              "offset": 873,
+              "line": 16,
+              "column": 50
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 880,
+              "line": 17,
+              "column": 7
+            },
+            "end": {
+              "offset": 908,
+              "line": 17,
+              "column": 35
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then/s7",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 915,
+              "line": 18,
+              "column": 7
+            },
+            "end": {
+              "offset": 960,
+              "line": 18,
+              "column": 52
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 434,
+              "line": 10,
+              "column": 32
+            },
+            "end": {
+              "offset": 966,
+              "line": 19,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 980,
+              "line": 20,
+              "column": 7
+            },
+            "end": {
+              "offset": 1031,
+              "line": 20,
+              "column": 58
+            }
+          }
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/koga.cves",
+            "start": {
+              "offset": 164,
+              "line": 5,
+              "column": 3
+            },
+            "end": {
+              "offset": 1041,
+              "line": 22,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

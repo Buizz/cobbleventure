@@ -1,0 +1,41 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "mienfoo-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 8.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mountain"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "mienfoo",
+      "level": "10-35",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_hills"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    }
+  ]
+}

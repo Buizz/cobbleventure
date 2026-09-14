@@ -1,0 +1,151 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "finizen-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5.04,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "finizen",
+      "level": "7-32",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "finizen-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5.04,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "finizen",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "finizen-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "minLureLevel": 1,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "finizen",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "minLureLevel": 3
+        },
+        "multiplier": 3.0
+      }
+    },
+    {
+      "id": "finizen-4",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5.04,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "finizen",
+      "level": "7-32",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "finizen-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5.04,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "finizen",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "finizen-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minLureLevel": 1,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "finizen",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "minLureLevel": 3
+        },
+        "multiplier": 3.0
+      }
+    }
+  ]
+}

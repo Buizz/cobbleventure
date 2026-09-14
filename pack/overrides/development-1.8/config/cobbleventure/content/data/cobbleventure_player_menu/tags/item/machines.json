@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "cobblemon:technical_machine", "required": false },
+    { "id": "#cobblemon:technical_machines", "required": false },
+    { "id": "#c:technical_machines", "required": false },
+    { "id": "#tmcraft:tm_moves", "required": false },
+    { "id": "#tmcraft:tutor_moves", "required": false },
+    { "id": "#tmcraft:egg_moves", "required": false },
+    { "id": "#tmcraft:star_moves", "required": false }
+  ]
+}

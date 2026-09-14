@@ -1,0 +1,712 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/story/starter_town_gatekeeper_minho",
+  "source_digest": "723b56f4498426b7565bbe16540f63349b85331d26df4bb8b75eb18dca5f43ca",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "unary",
+            "operator": "!",
+            "operand": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "flag"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "cobbleventure:flag/story/starter_received"
+                  }
+                }
+              ]
+            }
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/story/pokenav_received"
+                }
+              }
+            ]
+          },
+          "entry": 2
+        },
+        {
+          "index": 2,
+          "condition": null,
+          "entry": 4
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이 앞부터는 야생 포켓몬이 나타나. 오박사님께 첫 파트너를 받은 뒤 다시 오렴."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "파트너와 포켓내비도 준비됐네. 길에서 어떤 포켓몬을 만날지 기대되는걸!"
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p2/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이제 출발하는구나! 오박사님이 네가 마을을 나설 때 전해 달라며 포켓내비를 맡기셨어."
+              }
+            ]
+          },
+          "next": 5,
+          "await": true,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "first/give_pokenav",
+          "op": "command",
+          "command": "give_item",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobblenav:pokenav_item_red"
+              }
+            },
+            {
+              "name": "count",
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 1
+              }
+            },
+            {
+              "name": "notify",
+              "value": null
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": false,
+          "result": "pokenav",
+          "operation_id": "cobbleventure:event_script/story/starter_town_gatekeeper_minho/first/give_pokenav",
+          "next": 6,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p2/s2",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "pokenav"
+              },
+              "member": "remaining_count"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "int",
+              "value": 0
+            }
+          },
+          "then": 7,
+          "else": 16
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p2/s2/then/s0",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "pokenav"
+              },
+              "member": "failure_reason"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "bag_full"
+            }
+          },
+          "then": 8,
+          "else": 10
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p2/s2/then/s0/then/s0",
+          "op": "narrate",
+          "text": {
+            "kind": "literal",
+            "value": "가방에 빈 공간이 없어 포켓내비를 받을 수 없습니다."
+          },
+          "next": 9,
+          "await": true,
+          "resume": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "e0/p2/s2/then/s0/then_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 10,
+          "instruction_id": "e0/p2/s2/then/s0/else/s0",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "pokenav"
+              },
+              "member": "failure_reason"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "item_not_found"
+            }
+          },
+          "then": 11,
+          "else": 13
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p2/s2/then/s0/else/s0/then/s0",
+          "op": "narrate",
+          "text": {
+            "kind": "literal",
+            "value": "현재 모드 구성에 포켓내비 아이템이 없어 받을 수 없습니다. 모드 구성을 확인해 주세요."
+          },
+          "next": 12,
+          "await": true,
+          "resume": 12
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p2/s2/then/s0/else/s0/then_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p2/s2/then/s0/else/s0/else/s0",
+          "op": "narrate",
+          "text": {
+            "kind": "literal",
+            "value": "포켓내비 지급 중 오류가 발생했습니다. 관리자에게 문의해 주세요."
+          },
+          "next": 14,
+          "await": true,
+          "resume": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p2/s2/then/s1",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p2/s2/then_end",
+          "op": "jump",
+          "target": 16
+        },
+        {
+          "address": 16,
+          "instruction_id": "first/set_pokenav_received",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/story/pokenav_received"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/story/starter_town_gatekeeper_minho/first/set_pokenav_received",
+          "next": 17
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p2/s4",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓내비를 사용하면 주변에 사는 포켓몬을 찾는 데 도움이 될 거야. 첫 여행, 조심해서 다녀와!"
+              }
+            ]
+          },
+          "next": 18,
+          "await": true,
+          "resume": 18
+        },
+        {
+          "address": 18,
+          "instruction_id": "e0/p2/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 96,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 171,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 175,
+              "line": 6,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 245,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 315,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 179,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 319,
+              "line": 12,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p2/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 342,
+              "line": 15,
+              "column": 5
+            },
+            "end": {
+              "offset": 420,
+              "line": 17,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "first/give_pokenav",
+          "stable_id": "first/give_pokenav",
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 425,
+              "line": 18,
+              "column": 5
+            },
+            "end": {
+              "offset": 513,
+              "line": 18,
+              "column": 93
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p2/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 518,
+              "line": 19,
+              "column": 5
+            },
+            "end": {
+              "offset": 896,
+              "line": 30,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p2/s2/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 557,
+              "line": 20,
+              "column": 7
+            },
+            "end": {
+              "offset": 879,
+              "line": 28,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p2/s2/then/s0/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 607,
+              "line": 21,
+              "column": 9
+            },
+            "end": {
+              "offset": 646,
+              "line": 21,
+              "column": 48
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "e0/p2/s2/then/s0/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 597,
+              "line": 20,
+              "column": 47
+            },
+            "end": {
+              "offset": 654,
+              "line": 22,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "e0/p2/s2/then/s0/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 670,
+              "line": 23,
+              "column": 9
+            },
+            "end": {
+              "offset": 871,
+              "line": 27,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p2/s2/then/s0/else/s0/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 728,
+              "line": 24,
+              "column": 11
+            },
+            "end": {
+              "offset": 787,
+              "line": 24,
+              "column": 70
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p2/s2/then/s0/else/s0/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 716,
+              "line": 23,
+              "column": 55
+            },
+            "end": {
+              "offset": 797,
+              "line": 25,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p2/s2/then/s0/else/s0/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 815,
+              "line": 26,
+              "column": 11
+            },
+            "end": {
+              "offset": 861,
+              "line": 26,
+              "column": 57
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p2/s2/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 886,
+              "line": 29,
+              "column": 7
+            },
+            "end": {
+              "offset": 890,
+              "line": 29,
+              "column": 11
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p2/s2/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 549,
+              "line": 19,
+              "column": 36
+            },
+            "end": {
+              "offset": 896,
+              "line": 30,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "first/set_pokenav_received",
+          "stable_id": "first/set_pokenav_received",
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 901,
+              "line": 31,
+              "column": 5
+            },
+            "end": {
+              "offset": 990,
+              "line": 31,
+              "column": 94
+            }
+          }
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p2/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 995,
+              "line": 32,
+              "column": 5
+            },
+            "end": {
+              "offset": 1079,
+              "line": 34,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 18,
+          "instruction_id": "e0/p2/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/starter_town_gatekeeper_minho.cves",
+            "start": {
+              "offset": 323,
+              "line": 14,
+              "column": 3
+            },
+            "end": {
+              "offset": 1083,
+              "line": 35,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

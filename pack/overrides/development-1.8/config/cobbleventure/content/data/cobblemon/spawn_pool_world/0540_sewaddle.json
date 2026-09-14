@@ -1,0 +1,36 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "sewaddle-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "sewaddle",
+      "level": "6-31",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing",
+          "#cobblemon:is_spooky"
+        ]
+      }
+    }
+  ]
+}

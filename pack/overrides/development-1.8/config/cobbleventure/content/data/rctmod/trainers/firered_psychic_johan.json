@@ -1,0 +1,98 @@
+{
+  "name": "초능력자 요한 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "kadabra",
+      "level": 31,
+      "moveset": [
+        "psybeam",
+        "reflect",
+        "recover",
+        "futuresight"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    },
+    {
+      "species": "slowpoke",
+      "level": 31,
+      "moveset": [
+        "watergun",
+        "confusion",
+        "disable",
+        "headbutt"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    },
+    {
+      "species": "mrmime",
+      "level": 31,
+      "moveset": [
+        "reflect",
+        "magicalleaf",
+        "encore",
+        "psybeam"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    },
+    {
+      "species": "kadabra",
+      "level": 31,
+      "moveset": [
+        "psybeam",
+        "reflect",
+        "recover",
+        "futuresight"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

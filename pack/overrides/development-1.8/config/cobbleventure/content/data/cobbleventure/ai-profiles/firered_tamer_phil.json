@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/firered_tamer_phil",
+  "controller": "cobbleventure",
+  "difficulty": "standard",
+  "strategy": "balanced",
+  "options": {}
+}

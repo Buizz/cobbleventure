@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/research_z_move",
+  "source_digest": "29d7461c39d934e924f8b1df4490f7225b1f260c9bdc8fd655b812fc960cd991",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "현재 기술에 맞는 Z크리스탈을 만들어 드려요. 포켓몬을 고른 뒤 재료를 확인해 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "Choose a Pokemon to research a compatible Z-Crystal."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "op": "command",
+          "command": "open_research",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/research_z_move.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 195,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/research_z_move.cves",
+            "start": {
+              "offset": 200,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 213,
+              "line": 7,
+              "column": 18
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/research_z_move.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 217,
+              "line": 8,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

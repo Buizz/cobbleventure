@@ -1,6 +1,6 @@
 package dev.buizz.cobbleventure.pokefinder.mixin;
 
-import com.metacontent.cobblenav.client.gui.screen.pokefinder.PokefinderScreen;
+import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderScreen;
 import dev.buizz.cobbleventure.pokefinder.client.RadarSettingsScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/** CobbleNav 2.4.0 compatibility hook for the integrated exploration settings. */
+/** CobbleNav 2.4.1 compatibility hook for the integrated exploration settings. */
 @Mixin(PokefinderScreen.class)
 abstract class PokefinderScreenMixin extends Screen {
     @Shadow private int screenX;

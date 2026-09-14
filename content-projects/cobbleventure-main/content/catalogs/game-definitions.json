@@ -27,6 +27,30 @@
         "ko_kr": "카지노 환전상 이용에 필요한 소지품입니다.",
         "en_us": "Required to use the casino cashier."
       }
+    },
+    {
+      "id": "mega_showdown:mega_ring",
+      "base_item": "mega_showdown:mega_ring",
+      "icon": "mega_showdown:mega_ring",
+      "display_name": {
+        "ko_kr": "메가링",
+        "en_us": "Mega Ring"
+      },
+      "description": {
+        "ko_kr": "중요도구로 보유하면 장착 없이 메가진화를 사용할 수 있습니다."
+      }
+    },
+    {
+      "id": "mega_showdown:z_ring",
+      "base_item": "mega_showdown:z_ring",
+      "icon": "mega_showdown:z_ring",
+      "display_name": {
+        "ko_kr": "Z링",
+        "en_us": "Z-Ring"
+      },
+      "description": {
+        "ko_kr": "중요도구로 보유하면 장착 없이 Z기술를 사용할 수 있습니다."
+      }
     }
   ],
   "variables": [
@@ -464,6 +488,32 @@
       },
       "description": {
         "ko_kr": "해당 리그 전투 승리 시 기록하며 다음 방 출구와 트레이너 카드에 사용합니다."
+      }
+    },
+    {
+      "id": "cobbleventure:flag/rewards/mega_ring_received",
+      "scope": "player",
+      "type": "boolean",
+      "default": false,
+      "display_name": {
+        "ko_kr": "메가링 수령",
+        "en_us": "Mega Ring Received"
+      },
+      "description": {
+        "ko_kr": "메가링의 획득 및 분실 복구 상태입니다."
+      }
+    },
+    {
+      "id": "cobbleventure:flag/rewards/z_ring_received",
+      "scope": "player",
+      "type": "boolean",
+      "default": false,
+      "display_name": {
+        "ko_kr": "Z링 수령",
+        "en_us": "Z-Ring Received"
+      },
+      "description": {
+        "ko_kr": "Z링의 획득 및 분실 복구 상태입니다."
       }
     }
   ]

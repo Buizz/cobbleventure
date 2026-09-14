@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "regice-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0,
+      "condition": {
+        "biomes": [
+          "cobbleverse:custom_spawn/regice_temple"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "regice",
+      "level": "40-50",
+      "context": "grounded"
+    }
+  ]
+}

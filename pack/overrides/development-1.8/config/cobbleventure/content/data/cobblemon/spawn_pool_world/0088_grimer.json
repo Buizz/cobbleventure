@@ -1,0 +1,441 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "grimer-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.68,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "grimer",
+      "level": "8-33",
+      "spawnablePositionType": "surface",
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 1.5
+      }
+    },
+    {
+      "id": "grimer-2",
+      "presets": [
+        "water",
+        "urban"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.68,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "grimer",
+      "level": "8-33",
+      "spawnablePositionType": "surface",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 1.5
+      }
+    },
+    {
+      "id": "grimer-3",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.68,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "grimer",
+      "level": "8-33",
+      "spawnablePositionType": "surface",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 1.5
+      }
+    },
+    {
+      "id": "grimer-4",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "grimer",
+      "level": "8-33",
+      "spawnablePositionType": "fishing",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "grimer-5",
+      "presets": [
+        "water",
+        "urban"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "grimer",
+      "level": "8-33",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "grimer-6",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": true,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "grimer",
+      "level": "8-33",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "grimer-7",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "grimer",
+      "level": "8-33",
+      "spawnablePositionType": "fishing",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "grimer-8",
+      "presets": [
+        "water",
+        "urban"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "grimer",
+      "level": "8-33",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "grimer-9",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "grimer",
+      "level": "8-33",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "grimer-alolan-10",
+      "presets": [
+        "natural",
+        "urban"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.68,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_beach"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "grimer alolan",
+      "level": "8-33",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 1.5
+      }
+    },
+    {
+      "id": "grimer-11",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 7,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_beach"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "grimer alolan",
+      "level": "11-36",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "grimer-12",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_beach"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "grimer alolan",
+      "level": "11-33",
+      "spawnablePositionType": "fishing",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    }
+  ]
+}

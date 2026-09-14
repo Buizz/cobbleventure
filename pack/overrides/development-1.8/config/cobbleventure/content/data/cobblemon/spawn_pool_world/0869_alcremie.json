@@ -1,0 +1,110 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "alcremie-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.5,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_overworld"
+        ],
+        "neededNearbyBlocks": [
+          "minecraft:cake"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "alcremie",
+      "level": "22-50",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "alcremie-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.1,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_overworld"
+        ],
+        "neededNearbyBlocks": [
+          "#cobblemon:saccharine_trees"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "alcremie",
+      "level": "22-50",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "neededNearbyBlocks": [
+          "minecraft:cake",
+          "minecraft:sugar_cane"
+        ]
+      }
+    },
+    {
+      "id": "alcremie-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.16,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_overworld"
+        ],
+        "neededNearbyBlocks": [
+          "minecraft:sugar_cane"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "alcremie",
+      "level": "22-50",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "neededNearbyBlocks": [
+          "minecraft:cake",
+          "#cobblemon:saccharine_trees"
+        ]
+      }
+    },
+    {
+      "id": "alcremie-4",
+      "presets": [
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "neededNearbyBlocks": [
+          "minecraft:light_grey_carpet",
+          "minecraft:magenta_carpet",
+          "minecraft:white_carpet"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "alcremie",
+      "level": "22-50",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

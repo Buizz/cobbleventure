@@ -1,0 +1,29 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "lileep-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "lileep",
+      "level": "11-36",
+      "spawnablePositionType": "seafloor"
+    }
+  ]
+}

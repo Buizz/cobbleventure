@@ -1,0 +1,38 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "cascoon-1",
+      "presets": [
+        "natural",
+        "foliage",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest",
+          "#cobblemon:is_jungle"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "cascoon",
+      "level": "7-9",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing",
+          "#cobblemon:is_spooky"
+        ]
+      },
+      "context": "grounded"
+    }
+  ]
+}

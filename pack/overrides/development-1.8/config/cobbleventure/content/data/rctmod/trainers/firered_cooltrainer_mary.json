@@ -1,0 +1,123 @@
+{
+  "name": "엘리트 트레이너 메리 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "bellsprout",
+      "level": 22,
+      "moveset": [
+        "wrap",
+        "stunspore",
+        "poisonpowder",
+        "growth"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "oddish",
+      "level": 22,
+      "moveset": [
+        "poisonpowder",
+        "stunspore",
+        "absorb",
+        "sweetscent"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "weepinbell",
+      "level": 22,
+      "moveset": [
+        "vinewhip",
+        "stunspore",
+        "poisonpowder",
+        "growth"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "gloom",
+      "level": 22,
+      "moveset": [
+        "absorb",
+        "stunspore",
+        "poisonpowder",
+        "sweetscent"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "ivysaur",
+      "level": 22,
+      "moveset": [
+        "razorleaf",
+        "sleeppowder",
+        "vinewhip",
+        "leechseed"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 1
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ]
+}

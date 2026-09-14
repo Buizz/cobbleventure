@@ -1,0 +1,29 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "tapufini-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_river",
+          "#minecraft:is_beach"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "tapufini",
+      "level": "50-70",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

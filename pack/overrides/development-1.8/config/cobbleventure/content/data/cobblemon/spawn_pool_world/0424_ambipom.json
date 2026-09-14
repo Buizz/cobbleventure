@@ -1,0 +1,56 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ambipom-1",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_tropical_island"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "ambipom",
+      "level": "32-48",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "ambipom-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 9,
+        "minSkyLight": 0,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "ambipom",
+      "level": "32-48",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

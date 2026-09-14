@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/firered_engineer_baily",
+  "controller": "cobbleventure",
+  "difficulty": "standard",
+  "strategy": "balanced",
+  "options": {}
+}

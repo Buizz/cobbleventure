@@ -1,0 +1,99 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "banette-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_spooky"
+        ],
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "banette",
+      "level": "37-46",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "banette-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "banette",
+      "level": "37-46",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "banette-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "banette",
+      "level": "37-46",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "banette-4",
+      "presets": [
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "banette",
+      "level": "37-46",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

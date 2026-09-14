@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "greattusk-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 3,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "greattusk",
+      "level": "40-65",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "skuntank-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 3.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "skuntank",
+      "level": "35-56",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 1.8
+      }
+    }
+  ]
+}

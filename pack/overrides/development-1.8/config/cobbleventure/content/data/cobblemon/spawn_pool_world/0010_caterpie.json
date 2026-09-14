@@ -1,0 +1,87 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "caterpie-1",
+      "presets": [
+        "natural",
+        "foliage",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 7,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest",
+          "#cobblemon:is_plains",
+          "aether:skyroot_forest",
+          "aether:skyroot_woodland"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "caterpie",
+      "level": "1-20",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing",
+          "#cobblemon:is_spooky"
+        ]
+      }
+    },
+    {
+      "id": "caterpie-valencian-2",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 7,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_tropical_island"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "caterpie valencian",
+      "level": "1-20",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "caterpie-valencian-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 4.5,
+      "condition": {
+        "biomes": [
+          "the_bumblezone:floral_meadow"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "caterpie valencian",
+      "level": "1-20",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "#the_bumblezone:sempiternal_sanctums"
+        ]
+      }
+    }
+  ]
+}

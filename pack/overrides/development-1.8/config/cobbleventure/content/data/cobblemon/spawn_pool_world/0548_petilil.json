@@ -1,0 +1,159 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "petilil-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "petilil",
+      "level": "3-28",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_hills"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    },
+    {
+      "id": "petilil-2",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest",
+          "#cobblemon:is_tropical_island"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "petilil",
+      "level": "3-28",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_hills",
+          "#cobblemon:is_freezing",
+          "#cobblemon:is_spooky"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    },
+    {
+      "id": "petilil-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9.5,
+      "condition": {
+        "biomes": [
+          "the_bumblezone:floral_meadow"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "petilil",
+      "level": "3-28",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "#the_bumblezone:sempiternal_sanctums"
+        ]
+      }
+    },
+    {
+      "id": "petilil-hisui-4",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.7,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_hills"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "petilil region_bias=hisui",
+      "level": "3-28",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_freezing",
+          "#cobblemon:is_spooky"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    },
+    {
+      "id": "petilil-hisui-5",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.7,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "petilil region_bias=hisui",
+      "level": "3-28",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

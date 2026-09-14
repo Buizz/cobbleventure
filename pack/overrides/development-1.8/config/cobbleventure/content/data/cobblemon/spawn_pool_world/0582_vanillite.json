@@ -1,0 +1,78 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "vanillite-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "vanillite",
+      "level": "6-31",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "dawn"
+        },
+        "multiplier": 5.0
+      }
+    },
+    {
+      "id": "vanillite-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5.04,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "minY": 0,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "vanillite",
+      "level": "6-31",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "vanillite-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_frozen"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "vanillite",
+      "level": "6-31",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

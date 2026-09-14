@@ -1,0 +1,50 @@
+{
+  "$schema": "../../schemas/route.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:route/route_custom_08",
+  "display_name": {
+    "ko_kr": "태초마을 - 홍련마을 수로",
+    "en_us": "태초마을 - 홍련마을 수로"
+  },
+  "auto_name": true,
+  "enabled": true,
+  "route_type": "water",
+  "corridor": {
+    "width_blocks": 12,
+    "edge_noise": 0
+  },
+  "level_scaling": {
+    "mode": "world",
+    "offset": 0
+  },
+  "pokemon_spawns": {
+    "inherit_biome": false,
+    "excluded_species": [],
+    "additions": [
+      {
+        "species": "cobblemon:tentacool",
+        "min_level": 5,
+        "max_level": 40
+      }
+    ],
+    "level_overrides": [
+      {
+        "species": "cobblemon:tentacool",
+        "min_level": 5,
+        "max_level": 40
+      }
+    ]
+  },
+  "npc_placements": [],
+  "automatic_npc_placement": {
+    "enabled": true,
+    "count": 3,
+    "use_biome_defaults": false,
+    "direct_trainers": [
+      "cobbleventure:npc/kanto_swimmer_taejin",
+      "cobbleventure:npc/kanto_swimmer_nari",
+      "cobbleventure:npc/sample_fisherman_minsu"
+    ],
+    "trigger_override": "proximity"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/league/indigo_plateau_veteran",
+  "source_digest": "3df1e9950f1db9bdec3b78ca483812fca9b361a01081b54005b5cf03a159bf44",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "사천왕에게 도전하면 쉽게 돌아올 수 없네. 저마다 다른 방식으로 단련된 강자들이니, 한 가지 전법만 믿고 들어가서는 안 될 걸세."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/league/indigo_plateau_veteran.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 151,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/league/indigo_plateau_veteran.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 155,
+              "line": 6,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

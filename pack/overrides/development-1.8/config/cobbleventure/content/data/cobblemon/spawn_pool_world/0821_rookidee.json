@@ -1,0 +1,39 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "rookidee-1",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_hills",
+          "#cobblemon:is_sky",
+          "#cobblemon:is_spooky",
+          "#cobblemon:is_taiga"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "rookidee",
+      "level": "1-25",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid"
+        ]
+      }
+    }
+  ]
+}

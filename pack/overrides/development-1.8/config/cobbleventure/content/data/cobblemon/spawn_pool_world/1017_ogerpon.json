@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ogerpon-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "ogerpon",
+      "level": "50-75",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

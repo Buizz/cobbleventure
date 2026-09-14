@@ -1,0 +1,63 @@
+{
+  "name": "관동 체육관 관장 마티스",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "voltorb",
+      "level": 21,
+      "moveset": [
+        "sonicboom",
+        "tackle",
+        "screech",
+        "shockwave"
+      ],
+      "gender": "GENDERLESS"
+    },
+    {
+      "species": "pikachu",
+      "level": 18,
+      "moveset": [
+        "quickattack",
+        "thunderwave",
+        "doubleteam",
+        "shockwave"
+      ]
+    },
+    {
+      "species": "raichu",
+      "level": 24,
+      "moveset": [
+        "quickattack",
+        "thunderwave",
+        "doubleteam",
+        "shockwave"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 2
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    },
+    {
+      "item": "cobblemon:full_heal",
+      "quantity": 1
+    }
+  ]
+}

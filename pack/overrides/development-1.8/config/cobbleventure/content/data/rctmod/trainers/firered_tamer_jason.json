@@ -1,0 +1,41 @@
+{
+  "name": "포켓몬 조련사 제이슨 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "rhyhorn",
+      "level": 43,
+      "moveset": [
+        "scaryface",
+        "rockblast",
+        "horndrill",
+        "takedown"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 4,
+        "atk": 4,
+        "def": 4,
+        "spa": 4,
+        "spd": 4,
+        "spe": 4
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

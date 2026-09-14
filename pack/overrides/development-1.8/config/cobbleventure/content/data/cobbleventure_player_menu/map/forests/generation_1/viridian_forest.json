@@ -1,0 +1,530 @@
+{
+  "$schema": "../../schemas/forest.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:forest/viridian_forest",
+  "enabled": true,
+  "display_name": {
+    "ko_kr": "상록숲"
+  },
+  "music_track": "kanto.viridian_forest",
+  "dimension": {
+    "id": "cobbleventure:forests",
+    "region_id": "generation_1/viridian_forest",
+    "origin": {
+      "x": 0,
+      "y": 69,
+      "z": 0
+    },
+    "bounds": {
+      "min_x": -64,
+      "min_z": -208,
+      "max_x": 112,
+      "max_z": 208
+    }
+  },
+  "environment": {
+    "weather": "clear"
+  },
+  "random_encounters": {
+    "enabled": true,
+    "minimum_distance": 16,
+    "maximum_distance": 24,
+    "minimum_level": 3,
+    "maximum_level": 6,
+    "pokemon_biome": "minecraft:old_growth_spruce_taiga",
+    "inherit_biome": false,
+    "excluded_species": [],
+    "additions": [
+      { "species": "cobblemon:caterpie", "min_level": 3, "max_level": 5 },
+      { "species": "cobblemon:kakuna", "min_level": 4, "max_level": 6 },
+      { "species": "cobblemon:metapod", "min_level": 4, "max_level": 6 },
+      { "species": "cobblemon:pikachu", "min_level": 3, "max_level": 5 },
+      { "species": "cobblemon:weedle", "min_level": 3, "max_level": 5 }
+    ],
+    "level_overrides": [
+      { "species": "cobblemon:caterpie", "min_level": 3, "max_level": 5 },
+      { "species": "cobblemon:kakuna", "min_level": 4, "max_level": 6 },
+      { "species": "cobblemon:metapod", "min_level": 4, "max_level": 6 },
+      { "species": "cobblemon:pikachu", "min_level": 3, "max_level": 5 },
+      { "species": "cobblemon:weedle", "min_level": 3, "max_level": 5 }
+    ]
+  },
+  "trainer_settings": {
+    "enabled": true,
+    "max_active": 4,
+    "use_biome_defaults": false,
+    "direct_trainers": [
+      "cobbleventure:npc/sample_bug_catcher_doyun",
+      "cobbleventure:npc/sample_lass_yuna",
+      "cobbleventure:npc/sample_camper_jun",
+      "cobbleventure:npc/sample_bird_keeper_ara"
+    ],
+    "trigger_override": "proximity"
+  },
+  "tree_barrier": {
+    "min_height": 12,
+    "max_height": 22,
+    "trunk_blocks": [
+      "minecraft:spruce_log"
+    ],
+    "foliage_blocks": [
+      "minecraft:spruce_leaves"
+    ],
+    "barrier_block": "minecraft:barrier"
+  },
+  "undergrowth": {
+    "density": 0.82,
+    "blocks": [
+      "minecraft:short_grass",
+      "minecraft:fern",
+      "minecraft:tall_grass"
+    ],
+    "path_clearance": 2
+  },
+  "generator": {
+    "layout": "hybrid",
+    "seed_salt": 19960101,
+    "cell_size": 16,
+    "maze_complexity": 0.72,
+    "loop_chance": 0.22,
+    "spline_enabled": true,
+    "spline_tension": 0.5
+  },
+  "paths": [
+    {
+      "id": "main",
+      "kind": "main",
+      "width": 5,
+      "surface": "minecraft:dirt_path",
+      "points": [
+        {
+          "x": 0,
+          "z": 160
+        },
+        {
+          "x": -6,
+          "z": 124
+        },
+        {
+          "x": 3,
+          "z": 89
+        },
+        {
+          "x": 56,
+          "z": 53
+        },
+        {
+          "x": 72,
+          "z": 18
+        },
+        {
+          "x": 43,
+          "z": -18
+        },
+        {
+          "x": -4,
+          "z": -53
+        },
+        {
+          "x": -25,
+          "z": -89
+        },
+        {
+          "x": -23,
+          "z": -124
+        },
+        {
+          "x": 0,
+          "z": -160
+        }
+      ],
+      "spline": {
+        "enabled": true,
+        "tension": 0.5
+      }
+    },
+    {
+      "id": "shortcut_1",
+      "kind": "shortcut",
+      "width": 4,
+      "surface": "minecraft:dirt_path",
+      "points": [
+        {
+          "x": -6,
+          "z": 124
+        },
+        {
+          "x": 11,
+          "z": 36
+        },
+        {
+          "x": -4,
+          "z": -53
+        }
+      ],
+      "spline": {
+        "enabled": true,
+        "tension": 0.5
+      }
+    },
+    {
+      "id": "shortcut_2",
+      "kind": "shortcut",
+      "width": 4,
+      "surface": "minecraft:dirt_path",
+      "points": [
+        {
+          "x": 72,
+          "z": 18
+        },
+        {
+          "x": 35,
+          "z": -46
+        },
+        {
+          "x": -25,
+          "z": -89
+        }
+      ],
+      "spline": {
+        "enabled": true,
+        "tension": 0.5
+      }
+    }
+  ],
+  "terrain_tiles": [
+    {
+      "x": -24,
+      "z": 72,
+      "height_offset": 2
+    },
+    {
+      "x": -8,
+      "z": 72,
+      "height_offset": 2
+    },
+    {
+      "x": 8,
+      "z": 72,
+      "height_offset": 2
+    },
+    {
+      "x": 24,
+      "z": 72,
+      "height_offset": 2
+    },
+    {
+      "x": 40,
+      "z": 72,
+      "height_offset": 2
+    },
+    {
+      "x": 56,
+      "z": 72,
+      "height_offset": 2
+    },
+    {
+      "x": 72,
+      "z": 72,
+      "height_offset": 2
+    },
+    {
+      "x": -24,
+      "z": 88,
+      "height_offset": 2
+    },
+    {
+      "x": -8,
+      "z": 88,
+      "height_offset": 2
+    },
+    {
+      "x": 8,
+      "z": 88,
+      "height_offset": 2
+    },
+    {
+      "x": 24,
+      "z": 88,
+      "height_offset": 2
+    },
+    {
+      "x": 40,
+      "z": 88,
+      "height_offset": 2
+    },
+    {
+      "x": 56,
+      "z": 88,
+      "height_offset": 2
+    },
+    {
+      "x": 72,
+      "z": 88,
+      "height_offset": 2
+    },
+    {
+      "x": -24,
+      "z": 104,
+      "height_offset": 2
+    },
+    {
+      "x": -8,
+      "z": 104,
+      "height_offset": 2
+    },
+    {
+      "x": 8,
+      "z": 104,
+      "height_offset": 2
+    },
+    {
+      "x": 24,
+      "z": 104,
+      "height_offset": 2
+    },
+    {
+      "x": 40,
+      "z": 104,
+      "height_offset": 2
+    },
+    {
+      "x": 56,
+      "z": 104,
+      "height_offset": 2
+    },
+    {
+      "x": 72,
+      "z": 104,
+      "height_offset": 2
+    },
+    {
+      "x": -24,
+      "z": 120,
+      "height_offset": 2
+    },
+    {
+      "x": -8,
+      "z": 120,
+      "height_offset": 2
+    },
+    {
+      "x": 8,
+      "z": 120,
+      "height_offset": 2
+    },
+    {
+      "x": 24,
+      "z": 120,
+      "height_offset": 2
+    },
+    {
+      "x": 40,
+      "z": 120,
+      "height_offset": 2
+    },
+    {
+      "x": 56,
+      "z": 120,
+      "height_offset": 2
+    },
+    {
+      "x": 72,
+      "z": 120,
+      "height_offset": 2
+    },
+    {
+      "x": -24,
+      "z": 136,
+      "height_offset": 2
+    },
+    {
+      "x": -8,
+      "z": 136,
+      "height_offset": 2
+    },
+    {
+      "x": 8,
+      "z": 136,
+      "height_offset": 2
+    },
+    {
+      "x": 24,
+      "z": 136,
+      "height_offset": 2
+    },
+    {
+      "x": 40,
+      "z": 136,
+      "height_offset": 2
+    },
+    {
+      "x": 56,
+      "z": 136,
+      "height_offset": 2
+    },
+    {
+      "x": 72,
+      "z": 136,
+      "height_offset": 2
+    },
+    {
+      "x": -24,
+      "z": 152,
+      "height_offset": 2
+    },
+    {
+      "x": -8,
+      "z": 152,
+      "height_offset": 2
+    },
+    {
+      "x": 8,
+      "z": 152,
+      "height_offset": 2
+    },
+    {
+      "x": 24,
+      "z": 152,
+      "height_offset": 2
+    },
+    {
+      "x": 40,
+      "z": 152,
+      "height_offset": 2
+    },
+    {
+      "x": 56,
+      "z": 152,
+      "height_offset": 2
+    },
+    {
+      "x": 72,
+      "z": 152,
+      "height_offset": 2
+    },
+    {
+      "x": -24,
+      "z": 168,
+      "height_offset": 2
+    },
+    {
+      "x": -8,
+      "z": 168,
+      "height_offset": 2
+    },
+    {
+      "x": 8,
+      "z": 168,
+      "height_offset": 2
+    },
+    {
+      "x": 24,
+      "z": 168,
+      "height_offset": 2
+    },
+    {
+      "x": 40,
+      "z": 168,
+      "height_offset": 2
+    },
+    {
+      "x": 56,
+      "z": 168,
+      "height_offset": 2
+    },
+    {
+      "x": 72,
+      "z": 168,
+      "height_offset": 2
+    },
+    {
+      "x": -24,
+      "z": 40,
+      "height_offset": 2
+    },
+    {
+      "x": -8,
+      "z": 40,
+      "height_offset": 2
+    },
+    {
+      "x": 8,
+      "z": 40,
+      "height_offset": 2
+    },
+    {
+      "x": 24,
+      "z": 40,
+      "height_offset": 2
+    },
+    {
+      "x": 40,
+      "z": 40,
+      "height_offset": 2
+    },
+    {
+      "x": 56,
+      "z": 40,
+      "height_offset": 1
+    },
+    {
+      "x": 72,
+      "z": 40,
+      "height_offset": 1
+    },
+    {
+      "x": -24,
+      "z": 56,
+      "height_offset": 2
+    },
+    {
+      "x": -8,
+      "z": 56,
+      "height_offset": 2
+    },
+    {
+      "x": 8,
+      "z": 56,
+      "height_offset": 2
+    },
+    {
+      "x": 24,
+      "z": 56,
+      "height_offset": 2
+    },
+    {
+      "x": 40,
+      "z": 56,
+      "height_offset": 2
+    },
+    {
+      "x": 56,
+      "z": 56,
+      "height_offset": 1
+    },
+    {
+      "x": 72,
+      "z": 56,
+      "height_offset": 1
+    }
+  ],
+  "entrances": [
+    {
+      "id": "south",
+      "display_name": "상록시티 방향 입구",
+      "position": {
+        "x": 0,
+        "z": 160
+      }
+    },
+    {
+      "id": "north",
+      "display_name": "회색시티 방향 입구",
+      "position": {
+        "x": 0,
+        "z": -160
+      }
+    }
+  ]
+}

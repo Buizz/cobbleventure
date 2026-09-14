@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/rewards/feature_pc_technician",
+  "source_digest": "66328333fa0950b9c2e4439b12c97443d5c4bca0317fc9a525175151f3d38bae",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/rewards/feature/pc"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "원격 PC 연결은 정상 작동 중이야. 플레이어 메뉴에서 PC를 선택하면 돼."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "나는 이수재야. 포켓몬 전송 시스템을 연구하고 있지."
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "PC를 사용하면 파티에 데리고 다니지 않는 포켓몬을 박스에 맡기거나, 맡긴 포켓몬을 다시 꺼낼 수 있어."
+              }
+            ]
+          },
+          "next": 4,
+          "await": true,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "네 사용자 정보를 전송망에 등록해 둘게. 그러면 플레이어 메뉴에서도 원격으로 PC를 열 수 있어."
+              }
+            ]
+          },
+          "next": 5,
+          "await": true,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "grant/feature",
+          "op": "command",
+          "command": "unlock_feature",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "pc"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/rewards/feature_pc_technician/grant/feature",
+          "next": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "grant/state",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/rewards/feature/pc"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/rewards/feature_pc_technician/grant/state",
+          "next": 7
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p1/s5",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "등록 완료! 이제 플레이어 메뉴의 PC를 선택하면 어디서든 포켓몬 박스를 이용할 수 있어."
+              }
+            ]
+          },
+          "next": 8,
+          "await": true,
+          "resume": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_pc_technician.cves",
+            "start": {
+              "offset": 91,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 164,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_pc_technician.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 168,
+              "line": 6,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_pc_technician.cves",
+            "start": {
+              "offset": 191,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 251,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_pc_technician.cves",
+            "start": {
+              "offset": 256,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 345,
+              "line": 14,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_pc_technician.cves",
+            "start": {
+              "offset": 350,
+              "line": 15,
+              "column": 5
+            },
+            "end": {
+              "offset": 435,
+              "line": 17,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "grant/feature",
+          "stable_id": "grant/feature",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_pc_technician.cves",
+            "start": {
+              "offset": 440,
+              "line": 18,
+              "column": 5
+            },
+            "end": {
+              "offset": 476,
+              "line": 18,
+              "column": 41
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "grant/state",
+          "stable_id": "grant/state",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_pc_technician.cves",
+            "start": {
+              "offset": 481,
+              "line": 19,
+              "column": 5
+            },
+            "end": {
+              "offset": 551,
+              "line": 19,
+              "column": 75
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p1/s5",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_pc_technician.cves",
+            "start": {
+              "offset": 556,
+              "line": 20,
+              "column": 5
+            },
+            "end": {
+              "offset": 637,
+              "line": 22,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_pc_technician.cves",
+            "start": {
+              "offset": 172,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 641,
+              "line": 23,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

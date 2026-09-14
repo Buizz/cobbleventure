@@ -1,0 +1,54 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "onix-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5.52,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "onix",
+      "level": "14-39",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    },
+    {
+      "id": "onix-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.84,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_basalt"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "onix",
+      "level": "14-39",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

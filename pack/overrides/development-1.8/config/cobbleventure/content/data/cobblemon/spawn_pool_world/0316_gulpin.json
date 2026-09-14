@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "gulpin-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 7,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "gulpin",
+      "level": "8-25",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

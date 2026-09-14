@@ -1,0 +1,916 @@
+{
+  "$schema": "../schemas/gym-catalog.schema.json",
+  "schema_version": 1,
+  "gyms": [
+    {
+      "id": "cobbleventure:gym/pewter",
+      "enabled": true,
+      "display_name": {
+        "ko_kr": "회색 체육관",
+        "en_us": "Pewter Gym"
+      },
+      "theme": "rock",
+      "exterior": {
+        "structure": "cobbleventure:gyms/base_gym"
+      },
+      "interior": {
+        "modules": [
+          {
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_rock",
+            "position": [
+              0,
+              0,
+              80
+            ],
+            "rotation": "none"
+          }
+        ],
+        "connections": [
+          {
+            "from": "exterior:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door"
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door"
+          }
+        ]
+      },
+      "access": {
+        "require_previous_gym": false,
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [
+          "문은 굳게 잠겨 있다. 먼저 앞선 체육관 관장에게 승리해야 한다."
+        ],
+        "blocking_npc": {
+          "enabled": true,
+          "npc_profile": "cobbleventure:npc/gym_guide"
+        }
+      },
+      "staff": {
+        "leader": {
+          "league_entry_id": "cobbleventure:league/kanto/boulder",
+          "anchor": "leader",
+          "trainer_id": "cobbleventure:npc/gym_leader/brock",
+          "badge_id": "cobbleventure:badge/kanto/boulder"
+        },
+        "trainers": [
+          {
+            "id": "trainer_1",
+            "trainer_id": "cobbleventure:npc/firered_camper_liam",
+            "anchor": "trainer_1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cobbleventure:gym/cerulean",
+      "enabled": true,
+      "display_name": {
+        "ko_kr": "블루 체육관",
+        "en_us": "Cerulean Gym"
+      },
+      "theme": "water",
+      "access": {
+        "require_previous_gym": true,
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [
+          "문은 굳게 잠겨 있다. 먼저 앞선 체육관 관장에게 승리해야 한다."
+        ],
+        "blocking_npc": {
+          "enabled": true,
+          "npc_profile": "cobbleventure:npc/gym_guide"
+        },
+        "previous_badge": "cobbleventure:badge/kanto/boulder"
+      },
+      "exterior": {
+        "structure": "cobbleventure:gyms/base_gym"
+      },
+      "interior": {
+        "modules": [
+          {
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_water",
+            "position": [
+              0,
+              0,
+              80
+            ],
+            "rotation": "none"
+          }
+        ],
+        "connections": [
+          {
+            "from": "exterior:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door"
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door"
+          }
+        ]
+      },
+      "staff": {
+        "leader": {
+          "league_entry_id": "cobbleventure:league/kanto/cascade",
+          "anchor": "leader",
+          "trainer_id": "cobbleventure:npc/gym_leader/misty",
+          "badge_id": "cobbleventure:badge/kanto/cascade"
+        },
+        "trainers": [
+          {
+            "id": "trainer_1",
+            "trainer_id": "cobbleventure:npc/firered_picnicker_diana",
+            "anchor": "trainer_1"
+          },
+          {
+            "id": "trainer_2",
+            "trainer_id": "cobbleventure:npc/firered_swimmer_male_luis",
+            "anchor": "trainer_2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cobbleventure:gym/vermilion",
+      "enabled": true,
+      "display_name": {
+        "ko_kr": "갈색 체육관",
+        "en_us": "Vermilion Gym"
+      },
+      "theme": "electric",
+      "access": {
+        "require_previous_gym": true,
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [
+          "문은 굳게 잠겨 있다. 먼저 앞선 체육관 관장에게 승리해야 한다."
+        ],
+        "blocking_npc": {
+          "enabled": true,
+          "npc_profile": "cobbleventure:npc/gym_guide"
+        },
+        "previous_badge": "cobbleventure:badge/kanto/cascade"
+      },
+      "exterior": {
+        "structure": "cobbleventure:gyms/base_gym"
+      },
+      "interior": {
+        "modules": [
+          {
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_electric",
+            "position": [
+              0,
+              0,
+              80
+            ],
+            "rotation": "none"
+          }
+        ],
+        "connections": [
+          {
+            "from": "exterior:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door"
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door"
+          }
+        ]
+      },
+      "staff": {
+        "leader": {
+          "league_entry_id": "cobbleventure:league/kanto/thunder",
+          "anchor": "leader",
+          "trainer_id": "cobbleventure:npc/gym_leader/lt_surge",
+          "badge_id": "cobbleventure:badge/kanto/thunder"
+        },
+        "trainers": [
+          {
+            "id": "trainer_1",
+            "trainer_id": "cobbleventure:npc/firered_sailor_dwayne",
+            "anchor": "trainer_1"
+          },
+          {
+            "id": "trainer_2",
+            "trainer_id": "cobbleventure:npc/firered_engineer_baily",
+            "anchor": "trainer_2"
+          },
+          {
+            "id": "trainer_3",
+            "trainer_id": "cobbleventure:npc/firered_gentleman_tucker",
+            "anchor": "trainer_3"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cobbleventure:gym/celadon",
+      "enabled": true,
+      "display_name": {
+        "ko_kr": "무지개 체육관",
+        "en_us": "Celadon Gym"
+      },
+      "theme": "grass",
+      "access": {
+        "require_previous_gym": true,
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [
+          "문은 굳게 잠겨 있다. 먼저 앞선 체육관 관장에게 승리해야 한다."
+        ],
+        "blocking_npc": {
+          "enabled": true,
+          "npc_profile": "cobbleventure:npc/gym_guide"
+        },
+        "previous_badge": "cobbleventure:badge/kanto/thunder"
+      },
+      "exterior": {
+        "structure": "cobbleventure:gyms/base_gym"
+      },
+      "interior": {
+        "modules": [
+          {
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_grass",
+            "position": [
+              0,
+              0,
+              80
+            ],
+            "rotation": "none"
+          }
+        ],
+        "connections": [
+          {
+            "from": "exterior:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door"
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door"
+          }
+        ]
+      },
+      "staff": {
+        "leader": {
+          "league_entry_id": "cobbleventure:league/kanto/rainbow",
+          "anchor": "leader",
+          "trainer_id": "cobbleventure:npc/gym_leader/erika",
+          "badge_id": "cobbleventure:badge/kanto/rainbow"
+        },
+        "trainers": [
+          {
+            "id": "trainer_1",
+            "trainer_id": "cobbleventure:npc/firered_lass_kay",
+            "anchor": "trainer_1"
+          },
+          {
+            "id": "trainer_2",
+            "trainer_id": "cobbleventure:npc/firered_lass_lisa",
+            "anchor": "trainer_2"
+          },
+          {
+            "id": "trainer_3",
+            "trainer_id": "cobbleventure:npc/firered_picnicker_tina",
+            "anchor": "trainer_3"
+          },
+          {
+            "id": "trainer_4",
+            "trainer_id": "cobbleventure:npc/firered_beauty_bridget",
+            "anchor": "trainer_4"
+          },
+          {
+            "id": "trainer_5",
+            "trainer_id": "cobbleventure:npc/firered_beauty_tamia",
+            "anchor": "trainer_5"
+          },
+          {
+            "id": "trainer_6",
+            "trainer_id": "cobbleventure:npc/firered_beauty_lori",
+            "anchor": "trainer_6"
+          },
+          {
+            "id": "trainer_7",
+            "trainer_id": "cobbleventure:npc/firered_cooltrainer_mary",
+            "anchor": "trainer_7"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cobbleventure:gym/fuchsia",
+      "enabled": true,
+      "display_name": {
+        "ko_kr": "연분홍 체육관",
+        "en_us": "Fuchsia Gym"
+      },
+      "theme": "poison",
+      "access": {
+        "require_previous_gym": true,
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [
+          "문은 굳게 잠겨 있다. 먼저 앞선 체육관 관장에게 승리해야 한다."
+        ],
+        "blocking_npc": {
+          "enabled": true,
+          "npc_profile": "cobbleventure:npc/gym_guide"
+        },
+        "previous_badge": "cobbleventure:badge/kanto/rainbow"
+      },
+      "exterior": {
+        "structure": "cobbleventure:gyms/base_gym"
+      },
+      "interior": {
+        "modules": [
+          {
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_poison",
+            "position": [
+              0,
+              0,
+              80
+            ],
+            "rotation": "none"
+          }
+        ],
+        "connections": [
+          {
+            "from": "exterior:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door"
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door"
+          }
+        ]
+      },
+      "staff": {
+        "leader": {
+          "league_entry_id": "cobbleventure:league/kanto/soul",
+          "anchor": "leader",
+          "trainer_id": "cobbleventure:npc/gym_leader/koga",
+          "badge_id": "cobbleventure:badge/kanto/soul"
+        },
+        "trainers": [
+          {
+            "id": "trainer_1",
+            "trainer_id": "cobbleventure:npc/firered_juggler_kirk",
+            "anchor": "trainer_1"
+          },
+          {
+            "id": "trainer_2",
+            "trainer_id": "cobbleventure:npc/firered_juggler_shawn",
+            "anchor": "trainer_2"
+          },
+          {
+            "id": "trainer_3",
+            "trainer_id": "cobbleventure:npc/firered_juggler_kayden",
+            "anchor": "trainer_3"
+          },
+          {
+            "id": "trainer_4",
+            "trainer_id": "cobbleventure:npc/firered_juggler_nate",
+            "anchor": "trainer_4"
+          },
+          {
+            "id": "trainer_5",
+            "trainer_id": "cobbleventure:npc/firered_tamer_phil",
+            "anchor": "trainer_5"
+          },
+          {
+            "id": "trainer_6",
+            "trainer_id": "cobbleventure:npc/firered_tamer_edgar",
+            "anchor": "trainer_6"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cobbleventure:gym/saffron",
+      "enabled": true,
+      "display_name": {
+        "ko_kr": "노랑 체육관",
+        "en_us": "Saffron Gym"
+      },
+      "theme": "psychic",
+      "access": {
+        "require_previous_gym": true,
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [
+          "문은 굳게 잠겨 있다. 먼저 앞선 체육관 관장에게 승리해야 한다."
+        ],
+        "blocking_npc": {
+          "enabled": true,
+          "npc_profile": "cobbleventure:npc/gym_guide"
+        },
+        "previous_badge": "cobbleventure:badge/kanto/soul"
+      },
+      "exterior": {
+        "structure": "cobbleventure:gyms/base_gym"
+      },
+      "interior": {
+        "modules": [
+          {
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_psychic",
+            "position": [
+              0,
+              0,
+              80
+            ],
+            "rotation": "none"
+          }
+        ],
+        "connections": [
+          {
+            "from": "exterior:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door"
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door"
+          }
+        ]
+      },
+      "staff": {
+        "leader": {
+          "league_entry_id": "cobbleventure:league/kanto/marsh",
+          "anchor": "leader",
+          "trainer_id": "cobbleventure:npc/gym_leader/sabrina",
+          "badge_id": "cobbleventure:badge/kanto/marsh"
+        },
+        "trainers": [
+          {
+            "id": "trainer_1",
+            "trainer_id": "cobbleventure:npc/firered_psychic_johan",
+            "anchor": "trainer_1"
+          },
+          {
+            "id": "trainer_2",
+            "trainer_id": "cobbleventure:npc/firered_psychic_tyron",
+            "anchor": "trainer_2"
+          },
+          {
+            "id": "trainer_3",
+            "trainer_id": "cobbleventure:npc/firered_psychic_cameron",
+            "anchor": "trainer_3"
+          },
+          {
+            "id": "trainer_4",
+            "trainer_id": "cobbleventure:npc/firered_psychic_preston",
+            "anchor": "trainer_4"
+          },
+          {
+            "id": "trainer_5",
+            "trainer_id": "cobbleventure:npc/firered_channeler_amanda",
+            "anchor": "trainer_5"
+          },
+          {
+            "id": "trainer_6",
+            "trainer_id": "cobbleventure:npc/firered_channeler_stacy",
+            "anchor": "trainer_6"
+          },
+          {
+            "id": "trainer_7",
+            "trainer_id": "cobbleventure:npc/firered_channeler_tasha",
+            "anchor": "trainer_7"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cobbleventure:gym/cinnabar",
+      "enabled": true,
+      "display_name": {
+        "ko_kr": "홍련 체육관",
+        "en_us": "Cinnabar Gym"
+      },
+      "theme": "fire",
+      "access": {
+        "require_previous_gym": true,
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [
+          "문은 굳게 잠겨 있다. 먼저 앞선 체육관 관장에게 승리해야 한다."
+        ],
+        "blocking_npc": {
+          "enabled": true,
+          "npc_profile": "cobbleventure:npc/gym_guide"
+        },
+        "previous_badge": "cobbleventure:badge/kanto/marsh"
+      },
+      "exterior": {
+        "structure": "cobbleventure:gyms/base_gym"
+      },
+      "interior": {
+        "modules": [
+          {
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_fire",
+            "position": [
+              0,
+              0,
+              80
+            ],
+            "rotation": "none"
+          }
+        ],
+        "connections": [
+          {
+            "from": "exterior:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door"
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door"
+          }
+        ]
+      },
+      "staff": {
+        "leader": {
+          "league_entry_id": "cobbleventure:league/kanto/volcano",
+          "anchor": "leader",
+          "trainer_id": "cobbleventure:npc/gym_leader/blaine",
+          "badge_id": "cobbleventure:badge/kanto/volcano"
+        },
+        "trainers": [
+          {
+            "id": "trainer_1",
+            "trainer_id": "cobbleventure:npc/firered_super_nerd_erik",
+            "anchor": "trainer_1"
+          },
+          {
+            "id": "trainer_2",
+            "trainer_id": "cobbleventure:npc/firered_super_nerd_avery",
+            "anchor": "trainer_2"
+          },
+          {
+            "id": "trainer_3",
+            "trainer_id": "cobbleventure:npc/firered_super_nerd_derek",
+            "anchor": "trainer_3"
+          },
+          {
+            "id": "trainer_4",
+            "trainer_id": "cobbleventure:npc/firered_super_nerd_zac",
+            "anchor": "trainer_4"
+          },
+          {
+            "id": "trainer_5",
+            "trainer_id": "cobbleventure:npc/firered_burglar_quinn",
+            "anchor": "trainer_5"
+          },
+          {
+            "id": "trainer_6",
+            "trainer_id": "cobbleventure:npc/firered_burglar_ramon",
+            "anchor": "trainer_6"
+          },
+          {
+            "id": "trainer_7",
+            "trainer_id": "cobbleventure:npc/firered_burglar_dusty",
+            "anchor": "trainer_7"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cobbleventure:gym/viridian",
+      "enabled": true,
+      "display_name": {
+        "ko_kr": "상록 체육관",
+        "en_us": "Viridian Gym"
+      },
+      "theme": "ground",
+      "access": {
+        "require_previous_gym": true,
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [
+          "문은 굳게 잠겨 있다. 먼저 앞선 체육관 관장에게 승리해야 한다."
+        ],
+        "blocking_npc": {
+          "enabled": true,
+          "npc_profile": "cobbleventure:npc/gym_guide"
+        },
+        "previous_badge": "cobbleventure:badge/kanto/volcano"
+      },
+      "exterior": {
+        "structure": "cobbleventure:gyms/base_gym"
+      },
+      "interior": {
+        "modules": [
+          {
+            "id": "lobby",
+            "structure": "cobbleventure:interiors/gyms/shared_lobby",
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "gimmick",
+            "structure": "cobbleventure:interiors/gyms/shared_gimmick",
+            "position": [
+              0,
+              0,
+              40
+            ],
+            "rotation": "none"
+          },
+          {
+            "id": "arena",
+            "structure": "cobbleventure:interiors/gyms/arena_ground",
+            "position": [
+              0,
+              0,
+              80
+            ],
+            "rotation": "none"
+          }
+        ],
+        "connections": [
+          {
+            "from": "exterior:door",
+            "to": "lobby:door",
+            "condition_mode": "all",
+            "conditions": [],
+            "locked_dialogue": [],
+            "enter_dialogue": []
+          },
+          {
+            "from": "lobby:next",
+            "to": "gimmick:door"
+          },
+          {
+            "from": "gimmick:next",
+            "to": "arena:door"
+          }
+        ]
+      },
+      "staff": {
+        "leader": {
+          "league_entry_id": "cobbleventure:league/kanto/earth",
+          "anchor": "leader",
+          "trainer_id": "cobbleventure:npc/gym_leader/giovanni_gym",
+          "badge_id": "cobbleventure:badge/kanto/earth"
+        },
+        "trainers": [
+          {
+            "id": "trainer_1",
+            "trainer_id": "cobbleventure:npc/firered_tamer_jason",
+            "anchor": "trainer_1"
+          },
+          {
+            "id": "trainer_2",
+            "trainer_id": "cobbleventure:npc/firered_tamer_cole",
+            "anchor": "trainer_2"
+          },
+          {
+            "id": "trainer_3",
+            "trainer_id": "cobbleventure:npc/firered_black_belt_atsushi",
+            "anchor": "trainer_3"
+          },
+          {
+            "id": "trainer_4",
+            "trainer_id": "cobbleventure:npc/firered_black_belt_kiyo",
+            "anchor": "trainer_4"
+          },
+          {
+            "id": "trainer_5",
+            "trainer_id": "cobbleventure:npc/firered_black_belt_takashi",
+            "anchor": "trainer_5"
+          },
+          {
+            "id": "trainer_6",
+            "trainer_id": "cobbleventure:npc/firered_cooltrainer_samuel",
+            "anchor": "trainer_6"
+          },
+          {
+            "id": "trainer_7",
+            "trainer_id": "cobbleventure:npc/firered_cooltrainer_yuji",
+            "anchor": "trainer_7"
+          },
+          {
+            "id": "trainer_8",
+            "trainer_id": "cobbleventure:npc/firered_cooltrainer_warren",
+            "anchor": "trainer_8"
+          }
+        ]
+      }
+    }
+  ],
+  "leagues": [
+    {
+      "id": "cobbleventure:league/kanto",
+      "display_name": {
+        "ko_kr": "포켓몬리그",
+        "en_us": "Pokemon League"
+      },
+      "structure": "cobbleventure:league/kanto_league"
+    }
+  ]
+}

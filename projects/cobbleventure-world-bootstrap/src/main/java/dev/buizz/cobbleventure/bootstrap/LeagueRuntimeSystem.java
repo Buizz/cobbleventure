@@ -159,7 +159,11 @@ final class LeagueRuntimeSystem {
             if (fromLobby && destination.stage == 0) {
                 // Lobby always links to stage one in authoring; admission chooses the saved stage.
                 Room resume = instance.stage(progress.completed());
-                return new Route(target(target, resume), () -> write(player, instance, progress, true));
+                Room lobby = instance.lobby();
+                return new Route(target(target, resume), () -> {
+                    write(player, instance, progress, true);
+                    PokemonCenterDefeatReturn.recordLeagueCheckpoint(player, lobby.level, lobby.entry);
+                });
             }
             if (source == null || !state.getBoolean("active")
                 || !state.getString("instance").equals(instance.key)
@@ -260,7 +264,8 @@ final class LeagueRuntimeSystem {
             write(player, attempt.instance, progress.win(attempt.stage), true);
         } else {
             write(player, attempt.instance, progress.interrupt(), false);
-            RETURNS.put(player.getUUID(), attempt.instance);
+            // Battle defeat/forfeit is returned by the shared checkpoint recovery only.
+            RETURNS.remove(player.getUUID());
             message(player, attempt.instance.relay ? "도전이 종료되었습니다. 로비에서 처음부터 다시 도전하세요."
                 : "도전이 중단되었습니다. 로비에서 마지막 승리 다음 방부터 이어갈 수 있습니다.");
         }

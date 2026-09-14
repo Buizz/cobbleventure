@@ -1,0 +1,97 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "slugma-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_basalt",
+          "#cobblemon:nether/is_wasteland"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "slugma",
+      "level": "1-25",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "slugma-4",
+      "presets": [
+        "lava"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_nether",
+          "#cobblemon:is_volcanic"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "slugma",
+      "level": "1-25",
+      "spawnablePositionType": "surface"
+    },
+    {
+      "id": "slugma-1",
+      "presets": [
+        "lava"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "slugma",
+      "level": "1-25",
+      "spawnablePositionType": "surface",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "slugma-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_volcanic"
+        ],
+        "neededNearbyBlocks": [
+          "minecraft:lava"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "slugma",
+      "level": "1-25",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

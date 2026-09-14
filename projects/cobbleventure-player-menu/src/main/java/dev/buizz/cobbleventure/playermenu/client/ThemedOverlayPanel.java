@@ -45,6 +45,30 @@ public final class ThemedOverlayPanel {
         );
     }
 
+    /** Draws a square HUD panel flush against the top-right edge of the screen. */
+    public static void drawRightAttached(
+        GuiGraphics graphics, MenuTheme theme,
+        int x, int y, int width, int height, float opacity, int accent
+    ) {
+        float alpha = Math.clamp(opacity, 0.0F, 1.0F);
+        graphics.fill(
+            x, y, x + width, y + height,
+            withOpacity(theme.border, alpha)
+        );
+        graphics.fill(
+            x + 1, y + 1, x + width, y + height - 1,
+            withOpacity(theme.innerBorder, alpha)
+        );
+        graphics.fill(
+            x + 2, y + 2, x + width, y + height - 2,
+            withOpacity(theme.background, alpha)
+        );
+        graphics.fill(
+            x, y, x + 2, y + height,
+            withOpacity(accent, alpha)
+        );
+    }
+
     public static int withOpacity(int color, float opacity) {
         int sourceAlpha = color >>> 24;
         int alpha = Math.round(sourceAlpha * Math.clamp(opacity, 0.0F, 1.0F));

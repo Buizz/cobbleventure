@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/interiors/laboratory.nbt",
+  "interior": {
+    "id": "laboratory",
+    "width": 32,
+    "depth": 32,
+    "floor_height": 12,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "id": "door",
+      "label": "door",
+      "type": "door",
+      "position": [
+        15,
+        1,
+        1
+      ],
+      "safe_spawn": [
+        15,
+        1,
+        2
+      ],
+      "door_facing": "north",
+      "safe_side": "south"
+    },
+    {
+      "label": "professor_oak",
+      "type": "npc_position",
+      "position": [
+        16,
+        1,
+        14
+      ],
+      "facing": "north"
+    },
+    {
+      "label": "researcher2",
+      "type": "npc_position",
+      "position": [
+        12,
+        1,
+        6
+      ],
+      "facing": "east"
+    },
+    {
+      "label": "researcher1",
+      "type": "npc_position",
+      "position": [
+        19,
+        1,
+        6
+      ],
+      "facing": "west"
+    }
+  ]
+}

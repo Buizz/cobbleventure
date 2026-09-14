@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/kanto_beauty_sora",
+  "controller": "cobbleventure",
+  "difficulty": "standard",
+  "strategy": "balanced",
+  "options": {}
+}

@@ -1,0 +1,29 @@
+{
+  "name": "짧은치마 유나 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "pidgey",
+      "level": 6,
+      "moveset": [
+        "tackle",
+        "gust"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

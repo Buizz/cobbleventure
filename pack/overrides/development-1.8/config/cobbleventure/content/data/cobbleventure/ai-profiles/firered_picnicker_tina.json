@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/firered_picnicker_tina",
+  "controller": "cobbleventure",
+  "difficulty": "standard",
+  "strategy": "balanced",
+  "options": {}
+}

@@ -1,0 +1,123 @@
+{
+  "name": "엘리트 트레이너 조지 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "exeggutor",
+      "level": 42,
+      "moveset": [
+        "eggbomb",
+        "confusion",
+        "stunspore",
+        "sleeppowder"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "sandslash",
+      "level": 42,
+      "moveset": [
+        "furyswipes",
+        "swift",
+        "poisonsting",
+        "sandattack"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "cloyster",
+      "level": 42,
+      "moveset": [
+        "spikecannon",
+        "spikes",
+        "aurorabeam",
+        "supersonic"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "electrode",
+      "level": 42,
+      "moveset": [
+        "spark",
+        "sonicboom",
+        "screech",
+        "lightscreen"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "arcanine",
+      "level": 42,
+      "moveset": [
+        "flamewheel",
+        "roar",
+        "bite",
+        "takedown"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 1
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ]
+}

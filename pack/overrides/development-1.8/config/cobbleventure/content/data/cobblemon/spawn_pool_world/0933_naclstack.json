@@ -1,0 +1,67 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "naclstack-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.54,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_badlands"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "naclstack",
+      "level": "24-36",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "naclstack-2",
+      "presets": [
+        "salt",
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.9,
+      "condition": {
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "naclstack",
+      "level": "24-36",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "naclstack-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_quartz"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "naclstack",
+      "level": "24-36",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

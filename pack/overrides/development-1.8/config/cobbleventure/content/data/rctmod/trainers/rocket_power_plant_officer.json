@@ -1,0 +1,52 @@
+{
+  "name": "발전소 로켓단 간부 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "aggressive",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "magneton",
+      "level": 27,
+      "moveset": [
+        "spark",
+        "thunderwave",
+        "lightscreen",
+        "sonicboom"
+      ],
+      "gender": "GENDERLESS"
+    },
+    {
+      "species": "muk",
+      "level": 28,
+      "moveset": [
+        "sludge",
+        "mudshot",
+        "disable",
+        "minimize"
+      ]
+    },
+    {
+      "species": "raichu",
+      "level": 29,
+      "moveset": [
+        "spark",
+        "quickattack",
+        "electroball",
+        "doubleteam"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

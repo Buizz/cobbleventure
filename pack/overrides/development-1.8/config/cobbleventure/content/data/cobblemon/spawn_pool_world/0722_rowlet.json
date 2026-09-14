@@ -1,0 +1,62 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "rowlet-1",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest",
+          "aether:skyroot_forest",
+          "aether:skyroot_woodland",
+          "#cobblemon:is_taiga"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "rowlet",
+      "level": "5-32",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ]
+      }
+    },
+    {
+      "id": "rowlet-hisui-3",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_snowy_taiga"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "rowlet region_bias=hisui",
+      "level": "5-32",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

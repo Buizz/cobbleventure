@@ -62,15 +62,15 @@
       "door_routes": {}
     },
     "cobbleventure:facilities/department_store": {
+      "placement_y_offset": 0,
+      "structure_category": "building",
+      "no_interior_space": false,
       "radar": {
         "enabled": true,
         "category": "POKEMART",
         "label": "포켓몬상점",
         "anchor": "door"
       },
-      "placement_y_offset": 0,
-      "structure_category": "building",
-      "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
       "fixed_gacha_machines": {},
@@ -93,15 +93,15 @@
       }
     },
     "cobbleventure:facilities/pokemart": {
+      "placement_y_offset": 0,
+      "structure_category": "building",
+      "no_interior_space": false,
       "radar": {
         "enabled": true,
         "category": "POKEMART",
         "label": "포켓몬상점",
-        "anchor": "door"
+        "anchor": "auto"
       },
-      "placement_y_offset": 0,
-      "structure_category": "building",
-      "no_interior_space": false,
       "fixed_npcs": {
         "counter": "cobbleventure:npc/pokemart_clerk"
       },
@@ -112,15 +112,15 @@
       "door_routes": {}
     },
     "cobbleventure:facilities/pokemon_center": {
+      "placement_y_offset": 0,
+      "structure_category": "building",
+      "no_interior_space": false,
       "radar": {
         "enabled": true,
         "category": "POKEMON_CENTER",
         "label": "포켓몬센터",
-        "anchor": "door"
+        "anchor": "auto"
       },
-      "placement_y_offset": 0,
-      "structure_category": "building",
-      "no_interior_space": false,
       "fixed_npcs": {
         "nurse": "cobbleventure:npc/pokemon_center_nurse"
       },
@@ -155,15 +155,15 @@
       "door_routes": {}
     },
     "cobbleventure:gyms/base_gym": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_exterior",
+      "no_interior_space": false,
       "radar": {
         "enabled": true,
         "category": "GYM",
         "label": "체육관",
         "anchor": "door"
       },
-      "placement_y_offset": 0,
-      "structure_category": "gym_exterior",
-      "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
       "fixed_gacha_machines": {},
@@ -199,13 +199,13 @@
       }
     },
     "cobbleventure:houses/five_story_flat": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "5층 평지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -215,13 +215,13 @@
       "door_routes": {}
     },
     "cobbleventure:houses/five_story_gable": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "5층 박공지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -231,13 +231,13 @@
       "door_routes": {}
     },
     "cobbleventure:houses/five_story_gambrel": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "5층 갬브럴지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -247,13 +247,13 @@
       "door_routes": {}
     },
     "cobbleventure:houses/five_story_shed": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "5층 외쪽 경사지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -263,13 +263,13 @@
       "door_routes": {}
     },
     "cobbleventure:houses/one_story_flat": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "1층 평지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -293,13 +293,13 @@
       }
     },
     "cobbleventure:houses/one_story_gable": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "1층 박공지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -323,13 +323,13 @@
       }
     },
     "cobbleventure:houses/one_story_gambrel": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "1층 갬브럴지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -353,13 +353,13 @@
       }
     },
     "cobbleventure:houses/one_story_shed": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "1층 외쪽 경사지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -383,13 +383,13 @@
       }
     },
     "cobbleventure:houses/two_story_flat": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "2층 평지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -399,13 +399,13 @@
       "door_routes": {}
     },
     "cobbleventure:houses/two_story_gable": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "2층 박공지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -415,13 +415,13 @@
       "door_routes": {}
     },
     "cobbleventure:houses/two_story_gambrel": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "2층 갬브럴지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -431,13 +431,13 @@
       "door_routes": {}
     },
     "cobbleventure:houses/two_story_shed": {
+      "placement_y_offset": 0,
+      "structure_category": "residential",
       "residential_placement": {
         "enabled": true,
         "weight": 1,
         "label": "2층 외쪽 경사지붕 주택"
       },
-      "placement_y_offset": 0,
-      "structure_category": "residential",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -478,6 +478,222 @@
       "interiors": [],
       "door_routes": {}
     },
+    "cobbleventure:interiors/gyms/arena_bug": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_dark": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_dragon": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_electric": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_fairy": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_fighting": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_fire": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_flying": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_ghost": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_grass": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_ground": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_ice": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_normal": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_poison": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_psychic": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_rock": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_steel": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/arena_water": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
     "cobbleventure:interiors/gyms/base_gym_interior": {
       "placement_y_offset": 0,
       "structure_category": "gym_interior",
@@ -490,9 +706,117 @@
       "interiors": [],
       "door_routes": {}
     },
+    "cobbleventure:interiors/gyms/shared_gimmick": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/gyms/shared_lobby": {
+      "placement_y_offset": 0,
+      "structure_category": "gym_interior",
+      "music_track": "facility.gym",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/hall_of_fame": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
     "cobbleventure:interiors/laboratory": {
       "placement_y_offset": 0,
       "structure_category": "interior",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_champion": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_elite_1": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_elite_2": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_elite_3": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_elite_4": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [],
+      "door_routes": {}
+    },
+    "cobbleventure:interiors/leagues/kanto_lobby": {
+      "placement_y_offset": 0,
+      "structure_category": "interior",
+      "music_track": "kanto.indigo_plateau",
       "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
@@ -533,6 +857,33 @@
       "citizen_placement_allowed": false,
       "interiors": [],
       "door_routes": {}
+    },
+    "cobbleventure:league/indigo_plateau": {
+      "placement_y_offset": 0,
+      "structure_category": "league",
+      "music_track": "kanto.indigo_plateau",
+      "no_interior_space": false,
+      "fixed_npcs": {},
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [
+        {
+          "key": "lobby",
+          "structure": "cobbleventure:interiors/leagues/kanto_lobby"
+        }
+      ],
+      "door_routes": {
+        "exterior:door": {
+          "space": "lobby",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        }
+      },
+      "terrain_preparation": "reserve_plot"
     },
     "cobbleventure:league/kanto_league": {
       "placement_y_offset": 0,
@@ -591,15 +942,15 @@
       "door_routes": {}
     },
     "cobbleventure:placeholder/casino": {
+      "placement_y_offset": 0,
+      "structure_category": "placeholder",
+      "no_interior_space": false,
       "radar": {
         "enabled": true,
         "category": "CASINO",
         "label": "카지노",
         "anchor": "door"
       },
-      "placement_y_offset": 0,
-      "structure_category": "placeholder",
-      "no_interior_space": false,
       "fixed_npcs": {
         "room_1:blackjack_dealer_*": "cobbleventure:npc/blackjack_dealer",
         "room_1:npc1": "cobbleventure:npc/casino_cashier",
@@ -670,9 +1021,9 @@
       "structure_category": "placeholder",
       "no_interior_space": false,
       "fixed_npcs": {
-        "room_1:npc3": "cobbleventure:npc/facilities/fossil_researcher",
         "room_1:npc1": "cobbleventure:npc/facilities/fossil_assistant",
-        "room_1:npc2": "cobbleventure:npc/facilities/fossil_scholar"
+        "room_1:npc2": "cobbleventure:npc/facilities/fossil_scholar",
+        "room_1:npc3": "cobbleventure:npc/facilities/fossil_researcher"
       },
       "fixed_pokemon": {},
       "fixed_gacha_machines": {},
@@ -695,15 +1046,15 @@
       }
     },
     "cobbleventure:placeholder/gym_site": {
+      "placement_y_offset": 0,
+      "structure_category": "placeholder",
+      "no_interior_space": false,
       "radar": {
         "enabled": true,
         "category": "GYM",
         "label": "체육관",
-        "anchor": "door"
+        "anchor": "auto"
       },
-      "placement_y_offset": 0,
-      "structure_category": "placeholder",
-      "no_interior_space": false,
       "fixed_npcs": {},
       "fixed_pokemon": {},
       "fixed_gacha_machines": {},
@@ -830,6 +1181,104 @@
       "interiors": [],
       "door_routes": {}
     },
+    "cobbleventure:placeholder/round_laboratory": {
+      "placement_y_offset": 0,
+      "structure_category": "building",
+      "no_interior_space": false,
+      "town_placement": {
+        "enabled": true,
+        "id": "round_laboratory",
+        "label": "포켓몬 연구소(라운드형)",
+        "note": "둥근 크림색 외벽과 붉은 중앙 지붕의 포켓몬 연구소",
+        "color": "#ce7763"
+      },
+      "fixed_npcs": {
+        "dynamax:dynamax_researcher": "cobbleventure:npc/facilities/research_dynamax",
+        "mega:mega_researcher": "cobbleventure:npc/facilities/research_mega",
+        "stats:ev_researcher": "cobbleventure:npc/facilities/research_stats",
+        "stats:iv_researcher": "cobbleventure:npc/facilities/research_stats",
+        "z_move:z_move_researcher": "cobbleventure:npc/facilities/research_z_move"
+      },
+      "fixed_pokemon": {},
+      "fixed_gacha_machines": {},
+      "citizen_placement_allowed": false,
+      "interiors": [
+        {
+          "key": "room_1",
+          "structure": "cobbleventure:interiors/round_laboratory_lobby"
+        },
+        {
+          "key": "tm",
+          "structure": "cobbleventure:interiors/round_laboratory_tm"
+        },
+        {
+          "key": "z_move",
+          "structure": "cobbleventure:interiors/round_laboratory_z_move"
+        },
+        {
+          "key": "mega",
+          "structure": "cobbleventure:interiors/round_laboratory_mega"
+        },
+        {
+          "key": "dynamax",
+          "structure": "cobbleventure:interiors/round_laboratory_dynamax"
+        },
+        {
+          "key": "stats",
+          "structure": "cobbleventure:interiors/round_laboratory_stats"
+        }
+      ],
+      "door_routes": {
+        "exterior:door": {
+          "space": "room_1",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:dynamax": {
+          "space": "dynamax",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:mega": {
+          "space": "mega",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:stats": {
+          "space": "stats",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:tm": {
+          "space": "tm",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        },
+        "room_1:z_move": {
+          "space": "z_move",
+          "door": "door",
+          "condition_mode": "all",
+          "conditions": [],
+          "locked_dialogue": [],
+          "enter_dialogue": []
+        }
+      }
+    },
     "cobbleventure:placeholder/silph_company": {
       "placement_y_offset": 0,
       "structure_category": "placeholder",
@@ -917,290 +1366,6 @@
       "citizen_placement_allowed": false,
       "interiors": [],
       "door_routes": {}
-    },
-    "cobbleventure:placeholder/round_laboratory": {
-      "placement_y_offset": 0,
-      "structure_category": "building",
-      "no_interior_space": false,
-      "fixed_npcs": {
-        "z_move:z_move_researcher": "cobbleventure:npc/facilities/research_z_move",
-        "mega:mega_researcher": "cobbleventure:npc/facilities/research_mega",
-        "dynamax:dynamax_researcher": "cobbleventure:npc/facilities/research_dynamax",
-        "stats:ev_researcher": "cobbleventure:npc/facilities/research_stats",
-        "stats:iv_researcher": "cobbleventure:npc/facilities/research_stats"
-      },
-      "fixed_pokemon": {},
-      "fixed_gacha_machines": {},
-      "citizen_placement_allowed": false,
-      "interiors": [
-        {
-          "key": "room_1",
-          "structure": "cobbleventure:interiors/round_laboratory_lobby"
-        },
-        {
-          "key": "tm",
-          "structure": "cobbleventure:interiors/round_laboratory_tm"
-        },
-        {
-          "key": "z_move",
-          "structure": "cobbleventure:interiors/round_laboratory_z_move"
-        },
-        {
-          "key": "mega",
-          "structure": "cobbleventure:interiors/round_laboratory_mega"
-        },
-        {
-          "key": "dynamax",
-          "structure": "cobbleventure:interiors/round_laboratory_dynamax"
-        },
-        {
-          "key": "stats",
-          "structure": "cobbleventure:interiors/round_laboratory_stats"
-        }
-      ],
-      "door_routes": {
-        "exterior:door": {
-          "space": "room_1",
-          "door": "door",
-          "condition_mode": "all",
-          "conditions": [],
-          "locked_dialogue": [],
-          "enter_dialogue": []
-        },
-        "room_1:tm": {
-          "space": "tm",
-          "door": "door",
-          "condition_mode": "all",
-          "conditions": [],
-          "locked_dialogue": [],
-          "enter_dialogue": []
-        },
-        "room_1:z_move": {
-          "space": "z_move",
-          "door": "door",
-          "condition_mode": "all",
-          "conditions": [],
-          "locked_dialogue": [],
-          "enter_dialogue": []
-        },
-        "room_1:mega": {
-          "space": "mega",
-          "door": "door",
-          "condition_mode": "all",
-          "conditions": [],
-          "locked_dialogue": [],
-          "enter_dialogue": []
-        },
-        "room_1:dynamax": {
-          "space": "dynamax",
-          "door": "door",
-          "condition_mode": "all",
-          "conditions": [],
-          "locked_dialogue": [],
-          "enter_dialogue": []
-        },
-        "room_1:stats": {
-          "space": "stats",
-          "door": "door",
-          "condition_mode": "all",
-          "conditions": [],
-          "locked_dialogue": [],
-          "enter_dialogue": []
-        }
-      },
-      "town_placement": {
-        "enabled": true,
-        "id": "round_laboratory",
-        "label": "포켓몬 연구소(라운드형)",
-        "note": "둥근 크림색 외벽과 붉은 중앙 지붕의 포켓몬 연구소",
-        "color": "#ce7763"
-      }
-    },
-    "cobbleventure:interiors/hall_of_fame": {
-      "placement_y_offset": 0,
-      "structure_category": "interior",
-      "music_track": "kanto.indigo_plateau",
-      "no_interior_space": false,
-      "fixed_npcs": {},
-      "fixed_pokemon": {},
-      "fixed_gacha_machines": {},
-      "citizen_placement_allowed": false,
-      "interiors": [],
-      "door_routes": {}
-    },
-    "cobbleventure:interiors/gyms/arena_bug": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_dark": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_dragon": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_electric": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_fairy": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_fighting": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_fire": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_flying": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_ghost": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_grass": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_ground": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_ice": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_normal": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_poison": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_psychic": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_rock": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_steel": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/arena_water": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/shared_gimmick": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/gyms/shared_lobby": {
-      "structure_category": "gym_interior",
-      "music_track": "facility.gym"
-    },
-    "cobbleventure:interiors/leagues/kanto_lobby": {
-      "placement_y_offset": 0,
-      "structure_category": "interior",
-      "music_track": "kanto.indigo_plateau",
-      "no_interior_space": false,
-      "fixed_npcs": {},
-      "fixed_pokemon": {},
-      "fixed_gacha_machines": {},
-      "citizen_placement_allowed": false,
-      "interiors": [],
-      "door_routes": {}
-    },
-    "cobbleventure:interiors/leagues/kanto_elite_1": {
-      "placement_y_offset": 0,
-      "structure_category": "interior",
-      "music_track": "kanto.indigo_plateau",
-      "no_interior_space": false,
-      "fixed_npcs": {},
-      "fixed_pokemon": {},
-      "fixed_gacha_machines": {},
-      "citizen_placement_allowed": false,
-      "interiors": [],
-      "door_routes": {}
-    },
-    "cobbleventure:interiors/leagues/kanto_elite_2": {
-      "placement_y_offset": 0,
-      "structure_category": "interior",
-      "music_track": "kanto.indigo_plateau",
-      "no_interior_space": false,
-      "fixed_npcs": {},
-      "fixed_pokemon": {},
-      "fixed_gacha_machines": {},
-      "citizen_placement_allowed": false,
-      "interiors": [],
-      "door_routes": {}
-    },
-    "cobbleventure:interiors/leagues/kanto_elite_3": {
-      "placement_y_offset": 0,
-      "structure_category": "interior",
-      "music_track": "kanto.indigo_plateau",
-      "no_interior_space": false,
-      "fixed_npcs": {},
-      "fixed_pokemon": {},
-      "fixed_gacha_machines": {},
-      "citizen_placement_allowed": false,
-      "interiors": [],
-      "door_routes": {}
-    },
-    "cobbleventure:interiors/leagues/kanto_elite_4": {
-      "placement_y_offset": 0,
-      "structure_category": "interior",
-      "music_track": "kanto.indigo_plateau",
-      "no_interior_space": false,
-      "fixed_npcs": {},
-      "fixed_pokemon": {},
-      "fixed_gacha_machines": {},
-      "citizen_placement_allowed": false,
-      "interiors": [],
-      "door_routes": {}
-    },
-    "cobbleventure:interiors/leagues/kanto_champion": {
-      "placement_y_offset": 0,
-      "structure_category": "interior",
-      "music_track": "kanto.indigo_plateau",
-      "no_interior_space": false,
-      "fixed_npcs": {},
-      "fixed_pokemon": {},
-      "fixed_gacha_machines": {},
-      "citizen_placement_allowed": false,
-      "interiors": [],
-      "door_routes": {}
-    },
-    "cobbleventure:league/indigo_plateau": {
-      "placement_y_offset": 0,
-      "structure_category": "league",
-      "music_track": "kanto.indigo_plateau",
-      "no_interior_space": false,
-      "fixed_npcs": {},
-      "fixed_pokemon": {},
-      "fixed_gacha_machines": {},
-      "citizen_placement_allowed": false,
-      "interiors": [
-        {
-          "key": "lobby",
-          "structure": "cobbleventure:interiors/leagues/kanto_lobby"
-        }
-      ],
-      "door_routes": {
-        "exterior:door": {
-          "space": "lobby",
-          "door": "entry"
-        }
-      }
     }
   }
 }

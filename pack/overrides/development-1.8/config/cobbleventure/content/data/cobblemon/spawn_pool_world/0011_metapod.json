@@ -1,0 +1,87 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "metapod-1",
+      "presets": [
+        "natural",
+        "foliage",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest",
+          "#cobblemon:is_plains",
+          "aether:skyroot_forest",
+          "aether:skyroot_woodland"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "metapod",
+      "level": "7-21",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing",
+          "#cobblemon:is_spooky"
+        ]
+      }
+    },
+    {
+      "id": "metapod-valencian-2",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_tropical_island"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "metapod valencian",
+      "level": "7-21",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "metapod-valencian-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "the_bumblezone:floral_meadow"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "metapod valencian",
+      "level": "7-21",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "#the_bumblezone:sempiternal_sanctums"
+        ]
+      }
+    }
+  ]
+}

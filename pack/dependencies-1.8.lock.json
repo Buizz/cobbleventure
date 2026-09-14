@@ -11,19 +11,6 @@
   },
   "mods": [
     {
-      "id": "cobblemon",
-      "display_name": "Cobblemon",
-      "classification": "required",
-      "side": "both",
-      "enabled": true,
-      "version": "1.8.0",
-      "curseforge": {
-        "project_id": 687131,
-        "file_id": 8818732
-      },
-      "reason": "Cobblemon 1.8의 포켓몬, 파티와 실제 배틀 시스템"
-    },
-    {
       "id": "cobblemon_battle_extras",
       "display_name": "Cobblemon Battle Extras",
       "classification": "required",
@@ -237,10 +224,10 @@
       "classification": "required",
       "side": "both",
       "enabled": true,
-      "version": "2.4.0",
+      "version": "2.4.1",
       "curseforge": {
         "project_id": 976014,
-        "file_id": 8823427
+        "file_id": 8837236
       },
       "reason": "플레이어 메뉴의 포켓네비와 지역별 포켓몬 출현 정보"
     },
@@ -458,10 +445,10 @@
       "classification": "required",
       "side": "both",
       "enabled": true,
-      "version": "1.0+1.8+1.21.1-beta2",
+      "version": "1.2.0+1.8.1+1.21.1-release",
       "curseforge": {
         "project_id": 1189523,
-        "file_id": 8820597
+        "file_id": 8870190
       },
       "reason": "Cobblemon 1.8용 메가진화, Z기술, 테라스탈, 다이맥스와 울트라버스트"
     },
@@ -571,6 +558,29 @@
     }
   ],
   "content_packs": [
+    {
+      "id": "cobblemon",
+      "display_name": "Cobblemon",
+      "kind": "mod",
+      "classification": "required",
+      "side": "both",
+      "selected": true,
+      "version": "1.8.1",
+      "artifact_format": "neoforge_mod",
+      "packaging_status": "ready",
+      "runtime_status": "ready",
+      "modrinth": {
+        "project_id": "MdwFAVRL",
+        "version_id": "7otgw3aH"
+      },
+      "install_path": "mods",
+      "vendored_path": "pack/overrides/development-1.8/mods/Cobblemon-neoforge-1.8.1+1.21.1.jar",
+      "source_url": "https://cdn.modrinth.com/data/MdwFAVRL/versions/7otgw3aH/Cobblemon-neoforge-1.8.1%2B1.21.1.jar",
+      "sha1": "4e0406aeb73026d6103d7dde2da672d13203b97f",
+      "sha512": "ac00e6ee6bc6fc1f4872aa5baa07cbed45668452fd5b15ef0120089a4aa5e1b9e9841f8f84862ab940ffa3bdffb85bc07fa05dc3db87aa131cce455db6f0c9dc",
+      "license": "MPL-2.0",
+      "reason": "Cobblemon 1.8.1의 포켓몬, 파티와 실제 배틀 시스템. CurseForge 게시 전 공식 Modrinth JAR을 해시 고정해 직접 포함"
+    },
     {
       "id": "cobbreeding",
       "display_name": "Cobbreeding",

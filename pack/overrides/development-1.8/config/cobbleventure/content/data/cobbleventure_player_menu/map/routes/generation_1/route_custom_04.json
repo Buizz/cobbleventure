@@ -1,0 +1,76 @@
+{
+  "$schema": "../../schemas/route.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:route/route_custom_04",
+  "display_name": {
+    "ko_kr": "상록시티 - 상록숲 길",
+    "en_us": "상록시티 - 상록숲 길"
+  },
+  "auto_name": true,
+  "enabled": true,
+  "route_type": "road",
+  "corridor": {
+    "width_blocks": 12,
+    "edge_noise": 0
+  },
+  "level_scaling": {
+    "mode": "world",
+    "offset": 0
+  },
+  "pokemon_spawns": {
+    "inherit_biome": false,
+    "excluded_species": [],
+    "additions": [
+      {
+        "species": "cobblemon:caterpie",
+        "min_level": 3,
+        "max_level": 5
+      },
+      {
+        "species": "cobblemon:pidgey",
+        "min_level": 3,
+        "max_level": 5
+      },
+      {
+        "species": "cobblemon:rattata",
+        "min_level": 2,
+        "max_level": 5
+      },
+      {
+        "species": "cobblemon:weedle",
+        "min_level": 3,
+        "max_level": 5
+      }
+    ],
+    "level_overrides": [
+      {
+        "species": "cobblemon:caterpie",
+        "min_level": 3,
+        "max_level": 5
+      },
+      {
+        "species": "cobblemon:pidgey",
+        "min_level": 3,
+        "max_level": 5
+      },
+      {
+        "species": "cobblemon:rattata",
+        "min_level": 2,
+        "max_level": 5
+      },
+      {
+        "species": "cobblemon:weedle",
+        "min_level": 3,
+        "max_level": 5
+      }
+    ]
+  },
+  "npc_placements": [],
+  "automatic_npc_placement": {
+    "enabled": false,
+    "count": 0,
+    "use_biome_defaults": false,
+    "direct_trainers": [],
+    "trigger_override": "proximity"
+  }
+}

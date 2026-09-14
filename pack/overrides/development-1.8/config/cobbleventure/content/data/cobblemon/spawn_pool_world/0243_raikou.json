@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "raikou-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 33.33,
+      "condition": {
+        "structures": [
+          "cobbleverse:burned_tower"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "raikou",
+      "level": "60",
+      "spawnablePositionType": "grounded",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "isThundering": true
+          },
+          "multiplier": 3.0
+        }
+      ]
+    }
+  ]
+}

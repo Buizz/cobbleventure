@@ -32,7 +32,7 @@ dependencies {
     compileOnly "dev.buizz.cobbleventure:cobbleventure-adventure:0.1.0"
     compileOnly "dev.buizz.cobbleventure:cobbleventure-player-menu:1.6.0"
     compileOnly cobblemonBuildDependency
-    compileOnly "curse.maven:radical-cobblemon-trainers-api-1152792:7952419"
+    compileOnly "curse.maven:radical-cobblemon-trainers-api-1152792:8826267"
     compileOnly "curse.maven:cobbledollars-859232:8484919"
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20"
 

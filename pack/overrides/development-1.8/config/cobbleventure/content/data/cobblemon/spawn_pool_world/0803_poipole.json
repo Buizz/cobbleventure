@@ -1,0 +1,29 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "poipole-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 1.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_end"
+        ],
+        "structures": [
+          "cobbleverse:dawn_tower",
+          "cobbleverse:dusk_tower"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "poipole",
+      "level": "40",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

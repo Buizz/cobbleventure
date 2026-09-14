@@ -1,0 +1,128 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "chatot-1",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_jungle"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "chatot",
+      "level": "16-41",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "chatot-2",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_tropical_island"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "chatot",
+      "level": "16-41",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "chatot-3",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_sky"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "chatot",
+      "level": "16-41",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "chatot-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 9,
+        "minSkyLight": 0,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "chatot",
+      "level": "16-41",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "chatot-8",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "aether:skyroot_forest",
+          "aether:skyroot_woodland"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "chatot",
+      "level": "16-41",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

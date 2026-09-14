@@ -1,0 +1,125 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "bronzor-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "the_bumblezone:howling_constructs"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "bronzor",
+      "level": "5-30",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "#the_bumblezone:sempiternal_sanctums"
+        ]
+      }
+    },
+    {
+      "id": "bronzor-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 8.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_peak"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "minY": 0,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "bronzor",
+      "level": "5-30",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    },
+    {
+      "id": "bronzor-2",
+      "presets": [
+        "natural",
+        "jungle_pyramid"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 54,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "minY": 48,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "bronzor",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "bronzor-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 54,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxY": 10,
+        "minY": -37,
+        "structures": [
+          "#cobblemon:ruin"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "bronzor",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "bronzor-4",
+      "presets": [
+        "trail_ruins"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 54,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "minY": 48,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "bronzor",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "포켓몬타워 로켓단 조무래기 배틀 A",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "rattata",
+      "level": 27,
+      "moveset": [
+        "quickattack",
+        "hyperfang",
+        "bite",
+        "focusenergy"
+      ]
+    },
+    {
+      "species": "rattata",
+      "level": 27,
+      "moveset": [
+        "quickattack",
+        "hyperfang",
+        "bite",
+        "focusenergy"
+      ]
+    },
+    {
+      "species": "zubat",
+      "level": 27,
+      "moveset": [
+        "bite",
+        "supersonic",
+        "confuseray",
+        "wingattack"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

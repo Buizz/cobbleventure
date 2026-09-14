@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/league/kanto_champion",
+  "source_digest": "e69adb1e820f5f3bb9836b03266be0c92dcfc1c2d831634b17125282def0083b",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "나는 그린. 준비가 됐다면 승부하자!"
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "op": "choice",
+          "prompt": {
+            "kind": "literal",
+            "value": "도전하시겠습니까?"
+          },
+          "result": null,
+          "options": [
+            {
+              "text": {
+                "kind": "literal",
+                "value": "승부한다"
+              },
+              "target": 2
+            },
+            {
+              "text": {
+                "kind": "literal",
+                "value": "다음에 도전한다"
+              },
+              "target": 9
+            }
+          ],
+          "await": true
+        },
+        {
+          "address": 2,
+          "instruction_id": "challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/league/kanto_champion"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "result",
+          "operation_id": "cobbleventure:event_script/league/kanto_champion/challenge/battle",
+          "next": 3,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s1/option0/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 4,
+          "else": 7
+        },
+        {
+          "address": 4,
+          "instruction_id": "victory/progress",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/league/kanto/champion/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/league/kanto_champion/victory/progress",
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s1/option0/s1/then/s1",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "훌륭한 승부였다. 이제 다음 출구로 나아가라."
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/s1/option0/s1/then_end",
+          "op": "jump",
+          "target": 8
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p0/s1/option0/s1/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "준비를 마치면 다시 말을 걸어 도전해라."
+          },
+          "next": 8,
+          "await": true,
+          "resume": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p0/s1/option0_end",
+          "op": "jump",
+          "target": 11
+        },
+        {
+          "address": 9,
+          "instruction_id": "e0/p0/s1/option1/s0",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 10,
+          "instruction_id": "e0/p0/s1/option1_end",
+          "op": "jump",
+          "target": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 78,
+              "line": 3,
+              "column": 35
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 83,
+              "line": 4,
+              "column": 5
+            },
+            "end": {
+              "offset": 495,
+              "line": 15,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "challenge/battle",
+          "stable_id": "challenge/battle",
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 127,
+              "line": 6,
+              "column": 9
+            },
+            "end": {
+              "offset": 216,
+              "line": 6,
+              "column": 98
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s1/option0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 225,
+              "line": 7,
+              "column": 9
+            },
+            "end": {
+              "offset": 455,
+              "line": 12,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "victory/progress",
+          "stable_id": "victory/progress",
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 264,
+              "line": 8,
+              "column": 11
+            },
+            "end": {
+              "offset": 351,
+              "line": 8,
+              "column": 98
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s1/option0/s1/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 356,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 391,
+              "line": 9,
+              "column": 40
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/s1/option0/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 252,
+              "line": 7,
+              "column": 36
+            },
+            "end": {
+              "offset": 401,
+              "line": 10,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p0/s1/option0/s1/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 413,
+              "line": 11,
+              "column": 5
+            },
+            "end": {
+              "offset": 445,
+              "line": 11,
+              "column": 37
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p0/s1/option0_end",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 117,
+              "line": 5,
+              "column": 14
+            },
+            "end": {
+              "offset": 463,
+              "line": 13,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "e0/p0/s1/option1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 483,
+              "line": 14,
+              "column": 20
+            },
+            "end": {
+              "offset": 487,
+              "line": 14,
+              "column": 24
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "e0/p0/s1/option1_end",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 481,
+              "line": 14,
+              "column": 18
+            },
+            "end": {
+              "offset": 489,
+              "line": 14,
+              "column": 26
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "league-facilities.json:league/kanto_champion",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 499,
+              "line": 16,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

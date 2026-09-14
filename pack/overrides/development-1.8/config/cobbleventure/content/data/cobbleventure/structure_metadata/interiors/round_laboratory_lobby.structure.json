@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/interiors/round_laboratory_lobby.nbt",
+  "interior": {
+    "id": "round_laboratory_lobby",
+    "width": 64,
+    "depth": 16,
+    "floor_height": 8,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "id": "door",
+      "label": "door",
+      "type": "door",
+      "position": [
+        6,
+        1,
+        15
+      ],
+      "safe_spawn": [
+        6,
+        1,
+        14
+      ],
+      "door_facing": "north",
+      "safe_side": "north"
+    },
+    {
+      "id": "receptionist",
+      "label": "receptionist",
+      "type": "npc_position",
+      "position": [
+        6,
+        1,
+        3
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "tm",
+      "label": "tm",
+      "type": "door",
+      "position": [
+        16,
+        1,
+        0
+      ],
+      "safe_spawn": [
+        16,
+        1,
+        1
+      ],
+      "door_facing": "south",
+      "safe_side": "south"
+    },
+    {
+      "id": "z_move",
+      "label": "z_move",
+      "type": "door",
+      "position": [
+        26,
+        1,
+        0
+      ],
+      "safe_spawn": [
+        26,
+        1,
+        1
+      ],
+      "door_facing": "south",
+      "safe_side": "south"
+    },
+    {
+      "id": "mega",
+      "label": "mega",
+      "type": "door",
+      "position": [
+        36,
+        1,
+        0
+      ],
+      "safe_spawn": [
+        36,
+        1,
+        1
+      ],
+      "door_facing": "south",
+      "safe_side": "south"
+    },
+    {
+      "id": "dynamax",
+      "label": "dynamax",
+      "type": "door",
+      "position": [
+        46,
+        1,
+        0
+      ],
+      "safe_spawn": [
+        46,
+        1,
+        1
+      ],
+      "door_facing": "south",
+      "safe_side": "south"
+    },
+    {
+      "id": "stats",
+      "label": "stats",
+      "type": "door",
+      "position": [
+        56,
+        1,
+        0
+      ],
+      "safe_spawn": [
+        56,
+        1,
+        1
+      ],
+      "door_facing": "south",
+      "safe_side": "south"
+    }
+  ]
+}

@@ -72,7 +72,7 @@ repositories {
 dependencies {
     jarJar(implementation(project(':shared-ai-core')))
     compileOnly cobblemonBuildDependency
-    compileOnly "curse.maven:radical-cobblemon-trainers-api-1152792:7952419"
+    compileOnly "curse.maven:radical-cobblemon-trainers-api-1152792:8826267"
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20"
 
     testImplementation platform('org.junit:junit-bom:5.10.3')

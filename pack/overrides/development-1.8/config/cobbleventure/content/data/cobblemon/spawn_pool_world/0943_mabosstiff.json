@@ -1,0 +1,100 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "mabosstiff-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "mabosstiff",
+      "level": "30-51",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "mabosstiff-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "mabosstiff",
+      "level": "30-51",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "mabosstiff-3",
+      "presets": [
+        "natural",
+        "pillager_outpost"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "mabosstiff",
+      "level": "30-51",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "mabosstiff-4",
+      "presets": [
+        "natural",
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "mabosstiff",
+      "level": "30-51",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

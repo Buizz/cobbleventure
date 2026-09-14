@@ -1,0 +1,209 @@
+{
+  "name": "시바",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": true
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "breloom",
+      "level": 60,
+      "moveset": [
+        "machpunch",
+        "spore",
+        "bulletseed",
+        "rocktomb"
+      ],
+      "nature": "jolly",
+      "ability": "technician",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 6,
+        "atk": 252,
+        "spe": 252
+      },
+      "heldItem": "focus_sash",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "annihilape",
+      "level": 60,
+      "moveset": [
+        "ragefist",
+        "drainpunch",
+        "stealthrock",
+        "knockoff"
+      ],
+      "nature": "adamant",
+      "ability": "defiant",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "def": 140,
+        "spd": 116
+      },
+      "heldItem": "leftovers",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "machamp",
+      "level": 60,
+      "moveset": [
+        "dynamicpunch",
+        "knockoff",
+        "bulletpunch",
+        "icepunch"
+      ],
+      "nature": "adamant",
+      "ability": "noguard",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 252
+      },
+      "heldItem": "assault_vest",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "gallade",
+      "level": 60,
+      "moveset": [
+        "psychocut",
+        "sacredsword",
+        "leafblade",
+        "shadowsneak"
+      ],
+      "nature": "jolly",
+      "ability": "sharpness",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 6,
+        "atk": 252,
+        "spe": 252
+      },
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "urshifu",
+      "level": 60,
+      "moveset": [
+        "surgingstrikes",
+        "drainpunch",
+        "bulkup",
+        "aquajet"
+      ],
+      "nature": "adamant",
+      "ability": "unseenfist",
+      "gender": "MALE",
+      "aspects": [
+        "rapid_strike-style"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "heldItem": "punching_glove",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "heracross",
+      "level": 60,
+      "moveset": [
+        "pinmissile",
+        "rockblast",
+        "bulletseed",
+        "closecombat"
+      ],
+      "nature": "adamant",
+      "ability": "innerfocus",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 252,
+        "def": 6
+      },
+      "heldItem": "heracronite",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 99
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  PresetMetadata:{
+    author:"Cobbleventure",
+    category:"Cobbleventure Encounters V5",
+    created:0L,
+    description:"고생물 연구원 CVES V5 NPC 표현 프리셋",
+    entityTypeId:"easy_npc:humanoid",
+    modified:0L,
+    name:"고생물 연구원 [V5]",
+    variantType:"ALEX",
+    version:"1.0.0"
+  },
+  data:{
+    ActionData:{ActionEventSet:{},ActionPermissionLevel:2},
+    ArmorDropChances:[0.000f,0.000f,0.000f,0.000f],
+    ArmorItems:[{},{},{},{}],
+    CustomName:"{\"text\":\"고생물 연구원\",\"font\":\"minecraft:uniform\"}",
+    DialogData:{DialogDataSet:[],Type:"CUSTOM"},
+    EasyNPCVersion:3,
+    Invulnerable:1b,
+    ModelData:{Root:{Scale:[1.000f,1.000f,1.000f]}},
+    ObjectiveData:{HasObjectives:1b,ObjectiveDataSet:[{Type:"LOOK_AT_PLAYER"},{Type:"LOOK_AT_RESET"}]},
+    PersistenceRequired:1b,
+    PresetUUID:[I;1465601617,-392867234,-1879818799,1518686611],
+    SkinData:{Type:"CUSTOM",UUID:[I;-1774401467,120803793,-1249311140,-426374755] },
+    Tags:["cobbleventure_regional_npc","cves_binding/cobbleventure/facilities/fossil_scholar","cobbleventure_npc/cobbleventure/npc/facilities/fossil_scholar"],
+    VariantType:"ALEX",
+    id:"easy_npc:humanoid"
+  }
+}

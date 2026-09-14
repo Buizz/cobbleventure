@@ -1,0 +1,48 @@
+{
+  "resources": {
+    "cobbleventure:settlement/celadon_city": {
+      "ko_kr": "무지개시티",
+      "en_us": "Celadon City"
+    },
+    "cobbleventure:settlement/cerulean_city": {
+      "ko_kr": "블루시티",
+      "en_us": "Cerulean City"
+    },
+    "cobbleventure:settlement/crimson_town": {
+      "ko_kr": "회색시티",
+      "en_us": "Pewter City"
+    },
+    "cobbleventure:settlement/fuchsia_city": {
+      "ko_kr": "연분홍시티",
+      "en_us": "Fuchsia City"
+    },
+    "cobbleventure:settlement/lavender_town": {
+      "ko_kr": "보라타운",
+      "en_us": "Lavender Town"
+    },
+    "cobbleventure:settlement/route_01_town": {
+      "ko_kr": "상록시티",
+      "en_us": "Viridian City"
+    },
+    "cobbleventure:settlement/saffron_city": {
+      "ko_kr": "노랑시티",
+      "en_us": "Saffron City"
+    },
+    "cobbleventure:settlement/starter_town": {
+      "ko_kr": "태초마을",
+      "en_us": "Pallet Town"
+    },
+    "cobbleventure:settlement/tidehaven_town": {
+      "ko_kr": "홍련마을",
+      "en_us": "Cinnabar Island"
+    },
+    "cobbleventure:settlement/vermilion_city": {
+      "ko_kr": "갈색시티",
+      "en_us": "Vermilion City"
+    },
+    "cobbleventure:settlement/johto_starter_town": {
+      "ko_kr": "2세대 시작마을 (이동 테스트)",
+      "en_us": "Johto Starter Town (Travel Test)"
+    }
+  }
+}

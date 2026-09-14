@@ -1,0 +1,49 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "cherrim-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_taiga"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "cherrim blossom_form=overcast",
+      "level": "25-36",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "cherrim-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_taiga"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "cherrim blossom_form=sunshine",
+      "level": "25-36",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

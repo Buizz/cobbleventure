@@ -1,0 +1,30 @@
+{
+  "name": "캠프보이 준 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "geodude",
+      "level": 9,
+      "moveset": [
+        "tackle",
+        "defensecurl",
+        "rockthrow"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

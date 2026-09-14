@@ -1,0 +1,206 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "lapras-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "lapras",
+      "level": "29-54",
+      "spawnablePositionType": "surface"
+    },
+    {
+      "id": "lapras-2",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "lapras",
+      "level": "29-54",
+      "spawnablePositionType": "surface",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ]
+      }
+    },
+    {
+      "id": "lapras-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "lapras",
+      "level": "29-54",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "lapras-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "canSeeSky": true,
+        "minLureLevel": 1,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "lapras",
+      "level": "29-54",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "minLureLevel": 3
+        },
+        "multiplier": 3.0
+      }
+    },
+    {
+      "id": "lapras-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "lapras",
+      "level": "29-54",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ]
+      }
+    },
+    {
+      "id": "lapras-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "lapras",
+      "level": "29-54",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "lapras-7",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minLureLevel": 1,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "lapras",
+      "level": "29-54",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "minLureLevel": 3
+        },
+        "multiplier": 3.0
+      }
+    },
+    {
+      "id": "lapras-8",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "lapras",
+      "level": "29-54",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ]
+      }
+    }
+  ]
+}

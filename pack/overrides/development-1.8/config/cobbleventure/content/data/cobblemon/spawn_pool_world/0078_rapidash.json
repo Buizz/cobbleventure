@@ -1,0 +1,132 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "rapidash-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.96,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_grassland"
+        ],
+        "isRaining": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "rapidash",
+      "level": "40-50",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    },
+    {
+      "id": "rapidash-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_overgrowth",
+          "#cobblemon:nether/is_wasteland"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "rapidash",
+      "level": "40-50",
+      "spawnablePositionType": "grounded",
+      "drops": {
+        "amount": 4,
+        "entries": [
+          {
+            "item": "minecraft:leather",
+            "quantityRange": "0-2"
+          },
+          {
+            "item": "minecraft:blaze_powder",
+            "percentage": 10.0
+          },
+          {
+            "item": "cobblemon:shuca_berry",
+            "percentage": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rapidash-galarian-3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "rapidash galarian",
+      "level": "40-50",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    },
+    {
+      "id": "rapidash-galarian-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "rapidash galarian",
+      "level": "40-50",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

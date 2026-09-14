@@ -1,0 +1,164 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "chinchou-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean"
+        ],
+        "canSeeSky": true,
+        "maxY": 48,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "chinchou",
+      "level": "8-33",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "chinchou-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "chinchou",
+      "level": "8-33",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "maxLureLevel": 1,
+          "minLureLevel": 0
+        },
+        "multiplier": 0.6
+      }
+    },
+    {
+      "id": "chinchou-3",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "maxY": 48,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "chinchou",
+      "level": "8-33",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "chinchou-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "chinchou",
+      "level": "8-33",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "maxLureLevel": 1,
+          "minLureLevel": 0
+        },
+        "multiplier": 0.6
+      }
+    },
+    {
+      "id": "chinchou-5",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "maxY": 13,
+        "minY": -60,
+        "structures": [
+          "cobblemon:shipwreck_coves/submerged_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "chinchou",
+      "level": "8-33",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "chinchou-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "maxY": 13,
+        "minY": -60,
+        "structures": [
+          "cobblemon:shipwreck_coves/submerged_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "chinchou",
+      "level": "8-33",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "maxLureLevel": 1,
+          "minLureLevel": 0
+        },
+        "multiplier": 0.6
+      }
+    }
+  ]
+}

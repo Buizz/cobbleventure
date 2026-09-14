@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "fraxure-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 3.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mountain"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "fraxure",
+      "level": "38-41",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

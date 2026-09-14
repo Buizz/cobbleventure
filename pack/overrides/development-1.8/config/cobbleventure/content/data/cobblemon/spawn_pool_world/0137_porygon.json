@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "porygon-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 7,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_end"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "porygon",
+      "level": "45-68",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

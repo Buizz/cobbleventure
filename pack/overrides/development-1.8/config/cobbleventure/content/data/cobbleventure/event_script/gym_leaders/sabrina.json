@@ -1,0 +1,641 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/gym_leaders/sabrina",
+  "source_digest": "c85a62b02d8aceec670ae1e00745a6251da280dc9492cf973adf6875b0f4ff01",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:runtime/npc_instance_defeated"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "강한 힘만으로는 충분하지 않아. 포켓몬을 아끼는 마음이 네 미래를 더 멀리 이끌 거야."
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "네가 이곳에 올 것은 이미 알고 있었어."
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "나는 어릴 때부터 마음으로 사물을 움직이고 미래의 조각을 볼 수 있었지."
+          },
+          "next": 4,
+          "await": true,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "싸움은 좋아하지 않지만, 네가 원한다면 내 힘을 보여 주겠어."
+          },
+          "next": 5,
+          "await": true,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/gym_leader/sabrina"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "result",
+          "operation_id": "cobbleventure:event_script/gym_leaders/sabrina/challenge/battle",
+          "next": 6,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 7,
+          "else": 15
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/sabrina/victory/set_instance_defeated",
+          "next": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/gym/kanto/sabrina/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/sabrina/victory/set_defeated",
+          "next": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "op": "command",
+          "command": "give_money",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 4300
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/sabrina/victory/give_money",
+          "next": 10
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "op": "command",
+          "command": "grant_badge",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:badge/kanto/marsh"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/sabrina/victory/grant_badge",
+          "next": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/set_level_cap",
+          "op": "command",
+          "command": "set_level_cap",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 47
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/sabrina/victory/set_level_cap",
+          "next": 12
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s4/then/s5",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "예상과 다른 결말이군... 네 힘이 내 예지를 넘어섰어."
+          },
+          "next": 13,
+          "await": true,
+          "resume": 13
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "그 실력을 인정해 골드배지를 주겠어."
+          },
+          "next": 14,
+          "await": true,
+          "resume": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then_end",
+          "op": "jump",
+          "target": 16
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "이 결과는 이미 보았어. 하지만 미래는 수련으로 바꿀 수 있으니 다시 도전해."
+          },
+          "next": 16,
+          "await": true,
+          "resume": 16
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 97,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 155,
+              "line": 3,
+              "column": 63
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 159,
+              "line": 4,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 181,
+              "line": 6,
+              "column": 5
+            },
+            "end": {
+              "offset": 213,
+              "line": 6,
+              "column": 37
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 218,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 268,
+              "line": 7,
+              "column": 55
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 273,
+              "line": 8,
+              "column": 5
+            },
+            "end": {
+              "offset": 317,
+              "line": 8,
+              "column": 49
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "stable_id": "challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 322,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 408,
+              "line": 9,
+              "column": 91
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 413,
+              "line": 10,
+              "column": 5
+            },
+            "end": {
+              "offset": 973,
+              "line": 20,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "stable_id": "victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 448,
+              "line": 11,
+              "column": 7
+            },
+            "end": {
+              "offset": 542,
+              "line": 11,
+              "column": 101
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "stable_id": "victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 549,
+              "line": 12,
+              "column": 7
+            },
+            "end": {
+              "offset": 636,
+              "line": 12,
+              "column": 94
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "stable_id": "victory/give_money",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 643,
+              "line": 13,
+              "column": 7
+            },
+            "end": {
+              "offset": 682,
+              "line": 13,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "stable_id": "victory/grant_badge",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 689,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 759,
+              "line": 14,
+              "column": 77
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/set_level_cap",
+          "stable_id": "victory/set_level_cap",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 766,
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "offset": 809,
+              "line": 15,
+              "column": 50
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s4/then/s5",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 816,
+              "line": 16,
+              "column": 7
+            },
+            "end": {
+              "offset": 857,
+              "line": 16,
+              "column": 48
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 864,
+              "line": 17,
+              "column": 7
+            },
+            "end": {
+              "offset": 894,
+              "line": 17,
+              "column": 37
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 440,
+              "line": 10,
+              "column": 32
+            },
+            "end": {
+              "offset": 900,
+              "line": 18,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 914,
+              "line": 19,
+              "column": 7
+            },
+            "end": {
+              "offset": 967,
+              "line": 19,
+              "column": 60
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/sabrina.cves",
+            "start": {
+              "offset": 162,
+              "line": 5,
+              "column": 3
+            },
+            "end": {
+              "offset": 977,
+              "line": 21,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

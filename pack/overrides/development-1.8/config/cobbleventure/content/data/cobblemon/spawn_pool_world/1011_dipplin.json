@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "dipplin-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 3,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral"
+        ],
+        "canSeeSky": true,
+        "isRaining": false,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "dipplin",
+      "level": "20-35",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

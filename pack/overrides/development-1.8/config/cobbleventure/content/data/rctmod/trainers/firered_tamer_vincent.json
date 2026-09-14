@@ -1,0 +1,60 @@
+{
+  "name": "포켓몬 조련사 빈센트 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "persian",
+      "level": 44,
+      "moveset": [
+        "payday",
+        "feintattack",
+        "screech",
+        "furyswipes"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 4,
+        "atk": 4,
+        "def": 4,
+        "spa": 4,
+        "spd": 4,
+        "spe": 4
+      }
+    },
+    {
+      "species": "golduck",
+      "level": 44,
+      "moveset": [
+        "confusion",
+        "screech",
+        "psychup",
+        "furyswipes"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 4,
+        "atk": 4,
+        "def": 4,
+        "spa": 4,
+        "spd": 4,
+        "spe": 4
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

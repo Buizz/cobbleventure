@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "thundurus-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mountain"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "thundurus",
+      "level": "50-60",
+      "spawnablePositionType": "grounded",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "isThundering": true
+          },
+          "multiplier": 3.0
+        }
+      ]
+    }
+  ]
+}

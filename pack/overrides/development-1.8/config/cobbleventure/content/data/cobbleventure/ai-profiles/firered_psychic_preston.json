@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/firered_psychic_preston",
+  "controller": "cobbleventure",
+  "difficulty": "standard",
+  "strategy": "balanced",
+  "options": {}
+}

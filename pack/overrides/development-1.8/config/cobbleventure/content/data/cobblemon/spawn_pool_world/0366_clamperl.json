@@ -1,0 +1,140 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "clamperl-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 9.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean"
+        ],
+        "canSeeSky": true,
+        "maxY": 48,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "clamperl",
+      "level": "10-35",
+      "spawnablePositionType": "seafloor"
+    },
+    {
+      "id": "clamperl-2",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 8.75,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_warm_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "clamperl",
+      "level": "10-35",
+      "spawnablePositionType": "seafloor"
+    },
+    {
+      "id": "clamperl-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 5.25,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "clamperl",
+      "level": "10-35",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "clamperl-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 5.25,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "clamperl",
+      "level": "10-35",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "clamperl-5",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 9.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "maxY": 13,
+        "minY": -60,
+        "structures": [
+          "cobblemon:shipwreck_coves/submerged_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "clamperl",
+      "level": "10-35",
+      "spawnablePositionType": "seafloor"
+    },
+    {
+      "id": "clamperl-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 5.25,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "maxY": 13,
+        "minY": -60,
+        "structures": [
+          "cobblemon:shipwreck_coves/submerged_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "clamperl",
+      "level": "10-35",
+      "spawnablePositionType": "fishing"
+    }
+  ]
+}

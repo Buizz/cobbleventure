@@ -1,0 +1,116 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "beldum-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_dripstone",
+          "#cobblemon:is_peak"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "beldum",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "beldum-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 7.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_end"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "beldum",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "beldum-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 7.5,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "beldum",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "beldum-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.68,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "structures": [
+          "#aether:dungeons"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "beldum",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "beldum-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 7.5,
+      "condition": {
+        "biomes": [
+          "the_bumblezone:howling_constructs"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "beldum",
+      "level": "5-30",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "#the_bumblezone:sempiternal_sanctums"
+        ]
+      }
+    }
+  ]
+}

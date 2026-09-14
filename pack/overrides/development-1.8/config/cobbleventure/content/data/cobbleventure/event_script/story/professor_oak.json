@@ -1,0 +1,1164 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/story/professor_oak",
+  "source_digest": "14945efb59bf1b1228004f711b82688c67cd94dfb81fd77f5cf5a09a72fb68ab",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/story/pokedex_received"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/story/starter_received"
+                }
+              }
+            ]
+          },
+          "entry": 7
+        },
+        {
+          "index": 2,
+          "condition": null,
+          "entry": 17
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "잘 왔구나! 포켓몬들을 잠시 쉬게 해 주자꾸나."
+              },
+              {
+                "language": "en_us",
+                "value": "Welcome back! Let's give your Pokémon a little rest."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "return/heal_party",
+          "op": "command",
+          "command": "heal_party",
+          "arguments": [
+            {
+              "name": "fallback",
+              "value": null
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "healing",
+          "next": 2,
+          "resume": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/s2",
+          "op": "branch",
+          "condition": {
+            "kind": "member",
+            "target": {
+              "kind": "name",
+              "name": "healing"
+            },
+            "member": "healed"
+          },
+          "then": 3,
+          "else": 5
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s2/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓몬들이 모두 건강해졌구나! 모험하다 지치면 언제든 들르렴."
+              },
+              {
+                "language": "en_us",
+                "value": "Your Pokémon are all healthy again! Come back whenever they need a rest."
+              }
+            ]
+          },
+          "next": 4,
+          "await": true,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p0/s2/then_end",
+          "op": "jump",
+          "target": 6
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s2/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "지금은 치료할 수 없구나. 모두 건강한 상태인지 확인하고, 잠시 후 다시 와 보렴."
+              },
+              {
+                "language": "en_us",
+                "value": "I cannot heal them right now. Check whether they are already healthy, or come back in a moment."
+              }
+            ]
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "좋은 포켓몬을 골랐구나!"
+              },
+              {
+                "language": "en_us",
+                "value": "You chose a fine Pokémon!"
+              }
+            ]
+          },
+          "next": 8,
+          "await": true,
+          "resume": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p1/s1",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "그럼 이것도 받아라. 포켓몬 도감이란다."
+              },
+              {
+                "language": "en_us",
+                "value": "Then take this as well. It's a Pokédex."
+              }
+            ]
+          },
+          "next": 9,
+          "await": true,
+          "resume": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "retry/give_pokedex",
+          "op": "command",
+          "command": "give_item",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobblemon:pokedex_red"
+              }
+            },
+            {
+              "name": "count",
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 1
+              }
+            },
+            {
+              "name": "notify",
+              "value": null
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": false,
+          "result": "pokedex",
+          "operation_id": "cobbleventure:event_script/story/professor_oak/retry/give_pokedex",
+          "next": 10,
+          "resume": 10
+        },
+        {
+          "address": 10,
+          "instruction_id": "e0/p1/s3",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "pokedex"
+              },
+              "member": "remaining_count"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "int",
+              "value": 0
+            }
+          },
+          "then": 11,
+          "else": 14
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p1/s3/then/s0",
+          "op": "narrate",
+          "text": {
+            "kind": "literal",
+            "value": "가방에 빈 공간이 없어 포켓몬 도감을 받을 수 없습니다."
+          },
+          "next": 12,
+          "await": true,
+          "resume": 12
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s3/then/s1",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s3/then_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "retry/set_pokedex_received",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/story/pokedex_received"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/story/professor_oak/retry/set_pokedex_received",
+          "next": 15
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s5",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓몬 도감은 만난 포켓몬과 잡은 포켓몬의 정보를 자동으로 기록해 준단다. 여러 포켓몬을 만나 도감을 완성해 보렴!"
+              },
+              {
+                "language": "en_us",
+                "value": "The Pokédex automatically records information about Pokémon you meet and catch. Meet many Pokémon and try to complete it!"
+              }
+            ]
+          },
+          "next": 16,
+          "await": true,
+          "resume": 16
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p2/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "어서 오너라! 나는 포켓몬을 연구하는 오박사란다."
+              },
+              {
+                "language": "en_us",
+                "value": "Welcome! I'm Professor Oak, a Pokémon researcher."
+              }
+            ]
+          },
+          "next": 18,
+          "await": true,
+          "resume": 18
+        },
+        {
+          "address": 18,
+          "instruction_id": "e0/p2/s1",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이제 너와 함께 모험할 첫 포켓몬을 정해 보자꾸나!"
+              },
+              {
+                "language": "en_us",
+                "value": "Let's choose the first Pokémon that will join you on your adventure!"
+              }
+            ]
+          },
+          "next": 19,
+          "await": true,
+          "resume": 19
+        },
+        {
+          "address": 19,
+          "instruction_id": "first/starter_roulette",
+          "op": "command",
+          "command": "starter_roulette",
+          "arguments": [],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "starter",
+          "operation_id": "cobbleventure:event_script/story/professor_oak/first/starter_roulette",
+          "next": 20,
+          "resume": 20
+        },
+        {
+          "address": 20,
+          "instruction_id": "e0/p2/s3",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "${starter.name|josa:을/를} 골랐구나!"
+              },
+              {
+                "language": "en_us",
+                "value": "You chose ${starter.name}!"
+              }
+            ]
+          },
+          "next": 21,
+          "await": true,
+          "resume": 21
+        },
+        {
+          "address": 21,
+          "instruction_id": "e0/p2/s4",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "그럼 이것도 받아라. 포켓몬 도감이란다."
+              },
+              {
+                "language": "en_us",
+                "value": "Then take this as well. It's a Pokédex."
+              }
+            ]
+          },
+          "next": 22,
+          "await": true,
+          "resume": 22
+        },
+        {
+          "address": 22,
+          "instruction_id": "first/give_pokedex",
+          "op": "command",
+          "command": "give_item",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobblemon:pokedex_red"
+              }
+            },
+            {
+              "name": "count",
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 1
+              }
+            },
+            {
+              "name": "notify",
+              "value": null
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": false,
+          "result": "pokedex",
+          "operation_id": "cobbleventure:event_script/story/professor_oak/first/give_pokedex",
+          "next": 23,
+          "resume": 23
+        },
+        {
+          "address": 23,
+          "instruction_id": "e0/p2/s6",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "pokedex"
+              },
+              "member": "remaining_count"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "int",
+              "value": 0
+            }
+          },
+          "then": 24,
+          "else": 27
+        },
+        {
+          "address": 24,
+          "instruction_id": "e0/p2/s6/then/s0",
+          "op": "narrate",
+          "text": {
+            "kind": "literal",
+            "value": "가방에 빈 공간이 없어 포켓몬 도감을 받을 수 없습니다."
+          },
+          "next": 25,
+          "await": true,
+          "resume": 25
+        },
+        {
+          "address": 25,
+          "instruction_id": "e0/p2/s6/then/s1",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 26,
+          "instruction_id": "e0/p2/s6/then_end",
+          "op": "jump",
+          "target": 27
+        },
+        {
+          "address": 27,
+          "instruction_id": "first/set_pokedex_received",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/story/pokedex_received"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/story/professor_oak/first/set_pokedex_received",
+          "next": 28
+        },
+        {
+          "address": 28,
+          "instruction_id": "e0/p2/s8",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓몬 도감은 만난 포켓몬과 잡은 포켓몬의 정보를 자동으로 기록해 준단다. 여러 포켓몬을 만나 도감을 완성해 보렴!"
+              },
+              {
+                "language": "en_us",
+                "value": "The Pokédex automatically records information about Pokémon you meet and catch. Meet many Pokémon and try to complete it!"
+              }
+            ]
+          },
+          "next": 29,
+          "await": true,
+          "resume": 29
+        },
+        {
+          "address": 29,
+          "instruction_id": "e0/p2/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 95,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 220,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "return/heal_party",
+          "stable_id": "return/heal_party",
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 225,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 284,
+              "line": 7,
+              "column": 64
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 289,
+              "line": 8,
+              "column": 5
+            },
+            "end": {
+              "offset": 694,
+              "line": 18,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s2/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 315,
+              "line": 9,
+              "column": 7
+            },
+            "end": {
+              "offset": 474,
+              "line": 12,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p0/s2/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 307,
+              "line": 8,
+              "column": 23
+            },
+            "end": {
+              "offset": 480,
+              "line": 13,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s2/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 494,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 688,
+              "line": 17,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 698,
+              "line": 19,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 768,
+              "line": 22,
+              "column": 5
+            },
+            "end": {
+              "offset": 853,
+              "line": 25,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 858,
+              "line": 26,
+              "column": 5
+            },
+            "end": {
+              "offset": 966,
+              "line": 29,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "retry/give_pokedex",
+          "stable_id": "retry/give_pokedex",
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 971,
+              "line": 30,
+              "column": 5
+            },
+            "end": {
+              "offset": 1054,
+              "line": 30,
+              "column": 88
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "e0/p1/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1059,
+              "line": 31,
+              "column": 5
+            },
+            "end": {
+              "offset": 1156,
+              "line": 34,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p1/s3/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1098,
+              "line": 32,
+              "column": 7
+            },
+            "end": {
+              "offset": 1139,
+              "line": 32,
+              "column": 48
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s3/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1146,
+              "line": 33,
+              "column": 7
+            },
+            "end": {
+              "offset": 1150,
+              "line": 33,
+              "column": 11
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s3/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1090,
+              "line": 31,
+              "column": 36
+            },
+            "end": {
+              "offset": 1156,
+              "line": 34,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "retry/set_pokedex_received",
+          "stable_id": "retry/set_pokedex_received",
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1161,
+              "line": 35,
+              "column": 5
+            },
+            "end": {
+              "offset": 1250,
+              "line": 35,
+              "column": 94
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s5",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1255,
+              "line": 36,
+              "column": 5
+            },
+            "end": {
+              "offset": 1487,
+              "line": 39,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 702,
+              "line": 21,
+              "column": 3
+            },
+            "end": {
+              "offset": 1491,
+              "line": 40,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p2/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1514,
+              "line": 43,
+              "column": 5
+            },
+            "end": {
+              "offset": 1637,
+              "line": 46,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 18,
+          "instruction_id": "e0/p2/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1642,
+              "line": 47,
+              "column": 5
+            },
+            "end": {
+              "offset": 1785,
+              "line": 50,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 19,
+          "instruction_id": "first/starter_roulette",
+          "stable_id": "first/starter_roulette",
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1790,
+              "line": 51,
+              "column": 5
+            },
+            "end": {
+              "offset": 1851,
+              "line": 51,
+              "column": 66
+            }
+          }
+        },
+        {
+          "address": 20,
+          "instruction_id": "e0/p2/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1856,
+              "line": 52,
+              "column": 5
+            },
+            "end": {
+              "offset": 1959,
+              "line": 55,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 21,
+          "instruction_id": "e0/p2/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1964,
+              "line": 56,
+              "column": 5
+            },
+            "end": {
+              "offset": 2072,
+              "line": 59,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 22,
+          "instruction_id": "first/give_pokedex",
+          "stable_id": "first/give_pokedex",
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 2077,
+              "line": 60,
+              "column": 5
+            },
+            "end": {
+              "offset": 2160,
+              "line": 60,
+              "column": 88
+            }
+          }
+        },
+        {
+          "address": 23,
+          "instruction_id": "e0/p2/s6",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 2165,
+              "line": 61,
+              "column": 5
+            },
+            "end": {
+              "offset": 2262,
+              "line": 64,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 24,
+          "instruction_id": "e0/p2/s6/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 2204,
+              "line": 62,
+              "column": 7
+            },
+            "end": {
+              "offset": 2245,
+              "line": 62,
+              "column": 48
+            }
+          }
+        },
+        {
+          "address": 25,
+          "instruction_id": "e0/p2/s6/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 2252,
+              "line": 63,
+              "column": 7
+            },
+            "end": {
+              "offset": 2256,
+              "line": 63,
+              "column": 11
+            }
+          }
+        },
+        {
+          "address": 26,
+          "instruction_id": "e0/p2/s6/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 2196,
+              "line": 61,
+              "column": 36
+            },
+            "end": {
+              "offset": 2262,
+              "line": 64,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 27,
+          "instruction_id": "first/set_pokedex_received",
+          "stable_id": "first/set_pokedex_received",
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 2267,
+              "line": 65,
+              "column": 5
+            },
+            "end": {
+              "offset": 2356,
+              "line": 65,
+              "column": 94
+            }
+          }
+        },
+        {
+          "address": 28,
+          "instruction_id": "e0/p2/s8",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 2361,
+              "line": 66,
+              "column": 5
+            },
+            "end": {
+              "offset": 2593,
+              "line": 69,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 29,
+          "instruction_id": "e0/p2/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/professor_oak.cves",
+            "start": {
+              "offset": 1495,
+              "line": 42,
+              "column": 3
+            },
+            "end": {
+              "offset": 2597,
+              "line": 70,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

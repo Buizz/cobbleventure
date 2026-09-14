@@ -1,0 +1,41 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "tadbulb-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.7,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_river"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "tadbulb",
+      "level": "2-27",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "isThundering": true
+        },
+        "multiplier": 5.0
+      }
+    }
+  ]
+}

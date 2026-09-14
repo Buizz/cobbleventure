@@ -37,10 +37,10 @@ final class WorldPlanRepository {
             JsonObject settlement = readJson(CampaignContent.text("settlement_directory") + slug + ".json");
             townRadii.put(settlementId, settlement.get("town_radius_cells").getAsInt());
         }
-        return CobbleventureBootstrap.parseHexWorldPlan(
+        return CenterStructureRoads.connect(CobbleventureBootstrap.parseHexWorldPlan(
             world, Map.copyOf(townRadii),
             WorldPlanParser.boundaryProfiles(boundaryProfiles), seed
-        );
+        ));
     }
 
     private static JsonObject readJson(String path) {

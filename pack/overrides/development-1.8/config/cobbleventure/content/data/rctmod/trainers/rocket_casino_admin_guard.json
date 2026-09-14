@@ -1,0 +1,41 @@
+{
+  "name": "카지노 관리자 호위 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "aggressive",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "drowzee",
+      "level": 27,
+      "moveset": [
+        "confusion",
+        "disable",
+        "headbutt",
+        "poisongas"
+      ]
+    },
+    {
+      "species": "koffing",
+      "level": 27,
+      "moveset": [
+        "smog",
+        "sludge",
+        "smokescreen",
+        "assurance"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

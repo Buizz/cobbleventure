@@ -31,7 +31,7 @@ repositories {
 dependencies {
     compileOnly cobblemonBuildDependency
     compileOnly "curse.maven:cobbledollars-859232:8484919"
-    compileOnly "curse.maven:cobblenav-976014:${cobblemonTarget == '1.8' ? '8823427' : '7940651'}"
+    compileOnly "curse.maven:cobblenav-976014:${cobblemonTarget == '1.8' ? '8837236' : '7940651'}"
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.20"
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -52,6 +52,7 @@ neoForge {
     mods {
         "${mod_id}" { sourceSet(sourceSets.main) }
     }
+    addModdingDependenciesTo sourceSets.test
 }
 
 processResources {
@@ -66,7 +67,7 @@ processResources {
         artifact_version_range: artifactVersionRange,
         cobblemon_version: cobblemonEffectiveVersion,
         cobblemon_version_range: cobblemonVersionRange,
-        cobblenav_version_range: cobblemonTarget == '1.8' ? '[2.4.0,2.5)' : '[2.3.3,2.4)',
+        cobblenav_version_range: cobblemonTarget == '1.8' ? '[2.4.1,2.5)' : '[2.3.3,2.4)',
     ]
     inputs.properties properties
     filesMatching('META-INF/neoforge.mods.toml') {

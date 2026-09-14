@@ -1,0 +1,79 @@
+{
+  "name": "포켓몬 조련사 에드거 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "arbok",
+      "level": 33,
+      "moveset": [
+        "poisonsting",
+        "bite",
+        "glare",
+        "screech"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 4,
+        "atk": 4,
+        "def": 4,
+        "spa": 4,
+        "spd": 4,
+        "spe": 4
+      }
+    },
+    {
+      "species": "sandslash",
+      "level": 33,
+      "moveset": [
+        "sandattack",
+        "poisonsting",
+        "slash",
+        "swift"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 4,
+        "atk": 4,
+        "def": 4,
+        "spa": 4,
+        "spd": 4,
+        "spe": 4
+      }
+    },
+    {
+      "species": "arbok",
+      "level": 33,
+      "moveset": [
+        "poisonsting",
+        "bite",
+        "glare",
+        "screech"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 4,
+        "atk": 4,
+        "def": 4,
+        "spa": 4,
+        "spd": 4,
+        "spe": 4
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

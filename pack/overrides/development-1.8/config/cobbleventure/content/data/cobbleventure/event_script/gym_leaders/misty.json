@@ -1,0 +1,641 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/gym_leaders/misty",
+  "source_digest": "cbad568bfc39d19cea3b503e879d0ceb1c0980e1d7bf67310b08e55530d15390",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:runtime/npc_instance_defeated"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "내 물타입 포켓몬도 계속 강해질 거야. 너도 다음 승부에서 더 강해진 모습을 보여 줘!"
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "처음 보는 얼굴이네! 나는 블루시티 체육관 관장 이슬이야."
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "포켓몬을 키울 때는 누구나 자신만의 방침이 있어야 해."
+          },
+          "next": 4,
+          "await": true,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "내 방침은 물타입 포켓몬으로 처음부터 끝까지 전력 공격이야!"
+          },
+          "next": 5,
+          "await": true,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/gym_leader/misty"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "result",
+          "operation_id": "cobbleventure:event_script/gym_leaders/misty/challenge/battle",
+          "next": 6,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 7,
+          "else": 15
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/misty/victory/set_instance_defeated",
+          "next": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/gym/kanto/misty/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/misty/victory/set_defeated",
+          "next": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "op": "command",
+          "command": "give_money",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 2100
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/misty/victory/give_money",
+          "next": 10
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "op": "command",
+          "command": "grant_badge",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:badge/kanto/cascade"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/misty/victory/grant_badge",
+          "next": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/set_level_cap",
+          "op": "command",
+          "command": "set_level_cap",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 24
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/misty/victory/set_level_cap",
+          "next": 12
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s4/then/s5",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "와, 정말 강하네! 네 실력은 인정할 수밖에 없겠어."
+          },
+          "next": 13,
+          "await": true,
+          "resume": 13
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "나를 이긴 증표로 블루배지를 가져가."
+          },
+          "next": 14,
+          "await": true,
+          "resume": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then_end",
+          "op": "jump",
+          "target": 16
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "봤지? 물타입의 거센 공격은 쉽게 멈추지 않아. 다음에는 더 힘껏 덤벼 봐!"
+          },
+          "next": 16,
+          "await": true,
+          "resume": 16
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 97,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 155,
+              "line": 3,
+              "column": 63
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 159,
+              "line": 4,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 181,
+              "line": 6,
+              "column": 5
+            },
+            "end": {
+              "offset": 223,
+              "line": 6,
+              "column": 47
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 228,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 268,
+              "line": 7,
+              "column": 45
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 273,
+              "line": 8,
+              "column": 5
+            },
+            "end": {
+              "offset": 316,
+              "line": 8,
+              "column": 48
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "stable_id": "challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 321,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 405,
+              "line": 9,
+              "column": 89
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 410,
+              "line": 10,
+              "column": 5
+            },
+            "end": {
+              "offset": 967,
+              "line": 20,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "stable_id": "victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 445,
+              "line": 11,
+              "column": 7
+            },
+            "end": {
+              "offset": 539,
+              "line": 11,
+              "column": 101
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "stable_id": "victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 546,
+              "line": 12,
+              "column": 7
+            },
+            "end": {
+              "offset": 631,
+              "line": 12,
+              "column": 92
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "stable_id": "victory/give_money",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 638,
+              "line": 13,
+              "column": 7
+            },
+            "end": {
+              "offset": 677,
+              "line": 13,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "stable_id": "victory/grant_badge",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 684,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 756,
+              "line": 14,
+              "column": 79
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/set_level_cap",
+          "stable_id": "victory/set_level_cap",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 763,
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "offset": 806,
+              "line": 15,
+              "column": 50
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s4/then/s5",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 813,
+              "line": 16,
+              "column": 7
+            },
+            "end": {
+              "offset": 852,
+              "line": 16,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 859,
+              "line": 17,
+              "column": 7
+            },
+            "end": {
+              "offset": 889,
+              "line": 17,
+              "column": 37
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 437,
+              "line": 10,
+              "column": 32
+            },
+            "end": {
+              "offset": 895,
+              "line": 18,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 909,
+              "line": 19,
+              "column": 7
+            },
+            "end": {
+              "offset": 961,
+              "line": 19,
+              "column": 59
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/misty.cves",
+            "start": {
+              "offset": 162,
+              "line": 5,
+              "column": 3
+            },
+            "end": {
+              "offset": 971,
+              "line": 21,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

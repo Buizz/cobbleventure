@@ -1,0 +1,26 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "rockruff-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_hills"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "rockruff",
+      "level": "5-20",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

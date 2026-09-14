@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/rewards/field_move_whirlpool_instructor",
+  "source_digest": "7865f5daba039a95cb6c08fc2ce089722d8a9f9aa618230db71f0621406b5a1d",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/rewards/field_move/whirlpool"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "물의 중심이 아니라 가장자리의 흐름을 읽어."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "소용돌이는 맞서기보다 흐름의 빈틈을 통과해야 해. 바다회오리 돌파법을 가르쳐 주지."
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/field_move",
+          "op": "command",
+          "command": "grant_field_move",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "whirlpool"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": "granted",
+          "operation_id": "cobbleventure:event_script/rewards/field_move_whirlpool_instructor/grant/field_move",
+          "next": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/rewards/field_move/whirlpool"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/rewards/field_move_whirlpool_instructor/grant/state",
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이제 거센 소용돌이 앞에서 바다회오리를 사용할 수 있어."
+              }
+            ]
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_whirlpool_instructor.cves",
+            "start": {
+              "offset": 101,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 156,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_whirlpool_instructor.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 160,
+              "line": 6,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_whirlpool_instructor.cves",
+            "start": {
+              "offset": 183,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 260,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/field_move",
+          "stable_id": "grant/field_move",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_whirlpool_instructor.cves",
+            "start": {
+              "offset": 265,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 324,
+              "line": 12,
+              "column": 64
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "stable_id": "grant/state",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_whirlpool_instructor.cves",
+            "start": {
+              "offset": 329,
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 409,
+              "line": 13,
+              "column": 85
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_whirlpool_instructor.cves",
+            "start": {
+              "offset": 414,
+              "line": 14,
+              "column": 5
+            },
+            "end": {
+              "offset": 476,
+              "line": 16,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_whirlpool_instructor.cves",
+            "start": {
+              "offset": 164,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 480,
+              "line": 17,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

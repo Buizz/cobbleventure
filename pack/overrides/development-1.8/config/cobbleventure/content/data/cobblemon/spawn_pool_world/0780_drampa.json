@@ -1,0 +1,55 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "drampa-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_peak"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "minY": 190,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "drampa",
+      "level": "24-49",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "drampa-2",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_sky"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "minY": 190,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "drampa",
+      "level": "24-49",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

@@ -1,0 +1,1260 @@
+{
+  "$schema": "../../schemas/settlement.schema.json",
+  "schema_version": 3,
+  "id": "cobbleventure:settlement/fuchsia_city",
+  "enabled": true,
+  "display_name": {
+    "ko_kr": "연분홍시티",
+    "en_us": "Fuchsia City"
+  },
+  "region": "cobbleventure:generation_1/fuchsia",
+  "dimension": "cobbleventure:generation_1",
+  "music_track": "kanto.cerulean_city",
+  "town_radius_cells": 5,
+  "bounds": {
+    "min_x": -160,
+    "min_z": -160,
+    "max_x": 160,
+    "max_z": 160
+  },
+  "center": {
+    "x": 0,
+    "y": 69,
+    "z": 0
+  },
+  "anchors": {
+    "town_square": {
+      "x": 0,
+      "y": 69,
+      "z": 0
+    },
+    "special_district": {
+      "x": -80,
+      "y": 69,
+      "z": 0
+    },
+    "gym_building": {
+      "x": 76,
+      "y": 69,
+      "z": -61
+    }
+  },
+  "biome_layout": {
+    "arrangement": "organic_patches",
+    "transition_width": 10,
+    "pokemon_biome_set": "cobbleventure:biome_set/starter_region",
+    "zones": [
+      {
+        "id": "fuchsia_safari",
+        "biome": "minecraft:jungle",
+        "size_blocks": 280,
+        "placement": "center",
+        "weight": 5
+      }
+    ],
+    "boundary": {
+      "profile": "cobbleventure:boundary/dense_tree_line",
+      "width": 12,
+      "wall_height": 8,
+      "wall_thickness": 4
+    }
+  },
+  "connections": [],
+  "structure_profile": {
+    "road_layout_template": "cross",
+    "structure": "bca:village/default_mid",
+    "gym_theme": "poison",
+    "commercial_center": "pokemart",
+    "required_facilities": {
+      "village_hub": "cobbleventure:fuchsia_city/village_hub"
+    },
+    "special_district": {
+      "enabled": false,
+      "anchor": "special_district",
+      "placement_mode": "manual",
+      "footprint": {
+        "width": 8,
+        "depth": 8
+      },
+      "clearance": 6,
+      "building": {
+        "enabled": false,
+        "structure": ""
+      }
+    },
+    "gym": {
+      "enabled": true,
+      "gym_id": "cobbleventure:gym/fuchsia",
+      "structure": "cobbleventure:gyms/base_gym",
+      "theme": "poison",
+      "anchor": "gym_building"
+    },
+    "facility_placements": [
+      {
+        "id": "gym_building",
+        "mode": "direct_template",
+        "structure": "cobbleventure:gyms/base_gym",
+        "anchor": "gym_building"
+      }
+    ],
+    "pokemon_center_enabled": true,
+    "shop_configuration": {
+      "catalog_id": "cobbleventure:shop_catalog/pokemart_default",
+      "vendor_units": [
+        "bca:pokemart_shopkeeper"
+      ],
+      "assignments": [
+        {
+          "slot_id": "counter",
+          "vendor_unit": "bca:pokemart_shopkeeper"
+        }
+      ]
+    },
+    "civic_facilities_explicit": true,
+    "layout_shape": "branching",
+    "road_profile": {
+      "width": 5,
+      "material": "grass_path"
+    },
+    "generation_profile": {
+      "seed": 523463074,
+      "depth": 4,
+      "residential_buildings_enabled": true,
+      "basic_buildings": [
+        "cobbleventure:placeholder/basic_building_1",
+        "cobbleventure:placeholder/basic_building_2",
+        "cobbleventure:placeholder/basic_building_3"
+      ],
+      "building_density": "sparse",
+      "house_palette": {
+        "bases": [
+          "one_story"
+        ],
+        "roofs": [
+          "gable"
+        ],
+        "roof_colors": [
+          "red",
+          "orange"
+        ]
+      }
+    },
+    "facility_requirements": []
+  },
+  "npc_placement": {
+    "auto_place_npcs": false,
+    "trainer_population": {
+      "enabled": false,
+      "max_active": 16,
+      "use_biome_defaults": true,
+      "direct_trainers": [],
+      "placement_areas": [
+        "indoor",
+        "outdoor"
+      ]
+    },
+    "max_ambient_npcs": 14,
+    "default_wander_radius": 8,
+    "trainer_slots": [],
+    "zones": [
+      {
+        "id": "town_square",
+        "bounds": {
+          "min_x": -24,
+          "min_z": -24,
+          "max_x": 24,
+          "max_z": 24
+        },
+        "max_npcs": 8,
+        "tags": [
+          "ambient",
+          "resident"
+        ]
+      }
+    ],
+    "indoor_capacity": {
+      "requested": 0,
+      "available": 20,
+      "buildings": [
+        {
+          "building": "house_1",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "house_2",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "house_3",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "house_4",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "house_5",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "house_6",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "house_7",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "house_8",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "house_9",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "house_10",
+          "structure": "cobbleventure:houses/one_story_gable",
+          "capacity": 2
+        },
+        {
+          "building": "gym_building",
+          "structure": "cobbleventure:gyms/base_gym",
+          "capacity": 0
+        },
+        {
+          "building": "facility_pokemon_center",
+          "structure": "cobbleventure:facilities/pokemon_center",
+          "capacity": 0
+        },
+        {
+          "building": "facility_pokemart",
+          "structure": "cobbleventure:facilities/pokemart",
+          "capacity": 0
+        }
+      ]
+    }
+  },
+  "load_order": 9,
+  "town_footprint_shape": "five_up",
+  "settlement_flags": [],
+  "compiled_layout": {
+    "schema_version": 1,
+    "shape": "hex_tiles",
+    "cell_count": 5,
+    "footprint_shape": "five_up",
+    "footprint_cells": [],
+    "road_exits": [],
+    "external_exit_points": [],
+    "tile_radius_blocks": 64,
+    "hub": {
+      "x": 0,
+      "z": 0
+    },
+    "center_pattern": "tee_west",
+    "road_layout_template": "cross",
+    "building_density": "sparse",
+    "roads": [
+      {
+        "x1": 0,
+        "z1": 0,
+        "x2": 0,
+        "z2": -32
+      },
+      {
+        "x1": 0,
+        "z1": 0,
+        "x2": 0,
+        "z2": 32
+      },
+      {
+        "x1": 0,
+        "z1": 0,
+        "x2": -32,
+        "z2": 0
+      },
+      {
+        "x1": 0,
+        "z1": -32,
+        "x2": 0,
+        "z2": -64
+      },
+      {
+        "x1": 0,
+        "z1": -32,
+        "x2": -32,
+        "z2": -32
+      },
+      {
+        "x1": 0,
+        "z1": 32,
+        "x2": 0,
+        "z2": 80
+      },
+      {
+        "x1": 0,
+        "z1": 32,
+        "x2": 64,
+        "z2": 32
+      },
+      {
+        "x1": -32,
+        "z1": 0,
+        "x2": -80,
+        "z2": 0
+      },
+      {
+        "x1": -32,
+        "z1": 0,
+        "x2": -32,
+        "z2": 48
+      },
+      {
+        "x1": 0,
+        "z1": -64,
+        "x2": 48,
+        "z2": -64
+      },
+      {
+        "x1": 48,
+        "z1": -64,
+        "x2": 64,
+        "z2": -64
+      },
+      {
+        "x1": -32,
+        "z1": -32,
+        "x2": -80,
+        "z2": -32
+      },
+      {
+        "x1": 64,
+        "z1": 32,
+        "x2": 112,
+        "z2": 32
+      },
+      {
+        "x1": 64,
+        "z1": 32,
+        "x2": 64,
+        "z2": 64
+      },
+      {
+        "x1": -80,
+        "z1": 0,
+        "x2": -128,
+        "z2": 0
+      },
+      {
+        "x1": 64,
+        "z1": -64,
+        "x2": 96,
+        "z2": -64
+      },
+      {
+        "x1": -128,
+        "z1": 0,
+        "x2": -112,
+        "z2": 0
+      },
+      {
+        "x1": -112,
+        "z1": 0,
+        "x2": -112,
+        "z2": 32
+      },
+      {
+        "x1": -144,
+        "z1": 32,
+        "x2": -64,
+        "z2": 32
+      },
+      {
+        "x1": 0,
+        "z1": -16,
+        "x2": 0,
+        "z2": 80
+      },
+      {
+        "x1": 112,
+        "z1": -16,
+        "x2": 112,
+        "z2": 80
+      },
+      {
+        "x1": 0,
+        "z1": -64,
+        "x2": -48,
+        "z2": -64
+      },
+      {
+        "x1": -48,
+        "z1": -96,
+        "x2": -48,
+        "z2": -16
+      },
+      {
+        "x1": 64,
+        "z1": -64,
+        "x2": 48,
+        "z2": -64
+      },
+      {
+        "x1": 48,
+        "z1": -96,
+        "x2": 48,
+        "z2": -16
+      }
+    ],
+    "access_roads": [
+      {
+        "building": "gym_building",
+        "x1": 89,
+        "z1": -64,
+        "x2": 88,
+        "z2": -64
+      },
+      {
+        "building": "gym_building",
+        "x1": 88,
+        "z1": -64,
+        "x2": 88,
+        "z2": -59
+      },
+      {
+        "building": "gym_building",
+        "includes_safe_area": true,
+        "x1": 88,
+        "z1": -59,
+        "x2": 88,
+        "z2": -58
+      },
+      {
+        "building": "facility_pokemon_center",
+        "x1": -16,
+        "z1": 0,
+        "x2": -16,
+        "z2": 3
+      },
+      {
+        "building": "facility_pokemart",
+        "x1": 24,
+        "z1": -64,
+        "x2": 22,
+        "z2": -64
+      },
+      {
+        "building": "facility_pokemart",
+        "x1": 22,
+        "z1": -64,
+        "x2": 22,
+        "z2": -67
+      },
+      {
+        "building": "house_1",
+        "x1": 64,
+        "z1": 48,
+        "x2": 64,
+        "z2": 46
+      },
+      {
+        "building": "house_1",
+        "x1": 64,
+        "z1": 46,
+        "x2": 69,
+        "z2": 46
+      },
+      {
+        "building": "house_1",
+        "includes_safe_area": true,
+        "x1": 69,
+        "z1": 46,
+        "x2": 70,
+        "z2": 46
+      },
+      {
+        "building": "house_2",
+        "x1": -24,
+        "z1": -64,
+        "x2": -26,
+        "z2": -64
+      },
+      {
+        "building": "house_2",
+        "x1": -26,
+        "z1": -64,
+        "x2": -26,
+        "z2": -69
+      },
+      {
+        "building": "house_2",
+        "includes_safe_area": true,
+        "x1": -26,
+        "z1": -69,
+        "x2": -26,
+        "z2": -70
+      },
+      {
+        "building": "house_3",
+        "x1": -112,
+        "z1": 16,
+        "x2": -112,
+        "z2": 18
+      },
+      {
+        "building": "house_3",
+        "x1": -112,
+        "z1": 18,
+        "x2": -117,
+        "z2": 18
+      },
+      {
+        "building": "house_3",
+        "includes_safe_area": true,
+        "x1": -117,
+        "z1": 18,
+        "x2": -118,
+        "z2": 18
+      },
+      {
+        "building": "house_4",
+        "x1": -82,
+        "z1": 32,
+        "x2": -84,
+        "z2": 32
+      },
+      {
+        "building": "house_4",
+        "x1": -84,
+        "z1": 32,
+        "x2": -84,
+        "z2": 27
+      },
+      {
+        "building": "house_4",
+        "includes_safe_area": true,
+        "x1": -84,
+        "z1": 27,
+        "x2": -84,
+        "z2": 26
+      },
+      {
+        "building": "house_5",
+        "x1": -16,
+        "z1": -32,
+        "x2": -18,
+        "z2": -32
+      },
+      {
+        "building": "house_5",
+        "x1": -18,
+        "z1": -32,
+        "x2": -18,
+        "z2": -37
+      },
+      {
+        "building": "house_5",
+        "includes_safe_area": true,
+        "x1": -18,
+        "z1": -37,
+        "x2": -18,
+        "z2": -38
+      },
+      {
+        "building": "house_6",
+        "x1": 112,
+        "z1": 5,
+        "x2": 112,
+        "z2": 7
+      },
+      {
+        "building": "house_6",
+        "x1": 112,
+        "z1": 7,
+        "x2": 107,
+        "z2": 7
+      },
+      {
+        "building": "house_6",
+        "includes_safe_area": true,
+        "x1": 107,
+        "z1": 7,
+        "x2": 106,
+        "z2": 7
+      },
+      {
+        "building": "house_7",
+        "x1": 14,
+        "z1": 32,
+        "x2": 16,
+        "z2": 32
+      },
+      {
+        "building": "house_7",
+        "x1": 16,
+        "z1": 32,
+        "x2": 16,
+        "z2": 37
+      },
+      {
+        "building": "house_7",
+        "includes_safe_area": true,
+        "x1": 16,
+        "z1": 37,
+        "x2": 16,
+        "z2": 38
+      },
+      {
+        "building": "house_8",
+        "x1": -48,
+        "z1": -78,
+        "x2": -48,
+        "z2": -77
+      },
+      {
+        "building": "house_8",
+        "x1": -48,
+        "z1": -77,
+        "x2": -53,
+        "z2": -77
+      },
+      {
+        "building": "house_8",
+        "includes_safe_area": true,
+        "x1": -53,
+        "z1": -77,
+        "x2": -54,
+        "z2": -77
+      },
+      {
+        "building": "house_9",
+        "x1": 112,
+        "z1": 59,
+        "x2": 112,
+        "z2": 60
+      },
+      {
+        "building": "house_9",
+        "x1": 112,
+        "z1": 60,
+        "x2": 107,
+        "z2": 60
+      },
+      {
+        "building": "house_9",
+        "includes_safe_area": true,
+        "x1": 107,
+        "z1": 60,
+        "x2": 106,
+        "z2": 60
+      },
+      {
+        "building": "house_10",
+        "x1": 48,
+        "z1": -78,
+        "x2": 48,
+        "z2": -81
+      },
+      {
+        "building": "house_10",
+        "x1": 48,
+        "z1": -81,
+        "x2": 53,
+        "z2": -81
+      },
+      {
+        "building": "house_10",
+        "includes_safe_area": true,
+        "x1": 53,
+        "z1": -81,
+        "x2": 54,
+        "z2": -81
+      }
+    ],
+    "decorations": [
+      {
+        "type": "street_lamp",
+        "x": 5,
+        "z": -10,
+        "rotation": "clockwise_90"
+      },
+      {
+        "type": "bench",
+        "x": 5,
+        "z": 10,
+        "rotation": "counterclockwise_90"
+      },
+      {
+        "type": "street_tree",
+        "x": -7,
+        "z": 22,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": 7,
+        "z": -54,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": -22,
+        "z": -25,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": -7,
+        "z": 54,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": 22,
+        "z": 25,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": 46,
+        "z": 39,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": -54,
+        "z": -7,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": -25,
+        "z": 22,
+        "rotation": "none"
+      },
+      {
+        "type": "street_lamp",
+        "x": -27,
+        "z": 34,
+        "rotation": "clockwise_90"
+      },
+      {
+        "type": "street_tree",
+        "x": 22,
+        "z": -57,
+        "rotation": "none"
+      },
+      {
+        "type": "bench",
+        "x": 34,
+        "z": -59,
+        "rotation": "none"
+      },
+      {
+        "type": "flower_bed",
+        "x": -42,
+        "z": -27,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": -54,
+        "z": -39,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": 86,
+        "z": 25,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": -102,
+        "z": 7,
+        "rotation": "none"
+      },
+      {
+        "type": "flower_bed",
+        "x": -107,
+        "z": 10,
+        "rotation": "clockwise_90"
+      },
+      {
+        "type": "street_lamp",
+        "x": -134,
+        "z": 37,
+        "rotation": "none"
+      },
+      {
+        "type": "flower_bed",
+        "x": -86,
+        "z": 37,
+        "rotation": "none"
+      },
+      {
+        "type": "bench",
+        "x": 5,
+        "z": -6,
+        "rotation": "counterclockwise_90"
+      },
+      {
+        "type": "street_tree",
+        "x": 119,
+        "z": 6,
+        "rotation": "none"
+      },
+      {
+        "type": "street_lamp",
+        "x": 117,
+        "z": 18,
+        "rotation": "clockwise_90"
+      },
+      {
+        "type": "street_tree",
+        "x": 119,
+        "z": 54,
+        "rotation": "none"
+      },
+      {
+        "type": "flower_bed",
+        "x": 117,
+        "z": 66,
+        "rotation": "clockwise_90"
+      },
+      {
+        "type": "street_lamp",
+        "x": -10,
+        "z": -59,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": -41,
+        "z": -74,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": -55,
+        "z": -50,
+        "rotation": "none"
+      },
+      {
+        "type": "street_tree",
+        "x": 55,
+        "z": -26,
+        "rotation": "none"
+      },
+      {
+        "type": "fountain",
+        "x": -10,
+        "z": -10,
+        "rotation": "none"
+      }
+    ],
+    "facilities": {
+      "gym_building": {
+        "id": "gym_building",
+        "x": 76.46,
+        "z": -61.5,
+        "width": 25,
+        "depth": 26,
+        "occupied": {
+          "x": 76.46,
+          "z": -61.5,
+          "width": 25,
+          "depth": 26
+        },
+        "entrance_facing": "north",
+        "rotation": "none",
+        "road_connection": {
+          "x": 89,
+          "z": -64
+        },
+        "structure": "cobbleventure:gyms/base_gym",
+        "entrance": {
+          "x": 88,
+          "z": -59
+        },
+        "door": {
+          "x": 88,
+          "z": -58
+        }
+      },
+      "facility_pokemon_center": {
+        "id": "facility_pokemon_center",
+        "x": -27.5,
+        "z": 1.5,
+        "width": 16,
+        "depth": 23,
+        "occupied": {
+          "x": -25.5,
+          "z": 2.5,
+          "width": 19,
+          "depth": 12
+        },
+        "entrance_facing": "north",
+        "rotation": "clockwise_90",
+        "road_connection": {
+          "x": -16,
+          "z": 0
+        },
+        "structure": "cobbleventure:facilities/pokemon_center",
+        "entrance": {
+          "x": -16,
+          "z": 3
+        }
+      },
+      "facility_pokemart": {
+        "id": "facility_pokemart",
+        "x": 15.5,
+        "z": -78.5,
+        "width": 13,
+        "depth": 17,
+        "occupied": {
+          "x": 16.5,
+          "z": -76.5,
+          "width": 15,
+          "depth": 10
+        },
+        "entrance_facing": "south",
+        "rotation": "counterclockwise_90",
+        "road_connection": {
+          "x": 24,
+          "z": -64
+        },
+        "structure": "cobbleventure:facilities/pokemart",
+        "entrance": {
+          "x": 22,
+          "z": -67
+        }
+      }
+    },
+    "houses": [
+      {
+        "id": "house_1",
+        "x": 66.5,
+        "z": 36.5,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": 66.5,
+          "z": 39.5,
+          "width": 15,
+          "depth": 17
+        },
+        "entrance_facing": "west",
+        "rotation": "counterclockwise_90",
+        "road_connection": {
+          "x": 64,
+          "z": 48
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "orange",
+        "structure": "cobbleventure:houses/one_story_gable_orange",
+        "entrance": {
+          "x": 69,
+          "z": 46
+        },
+        "door": {
+          "x": 70,
+          "z": 46
+        }
+      },
+      {
+        "id": "house_2",
+        "x": -35.5,
+        "z": -82.5,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": -32.5,
+          "z": -81.5,
+          "width": 17,
+          "depth": 15
+        },
+        "entrance_facing": "south",
+        "rotation": "clockwise_180",
+        "road_connection": {
+          "x": -24,
+          "z": -64
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "red",
+        "structure": "cobbleventure:houses/one_story_gable_red",
+        "entrance": {
+          "x": -26,
+          "z": -69
+        },
+        "door": {
+          "x": -26,
+          "z": -70
+        }
+      },
+      {
+        "id": "house_3",
+        "x": -130.5,
+        "z": 3.5,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": -129.5,
+          "z": 7.5,
+          "width": 15,
+          "depth": 17
+        },
+        "entrance_facing": "east",
+        "rotation": "clockwise_90",
+        "road_connection": {
+          "x": -112,
+          "z": 16
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "orange",
+        "structure": "cobbleventure:houses/one_story_gable_orange",
+        "entrance": {
+          "x": -117,
+          "z": 18
+        },
+        "door": {
+          "x": -118,
+          "z": 18
+        }
+      },
+      {
+        "id": "house_4",
+        "x": -93.1,
+        "z": 13.5,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": -90.1,
+          "z": 14.5,
+          "width": 17,
+          "depth": 15
+        },
+        "entrance_facing": "south",
+        "rotation": "clockwise_180",
+        "road_connection": {
+          "x": -82,
+          "z": 32
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "orange",
+        "structure": "cobbleventure:houses/one_story_gable_orange",
+        "entrance": {
+          "x": -84,
+          "z": 27
+        },
+        "door": {
+          "x": -84,
+          "z": 26
+        }
+      },
+      {
+        "id": "house_5",
+        "x": -27.5,
+        "z": -50.5,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": -24.5,
+          "z": -49.5,
+          "width": 17,
+          "depth": 15
+        },
+        "entrance_facing": "south",
+        "rotation": "clockwise_180",
+        "road_connection": {
+          "x": -16,
+          "z": -32
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "red",
+        "structure": "cobbleventure:houses/one_story_gable_red",
+        "entrance": {
+          "x": -18,
+          "z": -37
+        },
+        "door": {
+          "x": -18,
+          "z": -38
+        }
+      },
+      {
+        "id": "house_6",
+        "x": 93.5,
+        "z": -7.38,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": 94.5,
+          "z": -3.38,
+          "width": 15,
+          "depth": 17
+        },
+        "entrance_facing": "east",
+        "rotation": "clockwise_90",
+        "road_connection": {
+          "x": 112,
+          "z": 5
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "orange",
+        "structure": "cobbleventure:houses/one_story_gable_orange",
+        "entrance": {
+          "x": 107,
+          "z": 7
+        },
+        "door": {
+          "x": 106,
+          "z": 7
+        }
+      },
+      {
+        "id": "house_7",
+        "x": 1.58,
+        "z": 34.5,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": 5.58,
+          "z": 34.5,
+          "width": 17,
+          "depth": 15
+        },
+        "entrance_facing": "north",
+        "rotation": "none",
+        "road_connection": {
+          "x": 14,
+          "z": 32
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "orange",
+        "structure": "cobbleventure:houses/one_story_gable_orange",
+        "entrance": {
+          "x": 16,
+          "z": 37
+        },
+        "door": {
+          "x": 16,
+          "z": 38
+        }
+      },
+      {
+        "id": "house_8",
+        "x": -66.5,
+        "z": -90.9,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": -65.5,
+          "z": -86.9,
+          "width": 15,
+          "depth": 17
+        },
+        "entrance_facing": "east",
+        "rotation": "clockwise_90",
+        "road_connection": {
+          "x": -48,
+          "z": -78
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "red",
+        "structure": "cobbleventure:houses/one_story_gable_red",
+        "entrance": {
+          "x": -53,
+          "z": -77
+        },
+        "door": {
+          "x": -54,
+          "z": -77
+        }
+      },
+      {
+        "id": "house_9",
+        "x": 93.5,
+        "z": 46.38,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": 94.5,
+          "z": 50.38,
+          "width": 15,
+          "depth": 17
+        },
+        "entrance_facing": "east",
+        "rotation": "clockwise_90",
+        "road_connection": {
+          "x": 112,
+          "z": 59
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "red",
+        "structure": "cobbleventure:houses/one_story_gable_red",
+        "entrance": {
+          "x": 107,
+          "z": 60
+        },
+        "door": {
+          "x": 106,
+          "z": 60
+        }
+      },
+      {
+        "id": "house_10",
+        "x": 50.5,
+        "z": -89.9,
+        "width": 24,
+        "depth": 16,
+        "occupied": {
+          "x": 50.5,
+          "z": -86.9,
+          "width": 15,
+          "depth": 17
+        },
+        "entrance_facing": "west",
+        "rotation": "counterclockwise_90",
+        "road_connection": {
+          "x": 48,
+          "z": -78
+        },
+        "base": "one_story",
+        "roof": "gable",
+        "roof_color": "orange",
+        "structure": "cobbleventure:houses/one_story_gable_orange",
+        "entrance": {
+          "x": 53,
+          "z": -81
+        },
+        "door": {
+          "x": 54,
+          "z": -81
+        }
+      }
+    ],
+    "requested_seed": 523463074,
+    "resolved_seed": 523463074,
+    "reroll_count": 0,
+    "reroll_limit": 8
+  }
+}

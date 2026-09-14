@@ -1,0 +1,62 @@
+{
+  "name": "관동 체육관 관장 민화",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "victreebel",
+      "level": 29,
+      "moveset": [
+        "stunspore",
+        "acid",
+        "poisonpowder",
+        "gigadrain"
+      ]
+    },
+    {
+      "species": "tangela",
+      "level": 24,
+      "moveset": [
+        "poisonpowder",
+        "constrict",
+        "ingrain",
+        "gigadrain"
+      ]
+    },
+    {
+      "species": "vileplume",
+      "level": 29,
+      "moveset": [
+        "sleeppowder",
+        "acid",
+        "stunspore",
+        "gigadrain"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 2
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    },
+    {
+      "item": "cobblemon:full_heal",
+      "quantity": 1
+    }
+  ]
+}

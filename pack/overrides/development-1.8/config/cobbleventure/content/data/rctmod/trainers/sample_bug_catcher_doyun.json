@@ -1,0 +1,29 @@
+{
+  "name": "곤충채집소년 도윤 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "caterpie",
+      "level": 7,
+      "moveset": [
+        "tackle",
+        "stringshot"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

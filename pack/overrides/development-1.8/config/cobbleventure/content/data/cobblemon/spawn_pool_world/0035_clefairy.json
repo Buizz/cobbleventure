@@ -1,0 +1,105 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "clefairy-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.52,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_dripstone"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "clefairy",
+      "level": "17-32",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "clefairy-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.52,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_dripstone"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "clefairy",
+      "level": "17-32",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "clefairy-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.52,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_hills"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "0",
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "clefairy",
+      "level": "17-32",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "clefairy-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.52,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_magical"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "clefairy",
+      "level": "17-32",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_spooky"
+        ]
+      }
+    }
+  ]
+}

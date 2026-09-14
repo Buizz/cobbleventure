@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/story/viridian_gatekeeper",
+  "source_digest": "1bd4ba051fc8e6f5fae3641835acd7956e1bdc844fd4b49b2beed831a9641860",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이 앞은 석영고원으로 향하는 길입니다. 포켓몬리그에 도전하려면 회색·블루·오렌지·무지개·핑크·골드·크림슨·그린배지가 모두 필요합니다. 여덟 배지를 모았다면 통과하셔도 좋습니다."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/viridian_gatekeeper.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 177,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/viridian_gatekeeper.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 181,
+              "line": 6,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

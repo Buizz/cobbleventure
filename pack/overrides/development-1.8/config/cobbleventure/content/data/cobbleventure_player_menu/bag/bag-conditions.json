@@ -1,0 +1,99 @@
+{
+  "conditions": {
+    "cvc_3ab8530946e9": {
+      "type": "badge",
+      "badge": "cobbleventure:badge/kanto/boulder"
+    },
+    "cvc_41c8ac9889bc": {
+      "type": "badge",
+      "badge": "cobbleventure:badge/kanto/cascade"
+    },
+    "cvc_d141f071212a": {
+      "type": "badge",
+      "badge": "cobbleventure:badge/kanto/thunder"
+    },
+    "cvc_7de0c7c01ecd": {
+      "type": "badge",
+      "badge": "cobbleventure:badge/kanto/rainbow"
+    },
+    "cvc_9dd3336a76a5": {
+      "type": "badge",
+      "badge": "cobbleventure:badge/kanto/soul"
+    },
+    "cvc_beb3fc8a7a89": {
+      "type": "badge",
+      "badge": "cobbleventure:badge/kanto/marsh"
+    },
+    "cvc_b5008cd373b7": {
+      "type": "badge",
+      "badge": "cobbleventure:badge/kanto/volcano"
+    },
+    "cvc_76918832d46a": {
+      "type": "badge",
+      "badge": "cobbleventure:badge/kanto/earth"
+    },
+    "cvc_d8699466bca7": {
+      "type": "variable",
+      "source": "persistent_data",
+      "key": "cobbleventureFieldMove.rock_climb",
+      "operator": ">=",
+      "value": 1
+    },
+    "cvc_3cf8d03d712f": {
+      "type": "variable",
+      "source": "persistent_data",
+      "key": "cobbleventureFieldMove.surf",
+      "operator": ">=",
+      "value": 1
+    },
+    "cvc_b8c789f01552": {
+      "type": "variable",
+      "source": "persistent_data",
+      "key": "cobbleventureFieldMove.fly",
+      "operator": ">=",
+      "value": 1
+    },
+    "cvc_8213fa3e40da": {
+      "type": "variable",
+      "source": "persistent_data",
+      "key": "cobbleventureFieldMove.flash",
+      "operator": ">=",
+      "value": 1
+    },
+    "cvi_312ccb2636b7": {
+      "type": "item",
+      "item": "cobblemon:potion",
+      "count": 1
+    },
+    "cvi_9aa4743f45e7": {
+      "type": "item",
+      "item": "cobblemon:antidote",
+      "count": 1
+    },
+    "cvi_1df701eaafb5": {
+      "type": "item",
+      "item": "cobbleventure_casino:coin_case",
+      "count": 1
+    },
+    "cvi_46e4cc1fb48f": {
+      "type": "item",
+      "item": "cobblemon:oran_berry",
+      "count": 1
+    },
+    "cvi_7b7761e51d1e": {
+      "type": "item",
+      "item": "cobblemon:poke_ball",
+      "count": 1
+    },
+    "cvc_aea0344d7577": {
+      "type": "party_count",
+      "operator": ">=",
+      "value": 1
+    },
+    "cvi_1e13e6c0d721": {
+      "type": "item",
+      "item": "cobbleventure_bootstrap:poke_flute",
+      "count": 1
+    }
+  }
+}

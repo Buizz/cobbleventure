@@ -1,0 +1,253 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "golisopod-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_coast"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "golisopod",
+      "level": "30-53",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "golisopod-2",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_tropical_island"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "neededNearbyBlocks": [
+          "minecraft:water"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "golisopod",
+      "level": "30-53",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "golisopod-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.96,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 0,
+        "minSkyLight": 0,
+        "neededNearbyBlocks": [
+          "minecraft:water"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "golisopod",
+      "level": "30-53",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    },
+    {
+      "id": "golisopod-4",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.96,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 0,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "golisopod",
+      "level": "30-53",
+      "spawnablePositionType": "seafloor",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    },
+    {
+      "id": "golisopod-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_coast",
+          "#cobblemon:is_tropical_island"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "golisopod",
+      "level": "30-53",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "golisopod-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_coast",
+          "#cobblemon:is_tropical_island"
+        ],
+        "canSeeSky": true,
+        "minLureLevel": 1,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "golisopod",
+      "level": "30-53",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "maxLureLevel": 2,
+          "minLureLevel": 1
+        },
+        "multiplier": 0.6
+      }
+    },
+    {
+      "id": "golisopod-7",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "golisopod",
+      "level": "30-53",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "maxLureLevel": 1,
+          "minLureLevel": 0
+        },
+        "multiplier": 0.6
+      }
+    },
+    {
+      "id": "golisopod-8",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_coast",
+          "#cobblemon:is_tropical_island"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "golisopod",
+      "level": "30-53",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "golisopod-9",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_coast",
+          "#cobblemon:is_tropical_island"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minLureLevel": 1,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "golisopod",
+      "level": "30-53",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "maxLureLevel": 2,
+          "minLureLevel": 1
+        },
+        "multiplier": 0.6
+      }
+    }
+  ]
+}

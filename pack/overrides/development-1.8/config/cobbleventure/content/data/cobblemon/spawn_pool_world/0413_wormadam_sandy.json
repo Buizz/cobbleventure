@@ -1,0 +1,43 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "wormadam-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5.3,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_sandy"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "wormadam bagworm_cloak=sandy",
+      "level": "35-55",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "wormadam-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_desert"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "wormadam bagworm_cloak=sandy",
+      "level": "15-32",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

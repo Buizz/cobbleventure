@@ -1,0 +1,345 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "relicanth-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean"
+        ],
+        "maxY": 48,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "relicanth-2",
+      "presets": [
+        "water",
+        "ocean_ruins"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 20,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "relicanth-3",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 48,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "submerged",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean",
+          "#cobblemon:is_lush"
+        ]
+      }
+    },
+    {
+      "id": "relicanth-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "relicanth-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean"
+        ],
+        "minLureLevel": 1,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "minLureLevel": 3
+        },
+        "multiplier": 3.0
+      }
+    },
+    {
+      "id": "relicanth-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean"
+        ]
+      }
+    },
+    {
+      "id": "relicanth-7",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 48,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean",
+          "#cobblemon:is_lush"
+        ],
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "relicanth-8",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 48,
+        "minLureLevel": 1,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean",
+          "#cobblemon:is_lush"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "minLureLevel": 3
+        },
+        "multiplier": 3.0
+      }
+    },
+    {
+      "id": "relicanth-9",
+      "presets": [
+        "water",
+        "ocean_ruins"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 20,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "relicanth-10",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_ocean"
+        ]
+      }
+    },
+    {
+      "id": "relicanth-11",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "maxY": 13,
+        "minY": -60,
+        "structures": [
+          "cobblemon:shipwreck_coves/submerged_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "relicanth-12",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "maxY": 13,
+        "minY": -60,
+        "structures": [
+          "cobblemon:shipwreck_coves/submerged_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "minLureLevel": 1
+      }
+    },
+    {
+      "id": "relicanth-13",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "maxY": 13,
+        "minLureLevel": 1,
+        "minY": -60,
+        "structures": [
+          "cobblemon:shipwreck_coves/submerged_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "relicanth",
+      "level": "24-49",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "minLureLevel": 3
+        },
+        "multiplier": 3.0
+      }
+    }
+  ]
+}

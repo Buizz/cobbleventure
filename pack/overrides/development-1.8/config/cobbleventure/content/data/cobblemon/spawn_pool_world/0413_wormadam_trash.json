@@ -1,0 +1,43 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "wormadam-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.7,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "wormadam bagworm_cloak=trash",
+      "level": "35-55",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "wormadam-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "wormadam bagworm_cloak=trash",
+      "level": "15-32",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

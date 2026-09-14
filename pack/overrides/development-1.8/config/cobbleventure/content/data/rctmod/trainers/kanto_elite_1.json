@@ -1,0 +1,218 @@
+{
+  "name": "칸나",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": true
+      },
+      "teraTarget": "mamoswine"
+    }
+  },
+  "team": [
+    {
+      "species": "ninetales",
+      "level": 60,
+      "moveset": [
+        "auroraveil",
+        "freezedry",
+        "moonblast",
+        "encore"
+      ],
+      "nature": "timid",
+      "ability": "snowwarning",
+      "gender": "FEMALE",
+      "aspects": [
+        "alolan"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 50,
+        "atk": 0,
+        "def": 100,
+        "spa": 6,
+        "spd": 100,
+        "spe": 252
+      },
+      "heldItem": "light_clay",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "cloyster",
+      "level": 60,
+      "moveset": [
+        "waterfall",
+        "iciclespear",
+        "rockblast",
+        "shellsmash"
+      ],
+      "nature": "jolly",
+      "ability": "skilllink",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 6,
+        "atk": 252,
+        "spe": 252
+      },
+      "heldItem": "kings_rock",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "mamoswine",
+      "level": 60,
+      "moveset": [
+        "highhorsepower",
+        "rockslide",
+        "iceshard",
+        "fissure"
+      ],
+      "nature": "adamant",
+      "ability": "thickfat",
+      "gender": "FEMALE",
+      "aspects": [
+        "hisuian"
+      ],
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 252,
+        "def": 6
+      },
+      "heldItem": "sitrus_berry",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "weavile",
+      "level": 60,
+      "moveset": [
+        "tripleaxel",
+        "iceshard",
+        "nightslash",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "ability": "pressure",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 6,
+        "atk": 252,
+        "spe": 252
+      },
+      "heldItem": "expert_belt",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "lapras",
+      "level": 60,
+      "moveset": [
+        "freezedry",
+        "sparklingaria",
+        "thunder",
+        "sheercold"
+      ],
+      "nature": "adamant",
+      "ability": "shellarmor",
+      "gender": "FEMALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "def": 6,
+        "spd": 252
+      },
+      "heldItem": "leftovers",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "froslass",
+      "level": 60,
+      "moveset": [
+        "blizzard",
+        "shadowball",
+        "thunderbolt",
+        "willowisp"
+      ],
+      "nature": "timid",
+      "ability": "cursedbody",
+      "gender": "FEMALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "heldItem": "froslassite",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 99
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "pyukumuku-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_beach"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "pyukumuku",
+      "level": "16-41",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "pyukumuku-2",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "minY": 48,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "pyukumuku",
+      "level": "16-41",
+      "spawnablePositionType": "seafloor",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean",
+          "#cobblemon:is_warm_ocean"
+        ]
+      }
+    },
+    {
+      "id": "pyukumuku-3",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_warm_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "pyukumuku",
+      "level": "16-41",
+      "spawnablePositionType": "seafloor"
+    },
+    {
+      "id": "pyukumuku-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_beach",
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "pyukumuku",
+      "level": "16-41",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean",
+          "#cobblemon:is_warm_ocean"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "pyukumuku-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_warm_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "pyukumuku",
+      "level": "16-41",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "pyukumuku-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_beach",
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "pyukumuku",
+      "level": "16-41",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean",
+          "#cobblemon:is_warm_ocean"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "pyukumuku-7",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_warm_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "pyukumuku",
+      "level": "16-41",
+      "spawnablePositionType": "fishing"
+    }
+  ]
+}

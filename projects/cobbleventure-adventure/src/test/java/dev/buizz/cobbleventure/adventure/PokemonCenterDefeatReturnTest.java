@@ -7,9 +7,45 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import org.junit.jupiter.api.Test;
 
 final class PokemonCenterDefeatReturnTest {
+    @Test
+    void leagueAndNurseOverwriteTheSamePersistentCheckpoint() {
+        CompoundTag data = new CompoundTag();
+        BlockPos nurse = new BlockPos(10, 64, 20);
+        BlockPos lobby = new BlockPos(90, 72, 120);
+        PokemonCenterDefeatReturn.saveCheckpoint(data, "cobbleventure:generation_1",
+            nurse, nurse, true, false);
+        PokemonCenterDefeatReturn.saveCheckpoint(data, "cobbleventure:building_interiors",
+            lobby, lobby, false, true);
+        CompoundTag restored = data.copy();
+        assertTrue(PokemonCenterDefeatReturn.hasSavedCheckpoint(restored));
+        assertFalse(restored.getBoolean("cobbleventurePokemonCenterVisited"));
+        assertEquals("cobbleventure:building_interiors",
+            restored.getString("cobbleventurePokemonCenterDimension"));
+        assertEquals(90, restored.getInt("cobbleventurePokemonCenterX"));
+        assertEquals(120, restored.getInt("cobbleventurePokemonCenterExitZ"));
+
+        PokemonCenterDefeatReturn.saveCheckpoint(restored, "cobbleventure:generation_1",
+            nurse, nurse, true, false);
+        assertTrue(PokemonCenterDefeatReturn.hasSavedCheckpoint(restored));
+        assertFalse(restored.getBoolean("cobbleventureLeagueCheckpoint"));
+        assertTrue(restored.getBoolean("cobbleventurePokemonCenterVisited"));
+        assertEquals(10, restored.getInt("cobbleventurePokemonCenterX"));
+    }
+
+    @Test
+    void legacyNurseCheckpointSurvivesButGenericSpawnIsNotASavePoint() {
+        CompoundTag legacy = new CompoundTag();
+        legacy.putBoolean("cobbleventurePokemonCenterVisited", true);
+        assertTrue(PokemonCenterDefeatReturn.hasSavedCheckpoint(legacy));
+        PokemonCenterDefeatReturn.saveCheckpoint(legacy, "minecraft:overworld",
+            BlockPos.ZERO, BlockPos.ZERO, false, false);
+        assertFalse(PokemonCenterDefeatReturn.hasSavedCheckpoint(legacy));
+    }
+
     @Test
     void recoveryStandsTwoBlocksInFrontOfNurseInEveryHorizontalDirection() {
         BlockPos nurse = new BlockPos(10, 64, -20);

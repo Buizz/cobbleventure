@@ -1,0 +1,41 @@
+{
+  "name": "포켓몬타워 로켓단 조무래기 배틀 B",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "zubat",
+      "level": 28,
+      "moveset": [
+        "bite",
+        "supersonic",
+        "confuseray",
+        "wingattack"
+      ]
+    },
+    {
+      "species": "golbat",
+      "level": 29,
+      "moveset": [
+        "bite",
+        "confuseray",
+        "wingattack",
+        "meanlook"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

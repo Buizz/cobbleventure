@@ -1,0 +1,56 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "falinks-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_badlands"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "falinks",
+      "level": "22-47",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    },
+    {
+      "id": "falinks-2",
+      "presets": [
+        "natural",
+        "nether_structures"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 100,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_nether"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "falinks",
+      "level": "22-47",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

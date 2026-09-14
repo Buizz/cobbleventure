@@ -1,0 +1,281 @@
+{
+  "$schema": "../../schemas/route.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:route/route_custom_19",
+  "display_name": {
+    "ko_kr": "블루시티 북쪽길 (24·25번도로)",
+    "en_us": "Cerulean North Road (Routes 24 & 25)"
+  },
+  "auto_name": false,
+  "enabled": true,
+  "route_type": "road",
+  "corridor": {
+    "width_blocks": 12,
+    "edge_noise": 0
+  },
+  "level_scaling": {
+    "mode": "world",
+    "offset": 0
+  },
+  "pokemon_spawns": {
+    "inherit_biome": false,
+    "excluded_species": [],
+    "additions": [
+      {
+        "species": "cobblemon:weedle",
+        "min_level": 7,
+        "max_level": 8,
+        "weight": 20
+      },
+      {
+        "species": "cobblemon:caterpie",
+        "min_level": 7,
+        "max_level": 8,
+        "weight": 20
+      },
+      {
+        "species": "cobblemon:pidgey",
+        "min_level": 11,
+        "max_level": 13,
+        "weight": 15
+      },
+      {
+        "species": "cobblemon:oddish",
+        "min_level": 12,
+        "max_level": 14,
+        "weight": 25
+      },
+      {
+        "species": "cobblemon:abra",
+        "min_level": 8,
+        "max_level": 13,
+        "weight": 15
+      },
+      {
+        "species": "cobblemon:kakuna",
+        "min_level": 8,
+        "max_level": 9,
+        "weight": 4,
+        "spawn_as_evolved": true
+      },
+      {
+        "species": "cobblemon:metapod",
+        "min_level": 8,
+        "max_level": 9,
+        "weight": 1,
+        "spawn_as_evolved": true
+      }
+    ],
+    "level_overrides": [
+      {
+        "species": "cobblemon:weedle",
+        "min_level": 7,
+        "max_level": 8
+      },
+      {
+        "species": "cobblemon:caterpie",
+        "min_level": 7,
+        "max_level": 8
+      },
+      {
+        "species": "cobblemon:pidgey",
+        "min_level": 11,
+        "max_level": 13
+      },
+      {
+        "species": "cobblemon:oddish",
+        "min_level": 12,
+        "max_level": 14
+      },
+      {
+        "species": "cobblemon:abra",
+        "min_level": 8,
+        "max_level": 13
+      },
+      {
+        "species": "cobblemon:kakuna",
+        "min_level": 8,
+        "max_level": 9
+      },
+      {
+        "species": "cobblemon:metapod",
+        "min_level": 8,
+        "max_level": 9
+      }
+    ],
+    "encounter_pools": {
+      "surf": {
+        "enabled": true,
+        "inherit_biome": false,
+        "excluded_species": [],
+        "trigger_chance": 1,
+        "additions": [
+          {
+            "species": "cobblemon:psyduck",
+            "min_level": 20,
+            "max_level": 40,
+            "weight": 100
+          }
+        ],
+        "level_overrides": [
+          {
+            "species": "cobblemon:psyduck",
+            "min_level": 20,
+            "max_level": 40
+          }
+        ]
+      },
+      "old_rod": {
+        "enabled": true,
+        "inherit_biome": false,
+        "excluded_species": [],
+        "trigger_chance": 1,
+        "additions": [
+          {
+            "species": "cobblemon:magikarp",
+            "min_level": 5,
+            "max_level": 5,
+            "weight": 100
+          }
+        ],
+        "level_overrides": [
+          {
+            "species": "cobblemon:magikarp",
+            "min_level": 5,
+            "max_level": 5
+          }
+        ]
+      },
+      "good_rod": {
+        "enabled": true,
+        "inherit_biome": false,
+        "excluded_species": [],
+        "trigger_chance": 1,
+        "additions": [
+          {
+            "species": "cobblemon:poliwag",
+            "min_level": 5,
+            "max_level": 15,
+            "weight": 60
+          },
+          {
+            "species": "cobblemon:magikarp",
+            "min_level": 5,
+            "max_level": 15,
+            "weight": 20
+          },
+          {
+            "species": "cobblemon:goldeen",
+            "min_level": 5,
+            "max_level": 15,
+            "weight": 20
+          }
+        ],
+        "level_overrides": [
+          {
+            "species": "cobblemon:poliwag",
+            "min_level": 5,
+            "max_level": 15
+          },
+          {
+            "species": "cobblemon:magikarp",
+            "min_level": 5,
+            "max_level": 15
+          },
+          {
+            "species": "cobblemon:goldeen",
+            "min_level": 5,
+            "max_level": 15
+          }
+        ]
+      },
+      "super_rod": {
+        "enabled": true,
+        "inherit_biome": false,
+        "excluded_species": [],
+        "trigger_chance": 1,
+        "additions": [
+          {
+            "species": "cobblemon:poliwag",
+            "min_level": 15,
+            "max_level": 25,
+            "weight": 40
+          },
+          {
+            "species": "cobblemon:poliwhirl",
+            "min_level": 20,
+            "max_level": 30,
+            "weight": 40,
+            "spawn_as_evolved": true
+          },
+          {
+            "species": "cobblemon:gyarados",
+            "min_level": 15,
+            "max_level": 25,
+            "weight": 15,
+            "spawn_as_evolved": true
+          },
+          {
+            "species": "cobblemon:psyduck",
+            "min_level": 15,
+            "max_level": 35,
+            "weight": 5
+          }
+        ],
+        "level_overrides": [
+          {
+            "species": "cobblemon:poliwag",
+            "min_level": 15,
+            "max_level": 25
+          },
+          {
+            "species": "cobblemon:poliwhirl",
+            "min_level": 20,
+            "max_level": 30
+          },
+          {
+            "species": "cobblemon:gyarados",
+            "min_level": 15,
+            "max_level": 25
+          },
+          {
+            "species": "cobblemon:psyduck",
+            "min_level": 15,
+            "max_level": 35
+          }
+        ]
+      }
+    }
+  },
+  "npc_placements": [],
+  "automatic_npc_placement": {
+    "enabled": true,
+    "count": 10,
+    "use_biome_defaults": false,
+    "direct_trainers": [
+      "cobbleventure:npc/firered_rival_cerulean_charmander",
+      "cobbleventure:npc/firered_youngster_timmy",
+      "cobbleventure:npc/firered_bug_catcher_cale",
+      "cobbleventure:npc/firered_lass_reli",
+      "cobbleventure:npc/firered_lass_ali",
+      "cobbleventure:npc/firered_camper_ethan",
+      "cobbleventure:npc/firered_team_rocket_grunt_6",
+      "cobbleventure:npc/firered_youngster_joey",
+      "cobbleventure:npc/firered_lass_haley",
+      "cobbleventure:npc/firered_hiker_wayne"
+    ],
+    "trigger_override": "proximity"
+  },
+  "automatic_npc_candidates": [
+    "cobbleventure:npc/firered_rival_cerulean_charmander",
+    "cobbleventure:npc/firered_youngster_timmy",
+    "cobbleventure:npc/firered_bug_catcher_cale",
+    "cobbleventure:npc/firered_lass_reli",
+    "cobbleventure:npc/firered_lass_ali",
+    "cobbleventure:npc/firered_camper_ethan",
+    "cobbleventure:npc/firered_team_rocket_grunt_6",
+    "cobbleventure:npc/firered_youngster_joey",
+    "cobbleventure:npc/firered_lass_haley",
+    "cobbleventure:npc/firered_hiker_wayne"
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "interior": {
+    "id": "shared_gimmick",
+    "width": 32,
+    "depth": 32,
+    "floor_height": 12,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "id": "trainer_1",
+      "label": "trainer_1",
+      "type": "npc_position",
+      "position": [
+        12,
+        1,
+        4
+      ],
+      "facing": "east"
+    },
+    {
+      "id": "trainer_2",
+      "label": "trainer_2",
+      "type": "npc_position",
+      "position": [
+        19,
+        1,
+        7
+      ],
+      "facing": "west"
+    },
+    {
+      "id": "trainer_4",
+      "label": "trainer_4",
+      "type": "npc_position",
+      "position": [
+        19,
+        1,
+        13
+      ],
+      "facing": "west"
+    },
+    {
+      "id": "trainer_6",
+      "label": "trainer_6",
+      "type": "npc_position",
+      "position": [
+        19,
+        1,
+        19
+      ],
+      "facing": "west"
+    },
+    {
+      "id": "trainer_8",
+      "label": "trainer_8",
+      "type": "npc_position",
+      "position": [
+        19,
+        1,
+        25
+      ],
+      "facing": "west"
+    },
+    {
+      "id": "trainer_3",
+      "label": "trainer_3",
+      "type": "npc_position",
+      "position": [
+        12,
+        1,
+        10
+      ],
+      "facing": "east"
+    },
+    {
+      "id": "trainer_5",
+      "label": "trainer_5",
+      "type": "npc_position",
+      "position": [
+        12,
+        1,
+        16
+      ],
+      "facing": "east"
+    },
+    {
+      "id": "trainer_7",
+      "label": "trainer_7",
+      "type": "npc_position",
+      "position": [
+        12,
+        1,
+        22
+      ],
+      "facing": "east"
+    },
+    {
+      "id": "next",
+      "label": "next",
+      "type": "transition",
+      "position": [
+        15,
+        2,
+        29
+      ],
+      "safe_spawn": [
+        15,
+        1,
+        27
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "door",
+      "label": "door",
+      "type": "transition",
+      "position": [
+        15,
+        2,
+        1
+      ],
+      "safe_spawn": [
+        15,
+        1,
+        4
+      ],
+      "facing": "north"
+    }
+  ],
+  "structure": "content/structures/interiors/gyms/shared_gimmick.nbt"
+}

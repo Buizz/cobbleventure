@@ -1,0 +1,51 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "kabutops-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "kabutops",
+      "level": "40-50",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "kabutops-2",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "kabutops",
+      "level": "40-50",
+      "spawnablePositionType": "submerged"
+    }
+  ]
+}

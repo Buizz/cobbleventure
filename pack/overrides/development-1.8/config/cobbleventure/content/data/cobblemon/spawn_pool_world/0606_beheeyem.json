@@ -1,0 +1,71 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "beheeyem-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_end"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "beheeyem",
+      "level": "42-49",
+      "spawnablePositionType": "grounded",
+      "drops": {
+        "amount": 6,
+        "entries": [
+          {
+            "item": "minecraft:ender_pearl",
+            "quantityRange": "0-2"
+          },
+          {
+            "item": "minecraft:chorus_fruit",
+            "quantityRange": "0-2"
+          },
+          {
+            "item": "cobblemon:light_clay",
+            "percentage": 5.0
+          },
+          {
+            "item": "cobblemon:colbur_berry",
+            "percentage": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "beheeyem-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.6,
+      "condition": {
+        "biomes": [
+          "the_bumblezone:howling_constructs"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "beheeyem",
+      "level": "42-49",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "#the_bumblezone:sempiternal_sanctums"
+        ]
+      }
+    }
+  ]
+}

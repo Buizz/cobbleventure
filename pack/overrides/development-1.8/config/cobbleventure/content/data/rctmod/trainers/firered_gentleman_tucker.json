@@ -1,0 +1,41 @@
+{
+  "name": "신사 터커 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "pikachu",
+      "level": 23,
+      "moveset": [
+        "thunderwave",
+        "quickattack",
+        "doubleteam",
+        "slam"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

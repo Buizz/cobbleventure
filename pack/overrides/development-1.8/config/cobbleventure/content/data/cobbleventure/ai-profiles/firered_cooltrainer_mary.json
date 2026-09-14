@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/firered_cooltrainer_mary",
+  "controller": "cobbleventure",
+  "difficulty": "advanced",
+  "strategy": "balanced",
+  "options": {}
+}

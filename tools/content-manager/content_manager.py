@@ -7673,7 +7673,7 @@ def validate_repository(
     cobblemon_target = os.environ.get("COBBLEVENTURE_COBBLEMON_TARGET", "1.8").strip().lower()
     dependency_lock_name = (
         "dependencies-1.8.lock.json"
-        if cobblemon_target in {"1.8", "1.8.0", "snapshot"}
+        if cobblemon_target in {"1.8", "1.8.0", "1.8.1", "snapshot"}
         else "dependencies.lock.json"
     )
     issues = validate_dependency_lock(
@@ -14366,14 +14366,6 @@ def save_space_connections(root: Path, data: Any) -> list[Issue]:
         )
         for resource_id, path in structure_paths.items()
     }
-    door_labels_by_structure = {
-        resource_id: {
-            anchor["label"] for anchor in _structure_named_anchors(
-                structure_path, {"door"}
-            )
-        }
-        for resource_id, structure_path in structure_paths.items()
-    }
     dungeon_anchor_labels_by_structure = {
         resource_id: {
             anchor["label"] for anchor in _structure_named_anchors(
@@ -14517,12 +14509,12 @@ def save_space_connections(root: Path, data: Any) -> list[Issue]:
             if source_key in normalized_dungeon_assignments or target_key in normalized_dungeon_assignments:
                 _issue(issues, "error", path, edge_path, "던전 입구로 지정한 앵커는 일반 공간 연결선에 사용할 수 없습니다.")
                 continue
-            anchor_catalog = connection_labels_by_structure if kind == "building" else door_labels_by_structure
+            anchor_catalog = connection_labels_by_structure
             source_doors = anchor_catalog.get(node_structures.get(source.get("node"), ""), set())
-            target_catalog = destination_labels_by_structure if kind == "building" else door_labels_by_structure
+            target_catalog = destination_labels_by_structure if kind == "building" else connection_labels_by_structure
             target_doors = target_catalog.get(node_structures.get(target.get("node"), ""), set())
             if source.get("anchor") not in source_doors or target.get("anchor") not in target_doors:
-                message = "출발은 문 또는 접촉 전환 앵커, 도착은 문·접촉 전환·도착점이어야 합니다." if kind == "building" else "연결 양쪽 모두 NBT에 저장된 실제 문 앵커여야 합니다."
+                message = "출발은 문 또는 접촉 전환 앵커, 도착은 문·접촉 전환·도착점이어야 합니다." if kind == "building" else "체육관 연결 양쪽 모두 NBT에 저장된 문 또는 접촉 전환 앵커여야 합니다."
                 _issue(issues, "error", path, edge_path, message)
                 continue
             normalized_connections.append(edge)
@@ -14670,6 +14662,7 @@ def building_settings_payload(
             "dungeon_markers": _structure_dungeon_marker_summary(path),
             "residential": residential,
             "settings": {
+                "terrain_preparation": entry.get("terrain_preparation", "none"),
                 "placement_y_offset": entry.get("placement_y_offset", 0)
                 if isinstance(entry.get("placement_y_offset", 0), int)
                 and not isinstance(entry.get("placement_y_offset", 0), bool) else 0,
@@ -15423,6 +15416,10 @@ def save_building_settings(root: Path, data: Any) -> list[Issue]:
             "citizen_placement_allowed",
             settings.get("random_citizen_eligible", residential),
         ))
+        terrain_preparation = settings.get("terrain_preparation", "none")
+        if terrain_preparation not in ("none", "reserve_plot"):
+            _issue(issues, "error", path, f"{entry_path}.terrain_preparation", "부지 확보 방식을 선택하세요.")
+            continue
         placement_y_offset = settings.get("placement_y_offset", 0)
         if (isinstance(placement_y_offset, bool)
                 or not isinstance(placement_y_offset, int)
@@ -15453,6 +15450,7 @@ def save_building_settings(root: Path, data: Any) -> list[Issue]:
                 "내부 공간 없음 구조물에는 내부공간이나 문 연결을 설정할 수 없습니다.",
             )
         normalized[resource_id] = {
+            "terrain_preparation": terrain_preparation,
             "placement_y_offset": placement_y_offset,
             "structure_category": _configured_structure_category(relative, settings),
             **({"residential_placement": {"enabled": house_enabled, "weight": house_weight, "label": house_label.strip()}}

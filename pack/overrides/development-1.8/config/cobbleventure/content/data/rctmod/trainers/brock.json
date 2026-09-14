@@ -1,0 +1,39 @@
+{
+  "name": "관동 체육관 관장 웅",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "geodude",
+      "level": 12,
+      "moveset": [
+        "tackle",
+        "defensecurl"
+      ]
+    },
+    {
+      "species": "onix",
+      "level": 14,
+      "moveset": [
+        "tackle",
+        "bind",
+        "rocktomb"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

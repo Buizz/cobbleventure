@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/interiors/fossil_laboratory.nbt",
+  "interior": {
+    "id": "fossil_laboratory",
+    "width": 32,
+    "depth": 32,
+    "floor_height": 12,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "id": "door",
+      "label": "door",
+      "type": "door",
+      "position": [
+        14,
+        1,
+        1
+      ],
+      "safe_spawn": [
+        14,
+        1,
+        0
+      ],
+      "door_facing": "north",
+      "safe_side": "north"
+    },
+    {
+      "id": "npc1",
+      "label": "npc1",
+      "type": "npc_position",
+      "position": [
+        18,
+        1,
+        11
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "npc2",
+      "label": "npc2",
+      "type": "npc_position",
+      "position": [
+        21,
+        1,
+        11
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "npc3",
+      "label": "npc3",
+      "type": "npc_position",
+      "position": [
+        10,
+        1,
+        8
+      ],
+      "facing": "north"
+    }
+  ]
+}

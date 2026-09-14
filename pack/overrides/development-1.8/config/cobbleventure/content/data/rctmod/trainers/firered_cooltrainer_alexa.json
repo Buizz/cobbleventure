@@ -1,0 +1,123 @@
+{
+  "name": "엘리트 트레이너 알렉사 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "clefairy",
+      "level": 42,
+      "moveset": [
+        "lightscreen",
+        "cosmicpower",
+        "doubleslap",
+        "encore"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "jigglypuff",
+      "level": 42,
+      "moveset": [
+        "sing",
+        "bodyslam",
+        "rollout",
+        "disable"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "persian",
+      "level": 42,
+      "moveset": [
+        "payday",
+        "feintattack",
+        "bite",
+        "screech"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "dewgong",
+      "level": 42,
+      "moveset": [
+        "sheercold",
+        "takedown",
+        "rest",
+        "aurorabeam"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "chansey",
+      "level": 42,
+      "moveset": [
+        "sing",
+        "eggbomb",
+        "softboiled",
+        "minimize"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 1
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ]
+}

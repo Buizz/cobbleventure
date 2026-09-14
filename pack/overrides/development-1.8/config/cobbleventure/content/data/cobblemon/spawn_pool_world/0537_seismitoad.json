@@ -1,0 +1,425 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "seismitoad-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "maxY": 9,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-2",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "submerged",
+      "anticondition": {
+        "maxY": 9,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 62,
+        "minSkyLight": 0,
+        "neededNearbyBlocks": [
+          "#minecraft:water"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-4",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 62,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "submerged",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-5",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "isRaining": true,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:has_block/mud"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-6",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "submerged",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:has_block/mud"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-7",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-8",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mushroom",
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:has_block/mud"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "seismitoad-9",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "submerged",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:has_block/mud"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-10",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mushroom",
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:has_block/mud"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "seismitoad-11",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 9,
+        "minSkyLight": 0,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-12",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 9,
+        "minSkyLight": 0,
+        "minY": -41,
+        "structures": [
+          "cobblemon:shipwreck_coves/lush_shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "submerged",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_lush"
+        ]
+      }
+    },
+    {
+      "id": "seismitoad-13",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "neededNearbyBlocks": [
+          "#minecraft:water"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "seismitoad-14",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "seismitoad",
+      "level": "20-43",
+      "spawnablePositionType": "submerged"
+    }
+  ]
+}

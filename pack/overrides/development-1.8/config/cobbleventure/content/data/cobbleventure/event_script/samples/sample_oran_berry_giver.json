@@ -1,0 +1,400 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/samples/sample_oran_berry_giver",
+  "source_digest": "d2b4a9c811dd92a2b1786105c3f2d640d6c4e61ca82c48b97a5a2aa5e44bc50d",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/sample/sample_oran_berry_giver/claimed"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "열매는 이미 나눠 줬어. 다음 수확 때 다시 보자!"
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "오늘 수확한 오랭열매야. 모험에 보탬이 될 거야."
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "first/give_item",
+          "op": "command",
+          "command": "give_item",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobblemon:oran_berry"
+              }
+            },
+            {
+              "name": "count",
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 4
+              }
+            },
+            {
+              "name": "notify",
+              "value": null
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": false,
+          "result": "reward",
+          "operation_id": "cobbleventure:event_script/samples/sample_oran_berry_giver/first/give_item",
+          "next": 4,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "reward"
+              },
+              "member": "remaining_count"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "int",
+              "value": 0
+            }
+          },
+          "then": 5,
+          "else": 8
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s2/then/s0",
+          "op": "narrate",
+          "text": {
+            "kind": "literal",
+            "value": "가방에 빈 공간이 없어 보상을 모두 받을 수 없습니다."
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s2/then/s1",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p1/s2/then_end",
+          "op": "jump",
+          "target": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "first/set_claimed",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/sample/sample_oran_berry_giver/claimed"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/samples/sample_oran_berry_giver/first/set_claimed",
+          "next": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 111,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 170,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 174,
+              "line": 6,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 197,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 255,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "first/give_item",
+          "stable_id": "first/give_item",
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 260,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 338,
+              "line": 12,
+              "column": 83
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 343,
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 438,
+              "line": 16,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s2/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 381,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 421,
+              "line": 14,
+              "column": 47
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s2/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 428,
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "offset": 432,
+              "line": 15,
+              "column": 11
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p1/s2/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 373,
+              "line": 13,
+              "column": 35
+            },
+            "end": {
+              "offset": 438,
+              "line": 16,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "first/set_claimed",
+          "stable_id": "first/set_claimed",
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 443,
+              "line": 17,
+              "column": 5
+            },
+            "end": {
+              "offset": 539,
+              "line": 17,
+              "column": 101
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/samples/sample_oran_berry_giver.cves",
+            "start": {
+              "offset": 178,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 543,
+              "line": 18,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

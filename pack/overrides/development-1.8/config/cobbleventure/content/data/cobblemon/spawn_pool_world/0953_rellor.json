@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "rellor-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "rellor",
+      "level": "2-27",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

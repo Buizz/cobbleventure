@@ -1,0 +1,117 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "croconaw-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 3.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "croconaw",
+      "level": "18-41",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "croconaw-2",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 3.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "croconaw",
+      "level": "18-41",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "croconaw-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 3.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "croconaw",
+      "level": "18-41",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "croconaw-4",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 3.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "croconaw",
+      "level": "18-41",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "croconaw-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 3.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "croconaw",
+      "level": "18-41",
+      "spawnablePositionType": "fishing"
+    }
+  ]
+}

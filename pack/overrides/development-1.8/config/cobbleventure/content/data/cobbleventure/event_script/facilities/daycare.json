@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/daycare",
+  "source_digest": "3eaf996b89fe37d30da68239bf928e71ee52aa9edb3d30ef8734fb765af1ccc3",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓몬을 맡기거나 찾아가시겠어요? 원하시면 함께 육성해 드릴게요."
+              },
+              {
+                "language": "en_us",
+                "value": "Would you like to deposit or withdraw a Pokemon? We can train them too."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "op": "command",
+          "command": "open_daycare",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/daycare.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 202,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/daycare.cves",
+            "start": {
+              "offset": 207,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 219,
+              "line": 7,
+              "column": 17
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/daycare.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 223,
+              "line": 8,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

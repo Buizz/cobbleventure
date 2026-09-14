@@ -1,0 +1,184 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "pikachu-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 3.75,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "pikachu",
+      "level": "16-32",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_spooky"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "isThundering": true
+        },
+        "multiplier": 2.0
+      }
+    },
+    {
+      "id": "pikachu-alola-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_beach",
+          "#cobblemon:is_tropical_island"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "pikachu region_bias=alola",
+      "level": "16-32",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "isThundering": true
+        },
+        "multiplier": 5.0
+      }
+    },
+    {
+      "id": "pikachu-cosplay-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 2.3,
+      "condition": {
+        "biomes": [
+          "minecraft:sunflower_plains"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "pikachu cosplay=belle",
+      "level": "22-44",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "pikachu-cosplay-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 2.3,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_savanna"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "pikachu cosplay=libre",
+      "level": "22-44",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "pikachu-cosplay-5",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 2.3,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_jungle"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "pikachu cosplay=phd",
+      "level": "22-44",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "pikachu-cosplay-6",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 2.3,
+      "condition": {
+        "biomes": [
+          "minecraft:cherry_grove"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "pikachu cosplay=pop_star",
+      "level": "22-44",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "pikachu-cosplay-7",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 2.3,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_badlands"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "pikachu cosplay=rock_star",
+      "level": "22-44",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

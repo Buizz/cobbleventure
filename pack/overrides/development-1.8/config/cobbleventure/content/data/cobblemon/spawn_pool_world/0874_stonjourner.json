@@ -1,0 +1,96 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "stonjourner-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_plains"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "stonjourner",
+      "level": "22-47",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "cobblemon:ruins/stonjourner_henge_ruins"
+        ],
+        "timeRange": "dusk"
+      }
+    },
+    {
+      "id": "stonjourner-2",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_plains"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "dusk",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "stonjourner",
+      "level": "22-47",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "cobblemon:ruins/stonjourner_henge_ruins"
+        ]
+      }
+    },
+    {
+      "id": "stonjourner-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 20,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "cobblemon:ruins/stonjourner_henge_ruins"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "stonjourner",
+      "level": "22-47",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "dusk"
+        },
+        "multiplier": 5.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/fossil_scholar",
+  "source_digest": "870abd785546b6610f03690b686a47b529ef8841541defaf829b82cc415c07dc",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "어떤 화석은 하나만으로 복원할 수 있지만, 조각으로 발견되는 화석은 두 종류를 짝지어야 해요. 어떤 조각을 조합하는지에 따라 복원되는 포켓몬도 달라지죠."
+              },
+              {
+                "language": "en_us",
+                "value": "Some fossils can be restored alone, while fossil pieces need to be paired. Different combinations can restore different Pokemon."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/fossil_scholar.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 308,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/fossil_scholar.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 312,
+              "line": 7,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

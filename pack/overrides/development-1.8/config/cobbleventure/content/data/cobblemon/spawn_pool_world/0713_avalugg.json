@@ -1,0 +1,166 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "avalugg-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "avalugg",
+      "level": "37-51",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "avalugg-2",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "avalugg",
+      "level": "37-51",
+      "spawnablePositionType": "surface"
+    },
+    {
+      "id": "avalugg-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "avalugg",
+      "level": "37-51",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "maxLureLevel": 1,
+          "minLureLevel": 0
+        },
+        "multiplier": 0.6
+      }
+    },
+    {
+      "id": "avalugg-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_frozen"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "avalugg",
+      "level": "37-51",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "avalugg-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "avalugg",
+      "level": "37-51",
+      "spawnablePositionType": "fishing",
+      "weightMultiplier": {
+        "condition": {
+          "maxLureLevel": 1,
+          "minLureLevel": 0
+        },
+        "multiplier": 0.6
+      }
+    },
+    {
+      "id": "avalugg-hisuian-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 8,
+      "condition": {
+        "biomes": [
+          "minecraft:frozen_peaks",
+          "minecraft:snowy_slopes"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "avalugg hisuian",
+      "level": "30-60",
+      "context": "grounded"
+    },
+    {
+      "id": "avalugg-hisuian-5",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_snowy_forest"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "avalugg hisuian",
+      "level": "30-60",
+      "context": "grounded"
+    }
+  ]
+}

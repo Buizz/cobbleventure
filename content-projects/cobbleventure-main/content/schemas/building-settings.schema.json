@@ -45,6 +45,10 @@
           "door_routes"
         ],
         "properties": {
+          "terrain_preparation": {
+            "enum": ["none", "reserve_plot"],
+            "default": "none"
+          },
           "placement_y_offset": {
             "type": "integer",
             "minimum": -64,

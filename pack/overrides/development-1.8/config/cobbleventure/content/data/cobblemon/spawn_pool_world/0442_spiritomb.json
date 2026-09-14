@@ -1,0 +1,164 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "spiritomb-1",
+      "presets": [
+        "ancient_city"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 60,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "spiritomb",
+      "level": "24-49",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spiritomb-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 100,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "minY": 48,
+        "structures": [
+          "#cobblemon:ruin"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "spiritomb",
+      "level": "24-49",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spiritomb-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 100,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxY": 10,
+        "minY": -37,
+        "structures": [
+          "#cobblemon:ruins/arch"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "spiritomb",
+      "level": "24-49",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spiritomb-4",
+      "presets": [
+        "trail_ruins"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 100,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "minY": 48,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "spiritomb",
+      "level": "24-49",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spiritomb-5",
+      "presets": [
+        "natural",
+        "desert_pyramid"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 100,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_desert"
+        ],
+        "canSeeSky": false,
+        "minY": 48,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "spiritomb",
+      "level": "24-49",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spiritomb-6",
+      "presets": [
+        "natural",
+        "jungle_pyramid"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 100,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_jungle"
+        ],
+        "canSeeSky": false,
+        "minY": 48,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "spiritomb",
+      "level": "24-49",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spiritomb-7",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "the_bumblezone:howling_constructs"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "spiritomb",
+      "level": "24-49",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "#the_bumblezone:sempiternal_sanctums"
+        ]
+      }
+    }
+  ]
+}

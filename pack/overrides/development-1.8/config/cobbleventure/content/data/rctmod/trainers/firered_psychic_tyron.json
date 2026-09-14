@@ -1,0 +1,60 @@
+{
+  "name": "초능력자 타이론 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "mrmime",
+      "level": 34,
+      "moveset": [
+        "magicalleaf",
+        "encore",
+        "psybeam",
+        "recycle"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    },
+    {
+      "species": "kadabra",
+      "level": 34,
+      "moveset": [
+        "reflect",
+        "recover",
+        "futuresight",
+        "roleplay"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

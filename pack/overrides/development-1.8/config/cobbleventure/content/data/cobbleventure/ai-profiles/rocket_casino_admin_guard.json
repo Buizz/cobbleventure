@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/rocket_casino_admin_guard",
+  "controller": "cobbleventure",
+  "difficulty": "standard",
+  "strategy": "aggressive",
+  "options": {}
+}

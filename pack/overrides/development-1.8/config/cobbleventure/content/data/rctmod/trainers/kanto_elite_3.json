@@ -1,0 +1,206 @@
+{
+  "name": "국화",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": true
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "golurk",
+      "level": 60,
+      "moveset": [
+        "shadowpunch",
+        "hammerarm",
+        "highhorsepower",
+        "icepunch"
+      ],
+      "nature": "adamant",
+      "ability": "ironfist",
+      "gender": "GENDERLESS",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 252,
+        "def": 6
+      },
+      "heldItem": "sitrus_berry",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "spiritomb",
+      "level": 60,
+      "moveset": [
+        "shadowsneak",
+        "darkpulse",
+        "willowisp",
+        "curse"
+      ],
+      "nature": "calm",
+      "ability": "infiltrator",
+      "gender": "FEMALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "def": 252,
+        "spd": 6
+      },
+      "heldItem": "leftovers",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "gholdengo",
+      "level": 60,
+      "moveset": [
+        "makeitrain",
+        "shadowball",
+        "thunderbolt",
+        "nastyplot"
+      ],
+      "nature": "timid",
+      "ability": "goodasgold",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "spa": 252,
+        "spe": 252
+      },
+      "heldItem": "air_balloon",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "blacephalon",
+      "level": 60,
+      "moveset": [
+        "mindblown",
+        "shadowball",
+        "fireblast",
+        "psyshock"
+      ],
+      "nature": "timid",
+      "ability": "beastboost",
+      "gender": "GENDERLESS",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "heldItem": "focus_sash",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "mimikyu",
+      "level": 60,
+      "moveset": [
+        "playrough",
+        "shadowclaw",
+        "shadowsneak",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "ability": "disguise",
+      "gender": "FEMALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 6,
+        "atk": 252,
+        "spe": 252
+      },
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "gengar",
+      "level": 60,
+      "moveset": [
+        "shadowball",
+        "sludgebomb",
+        "focusblast",
+        "icywind"
+      ],
+      "nature": "timid",
+      "ability": "cursedbody",
+      "gender": "FEMALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "heldItem": "gengarite",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 99
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "id": "cobbleventure:battle/league/kanto_elite_2",
+  "enabled": true,
+  "name": {
+    "ko_kr": "시바"
+  },
+  "battle": {
+    "format": "GEN_9_SINGLES",
+    "battle_type": "singles",
+    "ai": {
+      "controller": "cobbleventure",
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "options": {}
+    },
+    "level_mode": "fixed",
+    "rules": {
+      "can_forfeit": true,
+      "max_item_uses": 99
+    },
+    "bag": [
+      {
+        "item": "cobblemon:full_restore",
+        "quantity": 1
+      }
+    ],
+    "mechanics": {
+      "mega_evolution": false,
+      "z_move": false,
+      "dynamax": false,
+      "terastallization": true
+    },
+    "team": [
+      {
+        "species": "cobblemon:breloom",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "jolly",
+        "ability": "technician",
+        "held_item": "cobblemon:focus_sash",
+        "gimmick": null,
+        "moves": [
+          "machpunch",
+          "spore",
+          "bulletseed",
+          "rocktomb"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "attack": 252,
+          "speed": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:annihilape",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "adamant",
+        "ability": "defiant",
+        "held_item": "cobblemon:leftovers",
+        "gimmick": null,
+        "moves": [
+          "ragefist",
+          "drainpunch",
+          "stealthrock",
+          "knockoff"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 252,
+          "special_defense": 116,
+          "defense": 140
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:machamp",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "adamant",
+        "ability": "noguard",
+        "held_item": "cobblemon:assault_vest",
+        "gimmick": null,
+        "moves": [
+          "dynamicpunch",
+          "knockoff",
+          "bulletpunch",
+          "icepunch"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 252,
+          "attack": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:gallade",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "jolly",
+        "ability": "sharpness",
+        "held_item": null,
+        "gimmick": null,
+        "moves": [
+          "psychocut",
+          "sacredsword",
+          "leafblade",
+          "shadowsneak"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "attack": 252,
+          "speed": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:urshifu",
+        "level": 60,
+        "form": null,
+        "aspects": [
+          "rapid_strike-style"
+        ],
+        "gender": "male",
+        "nature": "adamant",
+        "ability": "unseenfist",
+        "held_item": "cobblemon:punching_glove",
+        "gimmick": null,
+        "moves": [
+          "surgingstrikes",
+          "drainpunch",
+          "bulkup",
+          "aquajet"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "speed": 252,
+          "special_attack": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:heracross",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "adamant",
+        "ability": "innerfocus",
+        "held_item": "mega_showdown:heracronite",
+        "gimmick": null,
+        "moves": [
+          "pinmissile",
+          "rockblast",
+          "bulletseed",
+          "closecombat"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 252,
+          "attack": 252,
+          "defense": 6
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      }
+    ],
+    "trainer_id": "cobbleventure:trainer/league/kanto_elite_2"
+  }
+}

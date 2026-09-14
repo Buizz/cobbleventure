@@ -1,0 +1,53 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "keldeo-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 3.3,
+      "condition": {
+        "biomes": [
+          "terralith:sakura_grove",
+          "terralith:sakura_valley"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "keldeo sword_form=ordinary",
+      "level": "60",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "keldeo-1-cobbleventure-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0.3,
+      "condition": {
+        "biomes": [
+          "terralith:sakura_grove",
+          "terralith:sakura_valley"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "keldeo sword_form=resolute",
+      "level": "80",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

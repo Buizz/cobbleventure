@@ -1,0 +1,641 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/gym_leaders/brock",
+  "source_digest": "29678d738709ba590e88b95e50d4bb73b8d053071cf86b60328875e7997a7fe5",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:runtime/npc_instance_defeated"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "넌 재능 있는 트레이너다. 블루시티 체육관에서도 그 실력을 시험해 봐라."
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "왔구나. 나는 회색시티 체육관 관장 웅이다."
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "내 포켓몬에게는 바위처럼 단단한 의지와 근성이 깃들어 있지."
+          },
+          "next": 4,
+          "await": true,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "패배를 각오하고도 도전하는 것이 트레이너의 긍지라면, 네 전력을 보여 봐라!"
+          },
+          "next": 5,
+          "await": true,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/gym_leader/brock"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "result",
+          "operation_id": "cobbleventure:event_script/gym_leaders/brock/challenge/battle",
+          "next": 6,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 7,
+          "else": 15
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/brock/victory/set_instance_defeated",
+          "next": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/gym/kanto/brock/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/brock/victory/set_defeated",
+          "next": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "op": "command",
+          "command": "give_money",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 1400
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/brock/victory/give_money",
+          "next": 10
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "op": "command",
+          "command": "grant_badge",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:badge/kanto/boulder"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/brock/victory/grant_badge",
+          "next": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/set_level_cap",
+          "op": "command",
+          "command": "set_level_cap",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 21
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/brock/victory/set_level_cap",
+          "next": 12
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s4/then/s5",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "너를 얕본 것이 내 패인이군. 훌륭한 승부였다."
+          },
+          "next": 13,
+          "await": true,
+          "resume": 13
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "승리의 증표로 회색배지를 받아라."
+          },
+          "next": 14,
+          "await": true,
+          "resume": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then_end",
+          "op": "jump",
+          "target": 16
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "아직 내 바위 같은 방어를 무너뜨리기엔 힘이 부족하군. 포켓몬과 함께 더 단단해져서 돌아와라."
+          },
+          "next": 16,
+          "await": true,
+          "resume": 16
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 97,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 147,
+              "line": 3,
+              "column": 55
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 151,
+              "line": 4,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 174,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 208,
+              "line": 7,
+              "column": 39
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 213,
+              "line": 8,
+              "column": 5
+            },
+            "end": {
+              "offset": 256,
+              "line": 8,
+              "column": 48
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 261,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 313,
+              "line": 9,
+              "column": 57
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "stable_id": "challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 318,
+              "line": 10,
+              "column": 5
+            },
+            "end": {
+              "offset": 402,
+              "line": 10,
+              "column": 89
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 407,
+              "line": 11,
+              "column": 5
+            },
+            "end": {
+              "offset": 969,
+              "line": 21,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "stable_id": "victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 442,
+              "line": 12,
+              "column": 7
+            },
+            "end": {
+              "offset": 536,
+              "line": 12,
+              "column": 101
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "stable_id": "victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 543,
+              "line": 13,
+              "column": 7
+            },
+            "end": {
+              "offset": 628,
+              "line": 13,
+              "column": 92
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "stable_id": "victory/give_money",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 635,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 674,
+              "line": 14,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "stable_id": "victory/grant_badge",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 681,
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "offset": 753,
+              "line": 15,
+              "column": 79
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/set_level_cap",
+          "stable_id": "victory/set_level_cap",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 760,
+              "line": 16,
+              "column": 7
+            },
+            "end": {
+              "offset": 803,
+              "line": 16,
+              "column": 50
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s4/then/s5",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 810,
+              "line": 17,
+              "column": 7
+            },
+            "end": {
+              "offset": 846,
+              "line": 17,
+              "column": 43
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 853,
+              "line": 18,
+              "column": 7
+            },
+            "end": {
+              "offset": 881,
+              "line": 18,
+              "column": 35
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 434,
+              "line": 11,
+              "column": 32
+            },
+            "end": {
+              "offset": 887,
+              "line": 19,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 901,
+              "line": 20,
+              "column": 7
+            },
+            "end": {
+              "offset": 963,
+              "line": 20,
+              "column": 69
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/brock.cves",
+            "start": {
+              "offset": 155,
+              "line": 6,
+              "column": 3
+            },
+            "end": {
+              "offset": 973,
+              "line": 22,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

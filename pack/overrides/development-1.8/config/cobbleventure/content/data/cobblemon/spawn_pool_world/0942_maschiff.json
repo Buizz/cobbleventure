@@ -1,0 +1,100 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "maschiff-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "maschiff",
+      "level": "9-34",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "maschiff-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "maschiff",
+      "level": "9-34",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "maschiff-3",
+      "presets": [
+        "natural",
+        "pillager_outpost"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 90,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "maschiff",
+      "level": "9-34",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "maschiff-4",
+      "presets": [
+        "natural",
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 90,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "maschiff",
+      "level": "9-34",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

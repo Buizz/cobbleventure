@@ -1,0 +1,72 @@
+{
+  "name": "관동 체육관 관장 독수",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "koffing",
+      "level": 37,
+      "moveset": [
+        "selfdestruct",
+        "sludge",
+        "smokescreen",
+        "toxic"
+      ]
+    },
+    {
+      "species": "muk",
+      "level": 39,
+      "moveset": [
+        "minimize",
+        "sludge",
+        "acidarmor",
+        "toxic"
+      ]
+    },
+    {
+      "species": "koffing",
+      "level": 37,
+      "moveset": [
+        "selfdestruct",
+        "sludge",
+        "smokescreen",
+        "toxic"
+      ]
+    },
+    {
+      "species": "weezing",
+      "level": 43,
+      "moveset": [
+        "tackle",
+        "sludge",
+        "smokescreen",
+        "toxic"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 3
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    },
+    {
+      "item": "cobblemon:full_heal",
+      "quantity": 1
+    }
+  ]
+}

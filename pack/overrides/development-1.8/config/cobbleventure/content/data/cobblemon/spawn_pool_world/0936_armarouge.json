@@ -1,0 +1,91 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "armarouge-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 4,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_nether"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "armarouge",
+      "level": "21-53",
+      "spawnablePositionType": "grounded",
+      "drops": {
+        "amount": 5,
+        "entries": [
+          {
+            "item": "minecraft:blaze_rod",
+            "quantityRange": "0-2"
+          },
+          {
+            "item": "cobblemon:charcoal_stick",
+            "percentage": 5.0
+          },
+          {
+            "item": "cobblemon:auspicious_armor",
+            "percentage": 5.0
+          },
+          {
+            "item": "cobblemon:rawst_berry",
+            "percentage": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "armarouge-2",
+      "presets": [
+        "ruined_portal"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "armarouge",
+      "level": "21-53",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "armarouge-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.4,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "structures": [
+          "#aether:dungeons"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "armarouge",
+      "level": "21-53",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "../../schemas/battle-preset.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:battle/gym_leader/blaine",
+  "enabled": true,
+  "name": { "ko_kr": "관동 체육관 관장 강연", "en_us": "관동 체육관 관장 Blaine" },
+  "battle": {
+    "format": "GEN_9_SINGLES",
+    "battle_type": "singles",
+    "ai": { "controller": "cobbleventure", "difficulty": "advanced", "strategy": "balanced", "options": {} },
+    "level_mode": "fixed",
+    "rules": { "can_forfeit": true, "max_item_uses": 3 },
+    "bag": [{ "item": "cobblemon:hyper_potion", "quantity": 2 }, { "item": "cobblemon:full_heal", "quantity": 1 }],
+    "mechanics": { "mega_evolution": false, "z_move": false, "dynamax": false, "terastallization": false },
+    "team": [
+      { "species": "cobblemon:growlithe", "level": 42, "gender": "random", "moves": ["bite", "roar", "takedown", "fireblast"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false },
+      { "species": "cobblemon:ponyta", "level": 40, "gender": "random", "moves": ["stomp", "bounce", "firespin", "fireblast"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false },
+      { "species": "cobblemon:rapidash", "level": 42, "gender": "random", "moves": ["stomp", "bounce", "firespin", "fireblast"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false },
+      { "species": "cobblemon:arcanine", "level": 47, "gender": "random", "moves": ["bite", "roar", "takedown", "fireblast"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false }
+    ],
+    "trainer_id": "cobbleventure:npc/gym_leader/blaine"
+  }
+}

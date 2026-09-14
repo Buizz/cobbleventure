@@ -1,0 +1,94 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "zoroark-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.96,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "zoroark",
+      "level": "30-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "moonPhase": 4
+        },
+        "multiplier": 5.0
+      }
+    },
+    {
+      "id": "zoroark-hisuian-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.96,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_snowy_taiga"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "zoroark hisuian",
+      "level": "30-51",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "moonPhase": 4
+        },
+        "multiplier": 5.0
+      }
+    },
+    {
+      "id": "zoroark-hisuian-2",
+      "presets": [
+        "natural",
+        "nether_fossil"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 16,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_nether"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "zoroark hisuian",
+      "level": "30-51",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "aegislash-1",
+      "presets": [
+        "natural",
+        "nether_structures"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.8,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_nether"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "aegislash",
+      "level": "40-50",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "aegislash-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.48,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#cobblemon:ruin"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "aegislash",
+      "level": "40-50",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "aegislash-3",
+      "presets": [
+        "stronghold"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "aegislash",
+      "level": "40-50",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "aegislash-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.048,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "structures": [
+          "#aether:dungeons"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "aegislash",
+      "level": "40-50",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

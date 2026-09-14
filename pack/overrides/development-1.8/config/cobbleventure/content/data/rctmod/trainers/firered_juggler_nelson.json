@@ -1,0 +1,98 @@
+{
+  "name": "저글러 넬슨 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "drowzee",
+      "level": 41,
+      "moveset": [
+        "meditate",
+        "psychic",
+        "psychup",
+        "swagger"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      }
+    },
+    {
+      "species": "hypno",
+      "level": 41,
+      "moveset": [
+        "headbutt",
+        "poisongas",
+        "meditate",
+        "psychic"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      }
+    },
+    {
+      "species": "kadabra",
+      "level": 41,
+      "moveset": [
+        "recover",
+        "futuresight",
+        "roleplay",
+        "psychic"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      }
+    },
+    {
+      "species": "kadabra",
+      "level": 41,
+      "moveset": [
+        "recover",
+        "futuresight",
+        "roleplay",
+        "psychic"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

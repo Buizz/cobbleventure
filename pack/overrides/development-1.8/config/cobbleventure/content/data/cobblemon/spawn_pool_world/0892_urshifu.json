@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "urshifu-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 3.5,
+      "condition": {
+        "biomes": [
+          "minecraft:cherry_grove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "urshifu",
+      "level": "60-80",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

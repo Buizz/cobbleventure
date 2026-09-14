@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "cobalion-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 1.5,
+      "condition": {
+        "biomes": [
+          "minecraft:windswept_forest"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "cobalion",
+      "level": "50-70",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

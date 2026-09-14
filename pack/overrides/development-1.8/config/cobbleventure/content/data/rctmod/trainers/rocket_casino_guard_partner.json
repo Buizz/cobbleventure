@@ -1,0 +1,41 @@
+{
+  "name": "카지노 지하 경비 지원조 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "zubat",
+      "level": 26,
+      "moveset": [
+        "astonish",
+        "bite",
+        "supersonic",
+        "absorb"
+      ]
+    },
+    {
+      "species": "ekans",
+      "level": 26,
+      "moveset": [
+        "bite",
+        "poisonsting",
+        "glare",
+        "wrap"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "sizzlipede-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_badlands",
+          "#cobblemon:is_volcanic"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "sizzlipede",
+      "level": "6-31",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "sizzlipede-2",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_basalt"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "sizzlipede",
+      "level": "6-31",
+      "spawnablePositionType": "grounded",
+      "drops": {
+        "amount": 2,
+        "entries": [
+          {
+            "item": "minecraft:blaze_powder",
+            "percentage": 5.0
+          },
+          {
+            "item": "cobblemon:charti_berry",
+            "percentage": 2.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "sizzlipede-3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_wasteland"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "sizzlipede",
+      "level": "6-31",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

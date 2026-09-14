@@ -1058,6 +1058,7 @@
                   <header><div><strong>월드 배치 높이</strong><small>NBT의 Y=0을 기준으로 실제 배치 위치를 위아래로 조정합니다.</small></div></header>
                   <div class="form-grid compact-grid">
                     <label><span>Y 보정값</span><input id="building-placement-y-offset" type="number" min="-64" max="64" step="1" value="0"></label>
+                    <label><span>월드 오브젝트 부지 보정</span><select id="building-terrain-preparation"><option value="none">진입도로 높이 기준</option><option value="reserve_plot">진입도로 높이 + 부지 확보</option></select><small>부지 확보는 건물 주변 2칸을 정리하고 바깥 8칸을 기존 지형에 연결합니다.</small></label>
                   </div>
                   <small>0은 보정 없음, 1은 한 칸 위, -1은 한 칸 아래입니다. NBT 종류별 자동 보정은 적용하지 않습니다.</small>
                 </section>

@@ -1,0 +1,43 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "burmy-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2.2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "burmy bagworm_cloak=trash",
+      "level": "7-19",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "burmy-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "burmy bagworm_cloak=trash",
+      "level": "5-19",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

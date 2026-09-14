@@ -1,0 +1,304 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "slowpoke-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_beach"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "slowpoke",
+      "level": "7-32",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "slowpoke-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_river"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "slowpoke",
+      "level": "7-32",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ]
+      }
+    },
+    {
+      "id": "slowpoke-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_beach"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "slowpoke",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "slowpoke-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "slowpoke",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "slowpoke-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_beach"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "slowpoke",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "slowpoke-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "slowpoke",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ]
+      },
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "slowpoke-galarian-7",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5.4,
+      "condition": {
+        "biomes": [
+          "minecraft:mushroom_fields",
+          "#cobblemon:is_tropical_island"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "neededNearbyBlocks": [
+          "minecraft:water"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "slowpoke galarian",
+      "level": "7-32",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "slowpoke-galarian-8",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "minecraft:mushroom_fields",
+          "#cobblemon:is_tropical_island"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "slowpoke galarian",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "slowpoke-galarian-9",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "minecraft:mushroom_fields",
+          "#cobblemon:is_tropical_island"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "slowpoke galarian",
+      "level": "7-32",
+      "spawnablePositionType": "fishing",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "maxLureLevel": 2,
+            "minLureLevel": 2
+          },
+          "multiplier": 3.0
+        },
+        {
+          "condition": {
+            "minLureLevel": 3
+          },
+          "multiplier": 5.0
+        }
+      ]
+    }
+  ]
+}

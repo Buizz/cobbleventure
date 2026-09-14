@@ -1,0 +1,179 @@
+{
+  "$schema": "../../schemas/settlement.schema.json",
+  "schema_version": 3,
+  "id": "cobbleventure:settlement/fuchsia_city",
+  "enabled": true,
+  "display_name": {
+    "ko_kr": "연분홍시티",
+    "en_us": "Fuchsia City"
+  },
+  "region": "cobbleventure:generation_1/fuchsia",
+  "dimension": "cobbleventure:generation_1",
+  "music_track": "kanto.cerulean_city",
+  "town_radius_cells": 5,
+  "bounds": {
+    "min_x": -160,
+    "min_z": -160,
+    "max_x": 160,
+    "max_z": 160
+  },
+  "center": {
+    "x": 0,
+    "y": 69,
+    "z": 0
+  },
+  "anchors": {
+    "town_square": {
+      "x": 0,
+      "y": 69,
+      "z": 0
+    },
+    "special_district": {
+      "x": -80,
+      "y": 69,
+      "z": 0
+    },
+    "gym_building": {
+      "x": 76,
+      "y": 69,
+      "z": -61
+    }
+  },
+  "biome_layout": {
+    "arrangement": "organic_patches",
+    "transition_width": 10,
+    "pokemon_biome_set": "cobbleventure:biome_set/starter_region",
+    "zones": [
+      {
+        "id": "fuchsia_safari",
+        "biome": "minecraft:jungle",
+        "size_blocks": 280,
+        "placement": "center",
+        "weight": 5
+      }
+    ],
+    "boundary": {
+      "profile": "cobbleventure:boundary/dense_tree_line",
+      "width": 12,
+      "wall_height": 8,
+      "wall_thickness": 4
+    }
+  },
+  "connections": [],
+  "structure_profile": {
+    "road_layout_template": "cross",
+    "structure": "bca:village/default_mid",
+    "gym_theme": "poison",
+    "commercial_center": "pokemart",
+    "required_facilities": {
+      "village_hub": "cobbleventure:fuchsia_city/village_hub"
+    },
+    "special_district": {
+      "enabled": false,
+      "anchor": "special_district",
+      "placement_mode": "manual",
+      "footprint": {
+        "width": 8,
+        "depth": 8
+      },
+      "clearance": 6,
+      "building": {
+        "enabled": false,
+        "structure": ""
+      }
+    },
+    "gym": {
+      "enabled": true,
+      "gym_id": "cobbleventure:gym/fuchsia",
+      "structure": "cobbleventure:gyms/base_gym",
+      "theme": "poison",
+      "anchor": "gym_building"
+    },
+    "facility_placements": [
+      {
+        "id": "gym_building",
+        "mode": "direct_template",
+        "structure": "cobbleventure:gyms/base_gym",
+        "anchor": "gym_building"
+      }
+    ],
+    "pokemon_center_enabled": true,
+    "shop_configuration": {
+      "catalog_id": "cobbleventure:shop_catalog/pokemart_default",
+      "vendor_units": [
+        "bca:pokemart_shopkeeper"
+      ],
+      "assignments": [
+        {
+          "slot_id": "counter",
+          "vendor_unit": "bca:pokemart_shopkeeper"
+        }
+      ]
+    },
+    "civic_facilities_explicit": true,
+    "layout_shape": "branching",
+    "road_profile": {
+      "width": 5,
+      "material": "grass_path"
+    },
+    "generation_profile": {
+      "seed": 523463074,
+      "depth": 4,
+      "residential_buildings_enabled": true,
+      "basic_buildings": [
+        "cobbleventure:placeholder/basic_building_1",
+        "cobbleventure:placeholder/basic_building_2",
+        "cobbleventure:placeholder/basic_building_3"
+      ],
+      "building_density": "sparse",
+      "house_palette": {
+        "bases": [
+          "one_story"
+        ],
+        "roofs": [
+          "gable"
+        ],
+        "roof_colors": [
+          "red",
+          "orange"
+        ]
+      }
+    },
+    "facility_requirements": []
+  },
+  "npc_placement": {
+    "auto_place_npcs": false,
+    "trainer_population": {
+      "enabled": false,
+      "max_active": 16,
+      "use_biome_defaults": true,
+      "direct_trainers": [],
+      "placement_areas": [
+        "indoor",
+        "outdoor"
+      ]
+    },
+    "max_ambient_npcs": 14,
+    "default_wander_radius": 8,
+    "trainer_slots": [],
+    "zones": [
+      {
+        "id": "town_square",
+        "bounds": {
+          "min_x": -24,
+          "min_z": -24,
+          "max_x": 24,
+          "max_z": 24
+        },
+        "max_npcs": 8,
+        "tags": [
+          "ambient",
+          "resident"
+        ]
+      }
+    ]
+  },
+  "load_order": 9,
+  "town_footprint_shape": "five_up",
+  "settlement_flags": []
+}

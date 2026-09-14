@@ -150,6 +150,19 @@ final class WorldStructureSystem {
         int floorY = CobbleventureBootstrap.nativeTerrainColumn(
             world, heightReference.x(), heightReference.z()
         ).groundY();
+        // All centered world objects use their entrance road as the elevation
+        // datum, just like road-aligned town facilities. Preserve X/Z and rotation.
+        if (configured.placementAnchor().equals("center")) {
+            var entrance = BuildingTerrainPlacement.entrance(configured.structure(), template, rotation);
+            BlockPos horizontalOrigin = rotatedTemplateOrigin(center.x() - rotatedSize.getX()/2, 0,
+                center.z() - rotatedSize.getZ()/2, template.getSize().getX(), template.getSize().getZ(), rotation);
+            var reference = BuildingTerrainPlacement.roadReference(world, configured.id(),
+                entrance == null ? new BlockPos(center.x(), 0, center.z()) : horizontalOrigin.offset(entrance.offset()));
+            if (reference != null) {
+                floorY = CobbleventureBootstrap.nativeTerrainColumn(world, reference.x(), reference.z()).groundY()
+                    - (entrance == null ? 0 : entrance.floorOffset());
+            }
+        }
         BlockPos origin;
         if (configured.placementAnchor().equals("road_anchor")) {
             if (entranceAnchor == null) {
@@ -171,11 +184,10 @@ final class WorldStructureSystem {
                         + configured.id() + " (" + configured.structure() + ", door)"
                 );
             }
-            // Door metadata points one block above the authored foundation. Only X/Z
-            // are alignment coordinates; lowering the origin by door Y buries the yard.
+            var datum = BuildingTerrainPlacement.entrance(configured.structure(), template, rotation);
             origin = new BlockPos(
                 placementPoint.x() - entranceAnchor.getX(),
-                floorY,
+                floorY - (datum == null ? 0 : datum.floorOffset()),
                 placementPoint.z() - entranceAnchor.getZ()
             );
         } else {
@@ -189,6 +201,10 @@ final class WorldStructureSystem {
         BlockPos marker = new BlockPos(
             center.x(), world.grid().origin().y() - 18, center.z()
         );
+        var plotEntrance = BuildingTerrainPlacement.entrance(configured.structure(), template, rotation);
+        BuildingTerrainPlacement.prepare(level, world, configured.structure(), template, origin, rotation,
+            origin.getY() + (plotEntrance == null ? 0 : plotEntrance.floorOffset()),
+            !level.getBlockState(marker).is(Blocks.RESPAWN_ANCHOR));
         if (!level.getBlockState(marker).is(Blocks.RESPAWN_ANCHOR)) {
             if (roadPoint != null) {
                 layAccessRoad(level, world, roadPoint, placementPoint, floorY);

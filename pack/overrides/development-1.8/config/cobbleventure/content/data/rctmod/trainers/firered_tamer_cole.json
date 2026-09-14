@@ -1,0 +1,60 @@
+{
+  "name": "포켓몬 조련사 콜 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "arbok",
+      "level": 39,
+      "moveset": [
+        "bite",
+        "glare",
+        "screech",
+        "acid"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 4,
+        "atk": 4,
+        "def": 4,
+        "spa": 4,
+        "spd": 4,
+        "spe": 4
+      }
+    },
+    {
+      "species": "tauros",
+      "level": 39,
+      "moveset": [
+        "scaryface",
+        "pursuit",
+        "swagger",
+        "rest"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 4,
+        "atk": 4,
+        "def": 4,
+        "spa": 4,
+        "spd": 4,
+        "spe": 4
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

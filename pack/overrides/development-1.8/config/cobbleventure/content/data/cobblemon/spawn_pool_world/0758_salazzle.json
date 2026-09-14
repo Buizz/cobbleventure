@@ -1,0 +1,98 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "salazzle-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_volcanic"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "salazzle",
+      "level": "33-48",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "salazzle-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_badlands",
+          "#cobblemon:is_mountain"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "neededNearbyBlocks": [
+          "minecraft:lava"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "salazzle",
+      "level": "33-48",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "salazzle-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_basalt"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "salazzle",
+      "level": "33-48",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "salazzle-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.06,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_desert"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "salazzle",
+      "level": "33-48",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

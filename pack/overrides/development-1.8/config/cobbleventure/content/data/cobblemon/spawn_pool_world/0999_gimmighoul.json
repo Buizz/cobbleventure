@@ -1,0 +1,143 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "gimmighoul-roaming-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 60,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "minY": 48,
+        "structures": [
+          "#cobblemon:ruin"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "gimmighoul roaming",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "gimmighoul-roaming-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 100,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxY": 10,
+        "minY": -37,
+        "structures": [
+          "#cobblemon:ruins/arch"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "gimmighoul roaming",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "gimmighoul-roaming-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "structures": [
+          "#aether:dungeons"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "gimmighoul roaming",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "gimmighoul-chest-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 60,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "minY": 48,
+        "structures": [
+          "#cobblemon:ruin"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "gimmighoul chest",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "gimmighoul-chest-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 100,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxY": 10,
+        "minY": -37,
+        "structures": [
+          "#cobblemon:ruins/arch"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "gimmighoul chest",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "gimmighoul-chest-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "structures": [
+          "#aether:dungeons"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "gimmighoul chest",
+      "level": "5-30",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

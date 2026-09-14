@@ -1,0 +1,641 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/gym_leaders/erika",
+  "source_digest": "765b57e2f1aedb7de3f89ba9f08d9b7a4baac983994a13a2d04aa9b296a8b15e",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:runtime/npc_instance_defeated"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "포켓몬과 자연을 아끼는 마음을 잊지 마세요. 당신의 여행에도 아름다운 꽃이 피길 바랄게요."
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "어머... 잠깐 졸고 있었나 봐요."
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "저는 무지개시티 체육관의 민화. 꽃꽂이와 풀타입 포켓몬을 좋아한답니다."
+          },
+          "next": 4,
+          "await": true,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "강한 트레이너라고 들었어요. 그럼 조용히 시작해 볼까요?"
+          },
+          "next": 5,
+          "await": true,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/gym_leader/erika"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "result",
+          "operation_id": "cobbleventure:event_script/gym_leaders/erika/challenge/battle",
+          "next": 6,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 7,
+          "else": 15
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/erika/victory/set_instance_defeated",
+          "next": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/gym/kanto/erika/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/erika/victory/set_defeated",
+          "next": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "op": "command",
+          "command": "give_money",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 2900
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/erika/victory/give_money",
+          "next": 10
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "op": "command",
+          "command": "grant_badge",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:badge/kanto/rainbow"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/erika/victory/grant_badge",
+          "next": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/set_level_cap",
+          "op": "command",
+          "command": "set_level_cap",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 43
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/gym_leaders/erika/victory/set_level_cap",
+          "next": 12
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s4/then/s5",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "어머, 제가 졌군요. 아주 훌륭한 승부였어요."
+          },
+          "next": 13,
+          "await": true,
+          "resume": 13
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "당신의 실력에 어울리는 무지개배지를 드릴게요."
+          },
+          "next": 14,
+          "await": true,
+          "resume": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then_end",
+          "op": "jump",
+          "target": 16
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "풀은 부드러워 보여도 뿌리가 깊답니다. 포켓몬을 더 정성껏 돌본 뒤 다시 오세요."
+          },
+          "next": 16,
+          "await": true,
+          "resume": 16
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 97,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 157,
+              "line": 3,
+              "column": 65
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 161,
+              "line": 4,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 183,
+              "line": 6,
+              "column": 5
+            },
+            "end": {
+              "offset": 212,
+              "line": 6,
+              "column": 34
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 217,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 266,
+              "line": 7,
+              "column": 54
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p1/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 271,
+              "line": 8,
+              "column": 5
+            },
+            "end": {
+              "offset": 312,
+              "line": 8,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "challenge/battle",
+          "stable_id": "challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 317,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 401,
+              "line": 9,
+              "column": 89
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 406,
+              "line": 10,
+              "column": 5
+            },
+            "end": {
+              "offset": 967,
+              "line": 20,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_instance_defeated",
+          "stable_id": "victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 441,
+              "line": 11,
+              "column": 7
+            },
+            "end": {
+              "offset": 535,
+              "line": 11,
+              "column": 101
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "victory/set_defeated",
+          "stable_id": "victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 542,
+              "line": 12,
+              "column": 7
+            },
+            "end": {
+              "offset": 627,
+              "line": 12,
+              "column": 92
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "victory/give_money",
+          "stable_id": "victory/give_money",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 634,
+              "line": 13,
+              "column": 7
+            },
+            "end": {
+              "offset": 673,
+              "line": 13,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "victory/grant_badge",
+          "stable_id": "victory/grant_badge",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 680,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 752,
+              "line": 14,
+              "column": 79
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "victory/set_level_cap",
+          "stable_id": "victory/set_level_cap",
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 759,
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "offset": 802,
+              "line": 15,
+              "column": 50
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p1/s4/then/s5",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 809,
+              "line": 16,
+              "column": 7
+            },
+            "end": {
+              "offset": 844,
+              "line": 16,
+              "column": 42
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p1/s4/then/s6",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 851,
+              "line": 17,
+              "column": 7
+            },
+            "end": {
+              "offset": 886,
+              "line": 17,
+              "column": 42
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p1/s4/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 433,
+              "line": 10,
+              "column": 32
+            },
+            "end": {
+              "offset": 892,
+              "line": 18,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p1/s4/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 906,
+              "line": 19,
+              "column": 7
+            },
+            "end": {
+              "offset": 961,
+              "line": 19,
+              "column": 62
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/gym_leaders/erika.cves",
+            "start": {
+              "offset": 164,
+              "line": 5,
+              "column": 3
+            },
+            "end": {
+              "offset": 971,
+              "line": 21,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

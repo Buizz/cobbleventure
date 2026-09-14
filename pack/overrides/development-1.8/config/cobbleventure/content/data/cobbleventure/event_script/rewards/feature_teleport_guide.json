@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/rewards/feature_teleport_guide",
+  "source_digest": "019880a22116b6c68e24566894ad8403074ba891434c0f9118868e881956d214",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/rewards/feature/settlement_teleport"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "순간이동으로 갈 수 있는 곳은 네가 직접 방문해 기억한 마을뿐이야."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "달맞이산을 넘어오느라 고생했구나. 집으로 돌아가고 싶을 때 쓸 수 있도록 순간이동을 가르쳐 줄게."
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/feature",
+          "op": "command",
+          "command": "unlock_feature",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "settlement_teleport"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/rewards/feature_teleport_guide/grant/feature",
+          "next": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/rewards/feature/settlement_teleport"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/rewards/feature_teleport_guide/grant/state",
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이제 지도에서 네가 방문한 마을을 골라 순간이동할 수 있어."
+              }
+            ]
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_teleport_guide.cves",
+            "start": {
+              "offset": 108,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 176,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_teleport_guide.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 180,
+              "line": 6,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_teleport_guide.cves",
+            "start": {
+              "offset": 203,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 288,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/feature",
+          "stable_id": "grant/feature",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_teleport_guide.cves",
+            "start": {
+              "offset": 293,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 346,
+              "line": 12,
+              "column": 58
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "stable_id": "grant/state",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_teleport_guide.cves",
+            "start": {
+              "offset": 351,
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 438,
+              "line": 13,
+              "column": 92
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_teleport_guide.cves",
+            "start": {
+              "offset": 443,
+              "line": 14,
+              "column": 5
+            },
+            "end": {
+              "offset": 507,
+              "line": 16,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_teleport_guide.cves",
+            "start": {
+              "offset": 184,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 511,
+              "line": 17,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

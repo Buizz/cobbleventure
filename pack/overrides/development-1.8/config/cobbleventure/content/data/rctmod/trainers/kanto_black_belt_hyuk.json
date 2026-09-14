@@ -1,0 +1,51 @@
+{
+  "name": "태권왕 혁 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "primeape",
+      "level": 41,
+      "moveset": [
+        "karatechop",
+        "seismictoss",
+        "focusenergy",
+        "thrash"
+      ]
+    },
+    {
+      "species": "machoke",
+      "level": 42,
+      "moveset": [
+        "lowsweep",
+        "seismictoss",
+        "knockoff",
+        "strength"
+      ]
+    },
+    {
+      "species": "hitmonlee",
+      "level": 42,
+      "moveset": [
+        "rollingkick",
+        "jumpkick",
+        "focusenergy",
+        "brickbreak"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

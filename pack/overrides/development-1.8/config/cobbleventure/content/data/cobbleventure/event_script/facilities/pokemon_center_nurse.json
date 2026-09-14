@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/pokemon_center_nurse",
+  "source_digest": "51aa65137c7f97e1564cc9f6dbc9031d502ebd9eb5d313e378e61fba54d7f57b",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "많이 힘드셨군요. 포켓몬들을 치료해 드릴게요."
+              },
+              {
+                "language": "en_us",
+                "value": "You have been through a lot. Let me heal your Pokémon."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "healing/use_machine",
+          "op": "command",
+          "command": "heal_party",
+          "arguments": [],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "healing",
+          "next": 2,
+          "resume": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/s2",
+          "op": "branch",
+          "condition": {
+            "kind": "member",
+            "target": {
+              "kind": "name",
+              "name": "healing"
+            },
+            "member": "healed"
+          },
+          "then": 3,
+          "else": 5
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s2/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓몬들이 모두 건강해졌습니다. 다시 힘내세요!"
+              },
+              {
+                "language": "en_us",
+                "value": "Your Pokémon are fully healed. We hope to see you again!"
+              }
+            ]
+          },
+          "next": 4,
+          "await": true,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p0/s2/then_end",
+          "op": "jump",
+          "target": 9
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s2/else/s0",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "healing"
+              },
+              "member": "failure_reason"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "healing_machine_not_found"
+            }
+          },
+          "then": 6,
+          "else": 8
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/s2/else/s0/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "근처에서 사용할 수 있는 치료기를 찾을 수 없어요."
+              },
+              {
+                "language": "en_us",
+                "value": "I cannot find an available healing machine nearby."
+              }
+            ]
+          },
+          "next": 7,
+          "await": true,
+          "resume": 7
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p0/s2/else/s0/then_end",
+          "op": "jump",
+          "target": 9
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p0/s2/else/s0/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓몬들이 이미 건강하거나 치료기가 사용 중이에요."
+              },
+              {
+                "language": "en_us",
+                "value": "Your Pokémon are already healthy, or the healing machine is busy."
+              }
+            ]
+          },
+          "next": 9,
+          "await": true,
+          "resume": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 174,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "healing/use_machine",
+          "stable_id": "healing/use_machine",
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 179,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 231,
+              "line": 7,
+              "column": 57
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 236,
+              "line": 8,
+              "column": 5
+            },
+            "end": {
+              "offset": 811,
+              "line": 25,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s2/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 262,
+              "line": 9,
+              "column": 7
+            },
+            "end": {
+              "offset": 397,
+              "line": 12,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p0/s2/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 254,
+              "line": 8,
+              "column": 23
+            },
+            "end": {
+              "offset": 403,
+              "line": 13,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s2/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 417,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 805,
+              "line": 24,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/s2/else/s0/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 484,
+              "line": 15,
+              "column": 9
+            },
+            "end": {
+              "offset": 621,
+              "line": 18,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p0/s2/else/s0/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 474,
+              "line": 14,
+              "column": 64
+            },
+            "end": {
+              "offset": 629,
+              "line": 19,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p0/s2/else/s0/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 645,
+              "line": 20,
+              "column": 9
+            },
+            "end": {
+              "offset": 797,
+              "line": 23,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemon_center_nurse.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 815,
+              "line": 26,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

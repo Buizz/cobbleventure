@@ -1,0 +1,2182 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/gacha_ticket_vendor",
+  "source_digest": "64fd5e40b5a8ce349535243cd6ac6518b224e780c3f6b902a992861877b991e5",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "어서 오세요. 카지노 칩을 모든 카지노에서 쓸 수 있는 종류별 공통 가챠 티켓으로 교환해 드립니다."
+              },
+              {
+                "language": "en_us",
+                "value": "Welcome. I exchange casino chips for shared gacha tickets usable at every casino."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "has_item"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure_casino:coin_case"
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "int",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "then": 2,
+          "else": 51
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/s1/then/s0",
+          "op": "choice",
+          "prompt": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "어떤 티켓이 필요하신가요?"
+              },
+              {
+                "language": "en_us",
+                "value": "Which ticket do you need?"
+              }
+            ]
+          },
+          "result": null,
+          "options": [
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "포켓몬 공통 티켓"
+                  },
+                  {
+                    "language": "en_us",
+                    "value": "Shared Pokemon Ticket"
+                  }
+                ]
+              },
+              "target": 3
+            },
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "아이템 공통 티켓"
+                  },
+                  {
+                    "language": "en_us",
+                    "value": "Shared Item Ticket"
+                  }
+                ]
+              },
+              "target": 18
+            },
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "기술머신 공통 티켓"
+                  },
+                  {
+                    "language": "en_us",
+                    "value": "Shared TM Ticket"
+                  }
+                ]
+              },
+              "target": 33
+            },
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "그만두기"
+                  },
+                  {
+                    "language": "en_us",
+                    "value": "Cancel"
+                  }
+                ]
+              },
+              "target": 48
+            }
+          ],
+          "await": true
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0",
+          "op": "let",
+          "name": "pokemon_price",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "gacha_ticket_price"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:starter_gacha"
+                }
+              }
+            ]
+          },
+          "next": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s1",
+          "op": "let",
+          "name": "pokemon_balance",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "casino_balance"
+            },
+            "arguments": []
+          },
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s2",
+          "op": "let",
+          "name": "pokemon_min",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "gacha_ticket_purchase_min"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:starter_gacha"
+                }
+              }
+            ]
+          },
+          "next": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s3",
+          "op": "let",
+          "name": "pokemon_max",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "min_int"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "call",
+                  "callee": {
+                    "kind": "name",
+                    "name": "gacha_ticket_purchase_max"
+                  },
+                  "arguments": [
+                    {
+                      "name": null,
+                      "value": {
+                        "kind": "literal",
+                        "type": "string",
+                        "value": "cobbleventure:starter_gacha"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "call",
+                  "callee": {
+                    "kind": "name",
+                    "name": "floor_div"
+                  },
+                  "arguments": [
+                    {
+                      "name": null,
+                      "value": {
+                        "kind": "name",
+                        "name": "pokemon_balance"
+                      }
+                    },
+                    {
+                      "name": null,
+                      "value": {
+                        "kind": "name",
+                        "name": "pokemon_price"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "next": 7
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">=",
+            "left": {
+              "kind": "name",
+              "name": "pokemon_max"
+            },
+            "right": {
+              "kind": "name",
+              "name": "pokemon_min"
+            }
+          },
+          "then": 8,
+          "else": 16
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓몬 티켓은 1장당 ${pokemon_price}칩입니다. 구매할 수량을 입력해 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "Pokemon tickets cost ${pokemon_price} chips each. Enter the quantity."
+              }
+            ]
+          },
+          "next": 9,
+          "await": true,
+          "resume": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "pokemon/amount",
+          "op": "command",
+          "command": "number_input",
+          "arguments": [],
+          "properties": [
+            {
+              "name": "min",
+              "value": {
+                "kind": "name",
+                "name": "pokemon_min"
+              }
+            },
+            {
+              "name": "max",
+              "value": {
+                "kind": "name",
+                "name": "pokemon_max"
+              }
+            },
+            {
+              "name": "current",
+              "value": {
+                "kind": "name",
+                "name": "pokemon_balance"
+              }
+            },
+            {
+              "name": "unit_price",
+              "value": {
+                "kind": "name",
+                "name": "pokemon_price"
+              }
+            }
+          ],
+          "await": true,
+          "await_explicit": true,
+          "result": "amount",
+          "next": 10,
+          "resume": 10
+        },
+        {
+          "address": 10,
+          "instruction_id": "pokemon/buy",
+          "op": "command",
+          "command": "server_command",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cvgacha ticket buy cobbleventure:starter_gacha"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "amount"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": "bought",
+          "next": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s3",
+          "op": "branch",
+          "condition": {
+            "kind": "name",
+            "name": "bought"
+          },
+          "then": 12,
+          "else": 14
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s3/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓몬 가챠 티켓 ${amount}장을 가방에 넣어 드렸습니다."
+              },
+              {
+                "language": "en_us",
+                "value": "${amount} Pokemon tickets are now in your bag."
+              }
+            ]
+          },
+          "next": 13,
+          "await": true,
+          "resume": 13
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s3/then_end",
+          "op": "jump",
+          "target": 15
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s3/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "교환하지 못했습니다. 칩 잔액과 구매 범위를 확인해 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "The exchange failed. Check your balance and quantity."
+              }
+            ]
+          },
+          "next": 15,
+          "await": true,
+          "resume": 15
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then_end",
+          "op": "jump",
+          "target": 17
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "포켓몬 티켓을 구매할 카지노 칩이 부족합니다. 1장 가격은 ${pokemon_price}칩입니다."
+              },
+              {
+                "language": "en_us",
+                "value": "You do not have enough casino chips. One Pokemon ticket costs ${pokemon_price} chips."
+              }
+            ]
+          },
+          "next": 17,
+          "await": true,
+          "resume": 17
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p0/s1/then/s0/option0_end",
+          "op": "jump",
+          "target": 50
+        },
+        {
+          "address": 18,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s0",
+          "op": "let",
+          "name": "item_price",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "gacha_ticket_price"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:item_gacha"
+                }
+              }
+            ]
+          },
+          "next": 19
+        },
+        {
+          "address": 19,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s1",
+          "op": "let",
+          "name": "item_balance",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "casino_balance"
+            },
+            "arguments": []
+          },
+          "next": 20
+        },
+        {
+          "address": 20,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s2",
+          "op": "let",
+          "name": "item_min",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "gacha_ticket_purchase_min"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:item_gacha"
+                }
+              }
+            ]
+          },
+          "next": 21
+        },
+        {
+          "address": 21,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s3",
+          "op": "let",
+          "name": "item_max",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "min_int"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "call",
+                  "callee": {
+                    "kind": "name",
+                    "name": "gacha_ticket_purchase_max"
+                  },
+                  "arguments": [
+                    {
+                      "name": null,
+                      "value": {
+                        "kind": "literal",
+                        "type": "string",
+                        "value": "cobbleventure:item_gacha"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "call",
+                  "callee": {
+                    "kind": "name",
+                    "name": "floor_div"
+                  },
+                  "arguments": [
+                    {
+                      "name": null,
+                      "value": {
+                        "kind": "name",
+                        "name": "item_balance"
+                      }
+                    },
+                    {
+                      "name": null,
+                      "value": {
+                        "kind": "name",
+                        "name": "item_price"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "next": 22
+        },
+        {
+          "address": 22,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">=",
+            "left": {
+              "kind": "name",
+              "name": "item_max"
+            },
+            "right": {
+              "kind": "name",
+              "name": "item_min"
+            }
+          },
+          "then": 23,
+          "else": 31
+        },
+        {
+          "address": 23,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "아이템 티켓은 1장당 ${item_price}칩입니다. 구매할 수량을 입력해 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "Item tickets cost ${item_price} chips each. Enter the quantity."
+              }
+            ]
+          },
+          "next": 24,
+          "await": true,
+          "resume": 24
+        },
+        {
+          "address": 24,
+          "instruction_id": "item/amount",
+          "op": "command",
+          "command": "number_input",
+          "arguments": [],
+          "properties": [
+            {
+              "name": "min",
+              "value": {
+                "kind": "name",
+                "name": "item_min"
+              }
+            },
+            {
+              "name": "max",
+              "value": {
+                "kind": "name",
+                "name": "item_max"
+              }
+            },
+            {
+              "name": "current",
+              "value": {
+                "kind": "name",
+                "name": "item_balance"
+              }
+            },
+            {
+              "name": "unit_price",
+              "value": {
+                "kind": "name",
+                "name": "item_price"
+              }
+            }
+          ],
+          "await": true,
+          "await_explicit": true,
+          "result": "amount",
+          "next": 25,
+          "resume": 25
+        },
+        {
+          "address": 25,
+          "instruction_id": "item/buy",
+          "op": "command",
+          "command": "server_command",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cvgacha ticket buy cobbleventure:item_gacha"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "amount"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": "bought",
+          "next": 26
+        },
+        {
+          "address": 26,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s3",
+          "op": "branch",
+          "condition": {
+            "kind": "name",
+            "name": "bought"
+          },
+          "then": 27,
+          "else": 29
+        },
+        {
+          "address": 27,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s3/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "아이템 가챠 티켓 ${amount}장을 가방에 넣어 드렸습니다."
+              },
+              {
+                "language": "en_us",
+                "value": "${amount} Item tickets are now in your bag."
+              }
+            ]
+          },
+          "next": 28,
+          "await": true,
+          "resume": 28
+        },
+        {
+          "address": 28,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s3/then_end",
+          "op": "jump",
+          "target": 30
+        },
+        {
+          "address": 29,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s3/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "교환하지 못했습니다. 칩 잔액과 구매 범위를 확인해 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "The exchange failed. Check your balance and quantity."
+              }
+            ]
+          },
+          "next": 30,
+          "await": true,
+          "resume": 30
+        },
+        {
+          "address": 30,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then_end",
+          "op": "jump",
+          "target": 32
+        },
+        {
+          "address": 31,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "아이템 티켓을 구매할 카지노 칩이 부족합니다. 1장 가격은 ${item_price}칩입니다."
+              },
+              {
+                "language": "en_us",
+                "value": "You do not have enough casino chips. One Item ticket costs ${item_price} chips."
+              }
+            ]
+          },
+          "next": 32,
+          "await": true,
+          "resume": 32
+        },
+        {
+          "address": 32,
+          "instruction_id": "e0/p0/s1/then/s0/option1_end",
+          "op": "jump",
+          "target": 50
+        },
+        {
+          "address": 33,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s0",
+          "op": "let",
+          "name": "tm_price",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "gacha_ticket_price"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:technical_machine_gacha"
+                }
+              }
+            ]
+          },
+          "next": 34
+        },
+        {
+          "address": 34,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s1",
+          "op": "let",
+          "name": "tm_balance",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "casino_balance"
+            },
+            "arguments": []
+          },
+          "next": 35
+        },
+        {
+          "address": 35,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s2",
+          "op": "let",
+          "name": "tm_min",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "gacha_ticket_purchase_min"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:technical_machine_gacha"
+                }
+              }
+            ]
+          },
+          "next": 36
+        },
+        {
+          "address": 36,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s3",
+          "op": "let",
+          "name": "tm_max",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "min_int"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "call",
+                  "callee": {
+                    "kind": "name",
+                    "name": "gacha_ticket_purchase_max"
+                  },
+                  "arguments": [
+                    {
+                      "name": null,
+                      "value": {
+                        "kind": "literal",
+                        "type": "string",
+                        "value": "cobbleventure:technical_machine_gacha"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "call",
+                  "callee": {
+                    "kind": "name",
+                    "name": "floor_div"
+                  },
+                  "arguments": [
+                    {
+                      "name": null,
+                      "value": {
+                        "kind": "name",
+                        "name": "tm_balance"
+                      }
+                    },
+                    {
+                      "name": null,
+                      "value": {
+                        "kind": "name",
+                        "name": "tm_price"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "next": 37
+        },
+        {
+          "address": 37,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">=",
+            "left": {
+              "kind": "name",
+              "name": "tm_max"
+            },
+            "right": {
+              "kind": "name",
+              "name": "tm_min"
+            }
+          },
+          "then": 38,
+          "else": 46
+        },
+        {
+          "address": 38,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "기술머신 티켓은 1장당 ${tm_price}칩입니다. 구매할 수량을 입력해 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "TM tickets cost ${tm_price} chips each. Enter the quantity."
+              }
+            ]
+          },
+          "next": 39,
+          "await": true,
+          "resume": 39
+        },
+        {
+          "address": 39,
+          "instruction_id": "tm/amount",
+          "op": "command",
+          "command": "number_input",
+          "arguments": [],
+          "properties": [
+            {
+              "name": "min",
+              "value": {
+                "kind": "name",
+                "name": "tm_min"
+              }
+            },
+            {
+              "name": "max",
+              "value": {
+                "kind": "name",
+                "name": "tm_max"
+              }
+            },
+            {
+              "name": "current",
+              "value": {
+                "kind": "name",
+                "name": "tm_balance"
+              }
+            },
+            {
+              "name": "unit_price",
+              "value": {
+                "kind": "name",
+                "name": "tm_price"
+              }
+            }
+          ],
+          "await": true,
+          "await_explicit": true,
+          "result": "amount",
+          "next": 40,
+          "resume": 40
+        },
+        {
+          "address": 40,
+          "instruction_id": "tm/buy",
+          "op": "command",
+          "command": "server_command",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cvgacha ticket buy cobbleventure:technical_machine_gacha"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "amount"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": "bought",
+          "next": 41
+        },
+        {
+          "address": 41,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s3",
+          "op": "branch",
+          "condition": {
+            "kind": "name",
+            "name": "bought"
+          },
+          "then": 42,
+          "else": 44
+        },
+        {
+          "address": 42,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s3/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "기술머신 가챠 티켓 ${amount}장을 가방에 넣어 드렸습니다."
+              },
+              {
+                "language": "en_us",
+                "value": "${amount} TM tickets are now in your bag."
+              }
+            ]
+          },
+          "next": 43,
+          "await": true,
+          "resume": 43
+        },
+        {
+          "address": 43,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s3/then_end",
+          "op": "jump",
+          "target": 45
+        },
+        {
+          "address": 44,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s3/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "교환하지 못했습니다. 칩 잔액과 구매 범위를 확인해 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "The exchange failed. Check your balance and quantity."
+              }
+            ]
+          },
+          "next": 45,
+          "await": true,
+          "resume": 45
+        },
+        {
+          "address": 45,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then_end",
+          "op": "jump",
+          "target": 47
+        },
+        {
+          "address": 46,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "기술머신 티켓을 구매할 카지노 칩이 부족합니다. 1장 가격은 ${tm_price}칩입니다."
+              },
+              {
+                "language": "en_us",
+                "value": "You do not have enough casino chips. One TM ticket costs ${tm_price} chips."
+              }
+            ]
+          },
+          "next": 47,
+          "await": true,
+          "resume": 47
+        },
+        {
+          "address": 47,
+          "instruction_id": "e0/p0/s1/then/s0/option2_end",
+          "op": "jump",
+          "target": 50
+        },
+        {
+          "address": 48,
+          "instruction_id": "e0/p0/s1/then/s0/option3/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "필요할 때 다시 찾아주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "Come back whenever you need tickets."
+              }
+            ]
+          },
+          "next": 49,
+          "await": true,
+          "resume": 49
+        },
+        {
+          "address": 49,
+          "instruction_id": "e0/p0/s1/then/s0/option3_end",
+          "op": "jump",
+          "target": 50
+        },
+        {
+          "address": 50,
+          "instruction_id": "e0/p0/s1/then_end",
+          "op": "jump",
+          "target": 52
+        },
+        {
+          "address": 51,
+          "instruction_id": "e0/p0/s1/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "동전케이스가 있어야 티켓을 교환할 수 있습니다."
+              },
+              {
+                "language": "en_us",
+                "value": "You need a Coin Case to exchange tickets."
+              }
+            ]
+          },
+          "next": 52,
+          "await": true,
+          "resume": 52
+        },
+        {
+          "address": 52,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 231,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 236,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 5459,
+              "line": 126,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/s1/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 293,
+              "line": 8,
+              "column": 7
+            },
+            "end": {
+              "offset": 5313,
+              "line": 120,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 495,
+              "line": 16,
+              "column": 11
+            },
+            "end": {
+              "offset": 564,
+              "line": 16,
+              "column": 80
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 575,
+              "line": 17,
+              "column": 11
+            },
+            "end": {
+              "offset": 613,
+              "line": 17,
+              "column": 49
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 624,
+              "line": 18,
+              "column": 11
+            },
+            "end": {
+              "offset": 698,
+              "line": 18,
+              "column": 85
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 709,
+              "line": 19,
+              "column": 11
+            },
+            "end": {
+              "offset": 835,
+              "line": 19,
+              "column": 137
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 846,
+              "line": 20,
+              "column": 11
+            },
+            "end": {
+              "offset": 1992,
+              "line": 43,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 890,
+              "line": 21,
+              "column": 13
+            },
+            "end": {
+              "offset": 1080,
+              "line": 24,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "pokemon/amount",
+          "stable_id": "pokemon/amount",
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 1093,
+              "line": 25,
+              "column": 13
+            },
+            "end": {
+              "offset": 1298,
+              "line": 30,
+              "column": 24
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "pokemon/buy",
+          "stable_id": "pokemon/buy",
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 1311,
+              "line": 31,
+              "column": 13
+            },
+            "end": {
+              "offset": 1408,
+              "line": 31,
+              "column": 110
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 1421,
+              "line": 32,
+              "column": 13
+            },
+            "end": {
+              "offset": 1766,
+              "line": 39,
+              "column": 16
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s3/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 1433,
+              "line": 32,
+              "column": 25
+            },
+            "end": {
+              "offset": 1585,
+              "line": 35,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s3/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 1431,
+              "line": 32,
+              "column": 23
+            },
+            "end": {
+              "offset": 1587,
+              "line": 35,
+              "column": 16
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then/s3/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 1607,
+              "line": 36,
+              "column": 20
+            },
+            "end": {
+              "offset": 1764,
+              "line": 39,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 876,
+              "line": 20,
+              "column": 41
+            },
+            "end": {
+              "offset": 1778,
+              "line": 40,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s4/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 1786,
+              "line": 40,
+              "column": 20
+            },
+            "end": {
+              "offset": 1990,
+              "line": 43,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p0/s1/then/s0/option0_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 483,
+              "line": 15,
+              "column": 13
+            },
+            "end": {
+              "offset": 2002,
+              "line": 44,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 18,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2108,
+              "line": 49,
+              "column": 11
+            },
+            "end": {
+              "offset": 2171,
+              "line": 49,
+              "column": 74
+            }
+          }
+        },
+        {
+          "address": 19,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2182,
+              "line": 50,
+              "column": 11
+            },
+            "end": {
+              "offset": 2217,
+              "line": 50,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 20,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2228,
+              "line": 51,
+              "column": 11
+            },
+            "end": {
+              "offset": 2296,
+              "line": 51,
+              "column": 79
+            }
+          }
+        },
+        {
+          "address": 21,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2307,
+              "line": 52,
+              "column": 11
+            },
+            "end": {
+              "offset": 2421,
+              "line": 52,
+              "column": 125
+            }
+          }
+        },
+        {
+          "address": 22,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2432,
+              "line": 53,
+              "column": 11
+            },
+            "end": {
+              "offset": 3530,
+              "line": 76,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 23,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2470,
+              "line": 54,
+              "column": 13
+            },
+            "end": {
+              "offset": 2651,
+              "line": 57,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 24,
+          "instruction_id": "item/amount",
+          "stable_id": "item/amount",
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2664,
+              "line": 58,
+              "column": 13
+            },
+            "end": {
+              "offset": 2854,
+              "line": 63,
+              "column": 24
+            }
+          }
+        },
+        {
+          "address": 25,
+          "instruction_id": "item/buy",
+          "stable_id": "item/buy",
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2867,
+              "line": 64,
+              "column": 13
+            },
+            "end": {
+              "offset": 2958,
+              "line": 64,
+              "column": 104
+            }
+          }
+        },
+        {
+          "address": 26,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2971,
+              "line": 65,
+              "column": 13
+            },
+            "end": {
+              "offset": 3313,
+              "line": 72,
+              "column": 16
+            }
+          }
+        },
+        {
+          "address": 27,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s3/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2983,
+              "line": 65,
+              "column": 25
+            },
+            "end": {
+              "offset": 3132,
+              "line": 68,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 28,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s3/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2981,
+              "line": 65,
+              "column": 23
+            },
+            "end": {
+              "offset": 3134,
+              "line": 68,
+              "column": 16
+            }
+          }
+        },
+        {
+          "address": 29,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then/s3/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 3154,
+              "line": 69,
+              "column": 20
+            },
+            "end": {
+              "offset": 3311,
+              "line": 72,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 30,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2456,
+              "line": 53,
+              "column": 35
+            },
+            "end": {
+              "offset": 3325,
+              "line": 73,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 31,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s4/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 3333,
+              "line": 73,
+              "column": 20
+            },
+            "end": {
+              "offset": 3528,
+              "line": 76,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 32,
+          "instruction_id": "e0/p0/s1/then/s0/option1_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 2096,
+              "line": 48,
+              "column": 13
+            },
+            "end": {
+              "offset": 3540,
+              "line": 77,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 33,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 3645,
+              "line": 82,
+              "column": 11
+            },
+            "end": {
+              "offset": 3719,
+              "line": 82,
+              "column": 85
+            }
+          }
+        },
+        {
+          "address": 34,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 3730,
+              "line": 83,
+              "column": 11
+            },
+            "end": {
+              "offset": 3763,
+              "line": 83,
+              "column": 44
+            }
+          }
+        },
+        {
+          "address": 35,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 3774,
+              "line": 84,
+              "column": 11
+            },
+            "end": {
+              "offset": 3853,
+              "line": 84,
+              "column": 90
+            }
+          }
+        },
+        {
+          "address": 36,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 3864,
+              "line": 85,
+              "column": 11
+            },
+            "end": {
+              "offset": 3985,
+              "line": 85,
+              "column": 132
+            }
+          }
+        },
+        {
+          "address": 37,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 3996,
+              "line": 86,
+              "column": 11
+            },
+            "end": {
+              "offset": 5080,
+              "line": 109,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 38,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 4030,
+              "line": 87,
+              "column": 13
+            },
+            "end": {
+              "offset": 4206,
+              "line": 90,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 39,
+          "instruction_id": "tm/amount",
+          "stable_id": "tm/amount",
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 4219,
+              "line": 91,
+              "column": 13
+            },
+            "end": {
+              "offset": 4399,
+              "line": 96,
+              "column": 24
+            }
+          }
+        },
+        {
+          "address": 40,
+          "instruction_id": "tm/buy",
+          "stable_id": "tm/buy",
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 4412,
+              "line": 97,
+              "column": 13
+            },
+            "end": {
+              "offset": 4514,
+              "line": 97,
+              "column": 115
+            }
+          }
+        },
+        {
+          "address": 41,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 4527,
+              "line": 98,
+              "column": 13
+            },
+            "end": {
+              "offset": 4868,
+              "line": 105,
+              "column": 16
+            }
+          }
+        },
+        {
+          "address": 42,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s3/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 4539,
+              "line": 98,
+              "column": 25
+            },
+            "end": {
+              "offset": 4687,
+              "line": 101,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 43,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s3/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 4537,
+              "line": 98,
+              "column": 23
+            },
+            "end": {
+              "offset": 4689,
+              "line": 101,
+              "column": 16
+            }
+          }
+        },
+        {
+          "address": 44,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then/s3/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 4709,
+              "line": 102,
+              "column": 20
+            },
+            "end": {
+              "offset": 4866,
+              "line": 105,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 45,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 4016,
+              "line": 86,
+              "column": 31
+            },
+            "end": {
+              "offset": 4880,
+              "line": 106,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 46,
+          "instruction_id": "e0/p0/s1/then/s0/option2/s4/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 4888,
+              "line": 106,
+              "column": 20
+            },
+            "end": {
+              "offset": 5078,
+              "line": 109,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 47,
+          "instruction_id": "e0/p0/s1/then/s0/option2_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 3633,
+              "line": 81,
+              "column": 13
+            },
+            "end": {
+              "offset": 5090,
+              "line": 110,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 48,
+          "instruction_id": "e0/p0/s1/then/s0/option3/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 5179,
+              "line": 115,
+              "column": 11
+            },
+            "end": {
+              "offset": 5295,
+              "line": 118,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 49,
+          "instruction_id": "e0/p0/s1/then/s0/option3_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 5167,
+              "line": 114,
+              "column": 13
+            },
+            "end": {
+              "offset": 5305,
+              "line": 119,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 50,
+          "instruction_id": "e0/p0/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 285,
+              "line": 7,
+              "column": 54
+            },
+            "end": {
+              "offset": 5319,
+              "line": 121,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 51,
+          "instruction_id": "e0/p0/s1/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 5333,
+              "line": 122,
+              "column": 7
+            },
+            "end": {
+              "offset": 5453,
+              "line": 125,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 52,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/gacha_ticket_vendor.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 5463,
+              "line": 127,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

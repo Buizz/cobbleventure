@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/pokemart_clerk",
+  "source_digest": "83164652050fef326c2d3a90053faae4f5280c7bea1ea2acf99db6f7a293072c",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "어서 오세요. 무엇을 도와드릴까요?"
+              },
+              {
+                "language": "en_us",
+                "value": "Welcome. How may I help you?"
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "op": "command",
+          "command": "server_command",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure_shop open bca:pokemart_shopkeeper"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemart_clerk.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 142,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemart_clerk.cves",
+            "start": {
+              "offset": 147,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 211,
+              "line": 7,
+              "column": 69
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/pokemart_clerk.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 215,
+              "line": 8,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

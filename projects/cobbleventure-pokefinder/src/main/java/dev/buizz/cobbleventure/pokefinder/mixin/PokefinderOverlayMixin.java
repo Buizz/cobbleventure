@@ -1,6 +1,6 @@
 package dev.buizz.cobbleventure.pokefinder.mixin;
 
-import com.metacontent.cobblenav.client.gui.overlay.PokefinderOverlay;
+import com.metacontent.cobblenav.client.gui.pokefinder.PokefinderOverlay;
 import dev.buizz.cobbleventure.pokefinder.client.PinnedPokefinderHud;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;

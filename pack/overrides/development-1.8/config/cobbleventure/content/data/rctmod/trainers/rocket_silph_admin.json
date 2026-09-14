@@ -1,0 +1,51 @@
+{
+  "name": "실프주식회사 로켓단 간부 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "aggressive",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "golbat",
+      "level": 37,
+      "moveset": [
+        "bite",
+        "confuseray",
+        "wingattack",
+        "meanlook"
+      ]
+    },
+    {
+      "species": "weezing",
+      "level": 39,
+      "moveset": [
+        "sludge",
+        "smokescreen",
+        "haze",
+        "selfdestruct"
+      ]
+    },
+    {
+      "species": "rhydon",
+      "level": 41,
+      "moveset": [
+        "stomp",
+        "rockblast",
+        "scaryface",
+        "takedown"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

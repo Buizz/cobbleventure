@@ -1,0 +1,70 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "lycanroc-dusk",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_hills"
+        ],
+        "canSeeSky": true,
+        "timeRange": "dusk",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "lycanroc wolf_form=dusk",
+      "level": "29-45",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "lycanroc-midday",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_hills"
+        ],
+        "canSeeSky": true,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "lycanroc wolf_form=midday",
+      "level": "29-45",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "lycanroc-midnight",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_hills"
+        ],
+        "canSeeSky": true,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "lycanroc wolf_form=midnight",
+      "level": "29-45",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

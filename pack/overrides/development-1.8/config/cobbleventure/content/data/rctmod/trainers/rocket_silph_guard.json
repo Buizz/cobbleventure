@@ -1,0 +1,41 @@
+{
+  "name": "실프주식회사 로켓단 경비 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "aggressive",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "machop",
+      "level": 32,
+      "moveset": [
+        "karatechop",
+        "seismictoss",
+        "focusenergy",
+        "foresight"
+      ]
+    },
+    {
+      "species": "drowzee",
+      "level": 32,
+      "moveset": [
+        "confusion",
+        "disable",
+        "headbutt",
+        "hypnosis"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

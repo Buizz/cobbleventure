@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/underground_entrance/underground_passage.nbt",
+  "anchors": [
+    {
+      "id": "underground_entry",
+      "label": "underground_entry",
+      "type": "transition",
+      "position": [
+        5,
+        3,
+        7
+      ],
+      "safe_spawn": [
+        8,
+        5,
+        9
+      ],
+      "facing": "west"
+    }
+  ]
+}

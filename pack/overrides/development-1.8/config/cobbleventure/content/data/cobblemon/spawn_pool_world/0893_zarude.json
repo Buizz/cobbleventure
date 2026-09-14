@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "zarude-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0.4,
+      "condition": {
+        "biomes": [
+          "minecraft:jungle"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "zarude",
+      "level": "70",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

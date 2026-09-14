@@ -1,0 +1,84 @@
+{
+  "name": "관동 체육관 관장 비주기",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "rhyhorn",
+      "level": 45,
+      "moveset": [
+        "takedown",
+        "rockblast",
+        "scaryface",
+        "earthquake"
+      ]
+    },
+    {
+      "species": "dugtrio",
+      "level": 42,
+      "moveset": [
+        "slash",
+        "sandtomb",
+        "mudslap",
+        "earthquake"
+      ]
+    },
+    {
+      "species": "nidoqueen",
+      "level": 44,
+      "moveset": [
+        "bodyslam",
+        "doublekick",
+        "poisonsting",
+        "earthquake"
+      ],
+      "gender": "FEMALE"
+    },
+    {
+      "species": "nidoking",
+      "level": 45,
+      "moveset": [
+        "thrash",
+        "doublekick",
+        "poisonsting",
+        "earthquake"
+      ],
+      "gender": "MALE"
+    },
+    {
+      "species": "rhyhorn",
+      "level": 50,
+      "moveset": [
+        "takedown",
+        "rockblast",
+        "scaryface",
+        "earthquake"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 3
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    },
+    {
+      "item": "cobblemon:full_heal",
+      "quantity": 1
+    }
+  ]
+}

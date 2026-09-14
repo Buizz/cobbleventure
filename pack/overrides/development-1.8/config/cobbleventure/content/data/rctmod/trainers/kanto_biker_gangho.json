@@ -1,0 +1,41 @@
+{
+  "name": "폭주족 강호 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "koffing",
+      "level": 27,
+      "moveset": [
+        "smog",
+        "smokescreen",
+        "sludge",
+        "selfdestruct"
+      ]
+    },
+    {
+      "species": "grimer",
+      "level": 27,
+      "moveset": [
+        "disable",
+        "sludge",
+        "mudslap",
+        "minimize"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

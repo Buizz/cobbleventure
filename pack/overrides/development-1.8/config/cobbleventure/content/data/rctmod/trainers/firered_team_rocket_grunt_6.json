@@ -1,0 +1,59 @@
+{
+  "name": "로켓단 조무래기 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "ekans",
+      "level": 15,
+      "moveset": [
+        "wrap",
+        "leer",
+        "poisonsting",
+        "bite"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      }
+    },
+    {
+      "species": "zubat",
+      "level": 15,
+      "moveset": [
+        "leechlife",
+        "astonish",
+        "supersonic"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

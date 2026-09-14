@@ -24,7 +24,7 @@ repositories {
     }
 }
 
-def cobblenavDependency = "curse.maven:cobblenav-976014:8823427"
+def cobblenavDependency = "curse.maven:cobblenav-976014:8837236"
 
 dependencies {
     compileOnly "dev.buizz.cobbleventure:cobbleventure-player-menu:1.6.0"

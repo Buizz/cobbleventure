@@ -1,0 +1,115 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "volcarona-1",
+      "presets": [
+        "natural",
+        "desert_pyramid"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 16,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_desert"
+        ],
+        "canSeeSky": false,
+        "minY": 48,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "volcarona",
+      "level": "59-64",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "volcarona-2",
+      "presets": [
+        "natural",
+        "jungle_pyramid"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 16,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_jungle"
+        ],
+        "canSeeSky": false,
+        "minY": 48,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "volcarona",
+      "level": "59-64",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "volcarona-3",
+      "presets": [
+        "natural",
+        "treetop"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_crimson",
+          "#cobblemon:nether/is_forest"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "volcarona",
+      "level": "59-64",
+      "spawnablePositionType": "grounded",
+      "drops": {
+        "amount": 3,
+        "entries": [
+          {
+            "item": "minecraft:blaze_powder",
+            "percentage": 10.0
+          },
+          {
+            "item": "cobblemon:silver_powder",
+            "percentage": 5.0
+          },
+          {
+            "item": "cobblemon:charti_berry",
+            "percentage": 5.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "volcarona-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "structures": [
+          "#aether:dungeons"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "volcarona",
+      "level": "59-64",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

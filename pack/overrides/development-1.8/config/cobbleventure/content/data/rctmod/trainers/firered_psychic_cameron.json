@@ -1,0 +1,79 @@
+{
+  "name": "초능력자 캐머런 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "slowpoke",
+      "level": 33,
+      "moveset": [
+        "watergun",
+        "confusion",
+        "disable",
+        "headbutt"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    },
+    {
+      "species": "slowpoke",
+      "level": 33,
+      "moveset": [
+        "watergun",
+        "confusion",
+        "disable",
+        "headbutt"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    },
+    {
+      "species": "slowbro",
+      "level": 33,
+      "moveset": [
+        "watergun",
+        "confusion",
+        "disable",
+        "headbutt"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

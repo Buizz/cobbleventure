@@ -1,0 +1,97 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "dondozo-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "dondozo",
+      "level": "28-53",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "dondozo-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "dondozo",
+      "level": "28-53",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "dondozo-3",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "dondozo",
+      "level": "28-53",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "dondozo-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_swamp"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "dondozo",
+      "level": "28-53",
+      "spawnablePositionType": "fishing"
+    }
+  ]
+}

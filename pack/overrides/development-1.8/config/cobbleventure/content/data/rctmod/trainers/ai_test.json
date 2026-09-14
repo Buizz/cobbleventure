@@ -1,0 +1,26 @@
+{
+  "name": "AI 맨 테스트 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "rattata",
+      "level": 5,
+      "moveset": [
+        "tackle",
+        "tailwhip"
+      ]
+    }
+  ]
+}

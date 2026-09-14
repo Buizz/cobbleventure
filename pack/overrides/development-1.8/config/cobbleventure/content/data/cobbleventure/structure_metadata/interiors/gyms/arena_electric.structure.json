@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "interior": {
+    "id": "arena_electric",
+    "width": 32,
+    "depth": 32,
+    "floor_height": 12,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "id": "door",
+      "label": "door",
+      "type": "transition",
+      "position": [
+        15,
+        2,
+        1
+      ],
+      "safe_spawn": [
+        15,
+        1,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "leader",
+      "label": "leader",
+      "type": "npc_position",
+      "position": [
+        14,
+        1,
+        20
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "battle_player",
+      "label": "battle_player",
+      "type": "npc_position",
+      "position": [
+        16,
+        1,
+        12
+      ],
+      "facing": "south"
+    }
+  ],
+  "structure": "content/structures/interiors/gyms/arena_electric.nbt"
+}

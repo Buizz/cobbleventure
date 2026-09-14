@@ -1,0 +1,157 @@
+{
+  "cobbleventure_music:music.kanto.indigo_plateau": {
+    "album": "Pokémon HeartGold & SoulSilver Original Soundtrack",
+    "author": "Hitomi Sato",
+    "title": "석영고원 및 관동 포켓몬리그 내부"
+  },
+  "cobbleventure_music:music.facility.building": {
+    "album": "Pokémon HeartGold & Pokémon SoulSilver",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "일반 건물 내부"
+  },
+  "cobbleventure_music:music.battle.gym_leader": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "체육관 관장 전투"
+  },
+  "cobbleventure_music:music.battle.trainer": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "일반 트레이너 전투"
+  },
+  "cobbleventure_music:music.battle.victory_gym_leader": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "체육관 관장 전투 승리"
+  },
+  "cobbleventure_music:music.battle.victory_trainer": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "일반 트레이너 전투 승리"
+  },
+  "cobbleventure_music:music.battle.victory_wild": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "야생 포켓몬 전투 승리"
+  },
+  "cobbleventure_music:music.event.item_acquired": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "일반 아이템 획득"
+  },
+  "cobbleventure_music:music.event.key_item_acquired": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "중요 아이템 획득"
+  },
+  "cobbleventure_music:music.event.machine_acquired": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "기술머신 획득"
+  },
+  "cobbleventure_music:music.facility.gym": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "체육관 내부"
+  },
+  "cobbleventure_music:music.facility.game_corner": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "로켓 게임코너 내부"
+  },
+  "cobbleventure_music:music.dungeon.team_rocket_hq": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "로켓단 본부 및 점거 시설"
+  },
+  "cobbleventure_music:music.dungeon.pokemon_tower": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "포켓몬타워"
+  },
+  "cobbleventure_music:music.dungeon.rocket_hideout": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "게임코너 지하 로켓단 아지트"
+  },
+  "cobbleventure_music:music.dungeon.silph_company": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "실프주식회사"
+  },
+  "cobbleventure_music:music.kanto.celadon_city": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "무지개시티"
+  },
+  "cobbleventure_music:music.kanto.cerulean_city": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "블루시티 및 연분홍시티"
+  },
+  "cobbleventure_music:music.kanto.cinnabar_island": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "홍련마을"
+  },
+  "cobbleventure_music:music.kanto.lavender_town": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "보라타운"
+  },
+  "cobbleventure_music:music.kanto.mt_moon": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "달맞이산"
+  },
+  "cobbleventure_music:music.kanto.pallet_town": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "태초마을"
+  },
+  "cobbleventure_music:music.kanto.pewter_city": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "회색시티·상록시티·노랑시티 계열"
+  },
+  "cobbleventure_music:music.kanto.route_01": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "관동 1번도로 계열"
+  },
+  "cobbleventure_music:music.kanto.route_03": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "관동 3번도로 계열"
+  },
+  "cobbleventure_music:music.kanto.vermilion_city": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "갈색시티"
+  },
+  "cobbleventure_music:music.kanto.viridian_forest": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "상록숲"
+  },
+  "cobbleventure_music:music.facility.pokemon_center": {
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요",
+    "title": "포켓몬센터"
+  },
+  "cobbleventure_music:music.encounter.trainer_bad_guys": {
+    "album": "Pokémon: Let's Go, Pikachu! & Pokémon: Let's Go, Eevee! Super Music Collection",
+    "author": "Hiroaki Tsutsumi, Kon Shirasu, Shota Kageyama",
+    "title": "악역 트레이너 조우"
+  },
+  "cobbleventure_music:music.encounter.trainer_boy": {
+    "album": "Pokémon: Let's Go, Pikachu! & Pokémon: Let's Go, Eevee! Super Music Collection",
+    "author": "Hiroaki Tsutsumi, Kon Shirasu, Shota Kageyama",
+    "title": "남성 트레이너 조우"
+  },
+  "cobbleventure_music:music.encounter.trainer_girl": {
+    "album": "Pokémon: Let's Go, Pikachu! & Pokémon: Let's Go, Eevee! Super Music Collection",
+    "author": "Hiroaki Tsutsumi, Kon Shirasu, Shota Kageyama",
+    "title": "여성 트레이너 조우"
+  }
+}

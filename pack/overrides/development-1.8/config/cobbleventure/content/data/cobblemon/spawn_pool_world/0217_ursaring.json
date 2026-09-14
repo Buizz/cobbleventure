@@ -1,0 +1,92 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ursaring-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.19,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest",
+          "#cobblemon:is_mountain",
+          "aether:skyroot_forest",
+          "aether:skyroot_woodland",
+          "#cobblemon:is_taiga"
+        ],
+        "minY": 48,
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "ursaring",
+      "level": "30-50",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_volcanic"
+        ],
+        "neededNearbyBlocks": [
+          "#cobblemon:saccharine_trees"
+        ]
+      }
+    },
+    {
+      "id": "ursaring-2",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.57,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "neededNearbyBlocks": [
+          "#cobblemon:saccharine_trees"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "ursaring",
+      "level": "30-50",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "ursaring-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.19,
+      "condition": {
+        "biomes": [
+          "the_bumblezone:crystal_canyon",
+          "the_bumblezone:floral_meadow"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_2"
+        ]
+      },
+      "pokemon": "ursaring",
+      "level": "30-50",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "structures": [
+          "#the_bumblezone:sempiternal_sanctums"
+        ]
+      }
+    }
+  ]
+}

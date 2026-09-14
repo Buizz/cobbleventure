@@ -1,0 +1,48 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "gothorita-1",
+      "presets": [
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.54,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "gothorita",
+      "level": "32-39",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "gothorita-2",
+      "presets": [
+        "end_city"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.44,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_end"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "gothorita",
+      "level": "32-39",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

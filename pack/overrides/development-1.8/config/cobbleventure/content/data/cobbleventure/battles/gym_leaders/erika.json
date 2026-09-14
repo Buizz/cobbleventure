@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/battle-preset.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:battle/gym_leader/erika",
+  "enabled": true,
+  "name": { "ko_kr": "관동 체육관 관장 민화", "en_us": "관동 체육관 관장 Erika" },
+  "battle": {
+    "format": "GEN_9_SINGLES",
+    "battle_type": "singles",
+    "ai": { "controller": "cobbleventure", "difficulty": "advanced", "strategy": "balanced", "options": {} },
+    "level_mode": "fixed",
+    "rules": { "can_forfeit": true, "max_item_uses": 2 },
+    "bag": [{ "item": "cobblemon:hyper_potion", "quantity": 1 }, { "item": "cobblemon:full_heal", "quantity": 1 }],
+    "mechanics": { "mega_evolution": false, "z_move": false, "dynamax": false, "terastallization": false },
+    "team": [
+      { "species": "cobblemon:victreebel", "level": 29, "gender": "random", "moves": ["stunspore", "acid", "poisonpowder", "gigadrain"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false },
+      { "species": "cobblemon:tangela", "level": 24, "gender": "random", "moves": ["poisonpowder", "constrict", "ingrain", "gigadrain"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false },
+      { "species": "cobblemon:vileplume", "level": 29, "gender": "random", "moves": ["sleeppowder", "acid", "stunspore", "gigadrain"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false }
+    ],
+    "trainer_id": "cobbleventure:npc/gym_leader/erika"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "신사 도영 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "growlithe",
+      "level": 22,
+      "moveset": [
+        "ember",
+        "leer",
+        "bite",
+        "takedown"
+      ]
+    },
+    {
+      "species": "pikachu",
+      "level": 22,
+      "moveset": [
+        "thundershock",
+        "quickattack",
+        "electroball",
+        "doubleteam"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "수영팬 루이스 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "horsea",
+      "level": 16,
+      "moveset": [
+        "bubble",
+        "smokescreen",
+        "leer"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      }
+    },
+    {
+      "species": "shellder",
+      "level": 16,
+      "moveset": [
+        "tackle",
+        "withdraw",
+        "iciclespear",
+        "supersonic"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "태권왕 다이스케 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "machoke",
+      "level": 43,
+      "moveset": [
+        "foresight",
+        "revenge",
+        "vitalthrow",
+        "submission"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "heldItem": "black_belt"
+    },
+    {
+      "species": "machop",
+      "level": 43,
+      "moveset": [
+        "vitalthrow",
+        "submission",
+        "crosschop",
+        "scaryface"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "heldItem": "black_belt"
+    },
+    {
+      "species": "machoke",
+      "level": 43,
+      "moveset": [
+        "foresight",
+        "revenge",
+        "vitalthrow",
+        "submission"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "heldItem": "black_belt"
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

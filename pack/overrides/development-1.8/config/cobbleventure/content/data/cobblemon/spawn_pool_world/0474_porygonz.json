@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "porygonz-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 0.08,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_end"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "porygonz",
+      "level": "47-54",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/interiors/casino.nbt",
+  "interior": {
+    "id": "casino",
+    "width": 48,
+    "depth": 48,
+    "floor_height": 12,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "label": "blackjack_dealer_2",
+      "type": "npc_position",
+      "position": [
+        12,
+        6,
+        7
+      ],
+      "facing": "west"
+    },
+    {
+      "label": "blackjack_dealer_1",
+      "type": "npc_position",
+      "position": [
+        15,
+        6,
+        7
+      ],
+      "facing": "east"
+    },
+    {
+      "label": "npc1",
+      "type": "npc_position",
+      "position": [
+        32,
+        6,
+        14
+      ],
+      "facing": "north"
+    },
+    {
+      "label": "npc2",
+      "type": "npc_position",
+      "position": [
+        31,
+        6,
+        14
+      ],
+      "facing": "north"
+    },
+    {
+      "label": "retired_guest",
+      "type": "npc_position",
+      "position": [
+        30,
+        6,
+        10
+      ],
+      "facing": "west"
+    },
+    {
+      "id": "gacha_default_pokemon",
+      "label": "gacha_default_pokemon",
+      "type": "npc_position",
+      "position": [
+        20,
+        6,
+        15
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "door",
+      "label": "door",
+      "type": "door",
+      "position": [
+        23,
+        6,
+        1
+      ],
+      "safe_spawn": [
+        23,
+        6,
+        2
+      ],
+      "door_facing": "south",
+      "safe_side": "south"
+    },
+    {
+      "id": "gacha_default_tm",
+      "label": "gacha_default_tm",
+      "type": "npc_position",
+      "position": [
+        24,
+        6,
+        15
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "gacha_default_item",
+      "label": "gacha_default_item",
+      "type": "npc_position",
+      "position": [
+        22,
+        6,
+        15
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "transition",
+      "label": "transition",
+      "type": "dungeon_entrance",
+      "position": [
+        4,
+        2,
+        14
+      ],
+      "safe_spawn": [
+        7,
+        1,
+        14
+      ],
+      "facing": "west",
+      "entrance_id": "cobbleventure:entrance/casino_hideout"
+    }
+  ]
+}

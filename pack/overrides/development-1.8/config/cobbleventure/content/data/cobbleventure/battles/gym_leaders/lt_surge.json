@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schemas/battle-preset.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:battle/gym_leader/lt_surge",
+  "enabled": true,
+  "name": { "ko_kr": "관동 체육관 관장 마티스", "en_us": "관동 체육관 관장 Lt. Surge" },
+  "battle": {
+    "format": "GEN_9_SINGLES",
+    "battle_type": "singles",
+    "ai": { "controller": "cobbleventure", "difficulty": "advanced", "strategy": "balanced", "options": {} },
+    "level_mode": "fixed",
+    "rules": { "can_forfeit": true, "max_item_uses": 2 },
+    "bag": [{ "item": "cobblemon:super_potion", "quantity": 1 }, { "item": "cobblemon:full_heal", "quantity": 1 }],
+    "mechanics": { "mega_evolution": false, "z_move": false, "dynamax": false, "terastallization": false },
+    "team": [
+      { "species": "cobblemon:voltorb", "level": 21, "gender": "genderless", "moves": ["sonicboom", "tackle", "screech", "shockwave"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false },
+      { "species": "cobblemon:pikachu", "level": 18, "gender": "random", "moves": ["quickattack", "thunderwave", "doubleteam", "shockwave"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false },
+      { "species": "cobblemon:raichu", "level": 24, "gender": "random", "moves": ["quickattack", "thunderwave", "doubleteam", "shockwave"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false }
+    ],
+    "trainer_id": "cobbleventure:npc/gym_leader/lt_surge"
+  }
+}

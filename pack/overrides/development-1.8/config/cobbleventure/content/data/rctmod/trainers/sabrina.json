@@ -1,0 +1,72 @@
+{
+  "name": "관동 체육관 관장 초련",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "kadabra",
+      "level": 38,
+      "moveset": [
+        "psybeam",
+        "reflect",
+        "futuresight",
+        "calmmind"
+      ]
+    },
+    {
+      "species": "mrmime",
+      "level": 37,
+      "moveset": [
+        "barrier",
+        "psybeam",
+        "batonpass",
+        "calmmind"
+      ]
+    },
+    {
+      "species": "venomoth",
+      "level": 38,
+      "moveset": [
+        "psybeam",
+        "gust",
+        "leechlife",
+        "supersonic"
+      ]
+    },
+    {
+      "species": "alakazam",
+      "level": 43,
+      "moveset": [
+        "psychic",
+        "recover",
+        "futuresight",
+        "calmmind"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 3
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    },
+    {
+      "item": "cobblemon:full_heal",
+      "quantity": 1
+    }
+  ]
+}

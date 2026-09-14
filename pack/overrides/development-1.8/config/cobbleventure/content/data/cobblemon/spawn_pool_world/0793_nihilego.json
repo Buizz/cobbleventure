@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "nihilego-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "nihilego",
+      "level": "60-78",
+      "spawnablePositionType": "submerged"
+    }
+  ]
+}

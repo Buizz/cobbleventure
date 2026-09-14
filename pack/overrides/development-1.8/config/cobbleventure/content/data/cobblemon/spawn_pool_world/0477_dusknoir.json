@@ -1,0 +1,48 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "dusknoir-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.03,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_spooky"
+        ],
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "dusknoir",
+      "level": "41-53",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "dusknoir-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.05,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_soul_sand"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "dusknoir",
+      "level": "41-53",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

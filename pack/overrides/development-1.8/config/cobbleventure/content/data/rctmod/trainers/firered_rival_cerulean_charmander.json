@@ -1,0 +1,94 @@
+{
+  "name": "라이벌 테리 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "pidgeotto",
+      "level": 17,
+      "moveset": [
+        "tackle",
+        "sandattack",
+        "gust",
+        "quickattack"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    },
+    {
+      "species": "abra",
+      "level": 16,
+      "moveset": [
+        "teleport"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    },
+    {
+      "species": "rattata",
+      "level": 15,
+      "moveset": [
+        "tackle",
+        "tailwhip",
+        "quickattack"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 6,
+        "atk": 6,
+        "def": 6,
+        "spa": 6,
+        "spd": 6,
+        "spe": 6
+      }
+    },
+    {
+      "species": "charmander",
+      "level": 18,
+      "moveset": [
+        "metalclaw",
+        "ember",
+        "growl",
+        "scratch"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

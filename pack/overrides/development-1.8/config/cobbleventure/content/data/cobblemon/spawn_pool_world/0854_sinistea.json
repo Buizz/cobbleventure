@@ -1,0 +1,214 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "sinistea-phony-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 9.108,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_plains",
+          "#cobblemon:is_snowy",
+          "#cobblemon:is_spooky",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "minY": 62,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "sinistea tea_authenticity=phony",
+      "level": "6-31",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "sinistea-antique-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.092,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_plains",
+          "#cobblemon:is_snowy",
+          "#cobblemon:is_spooky",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "minY": 62,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "sinistea tea_authenticity=antique",
+      "level": "6-31",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "sinistea-phony-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 9.108,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_plains",
+          "#cobblemon:is_snowy",
+          "#cobblemon:is_spooky",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "minY": 62,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "sinistea tea_authenticity=phony",
+      "level": "6-31",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "sinistea-antique-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.092,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_plains",
+          "#cobblemon:is_snowy",
+          "#cobblemon:is_spooky",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "minY": 62,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "sinistea tea_authenticity=antique",
+      "level": "6-31",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "sinistea-phony-5",
+      "presets": [
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 9.405,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "sinistea tea_authenticity=phony",
+      "level": "6-31",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "sinistea-antique-6",
+      "presets": [
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.095,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "sinistea tea_authenticity=antique",
+      "level": "6-31",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

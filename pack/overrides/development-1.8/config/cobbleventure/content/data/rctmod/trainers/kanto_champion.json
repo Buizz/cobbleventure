@@ -1,0 +1,211 @@
+{
+  "name": "그린",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": true
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "dragapult",
+      "level": 70,
+      "moveset": [
+        "lightscreen",
+        "reflect",
+        "shadowball",
+        "thunderwave"
+      ],
+      "nature": "impish",
+      "ability": "prankster",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "def": 14,
+        "spd": 244
+      },
+      "heldItem": "light_clay",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "arcanine",
+      "level": 70,
+      "moveset": [
+        "flareblitz",
+        "closecombat",
+        "extremespeed",
+        "playrough"
+      ],
+      "nature": "adamant",
+      "ability": "intimidate",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 76,
+        "atk": 252,
+        "def": 4,
+        "spd": 20,
+        "spe": 156
+      },
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "rillaboom",
+      "level": 70,
+      "moveset": [
+        "grassyglide",
+        "drainpunch",
+        "leechseed",
+        "knockoff"
+      ],
+      "nature": "adamant",
+      "ability": "analytic",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 236,
+        "def": 4,
+        "spa": 252,
+        "spd": 12,
+        "spe": 4
+      },
+      "heldItem": "shell_bell",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "dondozo",
+      "level": 70,
+      "moveset": [
+        "wavecrash",
+        "heavyslam",
+        "yawn",
+        "protect"
+      ],
+      "nature": "impish",
+      "ability": "unaware",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "def": 76,
+        "spd": 156
+      },
+      "heldItem": "leftovers",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "rhyperior",
+      "level": 70,
+      "moveset": [
+        "highhorsepower",
+        "stoneedge",
+        "crunch",
+        "terablast"
+      ],
+      "nature": "careful",
+      "ability": "lightningrod",
+      "gender": "MALE",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 244,
+        "atk": 14,
+        "spd": 252
+      },
+      "heldItem": "assault_vest",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    },
+    {
+      "species": "mewtwo",
+      "level": 70,
+      "moveset": [
+        "psystrike",
+        "aurasphere",
+        "icebeam",
+        "shadowball"
+      ],
+      "nature": "timid",
+      "ability": "pressure",
+      "gender": "GENDERLESS",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "heldItem": "mewtwonite_y",
+      "gimmicks": {
+        "tera": "auto"
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 99
+  },
+  "bag": [
+    {
+      "item": "cobblemon:full_restore",
+      "quantity": 1
+    }
+  ]
+}

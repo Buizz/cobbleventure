@@ -1,0 +1,30 @@
+{
+  "name": "새 조련사 아라 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "spearow",
+      "level": 14,
+      "moveset": [
+        "peck",
+        "growl",
+        "furyattack"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

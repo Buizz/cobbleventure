@@ -1,0 +1,52 @@
+{
+  "name": "카지노 기지 관리자 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "aggressive",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "onix",
+      "level": 25,
+      "moveset": [
+        "rockthrow",
+        "rage",
+        "bind",
+        "screech"
+      ]
+    },
+    {
+      "species": "rhyhorn",
+      "level": 24,
+      "moveset": [
+        "stomp",
+        "tailwhip",
+        "furyattack",
+        "scaryface"
+      ]
+    },
+    {
+      "species": "kangaskhan",
+      "level": 29,
+      "moveset": [
+        "megapunch",
+        "bite",
+        "tailwhip",
+        "rage"
+      ],
+      "gender": "FEMALE"
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

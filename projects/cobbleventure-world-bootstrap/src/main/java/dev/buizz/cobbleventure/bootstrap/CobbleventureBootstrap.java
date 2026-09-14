@@ -145,6 +145,8 @@ public final class CobbleventureBootstrap {
     private static int blockedPursuitZonePokemon;
     private static int blockedOutsideTerrainPokemon;
     private static int pendingRouteNpcReconcileTicks = -1;
+    private static final Map<RegionalNpcPairKey, PendingRegionalNpcPair>
+        PENDING_REGIONAL_NPC_PAIRS = new LinkedHashMap<>();
     private static final String DATA_FILE = "cobbleventure_world_bootstrap";
     private static final Set<EntityType<?>> BLOCKED_VANILLA_MOBS = Set.of(
         EntityType.AXOLOTL,
@@ -260,6 +262,8 @@ public final class CobbleventureBootstrap {
         "cobbleventureWhirlpoolMessageCooldown";
     private static final String WHIRLPOOL_REQUIREMENT =
         "cobbleventure:field_move/whirlpool";
+    private static final String ROCK_CLIMB_REQUIREMENT =
+        "cobbleventure:field_move/rock_climb";
     private static final List<String> SUPPORTED_FIELD_MOVES = List.of(
         "surf", "fly", "flash", "defog", "rock_climb", "whirlpool",
         "strength", "rock_smash"
@@ -855,6 +859,7 @@ public final class CobbleventureBootstrap {
         completedTownGenerationDisplay = null;
         completedTownGenerationDisplayTicks = 0;
         pendingRouteNpcReconcileTicks = -1;
+        PENDING_REGIONAL_NPC_PAIRS.clear();
         activeDimensionAnchors = null;
         activeEventBoundaries = null;
         DoorTransitionSound.reset();
@@ -1363,6 +1368,7 @@ public final class CobbleventureBootstrap {
         placeCaveEntrances(level, runtime.hexWorld());
         WorldGateSystem.placeAll(level, runtime.hexWorld());
         WorldStructureSystem.placeAll(level, runtime.hexWorld());
+        if (nativeGenerator) placeRoadArches(level, runtime.hexWorld());
         BlockPos spawnPos = starter.playerSpawn().toBlockPos();
         BlockPos villagePos = townSurfacePosition(level, starter);
         level.setDefaultSpawnPos(spawnPos, 0.0F);
@@ -2108,9 +2114,7 @@ public final class CobbleventureBootstrap {
     }
 
     private static boolean isRockClimbTerrain(TerrainSample sample) {
-        return "cobbleventure:field_move/rock_climb".equals(
-            sample.accessRequirement()
-        );
+        return ROCK_CLIMB_REQUIREMENT.equals(sample.accessRequirement());
     }
 
     private static void placeCaveMouthLandmark(
@@ -6039,6 +6043,7 @@ public final class CobbleventureBootstrap {
                 spawnRouteNpcs(routeLevel, routeWorld);
             }
         }
+        tickPendingRegionalNpcPairs(event.getServer());
         reconcileFacilityVendors(event.getServer());
         runScheduledGenerationDebrisCleanup(event.getServer());
         tickCompletedTownGenerationDisplay();
@@ -6059,6 +6064,7 @@ public final class CobbleventureBootstrap {
         Set<UUID> deepWaterBlocked = new HashSet<>();
         for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
             ServerLevel playerLevel = player.serverLevel();
+            applyRockClimb(player, playerLevel);
             if (!enforceDeepWaterAccess(player, playerLevel, playerLevel.getGameTime())) {
                 deepWaterBlocked.add(player.getUUID());
             }
@@ -6178,7 +6184,6 @@ public final class CobbleventureBootstrap {
                     LocalWeatherSystem.tick(player, world, sample);
                 }
             }
-            applyRockClimb(player, level);
             if (!enforceFieldMoveAccess(player, level, gameTime)) {
                 continue;
             }
@@ -7174,7 +7179,7 @@ public final class CobbleventureBootstrap {
     private static void applyRockClimb(ServerPlayer player, ServerLevel level) {
         if (!FieldMoveRidingAccess.isActive(player, "rock_climb")
             || player.isPassenger() || player.isSpectator() || player.isInWater()
-            || !player.horizontalCollision || !touchesNaturalRockWall(player, level)) {
+            || !touchesSolidWall(player, level)) {
             return;
         }
         Vec3 movement = player.getDeltaMovement();
@@ -7184,26 +7189,30 @@ public final class CobbleventureBootstrap {
         player.hurtMarked = true;
     }
 
-    private static boolean touchesNaturalRockWall(ServerPlayer player, ServerLevel level) {
-        BlockPos feet = player.blockPosition();
-        for (Direction direction : Direction.Plane.HORIZONTAL) {
-            BlockPos adjacent = feet.relative(direction);
-            if (isNaturalRock(level, adjacent) || isNaturalRock(level, adjacent.above())) {
-                return true;
+    private static boolean touchesSolidWall(ServerPlayer player, ServerLevel level) {
+        AABB body = player.getBoundingBox();
+        AABB probe = new AABB(
+            body.minX - 0.10D, body.minY + 0.05D, body.minZ - 0.10D,
+            body.maxX + 0.10D, body.maxY - 0.05D, body.maxZ + 0.10D
+        );
+        BlockPos.MutableBlockPos position = new BlockPos.MutableBlockPos();
+        for (int x = Mth.floor(probe.minX); x <= Mth.floor(probe.maxX); x++) {
+            for (int y = Mth.floor(probe.minY); y <= Mth.floor(probe.maxY); y++) {
+                for (int z = Mth.floor(probe.minZ); z <= Mth.floor(probe.maxZ); z++) {
+                    position.set(x, y, z);
+                    BlockState state = level.getBlockState(position);
+                    if (state.getCollisionShape(level, position).isEmpty()) {
+                        continue;
+                    }
+                    for (AABB collision : state.getCollisionShape(level, position).toAabbs()) {
+                        if (probe.intersects(collision.move(x, y, z))) {
+                            return true;
+                        }
+                    }
+                }
             }
         }
         return false;
-    }
-
-    private static boolean isNaturalRock(ServerLevel level, BlockPos position) {
-        return isRockClimbSurface(level.getBlockState(position));
-    }
-
-    static boolean isRockClimbSurface(BlockState state) {
-        return state.is(BlockTags.BASE_STONE_OVERWORLD)
-            || RockClimbTerrainPolicy.isNaturalCover(
-                BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString()
-            );
     }
 
     private static boolean enforceWhirlpoolAccess(
@@ -9691,13 +9700,17 @@ public final class CobbleventureBootstrap {
         profiler.finishPhase("sealed-outer-decoration");
         progress.update(83, "직접 배치 길 생성 중");
         drawHexRoads(level, world);
+        placeRoadArches(level, world);
+        profiler.finishPhase("route-rendering");
+    }
+
+    private static void placeRoadArches(ServerLevel level, HexWorldPlan world) {
         for (ConnectionPath route : world.paths()) {
             if (!route.surfaceStyle().equals("league_arch")) continue;
             List<RoadArchPlacement.Point> points = route.centerline().stream()
                 .map(point -> new RoadArchPlacement.Point(point.x(), point.z())).toList();
-            RoadArchPlacement.place(level, points);
+            RoadArchPlacement.place(level, world, route.id(), points);
         }
-        profiler.finishPhase("route-rendering");
     }
 
     private static Set<HexCoord> worldRenderCells(HexWorldPlan world) {
@@ -13717,7 +13730,7 @@ public final class CobbleventureBootstrap {
                 float yaw = (float) Math.toDegrees(Math.atan2(-facingX, facingZ));
                 String spawnKey = RouteNpcSpawnLedger.key(route.id(), placement.id());
                 if (data.hasSpawnedRouteNpc(spawnKey)) {
-                    reconcileExistingRegionalNpc(
+                    reconcileRouteNpcSlot(
                         level, placement.npc(), new BlockPos(x, y, z), yaw,
                         placement.triggerOverride()
                     );
@@ -13770,7 +13783,7 @@ public final class CobbleventureBootstrap {
                 String npcId = population.candidates().get(index);
                 String spawnKey = RouteNpcSpawnLedger.key(route.id(), "population/" + index);
                 if (data.hasSpawnedRouteNpc(spawnKey)) {
-                    reconcileExistingRegionalNpc(
+                    reconcileRouteNpcSlot(
                         level, npcId, new BlockPos(x, y, z), yaw,
                         population.triggerFor(npcId)
                     );
@@ -13879,29 +13892,145 @@ public final class CobbleventureBootstrap {
         if (!spawnSingleRegionalNpc(level, npcId, position, yaw, triggerOverride)) return false;
         JsonObject pair = npcPair(level, npcId);
         if (pair == null) return true;
-        Entity owner = placedRegionalNpc(level, npcId, position);
-        if (owner == null) return false;
-        String partnerId = requiredString(pair, "partner");
-        BlockPos partnerPosition = RegionalNpcPairPlacement.partnerPosition(owner.blockPosition(), yaw);
-        BlockPos safe = findRegionalNpcPosition(level, partnerPosition);
-        if (safe == null || safe.distSqr(owner.blockPosition()) < 2.0D) {
-            // Try the other side without placing both entities in one standing cell.
-            partnerPosition = RegionalNpcPairPlacement.partnerPosition(owner.blockPosition(), yaw + 180);
-            safe = findRegionalNpcPosition(level, partnerPosition);
+        scheduleRegionalNpcPair(level, npcId, position, yaw, triggerOverride, pair);
+        return true;
+    }
+
+    private static void reconcileRouteNpcSlot(
+        ServerLevel level, String npcId, BlockPos position, float yaw, String triggerOverride
+    ) {
+        JsonObject pair = npcPair(level, npcId);
+        if (pair == null) {
+            reconcileExistingRegionalNpc(level, npcId, position, yaw, triggerOverride);
+            return;
         }
-        if (safe == null || safe.distSqr(owner.blockPosition()) < 2.0D) {
-            LOGGER.warn("Double trainer partner has no safe position: owner={}, partner={}", npcId, partnerId);
-            return false;
+        // Paired EasyNPC imports can become visible after their import command
+        // returns. Re-enter the normal spawn path for this special case so a
+        // saved owner without its partner is repaired on world reload.
+        spawnRegionalNpc(level, npcId, position, yaw, triggerOverride);
+    }
+
+    private static void scheduleRegionalNpcPair(
+        ServerLevel level, String ownerId, BlockPos position, float yaw,
+        String triggerOverride, JsonObject pair
+    ) {
+        RegionalNpcPairKey key = new RegionalNpcPairKey(
+            level.dimension(), ownerId, position.immutable()
+        );
+        PENDING_REGIONAL_NPC_PAIRS.putIfAbsent(key, new PendingRegionalNpcPair(
+            key, requiredString(pair, "partner"), yaw, triggerOverride
+        ));
+    }
+
+    private static void tickPendingRegionalNpcPairs(MinecraftServer server) {
+        var iterator = PENDING_REGIONAL_NPC_PAIRS.entrySet().iterator();
+        while (iterator.hasNext()) {
+            PendingRegionalNpcPair pending = iterator.next().getValue();
+            ServerLevel level = server.getLevel(pending.key.dimension());
+            if (level == null) {
+                iterator.remove();
+                continue;
+            }
+            pending.ageTicks++;
+            loadRouteNpcChunk(
+                level, pending.key.position().getX(), pending.key.position().getZ()
+            );
+            reconcileExistingRegionalNpc(
+                level, pending.key.ownerId(), pending.key.position(), pending.yaw,
+                pending.triggerOverride
+            );
+            Entity owner = placedRegionalNpc(
+                level, pending.key.ownerId(), pending.key.position()
+            );
+            Entity partner = owner == null ? null : placedRegionalNpc(
+                level, pending.partnerId, owner.blockPosition()
+            );
+            RegionalNpcPairSpawnState.Action action = RegionalNpcPairSpawnState.next(
+                owner != null, partner != null, pending.ageTicks,
+                pending.partnerRequests,
+                pending.ageTicks - pending.lastPartnerRequestTick
+            );
+            if (action == RegionalNpcPairSpawnState.Action.COMPLETE) {
+                reconcileExistingRegionalNpc(
+                    level, pending.partnerId, partner.blockPosition(), pending.yaw,
+                    "interact"
+                );
+                partner = placedRegionalNpc(level, pending.partnerId, partner.blockPosition());
+                if (partner != null) bindRegionalNpcPartner(owner, partner);
+                iterator.remove();
+                continue;
+            }
+            if (action == RegionalNpcPairSpawnState.Action.GIVE_UP) {
+                LOGGER.error(
+                    "Double trainer pair did not finish loading: owner={}, partner={}, position={}",
+                    pending.key.ownerId(), pending.partnerId, pending.key.position()
+                );
+                iterator.remove();
+                continue;
+            }
+            if (action != RegionalNpcPairSpawnState.Action.REQUEST_PARTNER) continue;
+            pending.partnerRequests++;
+            pending.lastPartnerRequestTick = pending.ageTicks;
+            BlockPos safe = regionalNpcPartnerPosition(level, owner, pending.yaw);
+            if (safe == null) {
+                LOGGER.warn(
+                    "Double trainer partner has no safe position yet: owner={}, partner={}",
+                    pending.key.ownerId(), pending.partnerId
+                );
+                continue;
+            }
+            spawnSingleRegionalNpc(
+                level, pending.partnerId, safe, pending.yaw, "interact"
+            );
         }
-        if (!spawnSingleRegionalNpc(level, partnerId, safe, yaw, "interact")) return false;
-        Entity partner = placedRegionalNpc(level, partnerId, safe);
-        if (partner == null) return false;
+    }
+
+    private static BlockPos regionalNpcPartnerPosition(
+        ServerLevel level, Entity owner, float yaw
+    ) {
+        BlockPos candidate = RegionalNpcPairPlacement.partnerPosition(
+            owner.blockPosition(), yaw
+        );
+        BlockPos safe = findRegionalNpcPosition(level, candidate);
+        if (safe == null || safe.distSqr(owner.blockPosition()) < 2.0D) {
+            candidate = RegionalNpcPairPlacement.partnerPosition(
+                owner.blockPosition(), yaw + 180.0F
+            );
+            safe = findRegionalNpcPosition(level, candidate);
+        }
+        return safe == null || safe.distSqr(owner.blockPosition()) < 2.0D
+            ? null : safe;
+    }
+
+    private static void bindRegionalNpcPartner(Entity owner, Entity partner) {
         String ownerTag = dev.buizz.cobbleventure.adventure.event.EventNpcPartner.OWNER_TAG;
         for (String tag : List.copyOf(partner.getTags())) {
             if (tag.startsWith(ownerTag)) partner.removeTag(tag);
         }
         partner.addTag(ownerTag + owner.getUUID());
-        return true;
+    }
+
+    private record RegionalNpcPairKey(
+        ResourceKey<Level> dimension, String ownerId, BlockPos position
+    ) {}
+
+    private static final class PendingRegionalNpcPair {
+        private final RegionalNpcPairKey key;
+        private final String partnerId;
+        private final float yaw;
+        private final String triggerOverride;
+        private int ageTicks;
+        private int partnerRequests;
+        private int lastPartnerRequestTick;
+
+        private PendingRegionalNpcPair(
+            RegionalNpcPairKey key, String partnerId, float yaw, String triggerOverride
+        ) {
+            this.key = key;
+            this.partnerId = partnerId;
+            this.yaw = yaw;
+            this.triggerOverride = triggerOverride;
+        }
     }
 
     static JsonObject npcPair(ServerLevel level, String npcId) {

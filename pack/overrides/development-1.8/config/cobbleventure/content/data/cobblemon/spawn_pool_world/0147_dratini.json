@@ -1,0 +1,190 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "dratini-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 7.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 32,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "dratini",
+      "level": "5-30",
+      "spawnablePositionType": "surface",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    },
+    {
+      "id": "dratini-2",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 7.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 32,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "dratini",
+      "level": "5-30",
+      "spawnablePositionType": "submerged",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    },
+    {
+      "id": "dratini-3",
+      "presets": [
+        "water",
+        "ocean_ruins"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 84,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "dratini",
+      "level": "5-30",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "dratini-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 1.5,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "maxY": 32,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "dratini",
+      "level": "5-30",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    },
+    {
+      "id": "dratini-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "dratini",
+      "level": "5-30",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ]
+      }
+    },
+    {
+      "id": "dratini-6",
+      "presets": [
+        "water",
+        "ocean_ruins"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 84,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "dratini",
+      "level": "5-30",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "dratini-7",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "dratini",
+      "level": "5-30",
+      "spawnablePositionType": "fishing",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ]
+      }
+    }
+  ]
+}

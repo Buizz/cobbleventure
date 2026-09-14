@@ -701,6 +701,7 @@ final class BuildingRuntimeSystem {
                 SETTINGS.put(entry.getKey(), new BuildingSettings(
                     value.has("placement_y_offset")
                         ? value.get("placement_y_offset").getAsInt() : 0,
+                    value.has("terrain_preparation") && "reserve_plot".equals(value.get("terrain_preparation").getAsString()),
                     value.has("no_interior_space")
                         && value.get("no_interior_space").getAsBoolean(),
                     Map.copyOf(fixed),
@@ -737,6 +738,11 @@ final class BuildingRuntimeSystem {
     static int placementYOffset(String structure) {
         BuildingSettings settings = settingsForStructure(structure);
         return settings == null ? 0 : settings.placementYOffset;
+    }
+
+    static boolean reserveBuildingPlot(String structure) {
+        BuildingSettings settings = settingsForStructure(structure);
+        return settings != null && settings.reservePlot;
     }
 
     static BlockPos exteriorDoorApproachOffset(
@@ -1385,10 +1391,13 @@ final class BuildingRuntimeSystem {
             }
         }
         boolean isDaycare = exteriorStructure.equals(DAYCARE_STRUCTURE);
-        if ((eventSpaceId != null && !eventSpaceId.isBlank()) || isDaycare) {
-            String registrationKey = eventSpaceId == null || eventSpaceId.isBlank()
-                ? "__daycare_instance__|" + instanceKey
-                : eventSpaceId;
+        // Music and scripted-arrival recovery need every instanced interior to remain
+        // discoverable after placement. World objects such as Indigo Plateau do not
+        // have a public eventSpaceId, so keep them under an internal per-instance key.
+        if (spaces.size() > 1 || isDaycare) {
+            String registrationKey = BuildingEventSpaceIds.registrationKey(
+                eventSpaceId, instanceKey, isDaycare
+            );
             EventSpaceInstance existing = EVENT_SPACES.get(registrationKey);
             if (existing != null && !existing.instanceKey.equals(instanceKey)) {
                 throw new IllegalStateException(
@@ -1436,8 +1445,9 @@ final class BuildingRuntimeSystem {
                     route.getValue().conditions, route.getValue().conditionMode,
                     route.getValue().lockedDialogue, route.getValue().enterDialogue,
                     !route.getValue().space.equals("exterior"), settings.musicTrack,
-                    BuildingConnectionTypes.isTrigger(targetAnchor.type) ? null
-                        : targetSpace.rotation.rotate(targetAnchor.facing).toYRot()
+                    BuildingDestinationFacing.yaw(
+                        targetAnchor.type, targetAnchor.facing, targetSpace.rotation
+                    )
                 )
             );
             // An explicit outbound route owns this marker. Do not overwrite it with
@@ -1448,7 +1458,10 @@ final class BuildingRuntimeSystem {
                 new DoorTarget(
                     sourceSpace.level.dimension(), reverseDestination,
                     List.of(), "all", List.of(), List.of(),
-                    !sourceSpaceKey.equals("exterior"), settings.musicTrack
+                    !sourceSpaceKey.equals("exterior"), settings.musicTrack,
+                    BuildingDestinationFacing.yaw(
+                        sourceAnchor.type, sourceAnchor.facing, sourceSpace.rotation
+                    )
                 )
             );
         }
@@ -2261,7 +2274,7 @@ final class BuildingRuntimeSystem {
     }
 
     private record BuildingSettings(
-        int placementYOffset, boolean noInteriorSpace,
+        int placementYOffset, boolean reservePlot, boolean noInteriorSpace,
         Map<String, String> fixedNpcs, Map<String, String> fixedPokemon,
         Map<String, String> fixedVendors, Map<String, String> fixedGachaMachines,
         boolean citizenPlacementAllowed,

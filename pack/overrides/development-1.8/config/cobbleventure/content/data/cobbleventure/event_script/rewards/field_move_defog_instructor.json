@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/rewards/field_move_defog_instructor",
+  "source_digest": "e4914afc7241622b04bff0a442a4fc0cbd081c561fddd7b17bc2e68cc96ac3fe",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/rewards/field_move/defog"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "안개가 걷혀도 서두르지는 마."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "짙은 안개도 흐름을 읽으면 걷어낼 수 있어. 안개제거 방법을 알려 주지."
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/field_move",
+          "op": "command",
+          "command": "grant_field_move",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "defog"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": "granted",
+          "operation_id": "cobbleventure:event_script/rewards/field_move_defog_instructor/grant/field_move",
+          "next": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/rewards/field_move/defog"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/rewards/field_move_defog_instructor/grant/state",
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이제 짙은 안개를 만났을 때 안개제거를 사용할 수 있어."
+              }
+            ]
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_defog_instructor.cves",
+            "start": {
+              "offset": 97,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 144,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_defog_instructor.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 148,
+              "line": 6,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_defog_instructor.cves",
+            "start": {
+              "offset": 171,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 242,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/field_move",
+          "stable_id": "grant/field_move",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_defog_instructor.cves",
+            "start": {
+              "offset": 247,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 302,
+              "line": 12,
+              "column": 60
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "stable_id": "grant/state",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_defog_instructor.cves",
+            "start": {
+              "offset": 307,
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 383,
+              "line": 13,
+              "column": 81
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_defog_instructor.cves",
+            "start": {
+              "offset": 388,
+              "line": 14,
+              "column": 5
+            },
+            "end": {
+              "offset": 450,
+              "line": 16,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_defog_instructor.cves",
+            "start": {
+              "offset": 152,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 454,
+              "line": 17,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

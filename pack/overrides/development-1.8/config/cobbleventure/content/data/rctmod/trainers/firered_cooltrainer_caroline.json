@@ -1,0 +1,123 @@
+{
+  "name": "엘리트 트레이너 캐럴라인 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "bellsprout",
+      "level": 42,
+      "moveset": [
+        "razorleaf",
+        "acid",
+        "stunspore",
+        "poisonpowder"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "weepinbell",
+      "level": 42,
+      "moveset": [
+        "razorleaf",
+        "acid",
+        "sleeppowder",
+        "poisonpowder"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "victreebel",
+      "level": 42,
+      "moveset": [
+        "razorleaf",
+        "acid",
+        "stunspore",
+        "sleeppowder"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "paras",
+      "level": 42,
+      "moveset": [
+        "growth",
+        "slash",
+        "leechlife",
+        "stunspore"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    },
+    {
+      "species": "parasect",
+      "level": 42,
+      "moveset": [
+        "spore",
+        "slash",
+        "leechlife",
+        "poisonpowder"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 1
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 1
+    }
+  ]
+}

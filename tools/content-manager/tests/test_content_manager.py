@@ -6489,12 +6489,11 @@ class ContentManagerTests(unittest.TestCase):
         )
         mods = {item["id"]: item for item in dependency_lock["mods"]}
         expected = {
-            "cobblemon": ("1.8.0", 687131, 8818732),
             "rctapi": ("0.16.0-beta", 1152792, 8826267),
             "rctmod": ("0.19.0-beta", 1009534, 8827140),
             "tbcs": ("0.15.0-beta", 1172731, 8833923),
-            "mega_showdown": ("1.0+1.8+1.21.1-beta2", 1189523, 8820597),
-            "cobblenav": ("2.4.0", 976014, 8823427),
+            "mega_showdown": ("1.2.0+1.8.1+1.21.1-release", 1189523, 8870190),
+            "cobblenav": ("2.4.1", 976014, 8837236),
         }
         for mod_id, (version, project_id, file_id) in expected.items():
             with self.subTest(mod_id=mod_id):
@@ -6502,6 +6501,16 @@ class ContentManagerTests(unittest.TestCase):
                 self.assertEqual(version, mod["version"])
                 self.assertEqual(project_id, mod["curseforge"]["project_id"])
                 self.assertEqual(file_id, mod["curseforge"]["file_id"])
+
+        self.assertNotIn("cobblemon", mods)
+        content_packs = {
+            item["id"]: item for item in dependency_lock["content_packs"]
+        }
+        cobblemon = content_packs["cobblemon"]
+        self.assertEqual("1.8.1", cobblemon["version"])
+        self.assertEqual("MdwFAVRL", cobblemon["modrinth"]["project_id"])
+        self.assertEqual("7otgw3aH", cobblemon["modrinth"]["version_id"])
+        self.assertEqual("mods", cobblemon["install_path"])
 
         profile = content_manager.load_json(
             CORE_ROOT / "pack" / "profiles" / "development-1.8.json"
@@ -6513,6 +6522,7 @@ class ContentManagerTests(unittest.TestCase):
         profile_files = {
             (entry["projectID"], entry["fileID"]) for entry in profile["files"]
         }
+        self.assertNotIn((687131, 8818732), profile_files)
         self.assertNotIn((976014, 7940651), profile_files)
         self.assertTrue({(item[1], item[2]) for item in expected.values()}.issubset(profile_files))
         self.assertIn("Cobbleventure Pokefinder", profile["notice"])

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "cobbleventure_theme_blocks:block/building_pale_wall"
+    }
+  }
+}

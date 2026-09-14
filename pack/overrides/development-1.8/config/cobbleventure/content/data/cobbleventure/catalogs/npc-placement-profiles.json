@@ -1,0 +1,3973 @@
+{
+  "schema_version": 1,
+  "profiles": [
+    {
+      "npc": "cobbleventure:npc/ai_test",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/youngster_yasu_0063"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "AI 맨",
+          "en_us": "AI Man"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/examples/ai_test"
+      },
+      "classification": "trainer",
+      "expected_level": 50,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/blackjack_dealer",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/waitress_kati_03fc",
+          "arm_model": "slim",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "블랙잭 딜러",
+          "en_us": "Blackjack Dealer"
+        },
+        "functions": [
+          "blackjack"
+        ],
+        "binding_tag": "cves_binding/cobbleventure/facilities/blackjack_dealer"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/casino_cashier",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/waitress_kati_03fc",
+          "implementation_status": "ready",
+          "arm_model": "slim"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "카지노 환전상",
+          "en_us": "Casino Cashier"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/casino_cashier"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/facilities/daycare_attendant",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/pokemon_breeder_albert_0310",
+          "arm_model": "slim",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "키우미집 관리인",
+          "en_us": "Daycare Attendant"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/daycare_attendant"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/facilities/fossil_assistant",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_rodney_0153",
+          "arm_model": "slim",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "화석 연구 조수",
+          "en_us": "Fossil Assistant"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/fossil_assistant"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/facilities/fossil_researcher",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_ed_0158",
+          "arm_model": "slim",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "화석 복원 연구원",
+          "en_us": "Fossil Researcher"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/fossil_researcher"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/facilities/fossil_scholar",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_ivan_015b",
+          "arm_model": "slim",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "고생물 연구원",
+          "en_us": "Paleontology Researcher"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/fossil_scholar"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/gacha_ticket_vendor",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/waiter",
+          "arm_model": "slim"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "가챠 티켓 교환상",
+          "en_us": "Gacha Ticket Vendor"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/gacha_ticket_vendor"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/hall_guide",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/pokemart_clerk_male",
+          "arm_model": "classic"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "전당 안내원",
+          "en_us": "Hall Guide"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/hall_guide"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/pokemart_clerk",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/pokemart_clerk_male",
+          "arm_model": "classic"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "포켓마트 점원",
+          "en_us": "Poke Mart Clerk"
+        },
+        "functions": [
+          "shop"
+        ],
+        "binding_tag": "cves_binding/cobbleventure/facilities/pokemart_clerk"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/pokemon_center_nurse",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/nurse_joy",
+          "arm_model": "slim"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "간호순",
+          "en_us": "Nurse Joy"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/pokemon_center_nurse"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/facilities/research_dynamax",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_ed_0158",
+          "arm_model": "slim",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "다이맥스 연구원",
+          "en_us": "Dynamax Researcher"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/research_dynamax"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/facilities/research_mega",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_ed_0158",
+          "arm_model": "slim",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "메가진화 연구원",
+          "en_us": "Mega Evolution Researcher"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/research_mega"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/facilities/research_stats",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_ed_0158",
+          "arm_model": "slim",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "능력치 연구원",
+          "en_us": "Pokemon Training Researcher"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/research_stats"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/facilities/research_z_move",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_ed_0158",
+          "arm_model": "slim",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "Z기술 연구원",
+          "en_us": "Z-Move Researcher"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/facilities/research_z_move"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/firered_beauty_bridget",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/beauty_bridget_0109",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "아가씨 브리짓",
+          "en_us": "Beauty Bridget"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_beauty_bridget"
+      },
+      "classification": "trainer",
+      "expected_level": 21,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_beauty_lori",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/beauty_bridget_0109",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "아가씨 로리",
+          "en_us": "Beauty Lori"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_beauty_lori"
+      },
+      "classification": "trainer",
+      "expected_level": 24,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_beauty_tamia",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/beauty_bridget_0109",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "아가씨 타미아",
+          "en_us": "Beauty Tamia"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_beauty_tamia"
+      },
+      "classification": "trainer",
+      "expected_level": 24,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_black_belt_atsushi",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/black_belt_hitoshi_0141",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "태권왕 아츠시",
+          "en_us": "Black Belt Atsushi"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_black_belt_atsushi"
+      },
+      "classification": "trainer",
+      "expected_level": 40,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_black_belt_daisuke",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/black_belt_hitoshi_0141",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "태권왕 다이스케",
+          "en_us": "Black Belt Daisuke"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_black_belt_daisuke"
+      },
+      "classification": "trainer",
+      "expected_level": 43,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_black_belt_kiyo",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/black_belt_hitoshi_0141",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "태권왕 키요",
+          "en_us": "Black Belt Kiyo"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_black_belt_kiyo"
+      },
+      "classification": "trainer",
+      "expected_level": 43,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_black_belt_takashi",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/black_belt_hitoshi_0141",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "태권왕 타카시",
+          "en_us": "Black Belt Takashi"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_black_belt_takashi"
+      },
+      "classification": "trainer",
+      "expected_level": 38,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_bug_catcher_cale",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/bug_catcher",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "곤충채집소년 케일",
+          "en_us": "Bug Catcher Cale"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_bug_catcher_cale"
+      },
+      "classification": "trainer",
+      "expected_level": 10,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_burglar_dusty",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/team_rocket_grunt_0162",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "도둑 더스티",
+          "en_us": "Burglar Dusty"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_burglar_dusty"
+      },
+      "classification": "trainer",
+      "expected_level": 37,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_burglar_quinn",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/team_rocket_grunt_0162",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "도둑 퀸",
+          "en_us": "Burglar Quinn"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_burglar_quinn"
+      },
+      "classification": "trainer",
+      "expected_level": 36,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_burglar_ramon",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/team_rocket_grunt_0162",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "도둑 라몬",
+          "en_us": "Burglar Ramon"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_burglar_ramon"
+      },
+      "classification": "trainer",
+      "expected_level": 41,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_camper_ethan",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/camper",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "캠프보이 이선",
+          "en_us": "Camper Ethan"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_camper_ethan"
+      },
+      "classification": "trainer",
+      "expected_level": 18,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_camper_flint",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/camper",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "캠프보이 플린트",
+          "en_us": "Camper Flint"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_camper_flint"
+      },
+      "classification": "trainer",
+      "expected_level": 14,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_camper_liam",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/camper",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "캠프보이 리암",
+          "en_us": "Camper Liam"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_camper_liam"
+      },
+      "classification": "trainer",
+      "expected_level": 11,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_camper_shane",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/camper",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "캠프보이 셰인",
+          "en_us": "Camper Shane"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_camper_shane"
+      },
+      "classification": "trainer",
+      "expected_level": 14,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_channeler_amanda",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/hex_maniac",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "주술사 아만다",
+          "en_us": "Channeler Amanda"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_channeler_amanda"
+      },
+      "classification": "trainer",
+      "expected_level": 34,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_channeler_stacy",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/hex_maniac",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "주술사 스테이시",
+          "en_us": "Channeler Stacy"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_channeler_stacy"
+      },
+      "classification": "trainer",
+      "expected_level": 38,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_channeler_tasha",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/hex_maniac",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "주술사 타샤",
+          "en_us": "Channeler Tasha"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_channeler_tasha"
+      },
+      "classification": "trainer",
+      "expected_level": 33,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cool_couple_ray",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/young_couple_male",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 레이",
+          "en_us": "Cooltrainer Ray"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cool_couple_ray"
+      },
+      "classification": "trainer",
+      "expected_level": 45,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cool_couple_ray_tyra",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/young_couple_female",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 타이라",
+          "en_us": "Cooltrainer Tyra"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cool_couple_ray_tyra",
+        "double_battle": {
+          "partner": "cobbleventure:npc/firered_cool_couple_ray",
+          "group_id": "cobbleventure:double_battle/firered_cool_couple_ray_tyra",
+          "shared_clear_key": "cobbleventure:flag/trainer/firered_cool_couple_ray_tyra/defeated"
+        }
+      },
+      "classification": "trainer",
+      "expected_level": 45,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_alexa",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_female",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 알렉사",
+          "en_us": "Cooltrainer Alexa"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_alexa"
+      },
+      "classification": "trainer",
+      "expected_level": 42,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_caroline",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_female",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 캐럴라인",
+          "en_us": "Cooltrainer Caroline"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_caroline"
+      },
+      "classification": "trainer",
+      "expected_level": 42,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_colby",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_male",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 콜비",
+          "en_us": "Cooltrainer Colby"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_colby"
+      },
+      "classification": "trainer",
+      "expected_level": 43,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_george",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_male",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 조지",
+          "en_us": "Cooltrainer George"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_george"
+      },
+      "classification": "trainer",
+      "expected_level": 42,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_mary",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_female",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 메리",
+          "en_us": "Cooltrainer Mary"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_mary"
+      },
+      "classification": "trainer",
+      "expected_level": 22,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_naomi",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_female",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 나오미",
+          "en_us": "Cooltrainer Naomi"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_naomi"
+      },
+      "classification": "trainer",
+      "expected_level": 42,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_rolando",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_male",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 롤란도",
+          "en_us": "Cooltrainer Rolando"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_rolando"
+      },
+      "classification": "trainer",
+      "expected_level": 42,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_samuel",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_male",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 새뮤얼",
+          "en_us": "Cooltrainer Samuel"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_samuel"
+      },
+      "classification": "trainer",
+      "expected_level": 39,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_warren",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_male",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 워런",
+          "en_us": "Cooltrainer Warren"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_warren"
+      },
+      "classification": "trainer",
+      "expected_level": 39,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_cooltrainer_yuji",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_male",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 유지",
+          "en_us": "Cooltrainer Yuji"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_cooltrainer_yuji"
+      },
+      "classification": "trainer",
+      "expected_level": 38,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_engineer_baily",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_ed_0158",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "기술자 베일리",
+          "en_us": "Engineer Baily"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_engineer_baily"
+      },
+      "classification": "trainer",
+      "expected_level": 21,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_gentleman_tucker",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/gentleman_arthur_01a6",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "신사 터커",
+          "en_us": "Gentleman Tucker"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_gentleman_tucker"
+      },
+      "classification": "trainer",
+      "expected_level": 23,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_hiker_franklin",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/hiker_alan_00b9",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "등산가 프랭클린",
+          "en_us": "Hiker Franklin"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_hiker_franklin"
+      },
+      "classification": "trainer",
+      "expected_level": 15,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_hiker_nob",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/hiker_alan_00b9",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "등산가 노브",
+          "en_us": "Hiker Nob"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_hiker_nob"
+      },
+      "classification": "trainer",
+      "expected_level": 13,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_hiker_wayne",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/hiker_alan_00b9",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "등산가 웨인",
+          "en_us": "Hiker Wayne"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_hiker_wayne"
+      },
+      "classification": "trainer",
+      "expected_level": 17,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_juggler_gregory",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "저글러 그레고리",
+          "en_us": "Juggler Gregory"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_juggler_gregory"
+      },
+      "classification": "trainer",
+      "expected_level": 48,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_juggler_kayden",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "저글러 케이든",
+          "en_us": "Juggler Kayden"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_juggler_kayden"
+      },
+      "classification": "trainer",
+      "expected_level": 38,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_juggler_kirk",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "저글러 커크",
+          "en_us": "Juggler Kirk"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_juggler_kirk"
+      },
+      "classification": "trainer",
+      "expected_level": 31,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_juggler_nate",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "저글러 네이트",
+          "en_us": "Juggler Nate"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_juggler_nate"
+      },
+      "classification": "trainer",
+      "expected_level": 34,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_juggler_nelson",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "저글러 넬슨",
+          "en_us": "Juggler Nelson"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_juggler_nelson"
+      },
+      "classification": "trainer",
+      "expected_level": 41,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_juggler_shawn",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "저글러 숀",
+          "en_us": "Juggler Shawn"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_juggler_shawn"
+      },
+      "classification": "trainer",
+      "expected_level": 34,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_lass_ali",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/lass",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "짧은치마 알리",
+          "en_us": "Lass Ali"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_lass_ali"
+      },
+      "classification": "trainer",
+      "expected_level": 12,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_lass_haley",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/lass",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "짧은치마 헤일리",
+          "en_us": "Lass Haley"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_lass_haley"
+      },
+      "classification": "trainer",
+      "expected_level": 13,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_lass_kay",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/lass",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "짧은치마 케이",
+          "en_us": "Lass Kay"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_lass_kay"
+      },
+      "classification": "trainer",
+      "expected_level": 23,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_lass_lisa",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/lass",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "짧은치마 리사",
+          "en_us": "Lass Lisa"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_lass_lisa"
+      },
+      "classification": "trainer",
+      "expected_level": 23,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_lass_reli",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/lass",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "짧은치마 렐리",
+          "en_us": "Lass Reli"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_lass_reli"
+      },
+      "classification": "trainer",
+      "expected_level": 16,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_picnicker_diana",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/picnicker",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "피크닉걸 다이애나",
+          "en_us": "Picnicker Diana"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_picnicker_diana"
+      },
+      "classification": "trainer",
+      "expected_level": 19,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_picnicker_kelsey",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/picnicker",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "피크닉걸 켈시",
+          "en_us": "Picnicker Kelsey"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_picnicker_kelsey"
+      },
+      "classification": "trainer",
+      "expected_level": 15,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_picnicker_tina",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/picnicker",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "피크닉걸 티나",
+          "en_us": "Picnicker Tina"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_picnicker_tina"
+      },
+      "classification": "trainer",
+      "expected_level": 24,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_pokemaniac_dawson",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/player_red_0202",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "포켓몬 매니아 도슨",
+          "en_us": "Pokémaniac Dawson"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_pokemaniac_dawson"
+      },
+      "classification": "trainer",
+      "expected_level": 40,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_psychic_cameron",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "초능력자 캐머런",
+          "en_us": "Psychic Cameron"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_psychic_cameron"
+      },
+      "classification": "trainer",
+      "expected_level": 33,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_psychic_johan",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "초능력자 요한",
+          "en_us": "Psychic Johan"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_psychic_johan"
+      },
+      "classification": "trainer",
+      "expected_level": 31,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_psychic_preston",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "초능력자 프레스턴",
+          "en_us": "Psychic Preston"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_psychic_preston"
+      },
+      "classification": "trainer",
+      "expected_level": 38,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_psychic_tyron",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "초능력자 타이론",
+          "en_us": "Psychic Tyron"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_psychic_tyron"
+      },
+      "classification": "trainer",
+      "expected_level": 34,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_rival_cerulean_charmander",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/rival_red",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "라이벌 테리",
+          "en_us": "Rival Terry"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_rival_cerulean_charmander"
+      },
+      "classification": "trainer",
+      "expected_level": 18,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_sailor_dwayne",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/sailor",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "선원 드웨인",
+          "en_us": "Sailor Dwayne"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_sailor_dwayne"
+      },
+      "classification": "trainer",
+      "expected_level": 21,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_super_nerd_avery",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/super_nerd_aavery_00b2",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "이과계의 남자 에이버리",
+          "en_us": "Super Nerd Avery"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_super_nerd_avery"
+      },
+      "classification": "trainer",
+      "expected_level": 34,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_super_nerd_derek",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/super_nerd_aavery_00b2",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "이과계의 남자 데릭",
+          "en_us": "Super Nerd Derek"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_super_nerd_derek"
+      },
+      "classification": "trainer",
+      "expected_level": 41,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_super_nerd_erik",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/super_nerd_aavery_00b2",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "이과계의 남자 에릭",
+          "en_us": "Super Nerd Erik"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_super_nerd_erik"
+      },
+      "classification": "trainer",
+      "expected_level": 36,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_super_nerd_zac",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/super_nerd_aavery_00b2",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "이과계의 남자 잭",
+          "en_us": "Super Nerd Zac"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_super_nerd_zac"
+      },
+      "classification": "trainer",
+      "expected_level": 37,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_swimmer_male_luis",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/swimmer_male",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "수영팬 루이스",
+          "en_us": "Swimmer♂ Luis"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_swimmer_male_luis"
+      },
+      "classification": "trainer",
+      "expected_level": 16,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_tamer_cole",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/tamer",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "포켓몬 조련사 콜",
+          "en_us": "Tamer Cole"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_tamer_cole"
+      },
+      "classification": "trainer",
+      "expected_level": 39,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_tamer_edgar",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/tamer",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "포켓몬 조련사 에드거",
+          "en_us": "Tamer Edgar"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_tamer_edgar"
+      },
+      "classification": "trainer",
+      "expected_level": 33,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_tamer_jason",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/tamer",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "포켓몬 조련사 제이슨",
+          "en_us": "Tamer Jason"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_tamer_jason"
+      },
+      "classification": "trainer",
+      "expected_level": 43,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_tamer_phil",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/tamer",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "포켓몬 조련사 필",
+          "en_us": "Tamer Phil"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_tamer_phil"
+      },
+      "classification": "trainer",
+      "expected_level": 34,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_tamer_vincent",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/tamer",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "포켓몬 조련사 빈센트",
+          "en_us": "Tamer Vincent"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_tamer_vincent"
+      },
+      "classification": "trainer",
+      "expected_level": 44,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_team_rocket_grunt_6",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/team_rocket_grunt_0162",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "로켓단 조무래기",
+          "en_us": "Team Rocket Grunt"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_team_rocket_grunt_6"
+      },
+      "classification": "trainer",
+      "expected_level": 15,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_youngster_chad",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/youngster",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "반바지 꼬마 채드",
+          "en_us": "Youngster Chad"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_youngster_chad"
+      },
+      "classification": "trainer",
+      "expected_level": 14,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_youngster_dan",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/youngster",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "반바지 꼬마 댄",
+          "en_us": "Youngster Dan"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_youngster_dan"
+      },
+      "classification": "trainer",
+      "expected_level": 17,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_youngster_joey",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/youngster",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "반바지 꼬마 조이",
+          "en_us": "Youngster Joey"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_youngster_joey"
+      },
+      "classification": "trainer",
+      "expected_level": 15,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/firered_youngster_timmy",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/youngster",
+          "implementation_status": "ready"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "반바지 꼬마 티미",
+          "en_us": "Youngster Timmy"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/firered/firered_youngster_timmy"
+      },
+      "classification": "trainer",
+      "expected_level": 14,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/kanto_beauty_sora",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/beauty_sheila_010d"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "아가씨 소라"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/kanto_beauty_sora"
+      },
+      "classification": "trainer",
+      "expected_level": 23,
+      "preferred_biomes": [
+        "minecraft:flower_forest",
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/kanto_biker_gangho",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/biker_virgil_01d6"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "폭주족 강호"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/kanto_biker_gangho"
+      },
+      "classification": "trainer",
+      "expected_level": 27,
+      "preferred_biomes": [
+        "minecraft:plains",
+        "minecraft:badlands"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/kanto_black_belt_hyuk",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/black_belt_hitoshi_0141"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "태권왕 혁"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/kanto_black_belt_hyuk"
+      },
+      "classification": "trainer",
+      "expected_level": 42,
+      "preferred_biomes": [
+        "minecraft:stony_peaks",
+        "minecraft:windswept_hills"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/kanto_gentleman_doyoung",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/gentleman_brooks_01e2"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "신사 도영"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/kanto_gentleman_doyoung"
+      },
+      "classification": "trainer",
+      "expected_level": 22,
+      "preferred_biomes": [
+        "minecraft:plains",
+        "minecraft:beach"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/kanto_psychic_seon",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "초능력자 선"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/kanto_psychic_seon"
+      },
+      "classification": "trainer",
+      "expected_level": 24,
+      "preferred_biomes": [
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/kanto_sailor_junho",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/sailor_trevor_0087"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "선원 준호"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/kanto_sailor_junho"
+      },
+      "classification": "trainer",
+      "expected_level": 18,
+      "preferred_biomes": [
+        "minecraft:beach",
+        "minecraft:ocean"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/kanto_swimmer_nari",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/swimmerf_tiffany_010e"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "비키니 아가씨 나리"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/kanto_swimmer_nari"
+      },
+      "classification": "trainer",
+      "expected_level": 30,
+      "preferred_biomes": [
+        "minecraft:ocean",
+        "minecraft:beach"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/kanto_swimmer_taejin",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/swimmerm_roland_00f8"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "수영팬티 소년 태진"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/kanto_swimmer_taejin"
+      },
+      "classification": "trainer",
+      "expected_level": 28,
+      "preferred_biomes": [
+        "minecraft:ocean",
+        "minecraft:beach"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/rocket_power_plant_grunt",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/team_rocket_grunt_male"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "로켓단 조무래기"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/rocket_power_plant_grunt"
+      },
+      "classification": "trainer",
+      "expected_level": 1,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rocket_power_plant_grunt_east",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/team_rocket_grunt_male"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "로켓단 조무래기"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/rocket_power_plant_grunt_east"
+      },
+      "classification": "trainer",
+      "expected_level": 1,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rocket_power_plant_officer",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/rocket_admin_archer_002a"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "로켓단 간부"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/rocket_power_plant_officer"
+      },
+      "classification": "trainer",
+      "expected_level": 1,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rocket_silph_admin",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/rocket_admin_archer_002a"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "실프 점거 간부"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/rocket_silph_admin"
+      },
+      "classification": "trainer",
+      "expected_level": 1,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rocket_silph_guard",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/team_rocket_grunt_male"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "실프 사옥 경비"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/rocket_silph_guard"
+      },
+      "classification": "trainer",
+      "expected_level": 1,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rocket_tower_admin",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/rocket_admin_archer_002a"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "포켓몬타워 간부"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/rocket_tower_admin"
+      },
+      "classification": "trainer",
+      "expected_level": 1,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rocket_tower_guard",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/team_rocket_grunt_male"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "포켓몬타워 경비"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/generation_1/rocket_tower_guard"
+      },
+      "classification": "trainer",
+      "expected_level": 1,
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/league/indigo_plateau_attendant",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/pokemart_clerk_male",
+          "arm_model": "classic"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "리그 접수원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/league/indigo_plateau_attendant"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/league/indigo_plateau_challenger",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_female"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "리그 도전자"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/league/indigo_plateau_challenger"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/league/indigo_plateau_veteran",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/veteran_male"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "베테랑 트레이너"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/league/indigo_plateau_veteran"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/feature_map_guide",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/pokemon_ranger_male"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "여행 안내원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/feature_map_guide"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/feature_pc_technician",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_rodney_0153"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "이수재"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/feature_pc_technician"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/feature_teleport_guide",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "초능력자"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/feature_teleport_guide"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/field_move_defog_instructor",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/psychic_johan_0118"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "안개 관측가"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/field_move_defog_instructor"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/field_move_flash_instructor",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_ivan_015b"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "동굴 조사원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/field_move_flash_instructor"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/field_move_fly_instructor",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/bird_keeper_mitch_013a"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "비행 안내원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/field_move_fly_instructor"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/field_move_rock_climb_instructor",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/hiker_jeremy_01d1"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "절벽 등반가"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/field_move_rock_climb_instructor"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/field_move_rock_smash_instructor",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/hiker_alan_00b9"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "바위 작업반장"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/field_move_rock_smash_instructor"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/field_move_strength_instructor",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/black_belt_hitoshi_0141"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "괴력 수련가"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/field_move_strength_instructor"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/field_move_surf_instructor",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/swimmerm_roland_00f8"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "수상 안전요원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/field_move_surf_instructor"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/field_move_whirlpool_instructor",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/sailor_trevor_0087"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "조류 연구 선원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/field_move_whirlpool_instructor"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/item_antidote_supplier",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/hiker_alan_00b9"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "야외 탐사 지원원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/item_antidote_supplier"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/item_coin_case_guest",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/gentleman_arthur_01a6"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "은퇴한 카지노 손님"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/item_coin_case_guest"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/item_pokeball_supplier",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/scientist_ed_0158"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "연구소 조수"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/item_pokeball_supplier"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/rewards/item_potion_supplier",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/lass_sally_0075"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "회복 지원원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/rewards/item_potion_supplier"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/sample_ace_jiwon",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/ace_trainer_female"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "엘리트 트레이너 지원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_ace_jiwon"
+      },
+      "classification": "trainer",
+      "expected_level": 16,
+      "preferred_biomes": [
+        "minecraft:plains",
+        "minecraft:taiga"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/sample_antidote_giver",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/picnicker"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "해독제를 나눠주는 약초꾼"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_antidote_giver"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [
+        "minecraft:forest"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/sample_bird_keeper_ara",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/bird_keeper"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "새 조련사 아라"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_bird_keeper_ara"
+      },
+      "classification": "trainer",
+      "expected_level": 14,
+      "preferred_biomes": [
+        "minecraft:windswept_hills",
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/sample_bug_catcher_doyun",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/bug_catcher"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "곤충채집소년 도윤"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_bug_catcher_doyun"
+      },
+      "classification": "trainer",
+      "expected_level": 7,
+      "preferred_biomes": [
+        "minecraft:forest"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/sample_camper_jun",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/camper"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "캠프보이 준"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_camper_jun"
+      },
+      "classification": "trainer",
+      "expected_level": 9,
+      "preferred_biomes": [
+        "minecraft:taiga",
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/sample_fisherman_minsu",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/fisherman"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "낚시꾼 민수"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_fisherman_minsu"
+      },
+      "classification": "trainer",
+      "expected_level": 11,
+      "preferred_biomes": [
+        "minecraft:river",
+        "minecraft:beach"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/sample_hiker_seok",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/hiker_alan_00b9"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "등산가 석"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_hiker_seok"
+      },
+      "classification": "trainer",
+      "expected_level": 12,
+      "preferred_biomes": [
+        "minecraft:stony_peaks",
+        "minecraft:dripstone_caves"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/sample_lass_yuna",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/lass"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "짧은치마 유나"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_lass_yuna"
+      },
+      "classification": "trainer",
+      "expected_level": 6,
+      "preferred_biomes": [
+        "minecraft:plains",
+        "minecraft:forest"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/sample_oran_berry_giver",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/camper"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "오랭열매를 나눠주는 농부"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_oran_berry_giver"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/sample_picnicker_hana",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/picnicker"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "피크닉걸 하나"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_picnicker_hana"
+      },
+      "classification": "trainer",
+      "expected_level": 10,
+      "preferred_biomes": [
+        "minecraft:flower_forest",
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/sample_pokeball_giver",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/school_kid"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "몬스터볼을 나눠주는 연구원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_pokeball_giver"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/sample_potion_giver",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/lass"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "상처약을 나눠주는 여행자"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_potion_giver"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/sample_veteran_taeho",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/veteran_male"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "베테랑 트레이너 태호"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_veteran_taeho"
+      },
+      "classification": "trainer",
+      "expected_level": 18,
+      "preferred_biomes": [
+        "minecraft:plains",
+        "minecraft:stony_peaks"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/sample_youngster_minjun",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/youngster"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "반바지 꼬마 민준"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/samples/sample_youngster_minjun"
+      },
+      "classification": "trainer",
+      "expected_level": 5,
+      "preferred_biomes": [
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": true,
+      "automatic_route_placement": true
+    },
+    {
+      "npc": "cobbleventure:npc/gym_guide",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/police_officer",
+          "arm_model": "classic"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "체육관 안내인"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/story/gym_guide"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/professor_oak",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/prof_prof_oak_01ff"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "오박사",
+          "en_us": "Professor Oak"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/story/professor_oak"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/story/saffron_gatekeeper",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/police_officer",
+          "arm_model": "classic"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "관문 경비원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/story/saffron_gatekeeper"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/starter_town_gatekeeper_minho",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/police_officer",
+          "arm_model": "classic"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "길지기 민호"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/story/starter_town_gatekeeper_minho"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [
+        "minecraft:plains"
+      ],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/story/viridian_gatekeeper",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/police_officer",
+          "arm_model": "classic"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "관문 경비원"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/story/viridian_gatekeeper"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": false,
+      "automatic_route_placement": false
+    },
+    {
+      "npc": "cobbleventure:npc/api_trainer",
+      "event_engine": "cves_v5",
+      "runtime": {
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/youngster_yasu_0063"
+        },
+        "behavior": {
+          "movement": "stationary",
+          "look_at_player": true,
+          "invulnerable": true,
+          "collision": true
+        },
+        "display_name": {
+          "ko_kr": "API 트레이너"
+        },
+        "functions": [],
+        "binding_tag": "cves_binding/cobbleventure/trainers/api_trainer"
+      },
+      "classification": "ambient",
+      "preferred_biomes": [],
+      "automatic_town_placement": true,
+      "automatic_route_placement": false
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "tauros-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_grassland"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "tauros",
+      "level": "24-49",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_hills"
+        ]
+      },
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    },
+    {
+      "id": "tauros-combat-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_highlands"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "tauros paldean bull_breed=combat",
+      "level": "24-49",
+      "spawnablePositionType": "grounded",
+      "weightMultiplier": {
+        "condition": {
+          "timeRange": "night"
+        },
+        "multiplier": 0.25
+      }
+    },
+    {
+      "id": "tauros-blaze-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_highlands"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "tauros paldean bull_breed=blaze",
+      "level": "24-49",
+      "spawnablePositionType": "grounded",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "timeRange": "night"
+          },
+          "multiplier": 0.25
+        },
+        {
+          "condition": {
+            "neededNearbyBlocks": [
+              "#minecraft:lava"
+            ]
+          },
+          "multiplier": 5.0
+        }
+      ]
+    },
+    {
+      "id": "tauros-aqua-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_highlands"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "tauros paldean bull_breed=aqua",
+      "level": "24-49",
+      "spawnablePositionType": "grounded",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "timeRange": "night"
+          },
+          "multiplier": 0.25
+        },
+        {
+          "condition": {
+            "neededNearbyBlocks": [
+              "#minecraft:water"
+            ]
+          },
+          "multiplier": 5.0
+        }
+      ]
+    }
+  ]
+}

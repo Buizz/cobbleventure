@@ -1,16 +1,16 @@
 # Cobblemon 1.8 호환성 검증 기록
 
-> 최종 검증일: 2026-09-08
+> 최종 검증일: 2026-09-14
 > 상태: 정식 1.8 자체 모듈 빌드 및 핵심 트레이너 스택 서버 기동 통과
 
 ## 정식 검증 입력
 
 - Minecraft: `1.21.1`
 - NeoForge: `21.1.248`
-- Cobblemon: `1.8.0+1.21.1`
-- CurseForge 프로젝트/파일: `687131:8818732`
-- 파일: `Cobblemon-neoforge-1.8.0+1.21.1.jar`
-- SHA-256: `49994513E740408AFC6FE1D03E879C1ED7F42F8245020406D8872A1EE7961FDA`
+- Cobblemon: `1.8.1+1.21.1`
+- Modrinth 프로젝트/버전: `MdwFAVRL:7otgw3aH`
+- 파일: `Cobblemon-neoforge-1.8.1+1.21.1.jar`
+- SHA-256: `5E6882D60D76F57C56DDDBDFB9A66EAFDB9F7B93103A305CA51F285B09D20C0D`
 - 로컬 보관 위치: `.tmp/cobblemon-1.8-release/`
 
 Gradle 빌드는 `COBBLEVENTURE_COBBLEMON_TARGET=1.8`일 때 위 로컬 JAR을 사용하며,
@@ -32,29 +32,32 @@ Gradle 빌드는 `COBBLEVENTURE_COBBLEMON_TARGET=1.8`일 때 위 로컬 JAR을 �
 | `cobbleventure-theme-blocks` | 통과 | 리소스 동기화와 1.8 전용 JAR 설치 포함 |
 
 `cobbleventure-pokefinder`는 CobbleNav HUD와 내부 레이아웃을 확장하는 모듈이다.
-CobbleNav 2.4.0과 Cobblemon 1.8을 컴파일 입력으로 사용한 전체 단위 테스트와 JAR
+CobbleNav 2.4.1과 Cobblemon 1.8을 컴파일 입력으로 사용한 전체 단위 테스트와 JAR
 빌드를 통과했으며 1.8 개발팩에 다시 포함한다. 실제 HUD 조작은 클라이언트 스모크
 테스트에서 추가 확인한다.
 
 ## 1.8 외부 모드 갱신
 
-2026-09-08 기준 트레이너 스택의 공식 1.8 NeoForge 파일을 다음과 같이 고정했다.
+2026-09-14 기준 트레이너 스택의 공식 1.8 NeoForge 파일을 다음과 같이 고정했다.
 
 - RCT API `0.16.0-beta`: CurseForge `1152792:8826267`
 - Radical Cobblemon Trainers `0.19.0-beta`: CurseForge `1009534:8827140`
 - TBCS `0.15.0-beta`: CurseForge `1172731:8833923`
-- Mega Showdown `1.0+1.8+1.21.1-beta2`: CurseForge `1189523:8820597`
+- Mega Showdown `1.2.0+1.8.1+1.21.1-release`: CurseForge `1189523:8870190`
 
-- CobbleNav `2.4.0`: CurseForge `976014:8823427`
-  ([공식 변경 내역](https://www.curseforge.com/minecraft/mc-mods/cobblemon-pokenav/files/8823427),
-  2026-09-06 배포, Cobblemon 1.8.0 지원)
+Adventure, Battle AI와 World Bootstrap의 Gradle 컴파일 입력도 RCT API
+`1152792:8826267`로 통일해 런타임 Lock과 같은 API를 검사한다.
+
+- CobbleNav `2.4.1`: CurseForge `976014:8837236`
+  ([공식 변경 내역](https://www.curseforge.com/minecraft/mc-mods/cobblemon-pokenav/files/8837236),
+  2026-09-08 배포, Cobblemon 1.8.0 지원)
 
 CobbleNav JAR의 Cobblemon 요구 범위 `[1.8.0,)`과 기존 포켓내비 아이템
-`cobblenav:pokenav_item_red`를 확인했다. Player Menu는 1.8 빌드에서 2.4.0을
+`cobblenav:pokenav_item_red`를 확인했다. Player Menu는 1.8 빌드에서 2.4.1을
 참조하고 허용하며, Kotlin 람다 이름 변경으로 연락처 버튼을 잘못 가로채지 않도록
 지도 화면 생성 지점을 기준으로 연결한다. 실제 클라이언트에서 민호의 지급과
 포켓내비 열기·지도·연락처 버튼 동작은 추가 확인이 필요하다.
-Cobbleventure Pokefinder 확장도 CobbleNav 2.4.0 기준으로 빌드해 1.8 프로필에
+Cobbleventure Pokefinder 확장도 CobbleNav 2.4.1 기준으로 빌드해 1.8 프로필에
 포함한다. 1.7.3 프로필은 활성 빌드 경로에서 제거하고 참고용으로만 유지한다.
 
 경험치 HUD, KO 즉시 지급, 포획 경험치는 외부 세 모드와 Tim Core를 제거하고
@@ -88,6 +91,9 @@ NeoForge `21.1.248` 전용 서버에서 Cobblemon `1.8.0`, Kotlin for Forge `5.1
 Architectury `13.0.11`, RCT API `0.16.0-beta`, RCT `0.19.0-beta`, TBCS
 `0.15.0-beta`를 함께 기동했다. 서버가 `Done` 상태에 도달했고 RCT와 TBCS가 각각
 트레이너 1,559명을 등록했다.
+
+Cobblemon `1.8.1`은 전체 팩 빌드와 단위 테스트를 통과했으며 전용 서버 기동
+스모크는 별도로 다시 수행한다.
 
 최소 스모크 구성에는 Mega Showdown을 넣지 않아 RCT 기본 데이터의
 `mega_showdown:*` 아이템 검증 경고가 발생했다. 이는 1.8 개발팩에는 Mega Showdown이

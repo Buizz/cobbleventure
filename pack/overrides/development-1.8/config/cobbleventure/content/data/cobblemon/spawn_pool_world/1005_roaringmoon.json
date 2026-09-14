@@ -1,0 +1,29 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "roaringmoon-1",
+      "presets": [
+        "wild",
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 3,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mountain"
+        ],
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "roaringmoon",
+      "level": "55-70",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

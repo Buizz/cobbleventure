@@ -1,0 +1,250 @@
+{
+  "music.kanto.indigo_plateau": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/indigo_plateau",
+        "stream": true
+      }
+    ]
+  },
+  "music.facility.building": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/facility/building",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle.gym_leader": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/battle/gym_leader",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle.trainer": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/battle/trainer",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle.victory_gym_leader": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/battle/victory_gym_leader",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle.victory_trainer": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/battle/victory_trainer",
+        "stream": true
+      }
+    ]
+  },
+  "music.battle.victory_wild": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/battle/victory_wild",
+        "stream": true
+      }
+    ]
+  },
+  "music.event.item_acquired": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/event/item_acquired",
+        "stream": false
+      }
+    ]
+  },
+  "music.event.key_item_acquired": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/event/key_item_acquired",
+        "stream": false
+      }
+    ]
+  },
+  "music.event.machine_acquired": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/event/machine_acquired",
+        "stream": false
+      }
+    ]
+  },
+  "music.facility.gym": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/facility/gym",
+        "stream": true
+      }
+    ]
+  },
+  "music.facility.game_corner": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/facility/game_corner",
+        "stream": true
+      }
+    ]
+  },
+  "music.dungeon.team_rocket_hq": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/dungeon/team_rocket_hq",
+        "stream": true
+      }
+    ]
+  },
+  "music.dungeon.pokemon_tower": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/dungeon/pokemon_tower",
+        "stream": true
+      }
+    ]
+  },
+  "music.dungeon.rocket_hideout": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/dungeon/rocket_hideout",
+        "stream": true
+      }
+    ]
+  },
+  "music.dungeon.silph_company": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/dungeon/silph_company",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.celadon_city": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/celadon_city",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.cerulean_city": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/cerulean_city",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.cinnabar_island": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/cinnabar_island",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.lavender_town": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/lavender_town",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.mt_moon": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/mt_moon",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.pallet_town": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/pallet_town",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.pewter_city": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/pewter_city",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.route_01": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/route_01",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.route_03": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/route_03",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.vermilion_city": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/vermilion_city",
+        "stream": true
+      }
+    ]
+  },
+  "music.kanto.viridian_forest": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/kanto/viridian_forest",
+        "stream": true
+      }
+    ]
+  },
+  "music.facility.pokemon_center": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/facility/pokemon_center",
+        "stream": true
+      }
+    ]
+  },
+  "music.encounter.trainer_bad_guys": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/encounter/trainer_bad_guys",
+        "stream": true
+      }
+    ]
+  },
+  "music.encounter.trainer_boy": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/encounter/trainer_boy",
+        "stream": true
+      }
+    ]
+  },
+  "music.encounter.trainer_girl": {
+    "sounds": [
+      {
+        "name": "cobbleventure_music:music/encounter/trainer_girl",
+        "stream": true
+      }
+    ]
+  }
+}

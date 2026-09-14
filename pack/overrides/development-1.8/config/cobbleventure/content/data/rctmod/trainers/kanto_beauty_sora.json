@@ -1,0 +1,41 @@
+{
+  "name": "아가씨 소라 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "clefairy",
+      "level": 22,
+      "moveset": [
+        "sing",
+        "doubleslap",
+        "minimize",
+        "metronome"
+      ]
+    },
+    {
+      "species": "weepinbell",
+      "level": 22,
+      "moveset": [
+        "vinewhip",
+        "growth",
+        "sleeppowder",
+        "acid"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

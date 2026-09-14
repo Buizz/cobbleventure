@@ -1,0 +1,301 @@
+{
+  "$schema": "../schemas/music-tracks.schema.json",
+  "schema_version": 1,
+  "namespace": "cobbleventure_music",
+  "datapack_required": false,
+  "source": {
+    "label": "Cobbleventure Local Music Library",
+    "audio_tracked_by_git": false,
+    "local_directory": "local-assets/music",
+    "notes": "원본 음원은 저장소 안의 Git 제외 로컬 폴더와 그 하위 폴더에서 관리한다. 이 카탈로그에는 루트 기준 상대 파일 경로와 안정적인 사운드 ID만 기록한다."
+  },
+  "music_notification": {
+    "enabled": true,
+    "album": "Pokemon Another Red PWT 250821",
+    "author": "Pokémon 시리즈 / 편곡 출처 확인 필요"
+  },
+  "defaults": {
+    "tile": "kanto.route_01",
+    "road": "kanto.route_03",
+    "settlement": "kanto.pallet_town",
+    "cave": "kanto.mt_moon",
+    "forest": "kanto.viridian_forest",
+    "building": "facility.building",
+    "pokemon_center": "facility.pokemon_center",
+    "pokemart": "kanto.celadon_city",
+    "trainer_encounter_boy": "encounter.trainer_boy",
+    "trainer_encounter_girl": "encounter.trainer_girl",
+    "trainer_encounter_bad_guys": "encounter.trainer_bad_guys",
+    "item_acquired": "event.item_acquired",
+    "key_item_acquired": "event.key_item_acquired",
+    "machine_acquired": "event.machine_acquired",
+    "battle": "battle.trainer",
+    "gym": "battle.gym_leader",
+    "victory_wild": "battle.victory_wild",
+    "victory_trainer": "battle.victory_trainer",
+    "victory_gym": "battle.victory_gym_leader"
+  },
+  "tracks": [
+    {
+      "id": "kanto.indigo_plateau",
+      "sound_event": "music.kanto.indigo_plateau",
+      "resource": "music/kanto/indigo_plateau",
+      "source_file": "download/151. The Pokémon League.ogg",
+      "category": "league",
+      "usage": "석영고원 및 관동 포켓몬리그 내부",
+      "album": "Pokémon HeartGold & SoulSilver Original Soundtrack",
+      "author": "Hitomi Sato"
+    },
+    {
+      "id": "facility.building",
+      "sound_event": "music.facility.building",
+      "resource": "music/facility/building",
+      "source_file": "another-red-bgm/HGSS 104 New Bark Town.ogg",
+      "category": "facility",
+      "usage": "일반 건물 내부",
+      "album": "Pokémon HeartGold & Pokémon SoulSilver"
+    },
+    {
+      "id": "battle.gym_leader",
+      "sound_event": "music.battle.gym_leader",
+      "resource": "music/battle/gym_leader",
+      "source_file": "another-red-bgm/Battle Gym Leader.ogg",
+      "category": "battle",
+      "usage": "체육관 관장 전투"
+    },
+    {
+      "id": "battle.trainer",
+      "sound_event": "music.battle.trainer",
+      "resource": "music/battle/trainer",
+      "source_file": "another-red-bgm/Battle trainer.ogg",
+      "category": "battle",
+      "usage": "일반 트레이너 전투"
+    },
+    {
+      "id": "battle.victory_gym_leader",
+      "sound_event": "music.battle.victory_gym_leader",
+      "resource": "music/battle/victory_gym_leader",
+      "source_file": "another-red-bgm/Battle victory leader.ogg",
+      "category": "victory",
+      "usage": "체육관 관장 전투 승리"
+    },
+    {
+      "id": "battle.victory_trainer",
+      "sound_event": "music.battle.victory_trainer",
+      "resource": "music/battle/victory_trainer",
+      "source_file": "another-red-bgm/Battle victory trainer.ogg",
+      "category": "victory",
+      "usage": "일반 트레이너 전투 승리"
+    },
+    {
+      "id": "battle.victory_wild",
+      "sound_event": "music.battle.victory_wild",
+      "resource": "music/battle/victory_wild",
+      "source_file": "another-red-bgm/Battle victory wild.ogg",
+      "category": "victory",
+      "usage": "야생 포켓몬 전투 승리"
+    },
+    {
+      "id": "event.item_acquired",
+      "sound_event": "music.event.item_acquired",
+      "resource": "music/event/item_acquired",
+      "source_file": "another-red-bgm/Item get.ogg",
+      "category": "event",
+      "usage": "일반 아이템 획득",
+      "stream": false
+    },
+    {
+      "id": "event.key_item_acquired",
+      "sound_event": "music.event.key_item_acquired",
+      "resource": "music/event/key_item_acquired",
+      "source_file": "another-red-bgm/Key item get.ogg",
+      "category": "event",
+      "usage": "중요 아이템 획득",
+      "stream": false
+    },
+    {
+      "id": "event.machine_acquired",
+      "sound_event": "music.event.machine_acquired",
+      "resource": "music/event/machine_acquired",
+      "source_file": "another-red-bgm/Machine get.ogg",
+      "category": "event",
+      "usage": "기술머신 획득",
+      "stream": false
+    },
+    {
+      "id": "facility.gym",
+      "sound_event": "music.facility.gym",
+      "resource": "music/facility/gym",
+      "source_file": "download/1-42. Pokémon Gym.ogg",
+      "category": "facility",
+      "usage": "체육관 내부"
+    },
+    {
+      "id": "facility.game_corner",
+      "sound_event": "music.facility.game_corner",
+      "resource": "music/facility/game_corner",
+      "source_file": "download/36. Rocket Game Corner.ogg",
+      "category": "facility",
+      "usage": "로켓 게임코너 내부"
+    },
+    {
+      "id": "dungeon.team_rocket_hq",
+      "sound_event": "music.dungeon.team_rocket_hq",
+      "resource": "music/dungeon/team_rocket_hq",
+      "source_file": "download/1-77. Team Rocket HQ.ogg",
+      "category": "dungeon",
+      "usage": "로켓단 본부 및 점거 시설"
+    },
+    {
+      "id": "dungeon.pokemon_tower",
+      "sound_event": "music.dungeon.pokemon_tower",
+      "resource": "music/dungeon/pokemon_tower",
+      "source_file": "download/34. Pokémon Tower.ogg",
+      "category": "dungeon",
+      "usage": "포켓몬타워"
+    },
+    {
+      "id": "dungeon.rocket_hideout",
+      "sound_event": "music.dungeon.rocket_hideout",
+      "resource": "music/dungeon/rocket_hideout",
+      "source_file": "download/37. Rocket Hideout.ogg",
+      "category": "dungeon",
+      "usage": "게임코너 지하 로켓단 아지트"
+    },
+    {
+      "id": "dungeon.silph_company",
+      "sound_event": "music.dungeon.silph_company",
+      "resource": "music/dungeon/silph_company",
+      "source_file": "download/39. Silph Co.ogg",
+      "category": "dungeon",
+      "usage": "실프주식회사"
+    },
+    {
+      "id": "kanto.celadon_city",
+      "sound_event": "music.kanto.celadon_city",
+      "resource": "music/kanto/celadon_city",
+      "source_file": "another-red-bgm/KM_Celadon.ogg",
+      "category": "settlement",
+      "usage": "무지개시티"
+    },
+    {
+      "id": "kanto.cerulean_city",
+      "sound_event": "music.kanto.cerulean_city",
+      "resource": "music/kanto/cerulean_city",
+      "source_file": "another-red-bgm/KM_Cerulean.ogg",
+      "category": "settlement",
+      "usage": "블루시티 및 연분홍시티"
+    },
+    {
+      "id": "kanto.cinnabar_island",
+      "sound_event": "music.kanto.cinnabar_island",
+      "resource": "music/kanto/cinnabar_island",
+      "source_file": "another-red-bgm/KM_Cinnabar.ogg",
+      "category": "settlement",
+      "usage": "홍련마을"
+    },
+    {
+      "id": "kanto.lavender_town",
+      "sound_event": "music.kanto.lavender_town",
+      "resource": "music/kanto/lavender_town",
+      "source_file": "another-red-bgm/KM_Lavender.ogg",
+      "category": "settlement",
+      "usage": "보라타운"
+    },
+    {
+      "id": "kanto.mt_moon",
+      "sound_event": "music.kanto.mt_moon",
+      "resource": "music/kanto/mt_moon",
+      "source_file": "another-red-bgm/KM_Mt.Moon.ogg",
+      "category": "dungeon",
+      "usage": "달맞이산"
+    },
+    {
+      "id": "kanto.pallet_town",
+      "sound_event": "music.kanto.pallet_town",
+      "resource": "music/kanto/pallet_town",
+      "source_file": "another-red-bgm/KM_Pallet.ogg",
+      "category": "settlement",
+      "usage": "태초마을"
+    },
+    {
+      "id": "kanto.pewter_city",
+      "sound_event": "music.kanto.pewter_city",
+      "resource": "music/kanto/pewter_city",
+      "source_file": "another-red-bgm/KM_Pewter.ogg",
+      "category": "settlement",
+      "usage": "회색시티·상록시티·노랑시티 계열"
+    },
+    {
+      "id": "kanto.route_01",
+      "sound_event": "music.kanto.route_01",
+      "resource": "music/kanto/route_01",
+      "source_file": "another-red-bgm/KM_Route1.ogg",
+      "category": "route",
+      "usage": "관동 1번도로 계열"
+    },
+    {
+      "id": "kanto.route_03",
+      "sound_event": "music.kanto.route_03",
+      "resource": "music/kanto/route_03",
+      "source_file": "another-red-bgm/KM_Route3.ogg",
+      "category": "route",
+      "usage": "관동 3번도로 계열"
+    },
+    {
+      "id": "kanto.vermilion_city",
+      "sound_event": "music.kanto.vermilion_city",
+      "resource": "music/kanto/vermilion_city",
+      "source_file": "another-red-bgm/KM_Vermillion.ogg",
+      "category": "settlement",
+      "usage": "갈색시티"
+    },
+    {
+      "id": "kanto.viridian_forest",
+      "sound_event": "music.kanto.viridian_forest",
+      "resource": "music/kanto/viridian_forest",
+      "source_file": "another-red-bgm/KM_ViridianForest.ogg",
+      "category": "dungeon",
+      "usage": "상록숲"
+    },
+    {
+      "id": "facility.pokemon_center",
+      "sound_event": "music.facility.pokemon_center",
+      "resource": "music/facility/pokemon_center",
+      "source_file": "download/1-19.-Pokemon-Center.ogg",
+      "category": "facility",
+      "usage": "포켓몬센터"
+    },
+    {
+      "id": "encounter.trainer_bad_guys",
+      "sound_event": "music.encounter.trainer_bad_guys",
+      "resource": "music/encounter/trainer_bad_guys",
+      "source_file": "download/1-31. A Trainer Appears! (Bad Guys).ogg",
+      "category": "encounter",
+      "usage": "악역 트레이너 조우",
+      "album": "Pokémon: Let's Go, Pikachu! & Pokémon: Let's Go, Eevee! Super Music Collection",
+      "author": "Hiroaki Tsutsumi, Kon Shirasu, Shota Kageyama"
+    },
+    {
+      "id": "encounter.trainer_boy",
+      "sound_event": "music.encounter.trainer_boy",
+      "resource": "music/encounter/trainer_boy",
+      "source_file": "download/1-13. A Trainer Appears (Boy's Version).ogg",
+      "category": "encounter",
+      "usage": "남성 트레이너 조우",
+      "album": "Pokémon: Let's Go, Pikachu! & Pokémon: Let's Go, Eevee! Super Music Collection",
+      "author": "Hiroaki Tsutsumi, Kon Shirasu, Shota Kageyama"
+    },
+    {
+      "id": "encounter.trainer_girl",
+      "sound_event": "music.encounter.trainer_girl",
+      "resource": "music/encounter/trainer_girl",
+      "source_file": "download/1-21. A Trainer Appears! (Girl's Version).ogg",
+      "category": "encounter",
+      "usage": "여성 트레이너 조우",
+      "album": "Pokémon: Let's Go, Pikachu! & Pokémon: Let's Go, Eevee! Super Music Collection",
+      "author": "Hiroaki Tsutsumi, Kon Shirasu, Shota Kageyama"
+    }
+  ],
+  "review_candidates": []
+}

@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ironthorns",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 3,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mountain"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "ironthorns",
+      "level": "40-65",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

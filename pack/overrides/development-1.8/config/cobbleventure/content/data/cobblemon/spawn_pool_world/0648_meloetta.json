@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "meloetta-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 1,
+      "condition": {
+        "biomes": [
+          "minecraft:sunflower_plains"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "meloetta",
+      "level": "50-55",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "mrrime-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.032,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "mrrime",
+      "level": "42-52",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "mrrime-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.032,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freezing"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "mrrime",
+      "level": "42-52",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

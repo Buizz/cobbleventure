@@ -1,0 +1,41 @@
+{
+  "name": "비키니 아가씨 나리 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "goldeen",
+      "level": 30,
+      "moveset": [
+        "peck",
+        "waterpulse",
+        "supersonic",
+        "hornattack"
+      ]
+    },
+    {
+      "species": "staryu",
+      "level": 30,
+      "moveset": [
+        "watergun",
+        "rapidspin",
+        "recover",
+        "swift"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

@@ -15763,6 +15763,7 @@ function renderBuildingEditor() {
   $("#building-music-track").innerHTML = musicOptions(metadata.settings?.music_track || "", "building");
   $("#building-music-track").value = metadata.settings?.music_track || "";
   $("#building-placement-y-offset").value = Number(metadata.settings?.placement_y_offset || 0);
+  $("#building-terrain-preparation").value = metadata.settings?.terrain_preparation || "none";
   $("#building-size-width").value = metadata.width;
   $("#building-size-height").value = metadata.height;
   $("#building-size-depth").value = metadata.depth;
@@ -15908,6 +15909,7 @@ async function saveBuildingSettings() {
   for (const [id, metadata] of Object.entries(state.buildingSettings.structures)) {
     buildings[id] = {
       placement_y_offset: Number(metadata.settings?.placement_y_offset || 0),
+      terrain_preparation: metadata.settings?.terrain_preparation || "none",
       structure_category: metadata.settings?.structure_category || metadata.category,
       ...(metadata.settings?.music_track ? { music_track: metadata.settings.music_track } : {}),
       no_interior_space: Boolean(metadata.settings?.no_interior_space),
@@ -21777,6 +21779,12 @@ $("#route-inspector-form").elements.displayName.addEventListener("change", handl
 $("#route-endpoint-list").addEventListener("change", (event) => {
   const select = event.target.closest("[data-route-endpoint]");
   if (select) updateRouteEndpoint(select.dataset.routeEndpoint, select.value);
+});
+$("#building-terrain-preparation").addEventListener("change", (event) => {
+  const metadata = state.buildingSettings.structures[state.buildingSettings.selected];
+  if (!metadata) return;
+  metadata.settings.terrain_preparation = event.target.value;
+  markBuildingSettingsDirty();
 });
 $("#route-endpoint-list").addEventListener("click", (event) => {
   const button = event.target.closest("[data-disconnect-route-endpoint]");

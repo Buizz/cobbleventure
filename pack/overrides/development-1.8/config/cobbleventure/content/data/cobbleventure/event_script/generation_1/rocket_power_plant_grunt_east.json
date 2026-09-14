@@ -1,0 +1,1108 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/generation_1/rocket_power_plant_grunt_east",
+  "source_digest": "3bfb29de9c2ddad5980c43a3fa2c389bf7a8b3a93e72e2b0797fc89fd8cf95e3",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "proximity_enter",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 9
+            }
+          },
+          {
+            "name": "group",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "trainer_battle"
+            }
+          },
+          {
+            "name": "stage",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "warning"
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "unary",
+            "operator": "!",
+            "operand": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "flag"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "cobbleventure:runtime/npc_instance_defeated"
+                  }
+                }
+              ]
+            }
+          },
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "command",
+          "command": "encounter_warning",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "encounter.trainer_bad_guys"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 148,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 194,
+              "line": 3,
+              "column": 51
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 79,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 198,
+              "line": 4,
+              "column": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "trigger": {
+        "name": "proximity_enter",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 6
+            }
+          },
+          {
+            "name": "group",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "trainer_battle"
+            }
+          },
+          {
+            "name": "after",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "warning"
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "unary",
+            "operator": "!",
+            "operand": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "flag"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "cobbleventure:runtime/npc_instance_defeated"
+                  }
+                }
+              ]
+            }
+          },
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e1/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "제어실에는 한 발짝도 가까이 갈 수 없다!"
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "proximity/challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/rocket_power_plant_grunt"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "battle_result",
+          "operation_id": "cobbleventure:event_script/generation_1/rocket_power_plant_grunt_east/proximity/challenge/battle",
+          "next": 2,
+          "resume": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e1/p0/s2",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "battle_result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 3,
+          "else": 7
+        },
+        {
+          "address": 3,
+          "instruction_id": "proximity/victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/rocket_power_plant_grunt_east/proximity/victory/set_instance_defeated",
+          "next": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "proximity/victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/trainer/rocket_power_plant_grunt_east/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/rocket_power_plant_grunt_east/proximity/victory/set_defeated",
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e1/p0/s2/then/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "내가 통로를 내주다니…"
+              }
+            ]
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e1/p0/s2/then_end",
+          "op": "jump",
+          "target": 8
+        },
+        {
+          "address": 7,
+          "instruction_id": "e1/p0/s2/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "제어실은 우리가 지킨다!"
+              }
+            ]
+          },
+          "next": 8,
+          "await": true,
+          "resume": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e1/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e1/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 350,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 404,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "proximity/challenge/battle",
+          "stable_id": "proximity/challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 409,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 518,
+              "line": 12,
+              "column": 114
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e1/p0/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 523,
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 921,
+              "line": 23,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "proximity/victory/set_instance_defeated",
+          "stable_id": "proximity/victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 565,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 669,
+              "line": 14,
+              "column": 111
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "proximity/victory/set_defeated",
+          "stable_id": "proximity/victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 676,
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "offset": 793,
+              "line": 15,
+              "column": 124
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e1/p0/s2/then/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 800,
+              "line": 16,
+              "column": 7
+            },
+            "end": {
+              "offset": 847,
+              "line": 18,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e1/p0/s2/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 557,
+              "line": 13,
+              "column": 39
+            },
+            "end": {
+              "offset": 853,
+              "line": 19,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e1/p0/s2/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 867,
+              "line": 20,
+              "column": 7
+            },
+            "end": {
+              "offset": 915,
+              "line": 22,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e1/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 281,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 925,
+              "line": 24,
+              "column": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:runtime/npc_instance_defeated"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e2/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "내가 통로를 내주다니…"
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e2/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e2/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "제어실에는 한 발짝도 가까이 갈 수 없다!"
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e2/p1/s1",
+          "op": "choice",
+          "prompt": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "도전하시겠습니까?"
+              }
+            ]
+          },
+          "result": null,
+          "options": [
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "승부한다"
+                  }
+                ]
+              },
+              "target": 4
+            },
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "다음에 도전한다"
+                  }
+                ]
+              },
+              "target": 12
+            }
+          ],
+          "await": true
+        },
+        {
+          "address": 4,
+          "instruction_id": "challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/rocket_power_plant_grunt"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "battle_result",
+          "operation_id": "cobbleventure:event_script/generation_1/rocket_power_plant_grunt_east/challenge/battle",
+          "next": 5,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e2/p1/s1/option0/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "battle_result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 6,
+          "else": 10
+        },
+        {
+          "address": 6,
+          "instruction_id": "victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/rocket_power_plant_grunt_east/victory/set_instance_defeated",
+          "next": 7
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/trainer/rocket_power_plant_grunt_east/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/rocket_power_plant_grunt_east/victory/set_defeated",
+          "next": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e2/p1/s1/option0/s1/then/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "내가 통로를 내주다니…"
+              }
+            ]
+          },
+          "next": 9,
+          "await": true,
+          "resume": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "e2/p1/s1/option0/s1/then_end",
+          "op": "jump",
+          "target": 11
+        },
+        {
+          "address": 10,
+          "instruction_id": "e2/p1/s1/option0/s1/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "제어실은 우리가 지킨다!"
+              }
+            ]
+          },
+          "next": 11,
+          "await": true,
+          "resume": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "e2/p1/s1/option0_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 12,
+          "instruction_id": "e2/p1/s1/option1/s0",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 13,
+          "instruction_id": "e2/p1/s1/option1_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e2/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e2/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1026,
+              "line": 29,
+              "column": 5
+            },
+            "end": {
+              "offset": 1069,
+              "line": 31,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e2/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 958,
+              "line": 28,
+              "column": 3
+            },
+            "end": {
+              "offset": 1073,
+              "line": 32,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e2/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1096,
+              "line": 35,
+              "column": 5
+            },
+            "end": {
+              "offset": 1150,
+              "line": 37,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e2/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1155,
+              "line": 38,
+              "column": 5
+            },
+            "end": {
+              "offset": 1812,
+              "line": 56,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "challenge/battle",
+          "stable_id": "challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1221,
+              "line": 40,
+              "column": 9
+            },
+            "end": {
+              "offset": 1320,
+              "line": 40,
+              "column": 108
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e2/p1/s1/option0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1329,
+              "line": 41,
+              "column": 9
+            },
+            "end": {
+              "offset": 1747,
+              "line": 51,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "victory/set_instance_defeated",
+          "stable_id": "victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1375,
+              "line": 42,
+              "column": 11
+            },
+            "end": {
+              "offset": 1469,
+              "line": 42,
+              "column": 105
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_defeated",
+          "stable_id": "victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1480,
+              "line": 43,
+              "column": 11
+            },
+            "end": {
+              "offset": 1587,
+              "line": 43,
+              "column": 118
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e2/p1/s1/option0/s1/then/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1598,
+              "line": 44,
+              "column": 11
+            },
+            "end": {
+              "offset": 1653,
+              "line": 46,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "e2/p1/s1/option0/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1363,
+              "line": 41,
+              "column": 43
+            },
+            "end": {
+              "offset": 1663,
+              "line": 47,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "e2/p1/s1/option0/s1/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1681,
+              "line": 48,
+              "column": 11
+            },
+            "end": {
+              "offset": 1737,
+              "line": 50,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "e2/p1/s1/option0_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1211,
+              "line": 39,
+              "column": 25
+            },
+            "end": {
+              "offset": 1755,
+              "line": 52,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e2/p1/s1/option1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1794,
+              "line": 54,
+              "column": 9
+            },
+            "end": {
+              "offset": 1798,
+              "line": 54,
+              "column": 13
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e2/p1/s1/option1_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1784,
+              "line": 53,
+              "column": 29
+            },
+            "end": {
+              "offset": 1806,
+              "line": 55,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e2/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/rocket_power_plant_grunt_east.cves",
+            "start": {
+              "offset": 1077,
+              "line": 34,
+              "column": 3
+            },
+            "end": {
+              "offset": 1816,
+              "line": 57,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

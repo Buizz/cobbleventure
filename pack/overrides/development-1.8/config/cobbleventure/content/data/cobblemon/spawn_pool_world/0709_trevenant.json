@@ -1,0 +1,66 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "trevenant-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.1,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_spooky"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "trevenant",
+      "level": "26-47",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "trevenant-2",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.5,
+      "condition": {
+        "biomes": [
+          "minecraft:pale_garden"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_6"
+        ]
+      },
+      "pokemon": "trevenant",
+      "level": "26-47",
+      "spawnablePositionType": "grounded",
+      "drops": {
+        "amount": 4,
+        "entries": [
+          {
+            "item": "minecraft:resin_clump",
+            "percentage": 50.0
+          }
+        ]
+      }
+    }
+  ]
+}

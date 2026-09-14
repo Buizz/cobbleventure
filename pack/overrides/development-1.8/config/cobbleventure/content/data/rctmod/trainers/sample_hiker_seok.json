@@ -1,0 +1,30 @@
+{
+  "name": "등산가 석 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "machop",
+      "level": 12,
+      "moveset": [
+        "lowkick",
+        "leer",
+        "focusenergy"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

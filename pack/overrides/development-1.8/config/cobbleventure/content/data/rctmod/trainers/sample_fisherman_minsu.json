@@ -1,0 +1,29 @@
+{
+  "name": "낚시꾼 민수 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "magikarp",
+      "level": 11,
+      "moveset": [
+        "splash",
+        "tackle"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

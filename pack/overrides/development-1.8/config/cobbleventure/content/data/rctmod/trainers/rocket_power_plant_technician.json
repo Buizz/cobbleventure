@@ -1,0 +1,43 @@
+{
+  "name": "발전소 로켓단 기술자 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "voltorb",
+      "level": 25,
+      "moveset": [
+        "spark",
+        "sonicboom",
+        "screech",
+        "charge"
+      ],
+      "gender": "GENDERLESS"
+    },
+    {
+      "species": "magnemite",
+      "level": 26,
+      "moveset": [
+        "spark",
+        "thunderwave",
+        "supersonic",
+        "sonicboom"
+      ],
+      "gender": "GENDERLESS"
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

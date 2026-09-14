@@ -12,6 +12,8 @@
     "WildBattleDuringTrainerLaunchMixin",
     "ShowdownEmptySlotsMixin",
     "MegaShowdownRayquazaMixin",
+    "MegaShowdownStoredRingsMixin",
+    "MegaShowdownStoneFormatMixin",
     "FossilMachineAccess",
     "FossilLaboratoryTickMixin"
   ],

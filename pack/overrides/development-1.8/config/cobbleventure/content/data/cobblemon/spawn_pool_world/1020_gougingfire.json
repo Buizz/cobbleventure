@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "gougingfire-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 3.5,
+      "condition": {
+        "biomes": [
+          "minecraft:basalt_deltas"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "gougingfire",
+      "level": "70-75",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

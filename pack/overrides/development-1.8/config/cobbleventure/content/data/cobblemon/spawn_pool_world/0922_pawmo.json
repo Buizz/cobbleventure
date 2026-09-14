@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "pawmo-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 2.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_plains"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "pawmo",
+      "level": "18-34",
+      "spawnablePositionType": "grounded",
+      "canSeeSky": true
+    }
+  ]
+}

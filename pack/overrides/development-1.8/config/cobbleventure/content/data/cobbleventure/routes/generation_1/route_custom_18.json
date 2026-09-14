@@ -1,0 +1,149 @@
+{
+  "$schema": "../../schemas/route.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:route/route_custom_18",
+  "display_name": {
+    "ko_kr": "갈색시티 - 보라타운 통나무다리",
+    "en_us": "갈색시티 - 보라타운 통나무다리"
+  },
+  "auto_name": true,
+  "enabled": true,
+  "route_type": "log_bridge",
+  "log_bridge_layout": {
+    "pattern": "straight",
+    "detour_blocks": 12
+  },
+  "corridor": {
+    "width_blocks": 12,
+    "edge_noise": 0
+  },
+  "level_scaling": {
+    "mode": "world",
+    "offset": 0
+  },
+  "pokemon_spawns": {
+    "inherit_biome": false,
+    "excluded_species": [],
+    "additions": [
+      {
+        "species": "cobblemon:bellsprout",
+        "min_level": 22,
+        "max_level": 26
+      },
+      {
+        "species": "cobblemon:drowzee",
+        "min_level": 9,
+        "max_level": 15
+      },
+      {
+        "species": "cobblemon:ekans",
+        "min_level": 12,
+        "max_level": 15
+      },
+      {
+        "species": "cobblemon:gloom",
+        "min_level": 28,
+        "max_level": 30
+      },
+      {
+        "species": "cobblemon:oddish",
+        "min_level": 22,
+        "max_level": 26
+      },
+      {
+        "species": "cobblemon:pidgey",
+        "min_level": 23,
+        "max_level": 27
+      },
+      {
+        "species": "cobblemon:sandshrew",
+        "min_level": 12,
+        "max_level": 15
+      },
+      {
+        "species": "cobblemon:spearow",
+        "min_level": 13,
+        "max_level": 17
+      },
+      {
+        "species": "cobblemon:venonat",
+        "min_level": 24,
+        "max_level": 26
+      },
+      {
+        "species": "cobblemon:weepinbell",
+        "min_level": 28,
+        "max_level": 30
+      }
+    ],
+    "level_overrides": [
+      {
+        "species": "cobblemon:bellsprout",
+        "min_level": 22,
+        "max_level": 26
+      },
+      {
+        "species": "cobblemon:drowzee",
+        "min_level": 9,
+        "max_level": 15
+      },
+      {
+        "species": "cobblemon:ekans",
+        "min_level": 12,
+        "max_level": 15
+      },
+      {
+        "species": "cobblemon:gloom",
+        "min_level": 28,
+        "max_level": 30
+      },
+      {
+        "species": "cobblemon:oddish",
+        "min_level": 22,
+        "max_level": 26
+      },
+      {
+        "species": "cobblemon:pidgey",
+        "min_level": 23,
+        "max_level": 27
+      },
+      {
+        "species": "cobblemon:sandshrew",
+        "min_level": 12,
+        "max_level": 15
+      },
+      {
+        "species": "cobblemon:spearow",
+        "min_level": 13,
+        "max_level": 17
+      },
+      {
+        "species": "cobblemon:venonat",
+        "min_level": 24,
+        "max_level": 26
+      },
+      {
+        "species": "cobblemon:weepinbell",
+        "min_level": 28,
+        "max_level": 30
+      }
+    ]
+  },
+  "npc_placements": [],
+  "automatic_npc_placement": {
+    "enabled": true,
+    "count": 3,
+    "use_biome_defaults": false,
+    "direct_trainers": [
+      "cobbleventure:npc/firered_black_belt_atsushi",
+      "cobbleventure:npc/firered_burglar_ramon",
+      "cobbleventure:npc/firered_super_nerd_derek"
+    ],
+    "trigger_override": "proximity"
+  },
+  "automatic_npc_candidates": [
+    "cobbleventure:npc/firered_black_belt_atsushi",
+    "cobbleventure:npc/firered_burglar_ramon",
+    "cobbleventure:npc/firered_super_nerd_derek"
+  ]
+}

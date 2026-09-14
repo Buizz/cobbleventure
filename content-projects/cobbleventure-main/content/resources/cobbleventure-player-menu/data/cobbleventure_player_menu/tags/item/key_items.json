@@ -13,6 +13,14 @@
     {
       "id": "cobbleventure_casino:gacha_ticket",
       "required": false
+    },
+    {
+      "id": "#mega_showdown:mega_bracelet",
+      "required": false
+    },
+    {
+      "id": "#mega_showdown:z_ring",
+      "required": false
     }
   ]
 }

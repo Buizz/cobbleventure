@@ -136,7 +136,8 @@ class KantoLeagueTests(unittest.TestCase):
         self.assertEqual('minecraft:air', blocks.get((x, y + 1, z), 'minecraft:air'))
         self.assertNotIn(blocks.get((x, y - 1, z), 'minecraft:air'), ('minecraft:air', 'minecraft:water', 'minecraft:lava'))
         routes = self.runtime['door_routes']
-        self.assertEqual({'space': 'lobby', 'door': 'entry'}, routes['exterior:door'])
+        self.assertEqual('lobby', routes['exterior:door']['space'])
+        self.assertIn(routes['exterior:door']['door'], {'entry', 'door'})
         self.assertEqual({'space': 'exterior', 'door': 'door'}, routes['lobby:door'])
         self.assertEqual({'space': 'league_kanto_elite_1', 'door': 'entry'}, routes['lobby:entry'])
 
@@ -294,7 +295,10 @@ class KantoLeagueTests(unittest.TestCase):
     def test_graph_roundtrip_keeps_only_lobby_connections(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            for resource in [OWNER, self.league['lobby']['structure']]:
+            gym = leagues.read(CONTENT / 'catalogs/gyms.json')['gyms'][0]
+            resources = [OWNER, self.league['lobby']['structure'], gym['exterior']['structure']]
+            resources += [module['structure'] for module in gym['interior']['modules']]
+            for resource in resources:
                 for suffix in ['.nbt', '.structure.json']:
                     relative = Path('structures') / (resource.split(':')[1] + suffix)
                     target = root / 'content' / relative
@@ -303,12 +307,28 @@ class KantoLeagueTests(unittest.TestCase):
             path = root / 'content/catalogs/building-settings.json'
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps({'schema_version': 1, 'buildings': {OWNER: self.authored['buildings'][OWNER]}}), encoding='utf-8')
-            graph = next(g for g in cm.space_connections_payload(root)['graphs'] if g['owner'] == OWNER)
+            (path.parent / 'gyms.json').write_text(json.dumps({'schema_version': 1, 'gyms': [gym], 'leagues': []}), encoding='utf-8')
+            graphs = cm.space_connections_payload(root)['graphs']
+            graph = next(g for g in graphs if g['owner'] == OWNER)
             self.assertEqual(2, len(graph['nodes']))
-            issues = cm.save_space_connections(root, {'schema_version': 1, 'graphs': [graph]})
+            # The editor saves every graph, including gym transition anchors.
+            self.assertTrue(any(g['kind'] == 'gym' for g in graphs))
+            issues = cm.save_space_connections(root, {'schema_version': 1, 'graphs': graphs})
             self.assertFalse([i for i in issues if i.level == 'error'], issues)
             saved = leagues.read(path)['buildings'][OWNER]
             self.assertEqual({'exterior:door'}, set(saved['door_routes']))
+            self.assertEqual(self.authored['buildings'][OWNER].get('terrain_preparation', 'none'),
+                             saved['terrain_preparation'])
+
+    def test_external_lobby_door_preserves_challenge_entry_and_automatic_return(self):
+        settings = copy.deepcopy(self.authored)
+        building = settings['buildings'][OWNER]
+        building['door_routes'] = {'exterior:door': {'space': 'lobby', 'door': self.league['lobby']['leave']}}
+        compiled = leagues.compile_settings(settings, self.catalog)['buildings'][OWNER]
+        self.assertEqual(self.league['lobby']['leave'], compiled['door_routes']['exterior:door']['door'])
+        self.assertEqual({'space': 'exterior', 'door': 'door'}, compiled['door_routes']['lobby:' + self.league['lobby']['leave']])
+        self.assertEqual(self.league['lobby']['entry'], compiled['runtime_league']['rooms'][0]['entry'])
+        self.assertEqual('league_kanto_elite_1', compiled['door_routes']['lobby:' + self.league['lobby']['exit']]['space'])
 
 
 if __name__ == '__main__':

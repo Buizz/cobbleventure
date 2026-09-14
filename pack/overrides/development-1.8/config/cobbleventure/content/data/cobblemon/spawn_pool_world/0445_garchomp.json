@@ -1,0 +1,168 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "garchomp-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 0.25,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_badlands",
+          "#cobblemon:is_mountain"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "minY": 0,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "garchomp",
+      "level": "48-60",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "garchomp-2",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_badlands",
+          "#cobblemon:is_mountain"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "garchomp",
+      "level": "48-60",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "garchomp-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "minY": 0,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "garchomp",
+      "level": "48-60",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_badlands",
+          "#cobblemon:is_deep_dark",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_thermal"
+        ],
+        "neededNearbyBlocks": [
+          "minecraft:magma_block"
+        ]
+      }
+    },
+    {
+      "id": "garchomp-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 0.25,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "minY": 0,
+        "neededNearbyBlocks": [
+          "minecraft:magma_block"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "garchomp",
+      "level": "48-60",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_badlands",
+          "#cobblemon:is_deep_dark",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_thermal"
+        ]
+      }
+    },
+    {
+      "id": "garchomp-5",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 0.25,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_thermal"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "minY": 0,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "garchomp",
+      "level": "48-60",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "garchomp-6",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 0.25,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether"
+        ],
+        "maxSkyLight": 7,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "garchomp",
+      "level": "48-60",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "선원 준호 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "machop",
+      "level": 18,
+      "moveset": [
+        "karatechop",
+        "lowkick",
+        "leer",
+        "focusenergy"
+      ]
+    },
+    {
+      "species": "shellder",
+      "level": 18,
+      "moveset": [
+        "tackle",
+        "withdraw",
+        "supersonic",
+        "watergun"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

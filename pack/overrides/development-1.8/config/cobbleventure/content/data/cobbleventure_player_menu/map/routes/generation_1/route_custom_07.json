@@ -1,0 +1,91 @@
+{
+  "$schema": "../../schemas/route.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:route/route_custom_07",
+  "display_name": {
+    "ko_kr": "무지개시티 - 연분홍시티 길",
+    "en_us": "무지개시티 - 연분홍시티 길"
+  },
+  "auto_name": true,
+  "enabled": true,
+  "route_type": "road",
+  "corridor": {
+    "width_blocks": 12,
+    "edge_noise": 0
+  },
+  "level_scaling": {
+    "mode": "world",
+    "offset": 0
+  },
+  "pokemon_spawns": {
+    "inherit_biome": false,
+    "excluded_species": [],
+    "additions": [
+      {
+        "species": "cobblemon:doduo",
+        "min_level": 18,
+        "max_level": 28
+      },
+      {
+        "species": "cobblemon:fearow",
+        "min_level": 25,
+        "max_level": 29
+      },
+      {
+        "species": "cobblemon:raticate",
+        "min_level": 23,
+        "max_level": 29
+      },
+      {
+        "species": "cobblemon:rattata",
+        "min_level": 18,
+        "max_level": 22
+      },
+      {
+        "species": "cobblemon:spearow",
+        "min_level": 20,
+        "max_level": 22
+      }
+    ],
+    "level_overrides": [
+      {
+        "species": "cobblemon:doduo",
+        "min_level": 18,
+        "max_level": 28
+      },
+      {
+        "species": "cobblemon:fearow",
+        "min_level": 25,
+        "max_level": 29
+      },
+      {
+        "species": "cobblemon:raticate",
+        "min_level": 23,
+        "max_level": 29
+      },
+      {
+        "species": "cobblemon:rattata",
+        "min_level": 18,
+        "max_level": 22
+      },
+      {
+        "species": "cobblemon:spearow",
+        "min_level": 20,
+        "max_level": 22
+      }
+    ]
+  },
+  "npc_placements": [],
+  "automatic_npc_placement": {
+    "enabled": true,
+    "count": 4,
+    "use_biome_defaults": false,
+    "direct_trainers": [
+      "cobbleventure:npc/kanto_biker_gangho",
+      "cobbleventure:npc/firered_beauty_lori",
+      "cobbleventure:npc/firered_gentleman_tucker",
+      "cobbleventure:npc/firered_picnicker_tina"
+    ],
+    "trigger_override": "proximity"
+  }
+}

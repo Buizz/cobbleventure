@@ -1,0 +1,183 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "minior-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": true,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "minior meteor_shield=meteor",
+      "level": "20-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "minior-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_hills"
+        ],
+        "canSeeSky": true,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "minior meteor_shield=core core_color=red",
+      "level": "20-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "minior-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_savanna"
+        ],
+        "canSeeSky": true,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "minior meteor_shield=core core_color=orange",
+      "level": "20-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "minior-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_plains"
+        ],
+        "canSeeSky": true,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "minior meteor_shield=core core_color=yellow",
+      "level": "20-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "minior-5",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_jungle"
+        ],
+        "canSeeSky": true,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "minior meteor_shield=core core_color=green",
+      "level": "20-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "minior-6",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": true,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "minior meteor_shield=core core_color=blue",
+      "level": "20-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "minior-7",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_cold"
+        ],
+        "canSeeSky": true,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "minior meteor_shield=core core_color=indigo",
+      "level": "20-30",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "minior-8",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_mountain"
+        ],
+        "canSeeSky": true,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "minior meteor_shield=core core_color=violet",
+      "level": "20-30",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

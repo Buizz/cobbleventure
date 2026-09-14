@@ -1,0 +1,51 @@
+{
+  "name": "포켓몬타워 로켓단 간부 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "aggressive",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "koffing",
+      "level": 29,
+      "moveset": [
+        "smog",
+        "sludge",
+        "smokescreen",
+        "selfdestruct"
+      ]
+    },
+    {
+      "species": "drowzee",
+      "level": 29,
+      "moveset": [
+        "confusion",
+        "disable",
+        "headbutt",
+        "hypnosis"
+      ]
+    },
+    {
+      "species": "golbat",
+      "level": 30,
+      "moveset": [
+        "bite",
+        "confuseray",
+        "wingattack",
+        "meanlook"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

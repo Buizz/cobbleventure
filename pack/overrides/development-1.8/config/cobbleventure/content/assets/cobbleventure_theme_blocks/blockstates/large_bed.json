@@ -1,0 +1,8 @@
+{
+  "multipart": [
+    {"when":{"facing":"north","length":"0","width":"0"},"apply":{"model":"cobbleventure_theme_blocks:block/workshop/09_large_single_iron_bed/large_single_iron_bed"}},
+    {"when":{"facing":"east","length":"0","width":"0"},"apply":{"model":"cobbleventure_theme_blocks:block/workshop/09_large_single_iron_bed/large_single_iron_bed","y":90}},
+    {"when":{"facing":"south","length":"0","width":"0"},"apply":{"model":"cobbleventure_theme_blocks:block/workshop/09_large_single_iron_bed/large_single_iron_bed","y":180}},
+    {"when":{"facing":"west","length":"0","width":"0"},"apply":{"model":"cobbleventure_theme_blocks:block/workshop/09_large_single_iron_bed/large_single_iron_bed","y":270}}
+  ]
+}

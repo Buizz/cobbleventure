@@ -1,0 +1,48 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "articuno-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0,
+      "condition": {
+        "biomes": [
+          "cobbleverse:custom_spawn/articuno_tower"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "articuno",
+      "level": "50",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "articuno-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 4,
+      "condition": {
+        "structures": [
+          "cobbleverse:dyna_tree"
+        ],
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "articuno galarian",
+      "level": "60",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "name": "관동 체육관 관장 강연",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "growlithe",
+      "level": 42,
+      "moveset": [
+        "bite",
+        "roar",
+        "takedown",
+        "fireblast"
+      ]
+    },
+    {
+      "species": "ponyta",
+      "level": 40,
+      "moveset": [
+        "stomp",
+        "bounce",
+        "firespin",
+        "fireblast"
+      ]
+    },
+    {
+      "species": "rapidash",
+      "level": 42,
+      "moveset": [
+        "stomp",
+        "bounce",
+        "firespin",
+        "fireblast"
+      ]
+    },
+    {
+      "species": "arcanine",
+      "level": 47,
+      "moveset": [
+        "bite",
+        "roar",
+        "takedown",
+        "fireblast"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 3
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    },
+    {
+      "item": "cobblemon:full_heal",
+      "quantity": 1
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  PresetMetadata:{
+    author:"Cobbleventure",
+    category:"Cobbleventure Encounters V5",
+    created:0L,
+    description:"폭주족 강호 CVES V5 NPC 표현 프리셋",
+    entityTypeId:"easy_npc:humanoid",
+    modified:0L,
+    name:"폭주족 강호 [V5 근접전투]",
+    variantType:"STEVE",
+    version:"1.0.0"
+  },
+  data:{
+    ActionData:{ActionEventSet:{},ActionPermissionLevel:2},
+    ArmorDropChances:[0.000f,0.000f,0.000f,0.000f],
+    ArmorItems:[{},{},{},{}],
+    CustomName:"{\"text\":\"폭주족 강호\",\"font\":\"minecraft:uniform\"}",
+    DialogData:{DialogDataSet:[],Type:"CUSTOM"},
+    EasyNPCVersion:3,
+    Invulnerable:1b,
+    ModelData:{Root:{Scale:[1.050f,1.050f,1.050f]}},
+    ObjectiveData:{HasObjectives:1b,ObjectiveDataSet:[{Type:"LOOK_AT_PLAYER"},{Type:"LOOK_AT_RESET"}]},
+    PersistenceRequired:1b,
+    PresetUUID:[I;-321793693,-1711516959,-1392083117,-940076524],
+    SkinData:{Type:"CUSTOM",UUID:[I;648746281,-1670033228,-1721115065,1345087949] },
+    Tags:["cobbleventure_regional_npc","cves_binding/cobbleventure/generation_1/kanto_biker_gangho","cves_trigger/proximity"],
+    VariantType:"STEVE",
+    id:"easy_npc:humanoid"
+  }
+}

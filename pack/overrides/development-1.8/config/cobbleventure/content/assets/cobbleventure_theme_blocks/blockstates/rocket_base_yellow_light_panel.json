@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "cobbleventure_theme_blocks:block/rocket_base_yellow_light_panel"
+    },
+    "facing=east": {
+      "model": "cobbleventure_theme_blocks:block/rocket_base_yellow_light_panel",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "cobbleventure_theme_blocks:block/rocket_base_yellow_light_panel",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cobbleventure_theme_blocks:block/rocket_base_yellow_light_panel",
+      "y": 270
+    }
+  }
+}

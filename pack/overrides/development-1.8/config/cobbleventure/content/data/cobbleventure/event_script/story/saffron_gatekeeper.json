@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/story/saffron_gatekeeper",
+  "source_digest": "8aa93aeb75860eca10302d36881c901c8b6242db1dbfdb4b10983ff959bda81a",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "노랑시티로 이어지는 관문은 지금 도로 정비 공사 중입니다. 안전이 확인된 트레이너만 임시로 통행할 수 있으니, 회색·블루·오렌지·무지개·핑크·그린배지를 모두 모아 다시 와 주세요."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/saffron_gatekeeper.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 179,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/story/saffron_gatekeeper.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 183,
+              "line": 6,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

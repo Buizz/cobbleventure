@@ -154,6 +154,26 @@
         ]
       }
     },
+    "building:cobbleventure:league/indigo_plateau": {
+      "nodes": {
+        "exterior": [
+          90,
+          170
+        ],
+        "lobby": [
+          470,
+          90
+        ]
+      }
+    },
+    "building:cobbleventure:league/kanto_league": {
+      "nodes": {
+        "exterior": [
+          90,
+          170
+        ]
+      }
+    },
     "building:cobbleventure:placeholder/basic_building_1": {
       "nodes": {
         "exterior": [
@@ -302,6 +322,38 @@
         ]
       }
     },
+    "building:cobbleventure:placeholder/round_laboratory": {
+      "nodes": {
+        "exterior": [
+          90,
+          170
+        ],
+        "room_1": [
+          470,
+          90
+        ],
+        "tm": [
+          810,
+          90
+        ],
+        "z_move": [
+          1150,
+          90
+        ],
+        "mega": [
+          470,
+          350
+        ],
+        "dynamax": [
+          810,
+          350
+        ],
+        "stats": [
+          1150,
+          350
+        ]
+      }
+    },
     "building:cobbleventure:placeholder/silph_company": {
       "nodes": {
         "exterior": [
@@ -332,8 +384,16 @@
           90,
           170
         ],
-        "main": [
+        "lobby": [
           470,
+          90
+        ],
+        "gimmick": [
+          810,
+          90
+        ],
+        "arena": [
+          1150,
           90
         ]
       }
@@ -344,8 +404,16 @@
           90,
           170
         ],
-        "main": [
+        "lobby": [
           470,
+          90
+        ],
+        "gimmick": [
+          810,
+          90
+        ],
+        "arena": [
+          1150,
           90
         ]
       }
@@ -356,8 +424,16 @@
           90,
           170
         ],
-        "main": [
+        "lobby": [
           470,
+          90
+        ],
+        "gimmick": [
+          810,
+          90
+        ],
+        "arena": [
+          1150,
           90
         ]
       }
@@ -368,8 +444,16 @@
           90,
           170
         ],
-        "main": [
+        "lobby": [
           470,
+          90
+        ],
+        "gimmick": [
+          810,
+          90
+        ],
+        "arena": [
+          1150,
           90
         ]
       }
@@ -380,8 +464,16 @@
           90,
           170
         ],
-        "main": [
+        "lobby": [
           470,
+          90
+        ],
+        "gimmick": [
+          810,
+          90
+        ],
+        "arena": [
+          1150,
           90
         ]
       }
@@ -392,8 +484,16 @@
           90,
           170
         ],
-        "main": [
+        "lobby": [
           470,
+          90
+        ],
+        "gimmick": [
+          810,
+          90
+        ],
+        "arena": [
+          1150,
           90
         ]
       }
@@ -404,8 +504,16 @@
           90,
           170
         ],
-        "main": [
+        "lobby": [
           470,
+          90
+        ],
+        "gimmick": [
+          810,
+          90
+        ],
+        "arena": [
+          1150,
           90
         ]
       }
@@ -416,8 +524,16 @@
           90,
           170
         ],
-        "main": [
+        "lobby": [
           470,
+          90
+        ],
+        "gimmick": [
+          810,
+          90
+        ],
+        "arena": [
+          1150,
           90
         ]
       }
@@ -482,6 +598,15 @@
     "building:cobbleventure:houses/two_story_gable": {},
     "building:cobbleventure:houses/two_story_gambrel": {},
     "building:cobbleventure:houses/two_story_shed": {},
+    "building:cobbleventure:league/indigo_plateau": {
+      "route_1": {
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [],
+        "enter_dialogue": []
+      }
+    },
+    "building:cobbleventure:league/kanto_league": {},
     "building:cobbleventure:placeholder/basic_building_1": {},
     "building:cobbleventure:placeholder/basic_building_2": {},
     "building:cobbleventure:placeholder/basic_building_3": {},
@@ -539,6 +664,44 @@
     "building:cobbleventure:placeholder/pokemon_tower": {},
     "building:cobbleventure:placeholder/power_plant": {},
     "building:cobbleventure:placeholder/radio_tower": {},
+    "building:cobbleventure:placeholder/round_laboratory": {
+      "route_1": {
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [],
+        "enter_dialogue": []
+      },
+      "route_2": {
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [],
+        "enter_dialogue": []
+      },
+      "route_3": {
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [],
+        "enter_dialogue": []
+      },
+      "route_4": {
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [],
+        "enter_dialogue": []
+      },
+      "route_5": {
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [],
+        "enter_dialogue": []
+      },
+      "route_6": {
+        "condition_mode": "all",
+        "conditions": [],
+        "locked_dialogue": [],
+        "enter_dialogue": []
+      }
+    },
     "building:cobbleventure:placeholder/silph_company": {},
     "building:cobbleventure:placeholder/tm_workshop": {},
     "building:cobbleventure:placeholder/train_station": {},
@@ -548,7 +711,9 @@
         "conditions": [],
         "locked_dialogue": [],
         "enter_dialogue": []
-      }
+      },
+      "route_2": {},
+      "route_3": {}
     },
     "gym:cobbleventure:gym/cerulean": {
       "route_1": {
@@ -556,7 +721,9 @@
         "conditions": [],
         "locked_dialogue": [],
         "enter_dialogue": []
-      }
+      },
+      "route_2": {},
+      "route_3": {}
     },
     "gym:cobbleventure:gym/vermilion": {
       "route_1": {
@@ -564,7 +731,9 @@
         "conditions": [],
         "locked_dialogue": [],
         "enter_dialogue": []
-      }
+      },
+      "route_2": {},
+      "route_3": {}
     },
     "gym:cobbleventure:gym/celadon": {
       "route_1": {
@@ -572,7 +741,9 @@
         "conditions": [],
         "locked_dialogue": [],
         "enter_dialogue": []
-      }
+      },
+      "route_2": {},
+      "route_3": {}
     },
     "gym:cobbleventure:gym/fuchsia": {
       "route_1": {
@@ -580,7 +751,9 @@
         "conditions": [],
         "locked_dialogue": [],
         "enter_dialogue": []
-      }
+      },
+      "route_2": {},
+      "route_3": {}
     },
     "gym:cobbleventure:gym/saffron": {
       "route_1": {
@@ -588,7 +761,9 @@
         "conditions": [],
         "locked_dialogue": [],
         "enter_dialogue": []
-      }
+      },
+      "route_2": {},
+      "route_3": {}
     },
     "gym:cobbleventure:gym/cinnabar": {
       "route_1": {
@@ -596,7 +771,9 @@
         "conditions": [],
         "locked_dialogue": [],
         "enter_dialogue": []
-      }
+      },
+      "route_2": {},
+      "route_3": {}
     },
     "gym:cobbleventure:gym/viridian": {
       "route_1": {
@@ -604,7 +781,9 @@
         "conditions": [],
         "locked_dialogue": [],
         "enter_dialogue": []
-      }
+      },
+      "route_2": {},
+      "route_3": {}
     }
   },
   "dungeon_entrance_assignments": [

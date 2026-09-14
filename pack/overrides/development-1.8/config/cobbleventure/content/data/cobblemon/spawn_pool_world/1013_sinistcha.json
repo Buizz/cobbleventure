@@ -1,0 +1,161 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "sinistcha-unremarkable-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.792,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ],
+        "canSeeSky": false,
+        "minY": 62,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "sinistcha matcha_authenticity=unremarkable",
+      "level": "26-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_magical",
+          "#cobblemon:is_spooky"
+        ]
+      }
+    },
+    {
+      "id": "sinistcha-masterpiece-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.008,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ],
+        "canSeeSky": false,
+        "minY": 62,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "sinistcha matcha_authenticity=masterpiece",
+      "level": "26-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_magical",
+          "#cobblemon:is_spooky"
+        ]
+      }
+    },
+    {
+      "id": "sinistcha-unremarkable-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.792,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ],
+        "minY": 62,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "sinistcha matcha_authenticity=unremarkable",
+      "level": "26-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_magical",
+          "#cobblemon:is_spooky"
+        ]
+      }
+    },
+    {
+      "id": "sinistcha-masterpiece-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.008,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ],
+        "minY": 62,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "sinistcha matcha_authenticity=masterpiece",
+      "level": "26-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_magical",
+          "#cobblemon:is_spooky"
+        ]
+      }
+    }
+  ]
+}

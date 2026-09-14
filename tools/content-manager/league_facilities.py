@@ -181,16 +181,19 @@ def compile_settings(settings, data, source_root=None):
             if 'runtime_league' in building:
                 raise ValueError(f'건물에는 리그 로비 하나만 연결할 수 있습니다: {structure}')
             allowed = {f'{lobby_key}:{lobby["leave"]}'}
+            # Exterior arrival may use the lobby's public doorway. The entry
+            # marker remains the checkpoint used by league progression.
+            arrival_anchors = {lobby['entry'], lobby['leave']}
             for source, target in building.get('door_routes', {}).items():
                 if source.startswith(lobby_key + ':') and source not in allowed:
                     raise ValueError('리그 로비의 도전 출구는 리그 설정이 관리합니다.')
-                if target.get('space') == lobby_key and target.get('door', target.get('arrival')) != lobby['entry']:
-                    raise ValueError('외부 건물은 리그 로비의 입장 마커에 연결하세요.')
+                if target.get('space') == lobby_key and target.get('door', target.get('arrival')) not in arrival_anchors:
+                    raise ValueError('외부 건물은 리그 로비의 출입문 또는 입장 마커에 연결하세요.')
             leave_key = f'{lobby_key}:{lobby["leave"]}'
             if leave_key not in building.get('door_routes', {}):
                 entrances = [source for source, target in building.get('door_routes', {}).items()
                              if source.startswith('exterior:') and target.get('space') == lobby_key
-                             and target.get('door', target.get('arrival')) == lobby['entry']]
+                             and target.get('door', target.get('arrival')) in arrival_anchors]
                 if len(entrances) != 1:
                     raise ValueError(f'{structure}: 자동 복귀에는 외부 입구 연결 하나가 필요합니다. 입구가 여러 개면 복귀 연결을 지정하세요.')
                 building.setdefault('door_routes', {})[leave_key] = {

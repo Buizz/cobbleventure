@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/rewards/feature_map_guide",
+  "source_digest": "7f87ee4ffae7285fb500f37f18306201a94fd272cb5e95217a6b629c265b09af",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/rewards/feature/map"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "길이 헷갈리면 메뉴에서 지도를 펼쳐 봐. 마을과 길의 위치를 확인하면 다음 목적지를 찾기 쉬울 거야."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "상록시티에 처음 왔구나! 여행 중이라면 이 마을지도를 가져가. 처음 가는 길에서도 도움이 될 거야."
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/feature",
+          "op": "command",
+          "command": "unlock_feature",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "map"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/rewards/feature_map_guide/grant/feature",
+          "next": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/rewards/feature/map"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/rewards/feature_map_guide/grant/state",
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이제 메뉴에서 지도를 펼칠 수 있어. 마을과 길을 살펴보고 다음 목적지를 정해 봐!"
+              }
+            ]
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_map_guide.cves",
+            "start": {
+              "offset": 92,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 179,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_map_guide.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 183,
+              "line": 6,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_map_guide.cves",
+            "start": {
+              "offset": 206,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 292,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/feature",
+          "stable_id": "grant/feature",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_map_guide.cves",
+            "start": {
+              "offset": 297,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 334,
+              "line": 12,
+              "column": 42
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "stable_id": "grant/state",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_map_guide.cves",
+            "start": {
+              "offset": 339,
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 410,
+              "line": 13,
+              "column": 76
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_map_guide.cves",
+            "start": {
+              "offset": 415,
+              "line": 14,
+              "column": 5
+            },
+            "end": {
+              "offset": 492,
+              "line": 16,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/feature_map_guide.cves",
+            "start": {
+              "offset": 187,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 496,
+              "line": 17,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

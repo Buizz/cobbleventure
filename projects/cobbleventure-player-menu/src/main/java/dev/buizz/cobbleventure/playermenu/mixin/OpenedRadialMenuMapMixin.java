@@ -36,11 +36,11 @@ abstract class OpenedRadialMenuMapMixin {
         buttons.get(MAP_BUTTON_INDEX).setDisabled(!ProgressionNetwork.clientSnapshot().map());
     }
 
-    // Kotlin changed the map lambda suffix from 2 to 0 in CobbleNav 2.4.0.
+    // The map callback remains lambda 0 in CobbleNav 2.4.1.
     // Match the MapScreen construction so the contacts button is never intercepted.
     @Inject(
         method = {"buttons$lambda$2", "buttons$lambda$0"},
-        at = @At(value = "NEW", target = "com/metacontent/cobblenav/client/gui/screen/MapScreen"),
+        at = @At(value = "NEW", target = "com/metacontent/cobblenav/client/gui/pokenav/MapScreen"),
         cancellable = true
     )
     private static void cobbleventure$openWorldMap(

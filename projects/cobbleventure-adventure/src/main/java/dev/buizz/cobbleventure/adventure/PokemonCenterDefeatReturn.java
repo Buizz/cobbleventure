@@ -54,6 +54,7 @@ public final class PokemonCenterDefeatReturn {
     private static final String CHECKPOINT_EXIT_Y = "cobbleventurePokemonCenterExitY";
     private static final String CHECKPOINT_EXIT_Z = "cobbleventurePokemonCenterExitZ";
     private static final String CHECKPOINT_IS_CENTER = "cobbleventurePokemonCenterVisited";
+    private static final String CHECKPOINT_IS_LEAGUE = "cobbleventureLeagueCheckpoint";
     private static final long RETURN_DELAY_TICKS = 20L;
     private static final long MONEY_MESSAGE_TICKS = 15L;
     private static final long FADE_OUT_TICKS = 25L;
@@ -158,14 +159,27 @@ public final class PokemonCenterDefeatReturn {
         }
     }
 
-    /** Uses the authored starting point until a nurse successfully heals the player. */
+    /** Uses the authored start until nurse healing or League admission saves a checkpoint. */
     public static void recordStarterFallback(
         ServerPlayer player, ServerLevel level, BlockPos position
     ) {
         CompoundTag data = player.getPersistentData();
-        if (!data.getBoolean(CHECKPOINT_IS_CENTER)) {
+        if (!hasSavedCheckpoint(data)) {
             saveCheckpoint(data, level, position, position, false);
         }
+    }
+
+    /** Shares the nurse checkpoint slot; whichever was saved last is the defeat destination. */
+    public static void recordLeagueCheckpoint(ServerPlayer player, ServerLevel level, BlockPos position) {
+        saveCheckpoint(player.getPersistentData(), level.dimension().location().toString(),
+            position, position, false, true);
+        player.sendSystemMessage(Component.translatable(
+            "message.cobbleventure_bootstrap.league_checkpoint"
+        ));
+    }
+
+    static boolean hasSavedCheckpoint(CompoundTag data) {
+        return data.getBoolean(CHECKPOINT_IS_CENTER) || data.getBoolean(CHECKPOINT_IS_LEAGUE);
     }
 
     /** Called only after successful nurse healing, including nurses outside town centers. */
@@ -380,9 +394,9 @@ public final class PokemonCenterDefeatReturn {
             data.getInt(CHECKPOINT_X), data.getInt(CHECKPOINT_Y), data.getInt(CHECKPOINT_Z)
         );
         boolean center = data.getBoolean(CHECKPOINT_IS_CENTER);
-        // Old non-center checkpoints may contain the generic world spawn. Resolve the
-        // authored player home afresh instead of treating those coordinates as authoritative.
-        BlockPos safePosition = destination == null || !center ? null
+        // Legacy fallback coordinates may contain the generic world spawn. Only nurse
+        // and League checkpoints override the freshly resolved authored player home.
+        BlockPos safePosition = destination == null || !hasSavedCheckpoint(data) ? null
             : resolveRecoveryPosition(destination, position, center);
         if (safePosition == null) {
             RecoveryDestination fallback = starterRecovery.apply(player);
@@ -695,7 +709,14 @@ public final class PokemonCenterDefeatReturn {
         BlockPos exit,
         boolean center
     ) {
-        data.putString(CHECKPOINT_DIMENSION, level.dimension().location().toString());
+        saveCheckpoint(data, level.dimension().location().toString(), position, exit, center, false);
+    }
+
+    static void saveCheckpoint(
+        CompoundTag data, String dimension, BlockPos position, BlockPos exit,
+        boolean center, boolean league
+    ) {
+        data.putString(CHECKPOINT_DIMENSION, dimension);
         data.putInt(CHECKPOINT_X, position.getX());
         data.putInt(CHECKPOINT_Y, position.getY());
         data.putInt(CHECKPOINT_Z, position.getZ());
@@ -703,6 +724,7 @@ public final class PokemonCenterDefeatReturn {
         data.putInt(CHECKPOINT_EXIT_Y, exit.getY());
         data.putInt(CHECKPOINT_EXIT_Z, exit.getZ());
         data.putBoolean(CHECKPOINT_IS_CENTER, center);
+        data.putBoolean(CHECKPOINT_IS_LEAGUE, league);
     }
 
     private static final class RecoverySequence {

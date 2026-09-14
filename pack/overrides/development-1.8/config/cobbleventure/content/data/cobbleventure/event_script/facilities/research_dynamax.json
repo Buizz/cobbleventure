@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/research_dynamax",
+  "source_digest": "8b20e9bb1b458dcbdf5f102dbc39bc2a66d9dfc6b6be728e40361d01f9e400d1",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "다이버섯으로 다이맥스 레벨과 거다이맥스 인자를 연구해요. 먼저 포켓몬을 골라 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "Use Max Mushrooms to adjust Dynamax level and the Gigantamax factor."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "op": "command",
+          "command": "open_research",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/research_dynamax.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 210,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/research_dynamax.cves",
+            "start": {
+              "offset": 215,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 228,
+              "line": 7,
+              "column": 18
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/research_dynamax.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 232,
+              "line": 8,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

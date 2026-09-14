@@ -1,0 +1,79 @@
+{
+  "name": "포켓몬 매니아 도슨 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "charmeleon",
+      "level": 40,
+      "moveset": [
+        "metalclaw",
+        "smokescreen",
+        "scaryface",
+        "flamethrower"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 3,
+        "atk": 3,
+        "def": 3,
+        "spa": 3,
+        "spd": 3,
+        "spe": 3
+      }
+    },
+    {
+      "species": "lapras",
+      "level": 40,
+      "moveset": [
+        "confuseray",
+        "perishsong",
+        "icebeam",
+        "raindance"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 3,
+        "atk": 3,
+        "def": 3,
+        "spa": 3,
+        "spd": 3,
+        "spe": 3
+      }
+    },
+    {
+      "species": "lickitung",
+      "level": 40,
+      "moveset": [
+        "stomp",
+        "wrap",
+        "disable",
+        "slam"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 3,
+        "atk": 3,
+        "def": 3,
+        "spa": 3,
+        "spd": 3,
+        "spe": 3
+      }
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

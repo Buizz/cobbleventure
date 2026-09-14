@@ -1,0 +1,214 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "polteageist-phony-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.792,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_plains",
+          "#cobblemon:is_snowy",
+          "#cobblemon:is_spooky",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "minY": 62,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "polteageist tea_authenticity=phony",
+      "level": "26-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "polteageist-antique-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.008,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_plains",
+          "#cobblemon:is_snowy",
+          "#cobblemon:is_spooky",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "minY": 62,
+        "timeRange": "day",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "polteageist tea_authenticity=antique",
+      "level": "26-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "polteageist-phony-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.792,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_plains",
+          "#cobblemon:is_snowy",
+          "#cobblemon:is_spooky",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "minY": 62,
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "polteageist tea_authenticity=phony",
+      "level": "26-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "polteageist-antique-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.008,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_floral",
+          "#cobblemon:is_magical",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_plains",
+          "#cobblemon:is_snowy",
+          "#cobblemon:is_spooky",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "minY": 62,
+        "structures": [
+          "#minecraft:village"
+        ],
+        "timeRange": "night",
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "polteageist tea_authenticity=antique",
+      "level": "26-51",
+      "spawnablePositionType": "grounded",
+      "anticondition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_cherry_blossom",
+          "#cobblemon:is_island",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_ocean",
+          "#cobblemon:is_swamp",
+          "#cobblemon:is_thermal",
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "polteageist-phony-5",
+      "presets": [
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.495,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "polteageist tea_authenticity=phony",
+      "level": "26-51",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "polteageist-antique-6",
+      "presets": [
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.005,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "polteageist tea_authenticity=antique",
+      "level": "26-51",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

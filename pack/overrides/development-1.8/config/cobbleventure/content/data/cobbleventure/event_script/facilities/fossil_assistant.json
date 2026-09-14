@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/fossil_assistant",
+  "source_digest": "f684b37aa4903d9534dcddc18de4e199d65dcb112fded645cd8c97dd07d77c5d",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "화석 복원은 남아 있는 생체 정보를 읽는 것부터 시작해요. 저 수조 안에서 작은 생명이 자라나는 모습을 관찰해 보세요!"
+              },
+              {
+                "language": "en_us",
+                "value": "Restoration begins by reading the biological information preserved in a fossil. Watch a tiny life grow inside the tank!"
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/fossil_assistant.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 280,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/fossil_assistant.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 284,
+              "line": 7,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

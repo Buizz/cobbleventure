@@ -1,0 +1,62 @@
+{
+  "name": "태권왕 아츠시 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "machop",
+      "level": 40,
+      "moveset": [
+        "revenge",
+        "vitalthrow",
+        "submission",
+        "crosschop"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "heldItem": "black_belt"
+    },
+    {
+      "species": "machoke",
+      "level": 40,
+      "moveset": [
+        "seismictoss",
+        "foresight",
+        "revenge",
+        "vitalthrow"
+      ],
+      "nature": "hardy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "heldItem": "black_belt"
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 0
+  }
+}

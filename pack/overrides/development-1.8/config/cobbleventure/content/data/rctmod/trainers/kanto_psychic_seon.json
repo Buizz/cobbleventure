@@ -1,0 +1,41 @@
+{
+  "name": "초능력자 선 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "abra",
+      "level": 24,
+      "moveset": [
+        "confusion",
+        "teleport",
+        "reflect",
+        "chargebeam"
+      ]
+    },
+    {
+      "species": "drowzee",
+      "level": 24,
+      "moveset": [
+        "confusion",
+        "disable",
+        "headbutt",
+        "hypnosis"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

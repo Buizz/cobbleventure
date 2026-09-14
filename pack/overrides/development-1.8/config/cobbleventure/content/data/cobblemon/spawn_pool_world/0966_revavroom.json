@@ -1,0 +1,67 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "revavroom-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.96,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_badlands"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "revavroom",
+      "level": "40-50",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "revavroom-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.96,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "neededBaseBlocks": [
+          "minecraft:white_concrete",
+          "minecraft:orange_concrete",
+          "minecraft:magenta_concrete",
+          "minecraft:light_blue_concrete",
+          "minecraft:yellow_concrete",
+          "minecraft:lime_concrete",
+          "minecraft:pink_concrete",
+          "minecraft:gray_concrete",
+          "minecraft:light_gray_concrete",
+          "minecraft:cyan_concrete",
+          "minecraft:purple_concrete",
+          "minecraft:blue_concrete",
+          "minecraft:brown_concrete",
+          "minecraft:green_concrete",
+          "minecraft:red_concrete",
+          "minecraft:black_concrete"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "revavroom",
+      "level": "40-50",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

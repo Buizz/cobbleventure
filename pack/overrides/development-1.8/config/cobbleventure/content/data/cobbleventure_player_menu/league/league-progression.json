@@ -1,0 +1,398 @@
+{
+  "$schema": "../schemas/league-progression.schema.json",
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "cobbleventure:league/kanto/boulder",
+      "role": "gym_leader",
+      "primary_type": "rock",
+      "display_name": {
+        "ko_kr": "웅",
+        "en_us": "Brock"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 1,
+      "level_cap": 14,
+      "encounter": {
+        "identity_source": "official",
+        "character": "cobbleventure:character/brock",
+        "battle_id": "cobbleventure:battle/gym_leader/brock",
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/kanto_brock"
+        },
+        "dialogue": {
+          "challenge": [
+            "왔구나. 나는 회색시티 체육관 관장 웅이다.",
+            "내 포켓몬에게는 바위처럼 단단한 의지와 근성이 깃들어 있지.",
+            "패배를 각오하고도 도전하는 것이 트레이너의 긍지라면, 네 전력을 보여 봐라!"
+          ],
+          "victory": [
+            "너를 얕본 것이 내 패인이군. 훌륭한 승부였다.",
+            "승리의 증표로 회색배지를 받아라."
+          ],
+          "defeat": "아직 내 바위 같은 방어를 무너뜨리기엔 힘이 부족하군. 포켓몬과 함께 더 단단해져서 돌아와라.",
+          "cleared": "넌 재능 있는 트레이너다. 블루시티 체육관에서도 그 실력을 시험해 봐라."
+        },
+        "rewards": {
+          "money": 1400,
+          "badge_id": "cobbleventure:badge/kanto/boulder"
+        }
+      }
+    },
+    {
+      "id": "cobbleventure:league/kanto/cascade",
+      "role": "gym_leader",
+      "primary_type": "water",
+      "display_name": {
+        "ko_kr": "이슬",
+        "en_us": "Misty"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 2,
+      "level_cap": 21,
+      "encounter": {
+        "identity_source": "official",
+        "character": "cobbleventure:character/misty",
+        "battle_id": "cobbleventure:battle/gym_leader/misty",
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/kanto_misty"
+        },
+        "dialogue": {
+          "challenge": [
+            "처음 보는 얼굴이네! 나는 블루시티 체육관 관장 이슬이야.",
+            "포켓몬을 키울 때는 누구나 자신만의 방침이 있어야 해.",
+            "내 방침은 물타입 포켓몬으로 처음부터 끝까지 전력 공격이야!"
+          ],
+          "victory": [
+            "와, 정말 강하네! 네 실력은 인정할 수밖에 없겠어.",
+            "나를 이긴 증표로 블루배지를 가져가."
+          ],
+          "defeat": "봤지? 물타입의 거센 공격은 쉽게 멈추지 않아. 다음에는 더 힘껏 덤벼 봐!",
+          "cleared": "내 물타입 포켓몬도 계속 강해질 거야. 너도 다음 승부에서 더 강해진 모습을 보여 줘!"
+        },
+        "rewards": {
+          "money": 2100,
+          "badge_id": "cobbleventure:badge/kanto/cascade"
+        }
+      }
+    },
+    {
+      "id": "cobbleventure:league/kanto/thunder",
+      "role": "gym_leader",
+      "primary_type": "electric",
+      "display_name": {
+        "ko_kr": "마티스",
+        "en_us": "Lt. Surge"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 3,
+      "level_cap": 24,
+      "encounter": {
+        "identity_source": "official",
+        "character": "cobbleventure:character/lt_surge",
+        "battle_id": "cobbleventure:battle/gym_leader/lt_surge",
+        "appearance": {
+          "source": "rct_single",
+          "type": "skin",
+          "resource": "rctmod:trainers/single/kanto_ltsurge"
+        },
+        "dialogue": {
+          "challenge": [
+            "이봐, 꼬마! 전기 포켓몬은 얕볼 상대가 아니다!",
+            "전쟁터에서 녀석들의 전기가 몇 번이나 나를 구해 줬지.",
+            "마비와 강렬한 전격 앞에서도 버틸 수 있는지 시험해 주마!"
+          ],
+          "victory": [
+            "이런, 제대로 감전된 쪽은 나였군! 배짱 좋은 트레이너다.",
+            "오렌지배지는 네 것이다. 당당히 가져가라!"
+          ],
+          "defeat": "전투에서는 힘만큼 신중함도 중요하다! 전기 대책을 세워서 다시 와라, 꼬마!",
+          "cleared": "그 배짱을 잊지 마라! 어떤 전장에서도 포켓몬과 함께라면 길을 열 수 있을 거다."
+        },
+        "rewards": {
+          "money": 2400,
+          "badge_id": "cobbleventure:badge/kanto/thunder"
+        }
+      }
+    },
+    {
+      "id": "cobbleventure:league/kanto/rainbow",
+      "role": "gym_leader",
+      "primary_type": "grass",
+      "display_name": {
+        "ko_kr": "민화",
+        "en_us": "Erika"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 4,
+      "level_cap": 29,
+      "encounter": {
+        "identity_source": "official",
+        "character": "cobbleventure:character/erika",
+        "battle_id": "cobbleventure:battle/gym_leader/erika",
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/erika",
+          "arm_model": "classic"
+        },
+        "dialogue": {
+          "challenge": [
+            "어머... 잠깐 졸고 있었나 봐요.",
+            "저는 무지개시티 체육관의 민화. 꽃꽂이와 풀타입 포켓몬을 좋아한답니다.",
+            "강한 트레이너라고 들었어요. 그럼 조용히 시작해 볼까요?"
+          ],
+          "victory": [
+            "어머, 제가 졌군요. 아주 훌륭한 승부였어요.",
+            "당신의 실력에 어울리는 무지개배지를 드릴게요."
+          ],
+          "defeat": "풀은 부드러워 보여도 뿌리가 깊답니다. 포켓몬을 더 정성껏 돌본 뒤 다시 오세요.",
+          "cleared": "포켓몬과 자연을 아끼는 마음을 잊지 마세요. 당신의 여행에도 아름다운 꽃이 피길 바랄게요."
+        },
+        "rewards": {
+          "money": 2900,
+          "badge_id": "cobbleventure:badge/kanto/rainbow"
+        }
+      }
+    },
+    {
+      "id": "cobbleventure:league/kanto/soul",
+      "role": "gym_leader",
+      "primary_type": "poison",
+      "display_name": {
+        "ko_kr": "독수",
+        "en_us": "Koga"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 5,
+      "level_cap": 43,
+      "encounter": {
+        "identity_source": "official",
+        "character": "cobbleventure:character/koga",
+        "battle_id": "cobbleventure:battle/gym_leader/koga",
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/koga",
+          "arm_model": "classic"
+        },
+        "dialogue": {
+          "challenge": [
+            "후하하하! 어린 트레이너가 감히 닌자의 길에 도전하는가!",
+            "독은 서서히 숨통을 조이고, 잠은 반격할 틈마저 빼앗는다.",
+            "독타입 포켓몬이 펼치는 공포의 비술을 견뎌 보아라!"
+          ],
+          "victory": [
+            "흥! 네 실력과 인내를 인정하마.",
+            "연분홍배지를 받아라. 이제 파도타기의 비술도 다룰 자격이 있다."
+          ],
+          "defeat": "맹독은 시간이 흐를수록 깊어지는 법. 조급함을 버리고 다시 수련해 오너라!",
+          "cleared": "힘만으로는 모든 승부를 이길 수 없다. 변화무쌍한 전술을 익혀 더 높은 경지로 나아가거라."
+        },
+        "rewards": {
+          "money": 4300,
+          "badge_id": "cobbleventure:badge/kanto/soul",
+          "field_move": "surf"
+        }
+      }
+    },
+    {
+      "id": "cobbleventure:league/kanto/marsh",
+      "role": "gym_leader",
+      "primary_type": "psychic",
+      "display_name": {
+        "ko_kr": "초련",
+        "en_us": "Sabrina"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 6,
+      "level_cap": 43,
+      "encounter": {
+        "identity_source": "official",
+        "character": "cobbleventure:character/sabrina",
+        "battle_id": "cobbleventure:battle/gym_leader/sabrina",
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/sabrina",
+          "arm_model": "classic"
+        },
+        "dialogue": {
+          "challenge": [
+            "네가 이곳에 올 것은 이미 알고 있었어.",
+            "나는 어릴 때부터 마음으로 사물을 움직이고 미래의 조각을 볼 수 있었지.",
+            "싸움은 좋아하지 않지만, 네가 원한다면 내 힘을 보여 주겠어."
+          ],
+          "victory": [
+            "예상과 다른 결말이군... 네 힘이 내 예지를 넘어섰어.",
+            "그 실력을 인정해 골드배지를 주겠어."
+          ],
+          "defeat": "이 결과는 이미 보았어. 하지만 미래는 수련으로 바꿀 수 있으니 다시 도전해.",
+          "cleared": "강한 힘만으로는 충분하지 않아. 포켓몬을 아끼는 마음이 네 미래를 더 멀리 이끌 거야."
+        },
+        "rewards": {
+          "money": 4300,
+          "badge_id": "cobbleventure:badge/kanto/marsh"
+        }
+      }
+    },
+    {
+      "id": "cobbleventure:league/kanto/volcano",
+      "role": "gym_leader",
+      "primary_type": "fire",
+      "display_name": {
+        "ko_kr": "강연",
+        "en_us": "Blaine"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 7,
+      "level_cap": 47,
+      "encounter": {
+        "identity_source": "official",
+        "character": "cobbleventure:character/blaine",
+        "battle_id": "cobbleventure:battle/gym_leader/blaine",
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/blaine",
+          "arm_model": "classic"
+        },
+        "dialogue": {
+          "challenge": [
+            "하하! 나는 홍련체육관의 뜨거운 퀴즈 마스터 강연이다!",
+            "내 불꽃 포켓몬은 오랜 세월 뜨겁게 단련되어 왔지.",
+            "화상치료제는 준비했나? 지금부터 불타는 승부다!"
+          ],
+          "victory": [
+            "내 불꽃이 완전히 타버렸군! 네 열정이 한 수 위였다.",
+            "승리의 증표인 진홍색배지를 받아라!"
+          ],
+          "defeat": "하하! 정답은 불꽃보다 뜨거운 투지다! 준비를 갖추고 다시 도전하게!",
+          "cleared": "좋은 승부는 언제나 연구할 가치가 있지! 그 뜨거운 마음으로 마지막 배지를 향해 가게!"
+        },
+        "rewards": {
+          "money": 4700,
+          "badge_id": "cobbleventure:badge/kanto/volcano"
+        }
+      }
+    },
+    {
+      "id": "cobbleventure:league/kanto/earth",
+      "role": "gym_leader",
+      "primary_type": "ground",
+      "display_name": {
+        "ko_kr": "비주기",
+        "en_us": "Giovanni"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 8,
+      "level_cap": 50,
+      "encounter": {
+        "identity_source": "official",
+        "character": "cobbleventure:character/giovanni_gym",
+        "battle_id": "cobbleventure:battle/gym_leader/giovanni_gym",
+        "appearance": {
+          "source": "custom",
+          "type": "skin",
+          "resource": "cobbleventure:trainer_skin/rainbow_rocket_giovanni",
+          "arm_model": "classic"
+        },
+        "dialogue": {
+          "challenge": [
+            "후후후... 또다시 내 앞에 나타났군.",
+            "이곳에서 로켓단을 다시 일으킬 계획이었지만, 네가 끝까지 방해하는군.",
+            "좋다. 이번에는 봐주지 않겠다! 최강의 트레이너 비주기의 전력을 받아 보아라!"
+          ],
+          "victory": [
+            "이토록 치열한 승부에서 네가 끝내 이겼군. 완벽한 패배다.",
+            "그린배지를 받아라. 락클라임을 다룰 자격도 네게 있다."
+          ],
+          "defeat": "아직 나를 넘어설 힘은 없군. 각오를 다지고 다시 찾아와라.",
+          "cleared": "패배한 내가 부하들 앞에 설 수는 없다. 로켓단은 오늘로 끝이다. 나 역시 처음부터 다시 수련하겠다."
+        },
+        "rewards": {
+          "money": 5000,
+          "badge_id": "cobbleventure:badge/kanto/earth",
+          "field_move": "rock_climb"
+        }
+      }
+    },
+    {
+      "id": "cobbleventure:league/kanto/elite_1",
+      "role": "elite_four",
+      "primary_type": "ice",
+      "display_name": {
+        "ko_kr": "칸나"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 9,
+      "level_cap": 60,
+      "trainer_id": "cobbleventure:npc/league/kanto_elite_1"
+    },
+    {
+      "id": "cobbleventure:league/kanto/elite_2",
+      "role": "elite_four",
+      "primary_type": "fighting",
+      "display_name": {
+        "ko_kr": "시바"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 10,
+      "level_cap": 60,
+      "trainer_id": "cobbleventure:npc/league/kanto_elite_2"
+    },
+    {
+      "id": "cobbleventure:league/kanto/elite_3",
+      "role": "elite_four",
+      "primary_type": "ghost",
+      "display_name": {
+        "ko_kr": "국화"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 11,
+      "level_cap": 60,
+      "trainer_id": "cobbleventure:npc/league/kanto_elite_3"
+    },
+    {
+      "id": "cobbleventure:league/kanto/elite_4",
+      "role": "elite_four",
+      "primary_type": "dragon",
+      "display_name": {
+        "ko_kr": "목호"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 12,
+      "level_cap": 60,
+      "trainer_id": "cobbleventure:npc/league/kanto_elite_4"
+    },
+    {
+      "id": "cobbleventure:league/kanto/champion",
+      "role": "champion",
+      "primary_type": "normal",
+      "display_name": {
+        "ko_kr": "그린"
+      },
+      "generation": 1,
+      "region": "cobbleventure:region/kanto",
+      "order": 13,
+      "level_cap": 70,
+      "trainer_id": "cobbleventure:npc/league/kanto_champion"
+    }
+  ]
+}

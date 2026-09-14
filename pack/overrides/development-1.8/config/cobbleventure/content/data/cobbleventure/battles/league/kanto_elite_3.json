@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "id": "cobbleventure:battle/league/kanto_elite_3",
+  "enabled": true,
+  "name": {
+    "ko_kr": "국화"
+  },
+  "battle": {
+    "format": "GEN_9_SINGLES",
+    "battle_type": "singles",
+    "ai": {
+      "controller": "cobbleventure",
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "options": {}
+    },
+    "level_mode": "fixed",
+    "rules": {
+      "can_forfeit": true,
+      "max_item_uses": 99
+    },
+    "bag": [
+      {
+        "item": "cobblemon:full_restore",
+        "quantity": 1
+      }
+    ],
+    "mechanics": {
+      "mega_evolution": false,
+      "z_move": false,
+      "dynamax": false,
+      "terastallization": true
+    },
+    "team": [
+      {
+        "species": "cobblemon:golurk",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "genderless",
+        "nature": "adamant",
+        "ability": "ironfist",
+        "held_item": "cobblemon:sitrus_berry",
+        "gimmick": null,
+        "moves": [
+          "shadowpunch",
+          "hammerarm",
+          "highhorsepower",
+          "icepunch"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 252,
+          "attack": 252,
+          "defense": 6
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:spiritomb",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "female",
+        "nature": "calm",
+        "ability": "infiltrator",
+        "held_item": "cobblemon:leftovers",
+        "gimmick": null,
+        "moves": [
+          "shadowsneak",
+          "darkpulse",
+          "willowisp",
+          "curse"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 252,
+          "special_defense": 6,
+          "defense": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:gholdengo",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "timid",
+        "ability": "goodasgold",
+        "held_item": "cobblemon:air_balloon",
+        "gimmick": null,
+        "moves": [
+          "makeitrain",
+          "shadowball",
+          "thunderbolt",
+          "nastyplot"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "special_attack": 252,
+          "speed": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:blacephalon",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "genderless",
+        "nature": "timid",
+        "ability": "beastboost",
+        "held_item": "cobblemon:focus_sash",
+        "gimmick": null,
+        "moves": [
+          "mindblown",
+          "shadowball",
+          "fireblast",
+          "psyshock"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 4,
+          "special_attack": 252,
+          "speed": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:mimikyu",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "female",
+        "nature": "jolly",
+        "ability": "disguise",
+        "held_item": null,
+        "gimmick": null,
+        "moves": [
+          "playrough",
+          "shadowclaw",
+          "shadowsneak",
+          "swordsdance"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "attack": 252,
+          "speed": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:gengar",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "female",
+        "nature": "timid",
+        "ability": "cursedbody",
+        "held_item": "mega_showdown:gengarite",
+        "gimmick": null,
+        "moves": [
+          "shadowball",
+          "sludgebomb",
+          "focusblast",
+          "icywind"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "speed": 252,
+          "special_attack": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      }
+    ],
+    "trainer_id": "cobbleventure:trainer/league/kanto_elite_3"
+  }
+}

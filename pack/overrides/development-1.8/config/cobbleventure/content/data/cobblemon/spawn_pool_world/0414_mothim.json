@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "mothim-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_4"
+        ]
+      },
+      "pokemon": "mothim",
+      "level": "28-45",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

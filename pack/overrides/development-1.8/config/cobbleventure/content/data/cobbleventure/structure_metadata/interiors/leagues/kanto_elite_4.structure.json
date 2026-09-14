@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/interiors/leagues/kanto_elite_4.nbt",
+  "interior": {
+    "id": "kanto_elite_4",
+    "width": 63,
+    "depth": 63,
+    "floor_height": 24,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "id": "opponent",
+      "label": "opponent",
+      "type": "npc_position",
+      "position": [
+        31,
+        3,
+        28
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "opponent_battle_player",
+      "label": "opponent_battle_player",
+      "type": "npc_position",
+      "position": [
+        31,
+        3,
+        38
+      ],
+      "facing": "north"
+    },
+    {
+      "id": "entry",
+      "label": "entry",
+      "type": "transition",
+      "position": [
+        31,
+        3,
+        58
+      ],
+      "facing": "south",
+      "safe_spawn": [
+        31,
+        2,
+        56
+      ]
+    },
+    {
+      "id": "exit",
+      "label": "exit",
+      "type": "transition",
+      "position": [
+        31,
+        13,
+        58
+      ],
+      "facing": "south",
+      "safe_spawn": [
+        31,
+        12,
+        55
+      ]
+    }
+  ]
+}

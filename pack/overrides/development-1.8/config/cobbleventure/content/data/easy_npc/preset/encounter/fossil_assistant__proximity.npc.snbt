@@ -1,0 +1,30 @@
+{
+  PresetMetadata:{
+    author:"Cobbleventure",
+    category:"Cobbleventure Encounters V5",
+    created:0L,
+    description:"화석 연구 조수 CVES V5 NPC 표현 프리셋",
+    entityTypeId:"easy_npc:humanoid",
+    modified:0L,
+    name:"화석 연구 조수 [V5]",
+    variantType:"ALEX",
+    version:"1.0.0"
+  },
+  data:{
+    ActionData:{ActionEventSet:{},ActionPermissionLevel:2},
+    ArmorDropChances:[0.000f,0.000f,0.000f,0.000f],
+    ArmorItems:[{},{},{},{}],
+    CustomName:"{\"text\":\"화석 연구 조수\",\"font\":\"minecraft:uniform\"}",
+    DialogData:{DialogDataSet:[],Type:"CUSTOM"},
+    EasyNPCVersion:3,
+    Invulnerable:1b,
+    ModelData:{Root:{Scale:[1.000f,1.000f,1.000f]}},
+    ObjectiveData:{HasObjectives:1b,ObjectiveDataSet:[{Type:"LOOK_AT_PLAYER"},{Type:"LOOK_AT_RESET"}]},
+    PersistenceRequired:1b,
+    PresetUUID:[I;-1639725581,-514172186,-1286650187,-874516879],
+    SkinData:{Type:"CUSTOM",UUID:[I;746409872,-1653516678,-1333732974,786934159] },
+    Tags:["cobbleventure_regional_npc","cves_binding/cobbleventure/facilities/fossil_assistant","cobbleventure_npc/cobbleventure/npc/facilities/fossil_assistant"],
+    VariantType:"ALEX",
+    id:"easy_npc:humanoid"
+  }
+}

@@ -6,7 +6,7 @@
   "author": "Buizz",
   "purpose": "cobblemon-1.8-development-pack",
   "production_ready": false,
-  "notice": "Cobblemon 1.8.0과 NeoForge 21.1.248을 기준으로 RCT API 0.16.0-beta, RCT 0.19.0-beta, TBCS 0.15.0-beta, Mega Showdown 1.8, CobbleNav 2.4.0과 Cobbleventure Pokefinder를 포함한 기본 개발팩입니다.",
+  "notice": "Cobblemon 1.8.1과 NeoForge 21.1.248을 기준으로 RCT API 0.16.0-beta, RCT 0.19.0-beta, TBCS 0.15.0-beta, Mega Showdown 1.2.0, CobbleNav 2.4.1과 Cobbleventure Pokefinder를 포함한 기본 개발팩입니다.",
   "icon": "pack/assets/cobbleventure-import-test-icon.png",
   "minecraft": {
     "version": "1.21.1",
@@ -16,11 +16,6 @@
     }
   },
   "files": [
-    {
-      "projectID": 687131,
-      "fileID": 8818732,
-      "required": true
-    },
     {
       "projectID": 1396525,
       "fileID": 7968869,
@@ -103,7 +98,7 @@
     },
     {
       "projectID": 976014,
-      "fileID": 8823427,
+      "fileID": 8837236,
       "required": true
     },
     {
@@ -158,7 +153,7 @@
     },
     {
       "projectID": 1189523,
-      "fileID": 8820597,
+      "fileID": 8870190,
       "required": true
     },
     {

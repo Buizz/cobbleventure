@@ -1,0 +1,127 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "spinda-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 9.9,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_hills"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "spinda",
+      "level": "11-36",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spinda-1-2",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.025,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_hills"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "spinda special_spots=1 face_spots=none face_spots2=none",
+      "level": "11-36",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spinda-2-3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.025,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_hills"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "spinda special_spots=2 face_spots=none face_spots2=none",
+      "level": "11-36",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spinda-3-4",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.025,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_hills"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "spinda special_spots=3 face_spots=none face_spots2=none",
+      "level": "11-36",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "spinda-4-5",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 0.025,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_bamboo",
+          "#cobblemon:is_hills"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_3"
+        ]
+      },
+      "pokemon": "spinda special_spots=4 face_spots=none face_spots2=none",
+      "level": "11-36",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

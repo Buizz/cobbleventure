@@ -1,0 +1,31 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "terapagos-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0.5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_cave"
+        ],
+        "maxY": 0,
+        "neededBaseBlocks": [
+          "minecraft:amethyst_block"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "terapagos",
+      "level": "55-75",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

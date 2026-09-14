@@ -1,0 +1,112 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "haunter-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.95,
+      "condition": {
+        "biomes": [
+          "#aether:is_aether",
+          "#cobblemon:is_deep_dark"
+        ],
+        "maxLight": 0,
+        "maxSkyLight": 0,
+        "minSkyLight": 0,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "haunter",
+      "level": "25-41",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "haunter-2",
+      "presets": [
+        "derelict"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.712,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "haunter",
+      "level": "25-41",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "haunter-3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.95,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_spooky"
+        ],
+        "maxLight": 0,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "haunter",
+      "level": "25-41",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "haunter-4",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.95,
+      "condition": {
+        "biomes": [
+          "#minecraft:is_nether"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_1"
+        ]
+      },
+      "pokemon": "haunter",
+      "level": "25-41",
+      "spawnablePositionType": "grounded",
+      "drops": {
+        "amount": 3,
+        "entries": [
+          {
+            "item": "cobblemon:spell_tag",
+            "percentage": 5.0
+          },
+          {
+            "item": "cobblemon:payapa_berry",
+            "percentage": 5.0
+          },
+          {
+            "item": "minecraft:ghast_tear",
+            "percentage": 10.0
+          }
+        ]
+      }
+    }
+  ]
+}

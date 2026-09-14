@@ -1,0 +1,41 @@
+{
+  "name": "실프주식회사 로켓단 조무래기 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "raticate",
+      "level": 30,
+      "moveset": [
+        "hyperfang",
+        "quickattack",
+        "scaryface",
+        "pursuit"
+      ]
+    },
+    {
+      "species": "zubat",
+      "level": 30,
+      "moveset": [
+        "bite",
+        "supersonic",
+        "confuseray",
+        "wingattack"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

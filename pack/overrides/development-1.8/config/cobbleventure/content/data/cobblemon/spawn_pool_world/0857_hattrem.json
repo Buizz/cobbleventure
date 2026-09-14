@@ -1,0 +1,76 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "hattrem-1",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "bucket": "uncommon",
+      "weight": 1.44,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_magical",
+          "aether:skyroot_forest",
+          "aether:skyroot_woodland"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "hattrem",
+      "level": "32-37",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "hattrem-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.18,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "minecraft:swamp_hut"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "hattrem",
+      "level": "32-37",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "hattrem-3",
+      "presets": [
+        "mansion"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 0.18,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ],
+        "canSeeSky": false,
+        "dimensions": [
+          "cobbleventure:generation_8"
+        ]
+      },
+      "pokemon": "hattrem",
+      "level": "32-37",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

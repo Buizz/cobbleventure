@@ -1,0 +1,1108 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/generation_1/firered/firered_lass_kay",
+  "source_digest": "f2e02bc4f8663def233fe9ce02b40bde4f1c8ef9b2db53f8b32e5785489a93f8",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "proximity_enter",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 9
+            }
+          },
+          {
+            "name": "group",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "trainer_battle"
+            }
+          },
+          {
+            "name": "stage",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "warning"
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "unary",
+            "operator": "!",
+            "operand": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "flag"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "cobbleventure:runtime/npc_instance_defeated"
+                  }
+                }
+              ]
+            }
+          },
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "command",
+          "command": "encounter_warning",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "encounter.trainer_boy"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 148,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 189,
+              "line": 3,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 79,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 193,
+              "line": 4,
+              "column": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "trigger": {
+        "name": "proximity_enter",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 6
+            }
+          },
+          {
+            "name": "group",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "trainer_battle"
+            }
+          },
+          {
+            "name": "after",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "warning"
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "unary",
+            "operator": "!",
+            "operand": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "flag"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "cobbleventure:runtime/npc_instance_defeated"
+                  }
+                }
+              ]
+            }
+          },
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e1/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이 체육관에는 진정한 숙녀만 들어올 수 있어!"
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "proximity/challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/firered_lass_kay"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "battle_result",
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_lass_kay/proximity/challenge/battle",
+          "next": 2,
+          "resume": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e1/p0/s2",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "battle_result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 3,
+          "else": 7
+        },
+        {
+          "address": 3,
+          "instruction_id": "proximity/victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_lass_kay/proximity/victory/set_instance_defeated",
+          "next": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "proximity/victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/trainer/firered_lass_kay/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_lass_kay/proximity/victory/set_defeated",
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e1/p0/s2/then/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "너무 거칠잖아! 흥! 민화가 널 혼내 줄 거야!"
+              }
+            ]
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e1/p0/s2/then_end",
+          "op": "jump",
+          "target": 8
+        },
+        {
+          "address": 7,
+          "instruction_id": "e1/p0/s2/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이번 승부는 내가 이겼어. 다시 준비해서 도전해!"
+              }
+            ]
+          },
+          "next": 8,
+          "await": true,
+          "resume": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e1/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e1/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 345,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 401,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "proximity/challenge/battle",
+          "stable_id": "proximity/challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 406,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 507,
+              "line": 12,
+              "column": 106
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e1/p0/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 512,
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 925,
+              "line": 23,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "proximity/victory/set_instance_defeated",
+          "stable_id": "proximity/victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 554,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 658,
+              "line": 14,
+              "column": 111
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "proximity/victory/set_defeated",
+          "stable_id": "proximity/victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 665,
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "offset": 769,
+              "line": 15,
+              "column": 111
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e1/p0/s2/then/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 776,
+              "line": 16,
+              "column": 7
+            },
+            "end": {
+              "offset": 837,
+              "line": 18,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e1/p0/s2/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 546,
+              "line": 13,
+              "column": 39
+            },
+            "end": {
+              "offset": 843,
+              "line": 19,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e1/p0/s2/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 857,
+              "line": 20,
+              "column": 7
+            },
+            "end": {
+              "offset": 919,
+              "line": 22,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e1/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 276,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 929,
+              "line": 24,
+              "column": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:runtime/npc_instance_defeated"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e2/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "너무 거칠잖아! 흥! 민화가 널 혼내 줄 거야!"
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e2/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e2/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이 체육관에는 진정한 숙녀만 들어올 수 있어!"
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e2/p1/s1",
+          "op": "choice",
+          "prompt": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "도전하시겠습니까?"
+              }
+            ]
+          },
+          "result": null,
+          "options": [
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "승부한다"
+                  }
+                ]
+              },
+              "target": 4
+            },
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "다음에 도전한다"
+                  }
+                ]
+              },
+              "target": 12
+            }
+          ],
+          "await": true
+        },
+        {
+          "address": 4,
+          "instruction_id": "challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/firered_lass_kay"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "battle_result",
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_lass_kay/challenge/battle",
+          "next": 5,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e2/p1/s1/option0/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "battle_result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 6,
+          "else": 10
+        },
+        {
+          "address": 6,
+          "instruction_id": "victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_lass_kay/victory/set_instance_defeated",
+          "next": 7
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/trainer/firered_lass_kay/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_lass_kay/victory/set_defeated",
+          "next": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e2/p1/s1/option0/s1/then/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "너무 거칠잖아! 흥! 민화가 널 혼내 줄 거야!"
+              }
+            ]
+          },
+          "next": 9,
+          "await": true,
+          "resume": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "e2/p1/s1/option0/s1/then_end",
+          "op": "jump",
+          "target": 11
+        },
+        {
+          "address": 10,
+          "instruction_id": "e2/p1/s1/option0/s1/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이번 승부는 내가 이겼어. 다시 준비해서 도전해!"
+              }
+            ]
+          },
+          "next": 11,
+          "await": true,
+          "resume": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "e2/p1/s1/option0_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 12,
+          "instruction_id": "e2/p1/s1/option1/s0",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 13,
+          "instruction_id": "e2/p1/s1/option1_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e2/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e2/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1030,
+              "line": 29,
+              "column": 5
+            },
+            "end": {
+              "offset": 1087,
+              "line": 31,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e2/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 962,
+              "line": 28,
+              "column": 3
+            },
+            "end": {
+              "offset": 1091,
+              "line": 32,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e2/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1114,
+              "line": 35,
+              "column": 5
+            },
+            "end": {
+              "offset": 1170,
+              "line": 37,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e2/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1175,
+              "line": 38,
+              "column": 5
+            },
+            "end": {
+              "offset": 1839,
+              "line": 56,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "challenge/battle",
+          "stable_id": "challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1241,
+              "line": 40,
+              "column": 9
+            },
+            "end": {
+              "offset": 1332,
+              "line": 40,
+              "column": 100
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e2/p1/s1/option0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1341,
+              "line": 41,
+              "column": 9
+            },
+            "end": {
+              "offset": 1774,
+              "line": 51,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "victory/set_instance_defeated",
+          "stable_id": "victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1387,
+              "line": 42,
+              "column": 11
+            },
+            "end": {
+              "offset": 1481,
+              "line": 42,
+              "column": 105
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_defeated",
+          "stable_id": "victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1492,
+              "line": 43,
+              "column": 11
+            },
+            "end": {
+              "offset": 1586,
+              "line": 43,
+              "column": 105
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e2/p1/s1/option0/s1/then/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1597,
+              "line": 44,
+              "column": 11
+            },
+            "end": {
+              "offset": 1666,
+              "line": 46,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "e2/p1/s1/option0/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1375,
+              "line": 41,
+              "column": 43
+            },
+            "end": {
+              "offset": 1676,
+              "line": 47,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "e2/p1/s1/option0/s1/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1694,
+              "line": 48,
+              "column": 11
+            },
+            "end": {
+              "offset": 1764,
+              "line": 50,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "e2/p1/s1/option0_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1231,
+              "line": 39,
+              "column": 25
+            },
+            "end": {
+              "offset": 1782,
+              "line": 52,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e2/p1/s1/option1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1821,
+              "line": 54,
+              "column": 9
+            },
+            "end": {
+              "offset": 1825,
+              "line": 54,
+              "column": 13
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e2/p1/s1/option1_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1811,
+              "line": 53,
+              "column": 29
+            },
+            "end": {
+              "offset": 1833,
+              "line": 55,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e2/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_lass_kay.cves",
+            "start": {
+              "offset": 1095,
+              "line": 34,
+              "column": 3
+            },
+            "end": {
+              "offset": 1843,
+              "line": 57,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

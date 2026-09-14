@@ -1,0 +1,1108 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/generation_1/firered/firered_cooltrainer_warren",
+  "source_digest": "8aa6631ee7fcf0e1a533b52838a74d0db92b39df18ed36e5bfe91b81df72d6ac",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "proximity_enter",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 9
+            }
+          },
+          {
+            "name": "group",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "trainer_battle"
+            }
+          },
+          {
+            "name": "stage",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "warning"
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "unary",
+            "operator": "!",
+            "operand": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "flag"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "cobbleventure:runtime/npc_instance_defeated"
+                  }
+                }
+              ]
+            }
+          },
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "command",
+          "command": "encounter_warning",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "encounter.trainer_boy"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 148,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 189,
+              "line": 3,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 79,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 193,
+              "line": 4,
+              "column": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "trigger": {
+        "name": "proximity_enter",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 6
+            }
+          },
+          {
+            "name": "group",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "trainer_battle"
+            }
+          },
+          {
+            "name": "after",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "warning"
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "unary",
+            "operator": "!",
+            "operand": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "flag"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "cobbleventure:runtime/npc_instance_defeated"
+                  }
+                }
+              ]
+            }
+          },
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e1/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "진정한 실력자는 멋지게 이기는 법이지."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "proximity/challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/firered_cooltrainer_warren"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "battle_result",
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_cooltrainer_warren/proximity/challenge/battle",
+          "next": 2,
+          "resume": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e1/p0/s2",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "battle_result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 3,
+          "else": 7
+        },
+        {
+          "address": 3,
+          "instruction_id": "proximity/victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_cooltrainer_warren/proximity/victory/set_instance_defeated",
+          "next": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "proximity/victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/trainer/firered_cooltrainer_warren/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_cooltrainer_warren/proximity/victory/set_defeated",
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e1/p0/s2/then/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "내가 중심을 잃었군! 이렇게 지면 관장님께 혼나겠어…"
+              }
+            ]
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e1/p0/s2/then_end",
+          "op": "jump",
+          "target": 8
+        },
+        {
+          "address": 7,
+          "instruction_id": "e1/p0/s2/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이번 승부는 내가 이겼어. 다시 준비해서 도전해!"
+              }
+            ]
+          },
+          "next": 8,
+          "await": true,
+          "resume": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e1/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e1/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 345,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 397,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "proximity/challenge/battle",
+          "stable_id": "proximity/challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 402,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 513,
+              "line": 12,
+              "column": 116
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e1/p0/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 518,
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 944,
+              "line": 23,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "proximity/victory/set_instance_defeated",
+          "stable_id": "proximity/victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 560,
+              "line": 14,
+              "column": 7
+            },
+            "end": {
+              "offset": 664,
+              "line": 14,
+              "column": 111
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "proximity/victory/set_defeated",
+          "stable_id": "proximity/victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 671,
+              "line": 15,
+              "column": 7
+            },
+            "end": {
+              "offset": 785,
+              "line": 15,
+              "column": 121
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e1/p0/s2/then/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 792,
+              "line": 16,
+              "column": 7
+            },
+            "end": {
+              "offset": 856,
+              "line": 18,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e1/p0/s2/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 552,
+              "line": 13,
+              "column": 39
+            },
+            "end": {
+              "offset": 862,
+              "line": 19,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e1/p0/s2/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 876,
+              "line": 20,
+              "column": 7
+            },
+            "end": {
+              "offset": 938,
+              "line": 22,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e1/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 276,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 948,
+              "line": 24,
+              "column": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:runtime/npc_instance_defeated"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e2/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "내가 중심을 잃었군! 이렇게 지면 관장님께 혼나겠어…"
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e2/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e2/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "진정한 실력자는 멋지게 이기는 법이지."
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "e2/p1/s1",
+          "op": "choice",
+          "prompt": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "도전하시겠습니까?"
+              }
+            ]
+          },
+          "result": null,
+          "options": [
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "승부한다"
+                  }
+                ]
+              },
+              "target": 4
+            },
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "다음에 도전한다"
+                  }
+                ]
+              },
+              "target": 12
+            }
+          ],
+          "await": true
+        },
+        {
+          "address": 4,
+          "instruction_id": "challenge/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/firered_cooltrainer_warren"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "battle_result",
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_cooltrainer_warren/challenge/battle",
+          "next": 5,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e2/p1/s1/option0/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "battle_result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 6,
+          "else": 10
+        },
+        {
+          "address": 6,
+          "instruction_id": "victory/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_cooltrainer_warren/victory/set_instance_defeated",
+          "next": 7
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/trainer/firered_cooltrainer_warren/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/generation_1/firered/firered_cooltrainer_warren/victory/set_defeated",
+          "next": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e2/p1/s1/option0/s1/then/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "내가 중심을 잃었군! 이렇게 지면 관장님께 혼나겠어…"
+              }
+            ]
+          },
+          "next": 9,
+          "await": true,
+          "resume": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "e2/p1/s1/option0/s1/then_end",
+          "op": "jump",
+          "target": 11
+        },
+        {
+          "address": 10,
+          "instruction_id": "e2/p1/s1/option0/s1/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이번 승부는 내가 이겼어. 다시 준비해서 도전해!"
+              }
+            ]
+          },
+          "next": 11,
+          "await": true,
+          "resume": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "e2/p1/s1/option0_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 12,
+          "instruction_id": "e2/p1/s1/option1/s0",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 13,
+          "instruction_id": "e2/p1/s1/option1_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e2/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e2/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1049,
+              "line": 29,
+              "column": 5
+            },
+            "end": {
+              "offset": 1109,
+              "line": 31,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e2/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 981,
+              "line": 28,
+              "column": 3
+            },
+            "end": {
+              "offset": 1113,
+              "line": 32,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e2/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1136,
+              "line": 35,
+              "column": 5
+            },
+            "end": {
+              "offset": 1188,
+              "line": 37,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e2/p1/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1193,
+              "line": 38,
+              "column": 5
+            },
+            "end": {
+              "offset": 1880,
+              "line": 56,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "challenge/battle",
+          "stable_id": "challenge/battle",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1259,
+              "line": 40,
+              "column": 9
+            },
+            "end": {
+              "offset": 1360,
+              "line": 40,
+              "column": 110
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e2/p1/s1/option0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1369,
+              "line": 41,
+              "column": 9
+            },
+            "end": {
+              "offset": 1815,
+              "line": 51,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "victory/set_instance_defeated",
+          "stable_id": "victory/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1415,
+              "line": 42,
+              "column": 11
+            },
+            "end": {
+              "offset": 1509,
+              "line": 42,
+              "column": 105
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "victory/set_defeated",
+          "stable_id": "victory/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1520,
+              "line": 43,
+              "column": 11
+            },
+            "end": {
+              "offset": 1624,
+              "line": 43,
+              "column": 115
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e2/p1/s1/option0/s1/then/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1635,
+              "line": 44,
+              "column": 11
+            },
+            "end": {
+              "offset": 1707,
+              "line": 46,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "e2/p1/s1/option0/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1403,
+              "line": 41,
+              "column": 43
+            },
+            "end": {
+              "offset": 1717,
+              "line": 47,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "e2/p1/s1/option0/s1/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1735,
+              "line": 48,
+              "column": 11
+            },
+            "end": {
+              "offset": 1805,
+              "line": 50,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "e2/p1/s1/option0_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1249,
+              "line": 39,
+              "column": 25
+            },
+            "end": {
+              "offset": 1823,
+              "line": 52,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e2/p1/s1/option1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1862,
+              "line": 54,
+              "column": 9
+            },
+            "end": {
+              "offset": 1866,
+              "line": 54,
+              "column": 13
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e2/p1/s1/option1_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1852,
+              "line": 53,
+              "column": 29
+            },
+            "end": {
+              "offset": 1874,
+              "line": 55,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e2/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/generation_1/firered/firered_cooltrainer_warren.cves",
+            "start": {
+              "offset": 1117,
+              "line": 34,
+              "column": 3
+            },
+            "end": {
+              "offset": 1884,
+              "line": 57,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

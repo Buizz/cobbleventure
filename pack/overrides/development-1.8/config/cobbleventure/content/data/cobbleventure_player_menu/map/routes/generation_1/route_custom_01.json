@@ -1,0 +1,80 @@
+{
+  "$schema": "../../schemas/route.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:route/route_custom_01",
+  "display_name": {
+    "ko_kr": "블루시티 - 달맞이산 길",
+    "en_us": "블루시티 - 달맞이산 길"
+  },
+  "auto_name": true,
+  "enabled": true,
+  "route_type": "road",
+  "corridor": {
+    "width_blocks": 12,
+    "edge_noise": 0
+  },
+  "level_scaling": {
+    "mode": "world",
+    "offset": 0
+  },
+  "pokemon_spawns": {
+    "inherit_biome": false,
+    "excluded_species": [],
+    "additions": [
+      {
+        "species": "cobblemon:ekans",
+        "min_level": 6,
+        "max_level": 12
+      },
+      {
+        "species": "cobblemon:rattata",
+        "min_level": 8,
+        "max_level": 12
+      },
+      {
+        "species": "cobblemon:sandshrew",
+        "min_level": 6,
+        "max_level": 12
+      },
+      {
+        "species": "cobblemon:spearow",
+        "min_level": 8,
+        "max_level": 12
+      }
+    ],
+    "level_overrides": [
+      {
+        "species": "cobblemon:ekans",
+        "min_level": 6,
+        "max_level": 12
+      },
+      {
+        "species": "cobblemon:rattata",
+        "min_level": 8,
+        "max_level": 12
+      },
+      {
+        "species": "cobblemon:sandshrew",
+        "min_level": 6,
+        "max_level": 12
+      },
+      {
+        "species": "cobblemon:spearow",
+        "min_level": 8,
+        "max_level": 12
+      }
+    ]
+  },
+  "npc_placements": [],
+  "automatic_npc_placement": {
+    "enabled": true,
+    "count": 3,
+    "use_biome_defaults": false,
+    "direct_trainers": [
+      "cobbleventure:npc/firered_hiker_nob",
+      "cobbleventure:npc/firered_camper_flint",
+      "cobbleventure:npc/sample_picnicker_hana"
+    ],
+    "trigger_override": "proximity"
+  }
+}

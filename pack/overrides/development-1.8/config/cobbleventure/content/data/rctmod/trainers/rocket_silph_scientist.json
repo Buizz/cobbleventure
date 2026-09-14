@@ -1,0 +1,53 @@
+{
+  "name": "실프주식회사 협력 과학자 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "magnemite",
+      "level": 33,
+      "moveset": [
+        "spark",
+        "thunderwave",
+        "supersonic",
+        "sonicboom"
+      ],
+      "gender": "GENDERLESS"
+    },
+    {
+      "species": "koffing",
+      "level": 34,
+      "moveset": [
+        "smog",
+        "sludge",
+        "smokescreen",
+        "selfdestruct"
+      ]
+    },
+    {
+      "species": "electrode",
+      "level": 35,
+      "moveset": [
+        "spark",
+        "rollout",
+        "lightscreen",
+        "selfdestruct"
+      ],
+      "gender": "GENDERLESS"
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

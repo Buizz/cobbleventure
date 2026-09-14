@@ -1,0 +1,45 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "magearna-1",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_taiga"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "magearna",
+      "level": "50-70",
+      "spawnablePositionType": "grounded"
+    },
+    {
+      "id": "magearna-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "ultra-rare",
+      "weight": 0.4,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_taiga"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "magearna paint_color=original",
+      "level": "70-85",
+      "spawnablePositionType": "grounded"
+    }
+  ]
+}

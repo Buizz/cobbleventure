@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/rocket_silph_guard",
+  "controller": "cobbleventure",
+  "difficulty": "standard",
+  "strategy": "aggressive",
+  "options": {}
+}

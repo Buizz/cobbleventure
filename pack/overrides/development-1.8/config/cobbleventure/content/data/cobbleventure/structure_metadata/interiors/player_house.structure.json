@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/interiors/player_house.nbt",
+  "interior": {
+    "id": "player_house",
+    "width": 32,
+    "depth": 32,
+    "floor_height": 10,
+    "floors": 2
+  },
+  "anchors": [
+    {
+      "id": "door",
+      "label": "door",
+      "type": "door",
+      "position": [
+        17,
+        1,
+        1
+      ],
+      "safe_spawn": [
+        17,
+        1,
+        2
+      ],
+      "door_facing": "north",
+      "safe_side": "south"
+    },
+    {
+      "id": "mom",
+      "label": "mom",
+      "type": "npc_position",
+      "position": [
+        17,
+        1,
+        6
+      ],
+      "facing": "west"
+    },
+    {
+      "id": "start",
+      "label": "start",
+      "type": "npc_position",
+      "position": [
+        16,
+        7,
+        3
+      ],
+      "facing": "south"
+    }
+  ]
+}

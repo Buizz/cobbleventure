@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/league/kanto_elite_1",
+  "controller": "cobbleventure",
+  "difficulty": "standard",
+  "strategy": "balanced",
+  "options": {
+    "teraTarget": "mamoswine"
+  }
+}

@@ -2,7 +2,7 @@
 
 > 상태: 기본 실행 의존성 확정, 애드온 후보 검토 중
 >
-> 버전 기준: Minecraft 1.21.1 / NeoForge 21.1.248 / Cobblemon 1.8.0
+> 버전 기준: Minecraft 1.21.1 / NeoForge 21.1.248 / Cobblemon 1.8.1
 
 이 문서는 Cobbleventure 테스트팩과 공개 모드팩에 포함할 외부 모드의 역할과
 선정 근거를 관리한다. 빌드가 사용하는 실제 버전과 CurseForge 식별자는
@@ -21,7 +21,7 @@
 
 | ID | 모드 | 구분 | 설치면 | 역할 | 현재 상태 |
 |----|------|------|--------|------|-----------|
-| `cobblemon` | Cobblemon | 필수 | 양쪽 | 포켓몬, 기술, 파티와 실제 배틀 | 1.8.0 / CF `687131:8818732` |
+| `cobblemon` | Cobblemon | 필수 | 양쪽 | 포켓몬, 기술, 파티와 실제 배틀 | 1.8.1 / Modrinth `MdwFAVRL:7otgw3aH` |
 | `more_cobblemon_tweaks` | MoreCobblemonTweaks | 필수 | 클라이언트 | Cobblemon 도구 설명과 UI 편의 기능 개선 | 1.3.3 / CF `1082538:7593359` |
 | `sodium` | Sodium | 필수 | 클라이언트 | 청크·월드 렌더링과 마이크로 스터터 최적화 | 0.6.13 / CF `394468:6382651` |
 | `iris` | Iris Shaders | 필수 | 클라이언트 | Sodium 기반 셰이더팩 로딩 | 1.8.8 / CF `455508:6213632` |
@@ -32,7 +32,7 @@
 | `complementary_reimagined` | Complementary Shaders - Reimagined | 필수 | 클라이언트 | Iris용 기본 셰이더 및 Euphoria 기반팩 | r5.3 / CF `627557:5874236` |
 | `euphoria_patches` | Euphoria Patches | 필수 | 클라이언트 | Complementary r5.3 확장 그래픽 설정 패처 | 1.4.3-r5.3 / CF `915902:5876050` |
 | `badmobs` | Bad Mobs | 필수 | 양쪽 | 바닐라 동물·몬스터의 모든 소환 경로 차단 | 21.1.1 / CF `233258:7055133` |
-| `cobblenav` | Cobblemon Pokenav | 필수 | 양쪽 | 포켓네비와 현재 지역 포켓몬 출현 정보 | 2.4.0 / CF `976014:8823427` |
+| `cobblenav` | Cobblemon Pokenav | 필수 | 양쪽 | 포켓네비와 현재 지역 포켓몬 출현 정보 | 2.4.1 / CF `976014:8837236` |
 | `cloth_config` | Cloth Config API | 필수 | 양쪽 | Cobblemon Casino 설정 화면 API | 15.0.140 / CF `348521:5729127` |
 | `kotlin_for_forge` | Kotlin for Forge | 필수 | 양쪽 | Cobblemon NeoForge의 Kotlin 런타임 | 5.12.0 / CF `351264:8335665` |
 | `forgified_fabric_api` | Forgified Fabric API | 필수 | 양쪽 | Mega Showdown용 Fabric API의 NeoForge 호환 구현 | 0.116.15+2.3.1 / CF `889079:8539754` |
@@ -48,7 +48,7 @@
 | `athena` | Athena | 필수 | 클라이언트 | CobbleFurnies 포켓볼 양탄자·연결 텍스처 렌더링 | 4.0.6 / CF `841890:8061947` |
 | `accessories` | Accessories | 필수 | 양쪽 | Mega Showdown 장신구 슬롯과 렌더링 | 1.1.0-beta.53 / CF `938917:7583320` |
 | `owo_lib` | oωo (owo-lib) | 필수 | 양쪽 | Mega Showdown GUI·설정·네트워크 라이브러리 | 0.12.15.5-beta.1 / CF `532610:6785734` |
-| `mega_showdown` | Cobblemon: Mega Showdown | 필수 | 양쪽 | 메가진화·Z기술·테라스탈·다이맥스·울트라버스트 | 1.0+1.8+1.21.1-beta2 / CF `1189523:8820597` |
+| `mega_showdown` | Cobblemon: Mega Showdown | 필수 | 양쪽 | 메가진화·Z기술·테라스탈·다이맥스·울트라버스트 | 1.2.0+1.8.1+1.21.1-release / CF `1189523:8870190` |
 | `paxi_neoforge` | Paxi (NeoForge) | 필수 | 양쪽 | CCCC와 ZA 보정팩을 모든 월드에서 자동 로드 | 5.1.3 / CF `1015157:6485740` |
 | `yungs_api_neoforge` | YUNG's API (NeoForge) | 필수 | 양쪽 | Paxi 필수 공용 API | 5.1.6 / CF `1015100:6715463` |
 | `easy_npc_bundle` | Easy NPC Bundle | 필수 | 양쪽 | Core와 Config UI 의존성을 선언하는 런처용 번들 | 7.0.1 / CF `559312:8420470` |
@@ -122,7 +122,8 @@ Contrary 특성과 보정 능력치를 적용한다. 데이터 정의와 한국�
 로드된다. ZIP 안에는 별도 라이선스 문서가 없으므로 외부 공개 배포 전에는
 제공자에게 재배포 권한을 확인한다.
 
-전투 기믹은 Cobblemon 1.8용 **Mega Showdown 1.0+1.8+1.21.1-beta2**로 고정한다. 공식
+전투 기믹은 Cobblemon 1.8용 **Mega Showdown 1.2.0+1.8.1+1.21.1-release**로 고정한다. JAR의
+Cobblemon 요구 범위는 `[1.8.0,)`이므로 현재 Cobblemon 1.8.1과 호환된다. 공식
 의존 관계에 따라 Accessories, Architectury API, Cobblemon, Fabric API 계층과
 owo-lib를 함께 포함한다. NeoForge에서는 기존 Forgified Fabric API를 Fabric API
 호환 계층으로 사용한다.

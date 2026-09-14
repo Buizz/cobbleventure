@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/** Keeps Mega Showdown beta2's four-slot Rayquaza check safe for partially filled movesets. */
+/** Keeps Mega Showdown 1.2.0's four-slot Rayquaza check safe for partially filled movesets. */
 @Pseudo
 @Mixin(targets = "com.github.yajatkaul.mega_showdown.gimmick.MegaGimmick", remap = false)
 public abstract class MegaShowdownRayquazaMixin {

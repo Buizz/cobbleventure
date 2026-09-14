@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "bisharp-1",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 4,
+      "condition": {
+        "biomes": [
+          "minecraft:bamboo_jungle"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "bisharp",
+      "level": "52-78",
+      "spawnablePositionType": "grounded",
+      "weightMultipliers": [
+        {
+          "condition": {
+            "timeRange": "night"
+          },
+          "multiplier": 2.5
+        }
+      ]
+    }
+  ]
+}

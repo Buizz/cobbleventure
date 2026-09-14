@@ -1,0 +1,735 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "basculin-blue-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "1,2,3",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-blue-2",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "5,6,7",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-blue-3",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-blue-4",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "1,2,3",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-blue-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "5,6,7",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-blue-6",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-red-7",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "5,6,7",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-red-8",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "1,2,3",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-red-9",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-red-10",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "5,6,7",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-red-11",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "1,2,3",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-red-12",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-blue-15",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "1,2,3",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-blue-16",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "5,6,7",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-blue-17",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-blue-18",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "1,2,3",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-blue-19",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "5,6,7",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-blue-20",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=blue",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-red-21",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "5,6,7",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-red-22",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "1,2,3",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-red-23",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-red-24",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "5,6,7",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-red-25",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 2,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "1,2,3",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-red-26",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 5,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=red",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-white-13",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=white",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-white-14",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": true,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=white",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "basculin-white-27",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_freshwater"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=white",
+      "level": "21-46",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "basculin-white-28",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 1.8,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_forest",
+          "#cobblemon:is_freshwater",
+          "#cobblemon:is_grassland",
+          "#cobblemon:is_jungle",
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_snowy_forest",
+          "#cobblemon:is_taiga",
+          "#cobblemon:is_tundra"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "moonPhase": "0,4",
+        "dimensions": [
+          "cobbleventure:generation_5"
+        ]
+      },
+      "pokemon": "basculin striped=white",
+      "level": "21-46",
+      "spawnablePositionType": "fishing"
+    }
+  ]
+}

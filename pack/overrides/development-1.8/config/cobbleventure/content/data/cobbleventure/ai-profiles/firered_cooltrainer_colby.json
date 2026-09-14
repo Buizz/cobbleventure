@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/firered_cooltrainer_colby",
+  "controller": "cobbleventure",
+  "difficulty": "advanced",
+  "strategy": "balanced",
+  "options": {}
+}

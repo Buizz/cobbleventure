@@ -1,0 +1,41 @@
+{
+  "name": "발전소 로켓단 조무래기 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "rattata",
+      "level": 25,
+      "moveset": [
+        "quickattack",
+        "hyperfang",
+        "bite",
+        "focusenergy"
+      ]
+    },
+    {
+      "species": "koffing",
+      "level": 25,
+      "moveset": [
+        "smog",
+        "sludge",
+        "smokescreen",
+        "assurance"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": false
+  }
+}

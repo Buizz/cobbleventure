@@ -1,0 +1,26 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ironvaliant",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 3,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_plains"
+        ],
+        "isThundering": true,
+        "dimensions": [
+          "cobbleventure:generation_9"
+        ]
+      },
+      "pokemon": "ironvaliant",
+      "level": "55-70",
+      "context": "grounded"
+    }
+  ]
+}

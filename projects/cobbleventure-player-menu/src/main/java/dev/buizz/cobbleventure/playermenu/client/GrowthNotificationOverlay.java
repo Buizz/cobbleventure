@@ -28,7 +28,7 @@ public final class GrowthNotificationOverlay {
         CobbleventurePlayerMenu.MOD_ID, "growth_notification"
     );
     private static final long FADE_IN_NANOS = 250_000_000L;
-    private static final int MAX_VISIBLE_POKEMON = 2;
+    private static final int MAX_VISIBLE_POKEMON = 1;
     private static final GrowthNotificationState STATE = new GrowthNotificationState();
     private static final Set<UUID> HUD_NOTICES = new LinkedHashSet<>();
     private static long noticeStartedAt;
@@ -106,7 +106,6 @@ public final class GrowthNotificationOverlay {
             rows.add(noticeLine(notices.get(index)));
         }
         int hiddenCount = notices.size() - visibleCount;
-        Component title = Component.translatable("toast.cobbleventure_player_menu.growth.title");
         Component footer = hiddenCount > 0
             ? Component.translatable(
                 "toast.cobbleventure_player_menu.growth.more", hiddenCount,
@@ -117,47 +116,44 @@ public final class GrowthNotificationOverlay {
                 minecraft.options.keyInventory.getTranslatedKeyMessage()
             );
         MenuTheme theme = MenuTheme.load(minecraft);
-        int contentWidth = Math.max(
-            theme.textWidth(minecraft.font, title, MenuTheme.TextRole.LABEL),
-            theme.textWidth(minecraft.font, footer, MenuTheme.TextRole.CAPTION)
+        int contentWidth = theme.textWidth(
+            minecraft.font, footer, MenuTheme.TextRole.CAPTION
         );
         for (Component row : rows) {
             contentWidth = Math.max(
-                contentWidth, theme.textWidth(minecraft.font, row, MenuTheme.TextRole.LABEL)
+                contentWidth, theme.textWidth(minecraft.font, row, MenuTheme.TextRole.CAPTION)
             );
         }
         int width = Math.clamp(
-            contentWidth + 24, 190, Math.max(190, Math.min(264, graphics.guiWidth() - 24))
+            contentWidth + 14, 112, Math.max(112, Math.min(172, graphics.guiWidth()))
         );
-        int height = 38 + visibleCount * 13;
+        int height = 17 + visibleCount * 11;
         long elapsed = Math.max(0L, System.nanoTime() - noticeStartedAt);
         float progress = Math.min(1.0F, elapsed / (float)FADE_IN_NANOS);
         float alpha = progress;
         float slide = 1.0F - easeOutCubic(progress);
-        int x = graphics.guiWidth() - width - 12 + Math.round(slide * 18);
-        int y = 12;
+        int x = graphics.guiWidth() - width + Math.round(slide * 16);
+        int y = 0;
         boolean hasMoves = notices.stream().anyMatch(notice -> notice.pending().moves() > 0);
         int accent = hasMoves ? theme.warning : theme.success;
 
         RenderSystem.enableBlend();
-        ThemedOverlayPanel.draw(graphics, theme, x, y, width, height, alpha, accent);
-        graphics.enableScissor(x + 8, y + 4, x + width - 8, y + height - 4);
+        ThemedOverlayPanel.drawRightAttached(
+            graphics, theme, x, y, width, height, alpha, accent
+        );
+        graphics.enableScissor(x + 4, y + 2, x + width - 3, y + height - 2);
         try {
-            theme.drawText(
-                graphics, minecraft.font, title, x + 12, y + 8,
-                MenuTheme.TextRole.LABEL, ThemedOverlayPanel.withOpacity(accent, alpha)
-            );
-            int rowY = y + 22;
+            int rowY = y + 5;
             for (Component row : rows) {
                 theme.drawText(
-                    graphics, minecraft.font, row, x + 12, rowY,
-                    MenuTheme.TextRole.LABEL,
+                    graphics, minecraft.font, row, x + 7, rowY,
+                    MenuTheme.TextRole.CAPTION,
                     ThemedOverlayPanel.withOpacity(theme.textColor, alpha)
                 );
-                rowY += 13;
+                rowY += 11;
             }
             theme.drawText(
-                graphics, minecraft.font, footer, x + 12, rowY + 1,
+                graphics, minecraft.font, footer, x + 7, rowY,
                 MenuTheme.TextRole.CAPTION,
                 ThemedOverlayPanel.withOpacity(theme.secondaryTextColor, alpha)
             );

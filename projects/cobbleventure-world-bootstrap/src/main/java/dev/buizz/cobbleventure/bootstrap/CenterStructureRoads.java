@@ -21,26 +21,39 @@ final class CenterStructureRoads {
     private CenterStructureRoads() {}
 
     static HexWorldPlan connect(ServerLevel level, HexWorldPlan world) {
+        return connect(world);
+    }
+
+    static HexWorldPlan connect(HexWorldPlan world) {
         List<ConnectionPath> paths = new ArrayList<>(world.paths());
         for (var object : world.worldStructures()) {
             if (!object.placementAnchor().equals("center")) continue;
+            if (paths.stream().noneMatch(path -> object.id().equals(path.from()) || object.id().equals(path.to()))) continue;
             ResourceLocation id = ResourceLocation.parse(object.structure());
-            var resource = level.getServer().getResourceManager().getResource(
-                ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "structure_metadata/" + id.getPath() + ".structure.json"));
             JsonObject metadata = new JsonObject();
-            if (resource.isPresent()) try (var reader = resource.get().openAsReader()) {
-                metadata = JsonParser.parseReader(reader).getAsJsonObject();
+            net.minecraft.nbt.CompoundTag template;
+            String base = "/data/" + id.getNamespace() + "/";
+            try (var stream = dev.buizz.cobbleventure.content.ContentFiles.open(base + "structure/" + id.getPath() + ".nbt")) {
+                if (stream == null) throw new IllegalStateException("Missing centered structure: " + id);
+                template = net.minecraft.nbt.NbtIo.readCompressed(stream, net.minecraft.nbt.NbtAccounter.unlimitedHeap());
+            } catch (java.io.IOException error) { throw new IllegalStateException("Cannot read road structure: " + id, error); }
+            try (var stream = dev.buizz.cobbleventure.content.ContentFiles.open(base + "structure_metadata/" + id.getPath() + ".structure.json")) {
+                if (stream != null) try (var reader = new java.io.InputStreamReader(stream, java.nio.charset.StandardCharsets.UTF_8)) {
+                    metadata = JsonParser.parseReader(reader).getAsJsonObject();
+                }
             } catch (java.io.IOException error) { throw new IllegalStateException("Cannot read road entrance: " + id, error); }
-            var template = level.getStructureManager().get(id).orElseThrow();
-            JsonObject anchor = roadAnchor(level, object.structure());
+            JsonObject anchor = roadAnchor(template);
             if (anchor == null) anchor = entrance(metadata);
             if (anchor == null) continue;
             Rotation rotation = Rotation.values()[Math.floorMod(object.rotation(), 4)];
-            var size = template.getSize(rotation);
+            var sizes = template.getList("size", 3);
+            int width = sizes.getInt(0), depth = sizes.getInt(2);
+            boolean sideways = rotation == Rotation.CLOCKWISE_90 || rotation == Rotation.COUNTERCLOCKWISE_90;
+            var size = new net.minecraft.core.Vec3i(sideways ? depth : width, sizes.getInt(1), sideways ? width : depth);
             Point center = world.grid().worldCenter(object.anchor());
             int minX = center.x() - size.getX() / 2, minZ = center.z() - size.getZ() / 2;
             BlockPos origin = WorldStructureSystem.rotatedTemplateOrigin(minX, 0, minZ,
-                template.getSize().getX(), template.getSize().getZ(), rotation);
+                width, depth, rotation);
             var coordinates = anchor.has("safe_spawn") ? anchor.getAsJsonArray("safe_spawn") : anchor.getAsJsonArray("position");
             BlockPos local = new BlockPos(coordinates.get(0).getAsInt(), coordinates.get(1).getAsInt(), coordinates.get(2).getAsInt());
             BlockPos transformed = StructureTemplate.transform(local, Mirror.NONE, rotation, BlockPos.ZERO).offset(origin);
@@ -86,17 +99,25 @@ final class CenterStructureRoads {
         return null;
     }
 
-    private static JsonObject roadAnchor(ServerLevel level, String structure) {
-        BlockPos position = BuildingRuntimeSystem.exteriorRoadAnchorOffset(level, structure, "none");
-        Direction outside = BuildingRuntimeSystem.exteriorRoadAnchorOutsideDirection(level, structure, "none");
-        if (position == null || outside == null) return null;
-        JsonObject anchor = new JsonObject();
-        anchor.addProperty("type", "road_anchor");
-        anchor.addProperty("safe_side", outside.getName());
-        var coordinates = new com.google.gson.JsonArray();
-        coordinates.add(position.getX()); coordinates.add(position.getY()); coordinates.add(position.getZ());
-        anchor.add("position", coordinates);
-        return anchor;
+    static JsonObject roadAnchor(net.minecraft.nbt.CompoundTag template) {
+        var palette = template.getList("palette", 10);
+        var blocks = template.getList("blocks", 10);
+        JsonObject result = null;
+        for (int i=0; i<blocks.size(); i++) {
+            var block = blocks.getCompound(i);
+            var state = palette.getCompound(block.getInt("state"));
+            if (!state.getString("Name").equals("minecraft:jigsaw")
+                || !block.getCompound("nbt").getString("name").equals("cobbleventure:road_anchor")) continue;
+            if (result != null) throw new IllegalStateException("Centered structure requires exactly one road_anchor");
+            result = new JsonObject();
+            result.addProperty("type", "road_anchor");
+            result.addProperty("safe_side", state.getCompound("Properties").getString("orientation").split("_")[0]);
+            var coordinates = new com.google.gson.JsonArray();
+            var pos = block.getList("pos",3);
+            for (int axis=0; axis<3; axis++) coordinates.add(pos.getInt(axis));
+            result.add("position", coordinates);
+        }
+        return result;
     }
 
     record Rect(int minX, int minZ, int maxX, int maxZ) {

@@ -1,0 +1,41 @@
+{
+  "name": "수영팬티 소년 태진 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "tentacool",
+      "level": 28,
+      "moveset": [
+        "acid",
+        "waterpulse",
+        "supersonic",
+        "wrap"
+      ]
+    },
+    {
+      "species": "horsea",
+      "level": 28,
+      "moveset": [
+        "watergun",
+        "smokescreen",
+        "leer",
+        "twister"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

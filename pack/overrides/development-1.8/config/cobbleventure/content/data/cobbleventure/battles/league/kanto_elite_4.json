@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "id": "cobbleventure:battle/league/kanto_elite_4",
+  "enabled": true,
+  "name": {
+    "ko_kr": "목호"
+  },
+  "battle": {
+    "format": "GEN_9_SINGLES",
+    "battle_type": "singles",
+    "ai": {
+      "controller": "cobbleventure",
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "options": {}
+    },
+    "level_mode": "fixed",
+    "rules": {
+      "can_forfeit": true,
+      "max_item_uses": 99
+    },
+    "bag": [
+      {
+        "item": "cobblemon:full_restore",
+        "quantity": 1
+      }
+    ],
+    "mechanics": {
+      "mega_evolution": false,
+      "z_move": false,
+      "dynamax": false,
+      "terastallization": true
+    },
+    "team": [
+      {
+        "species": "cobblemon:haxorus",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "adamant",
+        "ability": "moldbreaker",
+        "held_item": "cobblemon:choice_scarf",
+        "gimmick": null,
+        "moves": [
+          "outrage",
+          "ironhead",
+          "earthquake",
+          "dragondance"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "attack": 252,
+          "speed": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:naganadel",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "timid",
+        "ability": "beastboost",
+        "held_item": "cobblemon:focus_sash",
+        "gimmick": null,
+        "moves": [
+          "sludgewave",
+          "dracometeor",
+          "heatwave",
+          "airslash"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "speed": 252,
+          "special_attack": 252,
+          "defense": 4
+        },
+        "tera_type": "auto",
+        "shiny": true,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:goodra",
+        "level": 60,
+        "form": null,
+        "aspects": [
+          "hisuian"
+        ],
+        "gender": "male",
+        "nature": "relaxed",
+        "ability": "gooey",
+        "held_item": "cobblemon:leftovers",
+        "gimmick": null,
+        "moves": [
+          "bodypress",
+          "shelter",
+          "heavyslam",
+          "icebeam"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 252,
+          "defense": 236,
+          "special_defense": 20
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:baxcalibur",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "adamant",
+        "ability": "thermalexchange",
+        "held_item": "cobblemon:loaded_dice",
+        "gimmick": null,
+        "moves": [
+          "iciclespear",
+          "scaleshot",
+          "swordsdance",
+          "iceshard"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 6,
+          "speed": 252,
+          "attack": 252
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:dragonite",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "adamant",
+        "ability": "multiscale",
+        "held_item": "cobblemon:shell_bell",
+        "gimmick": null,
+        "moves": [
+          "dragonclaw",
+          "firepunch",
+          "extremespeed",
+          "dragondance"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "hp": 252,
+          "attack": 252,
+          "defense": 6
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      },
+      {
+        "species": "cobblemon:charizard",
+        "level": 60,
+        "form": null,
+        "aspects": [],
+        "gender": "male",
+        "nature": "jolly",
+        "ability": "blaze",
+        "held_item": "mega_showdown:charizardite_x",
+        "gimmick": null,
+        "moves": [
+          "flareblitz",
+          "dragonclaw",
+          "earthquake",
+          "flamecharge"
+        ],
+        "ivs": {
+          "hp": 31,
+          "attack": 31,
+          "defense": 31,
+          "special_attack": 31,
+          "special_defense": 31,
+          "speed": 31
+        },
+        "evs": {
+          "attack": 252,
+          "speed": 252,
+          "hp": 6
+        },
+        "tera_type": "auto",
+        "shiny": false,
+        "gigantamax_factor": false
+      }
+    ],
+    "trainer_id": "cobbleventure:trainer/league/kanto_elite_4"
+  }
+}

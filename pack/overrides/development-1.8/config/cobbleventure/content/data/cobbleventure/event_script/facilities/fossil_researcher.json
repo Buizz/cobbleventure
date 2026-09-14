@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/fossil_researcher",
+  "source_digest": "7eaf488442090719e86d4a9d88dc6f7dc2268509669e6ee65a03b00255ab7cc0",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "화석에 남아 있는 생체 정보를 이용하면 옛 포켓몬을 복원할 수 있어요. 가방에서 복원할 화석을 골라 주세요. 조각 화석은 알맞은 조합이 필요해요. 배양 재료와 몬스터볼은 연구소에서 준비하니, 약 30초 뒤 저에게 다시 말을 걸어 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "We can restore ancient Pokemon from fossils. Choose a fossil from your bag; fossil pieces require a matching pair. We supply the materials and Poke Ball. Talk to me again after about 30 seconds."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "op": "command",
+          "command": "open_fossil",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/fossil_researcher.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 421,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/fossil_researcher.cves",
+            "start": {
+              "offset": 426,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 437,
+              "line": 7,
+              "column": 16
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/fossil_researcher.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 441,
+              "line": 8,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

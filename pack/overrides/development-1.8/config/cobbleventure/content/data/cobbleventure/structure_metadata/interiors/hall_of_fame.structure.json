@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/interiors/hall_of_fame.nbt",
+  "interior": {
+    "id": "hall_of_fame",
+    "width": 32,
+    "depth": 32,
+    "floor_height": 12,
+    "floors": 1
+  },
+  "anchors": [
+    {
+      "id": "hall_exit",
+      "label": "hall_exit",
+      "type": "transition",
+      "position": [
+        16,
+        2,
+        29
+      ],
+      "safe_spawn": [
+        16,
+        1,
+        26
+      ],
+      "facing": "south"
+    },
+    {
+      "id": "npc",
+      "label": "npc",
+      "type": "npc_position",
+      "position": [
+        16,
+        1,
+        12
+      ],
+      "facing": "south"
+    }
+  ]
+}

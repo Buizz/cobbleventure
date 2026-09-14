@@ -8,6 +8,14 @@ PROJECT = ROOT / "content-projects/cobbleventure-main/content"
 
 
 class ImportantItemCatalogTests(unittest.TestCase):
+    def test_battle_ring_families_are_in_important_items_tab(self) -> None:
+        tag = json.loads((PROJECT / "resources/cobbleventure-player-menu/data/"
+                          "cobbleventure_player_menu/tags/item/key_items.json").read_text(encoding="utf-8"))
+        values = [entry if isinstance(entry, str) else entry["id"] for entry in tag["values"]]
+        self.assertIn("#mega_showdown:mega_bracelet", values)
+        self.assertIn("#mega_showdown:z_ring", values)
+        self.assertNotIn("#mega_showdown:omni_ring", values)
+
     def test_important_items_have_declared_acquisition_flags(self) -> None:
         catalog = json.loads(
             (PROJECT / "catalogs/important-items.json").read_text(encoding="utf-8")
@@ -23,6 +31,8 @@ class ImportantItemCatalogTests(unittest.TestCase):
                 "cobblenav:pokenav_item_red",
                 "cobbleventure_casino:coin_case",
                 "cobbleventure_bootstrap:poke_flute",
+                "mega_showdown:mega_ring",
+                "mega_showdown:z_ring",
             },
             {value["item"] for value in catalog["items"]},
         )

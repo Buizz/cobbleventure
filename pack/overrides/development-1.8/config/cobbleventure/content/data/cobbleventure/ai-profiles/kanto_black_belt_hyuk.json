@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "trainerId": "cobbleventure:trainer/kanto_black_belt_hyuk",
+  "controller": "cobbleventure",
+  "difficulty": "advanced",
+  "strategy": "balanced",
+  "options": {}
+}

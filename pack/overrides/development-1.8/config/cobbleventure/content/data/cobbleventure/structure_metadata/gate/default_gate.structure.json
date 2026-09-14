@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "structure": "content/structures/gate/default_gate.nbt",
+  "anchors": [
+    {
+      "id": "npc1",
+      "label": "npc1",
+      "type": "npc_position",
+      "position": [
+        9,
+        3,
+        12
+      ],
+      "facing": "east"
+    },
+    {
+      "id": "npc2",
+      "label": "npc2",
+      "type": "npc_position",
+      "position": [
+        20,
+        3,
+        11
+      ],
+      "facing": "west"
+    }
+  ]
+}

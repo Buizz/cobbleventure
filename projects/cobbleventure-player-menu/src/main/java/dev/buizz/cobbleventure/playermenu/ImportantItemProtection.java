@@ -156,9 +156,20 @@ public final class ImportantItemProtection {
 
     /** Grants the catalog as one transaction, including the flags used by loss recovery. */
     static BagTransaction.Result grantAll(ServerPlayer player) {
+        return grantDefinitions(player, DEFINITIONS);
+    }
+
+    static BagTransaction.Result grantRing(ServerPlayer player, String ring) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath("mega_showdown", ring);
+        List<Definition> selected = DEFINITIONS.stream().filter(value -> value.item().equals(id)).toList();
+        if (selected.isEmpty()) throw new IllegalStateException("중요도구 카탈로그에 링이 없습니다: " + id);
+        return grantDefinitions(player, selected);
+    }
+
+    private static BagTransaction.Result grantDefinitions(ServerPlayer player, List<Definition> definitions) {
         var storage = BagStorage.load(player);
         List<ItemStack> outputs = new ArrayList<>();
-        for (Definition definition : DEFINITIONS) {
+        for (Definition definition : definitions) {
             var item = BuiltInRegistries.ITEM.getOptional(definition.item()).orElseThrow(
                 () -> new IllegalStateException("등록되지 않은 중요도구: " + definition.item()));
             int missing = definition.minimumCount() - count(player, storage, definition.item());
@@ -171,7 +182,7 @@ public final class ImportantItemProtection {
 
             @Override public void apply() {
                 var scoreboard = player.getScoreboard();
-                for (Definition definition : DEFINITIONS) {
+                for (Definition definition : definitions) {
                     String key = flagObjective(definition.acquisitionFlag());
                     Objective objective = scoreboard.getObjective(key);
                     if (objective == null) {

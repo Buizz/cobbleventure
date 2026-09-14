@@ -9,6 +9,7 @@ def targetAliases = [
     'stable': '1.8',
     '1.8': '1.8',
     '1.8.0': '1.8',
+    '1.8.1': '1.8',
     'snapshot': '1.8',
 ]
 def normalizedTarget = targetAliases[requestedTarget.toLowerCase(Locale.ROOT)]
@@ -32,7 +33,7 @@ if (normalizedTarget == '1.8') {
             rootProject.file('../../.tmp/cobblemon-1.8-snapshot'),
         ]) {
             def matches = directory.isDirectory()
-                ? directory.listFiles().findAll { it.isFile() && it.name ==~ /Cobblemon-neoforge-1\.8.*\.jar/ }
+                ? directory.listFiles().findAll { it.isFile() && it.name ==~ /Cobblemon-neoforge-1\.8\.1\+.*\.jar/ }
                     .sort { left, right -> right.lastModified() <=> left.lastModified() }
                 : []
             if (!matches.isEmpty()) {
@@ -43,17 +44,17 @@ if (normalizedTarget == '1.8') {
     }
     if (localJar == null) {
         throw new GradleException(
-            'Cobblemon 1.8 JAR을 .tmp/cobblemon-1.8-release에 두거나 '
+            'Cobblemon 1.8.1 JAR을 .tmp/cobblemon-1.8-release에 두거나 '
                 + '-Pcobblemon_local_jar 또는 COBBLEVENTURE_COBBLEMON_JAR를 지정하세요.'
         )
     }
     if (!localJar.isFile()) {
-        throw new GradleException("Cobblemon 1.8 JAR을 찾을 수 없습니다: ${localJar}")
+        throw new GradleException("Cobblemon 1.8.1 JAR을 찾을 수 없습니다: ${localJar}")
     }
 }
 
 ext.cobblemonTarget = normalizedTarget
-ext.cobblemonEffectiveVersion = normalizedTarget == '1.8' ? '1.8.0' : '1.7.3'
+ext.cobblemonEffectiveVersion = normalizedTarget == '1.8' ? '1.8.1' : '1.7.3'
 ext.cobblemonVersionRange = normalizedTarget == '1.8'
     ? '[1.8.0,1.9)'
     : '[1.7.3,1.8)'

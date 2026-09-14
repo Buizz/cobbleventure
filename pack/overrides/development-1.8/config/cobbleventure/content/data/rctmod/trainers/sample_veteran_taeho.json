@@ -1,0 +1,31 @@
+{
+  "name": "베테랑 트레이너 태호 배틀",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "standard",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "growlithe",
+      "level": 18,
+      "moveset": [
+        "ember",
+        "leer",
+        "howl",
+        "bite"
+      ]
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true
+  }
+}

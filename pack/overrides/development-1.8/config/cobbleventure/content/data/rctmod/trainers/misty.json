@@ -1,0 +1,50 @@
+{
+  "name": "관동 체육관 관장 이슬",
+  "ai": {
+    "type": "cobbleventure",
+    "data": {
+      "difficulty": "advanced",
+      "strategy": "balanced",
+      "mechanics": {
+        "megaEvolution": false,
+        "zMove": false,
+        "dynamax": false,
+        "terastallization": false
+      }
+    }
+  },
+  "team": [
+    {
+      "species": "staryu",
+      "level": 18,
+      "moveset": [
+        "tackle",
+        "harden",
+        "recover",
+        "waterpulse"
+      ],
+      "gender": "GENDERLESS"
+    },
+    {
+      "species": "starmie",
+      "level": 21,
+      "moveset": [
+        "swift",
+        "recover",
+        "rapidspin",
+        "waterpulse"
+      ],
+      "gender": "GENDERLESS"
+    }
+  ],
+  "battleRules": {
+    "canForfeit": true,
+    "maxItemUses": 1
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ]
+}

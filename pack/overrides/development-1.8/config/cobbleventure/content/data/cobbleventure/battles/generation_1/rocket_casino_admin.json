@@ -1,0 +1,19 @@
+{
+  "$schema": "../../schemas/battle-preset.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:battle/rocket_casino_admin",
+  "enabled": true,
+  "name": { "ko_kr": "카지노 기지 관리자 배틀" },
+  "battle": {
+    "trainer_id": "cobbleventure:trainer/rocket_casino_admin",
+    "format": "GEN_9_SINGLES", "battle_type": "singles",
+    "ai": { "controller": "cobbleventure", "difficulty": "advanced", "strategy": "aggressive", "options": {} },
+    "level_mode": "fixed", "rules": { "can_forfeit": false }, "bag": [],
+    "mechanics": { "mega_evolution": false, "z_move": false, "dynamax": false, "terastallization": false },
+    "team": [
+      { "species": "cobblemon:onix", "level": 25, "form": null, "aspects": [], "gender": "random", "nature": null, "ability": null, "held_item": null, "gimmick": null, "moves": ["rock_throw", "rage", "bind", "screech"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false, "gigantamax_factor": false },
+      { "species": "cobblemon:rhyhorn", "level": 24, "form": null, "aspects": [], "gender": "random", "nature": null, "ability": null, "held_item": null, "gimmick": null, "moves": ["stomp", "tail_whip", "fury_attack", "scary_face"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false, "gigantamax_factor": false },
+      { "species": "cobblemon:kangaskhan", "level": 29, "form": null, "aspects": [], "gender": "female", "nature": null, "ability": null, "held_item": null, "gimmick": null, "moves": ["mega_punch", "bite", "tail_whip", "rage"], "ivs": {}, "evs": {}, "tera_type": "auto", "shiny": false, "gigantamax_factor": false }
+    ]
+  }
+}

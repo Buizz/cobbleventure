@@ -462,18 +462,19 @@ if not defined COBBLEVENTURE_COBBLEMON_TARGET set "COBBLEVENTURE_COBBLEMON_TARGE
 if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="stable" set "COBBLEVENTURE_COBBLEMON_TARGET=1.8"
 if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="snapshot" set "COBBLEVENTURE_COBBLEMON_TARGET=1.8"
 if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8.0" set "COBBLEVENTURE_COBBLEMON_TARGET=1.8"
+if /I "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8.1" set "COBBLEVENTURE_COBBLEMON_TARGET=1.8"
 if /I not "%COBBLEVENTURE_COBBLEMON_TARGET%"=="1.8" (
     echo [ERROR] Unsupported Cobblemon build target: %COBBLEVENTURE_COBBLEMON_TARGET%
     echo Supported target: 1.8
     exit /b 1
 )
 if defined COBBLEVENTURE_COBBLEMON_JAR goto validate_cobblemon_jar
-for /f "delims=" %%F in ('dir /b /a-d /o-d "%REPO_ROOT%.tmp\cobblemon-1.8-release\Cobblemon-neoforge-1.8*.jar" 2^>nul') do if not defined COBBLEVENTURE_COBBLEMON_JAR set "COBBLEVENTURE_COBBLEMON_JAR=%REPO_ROOT%.tmp\cobblemon-1.8-release\%%F"
-for /f "delims=" %%F in ('dir /b /a-d /o-d "%REPO_ROOT%.tmp\cobblemon-1.8-snapshot\Cobblemon-neoforge-1.8*.jar" 2^>nul') do if not defined COBBLEVENTURE_COBBLEMON_JAR set "COBBLEVENTURE_COBBLEMON_JAR=%REPO_ROOT%.tmp\cobblemon-1.8-snapshot\%%F"
+for /f "delims=" %%F in ('dir /b /a-d /o-d "%REPO_ROOT%.tmp\cobblemon-1.8-release\Cobblemon-neoforge-1.8.1+*.jar" 2^>nul') do if not defined COBBLEVENTURE_COBBLEMON_JAR set "COBBLEVENTURE_COBBLEMON_JAR=%REPO_ROOT%.tmp\cobblemon-1.8-release\%%F"
+for /f "delims=" %%F in ('dir /b /a-d /o-d "%REPO_ROOT%.tmp\cobblemon-1.8-snapshot\Cobblemon-neoforge-1.8.1+*.jar" 2^>nul') do if not defined COBBLEVENTURE_COBBLEMON_JAR set "COBBLEVENTURE_COBBLEMON_JAR=%REPO_ROOT%.tmp\cobblemon-1.8-snapshot\%%F"
 
 :validate_cobblemon_jar
 if not defined COBBLEVENTURE_COBBLEMON_JAR (
-    echo [ERROR] Cobblemon 1.8 NeoForge JAR was not found.
+    echo [ERROR] Cobblemon 1.8.1 NeoForge JAR was not found.
     echo Set COBBLEVENTURE_COBBLEMON_JAR or place the NeoForge JAR under:
     echo   .tmp\cobblemon-1.8-release\
     exit /b 1

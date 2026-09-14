@@ -1,0 +1,878 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/facilities/casino_cashier",
+  "source_digest": "679c555a681d84a438dd81d060c0ffd49d55666a6b03c945bcfd8668793d7f4d",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": null,
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "어서 오세요. 이곳에서는 보유한 돈을 카지노 게임 잔액으로 환전해 드립니다."
+              },
+              {
+                "language": "en_us",
+                "value": "Welcome. Here you can convert your money directly into casino game balance."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "has_item"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure_casino:coin_case"
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "int",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "then": 2,
+          "else": 20
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/s1/then/s0",
+          "op": "choice",
+          "prompt": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "환전은 되돌릴 수 없습니다. 환전하시겠습니까?"
+              },
+              {
+                "language": "en_us",
+                "value": "Exchange cannot be reversed. Would you like to continue?"
+              }
+            ]
+          },
+          "result": null,
+          "options": [
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "환전하기"
+                  },
+                  {
+                    "language": "en_us",
+                    "value": "Exchange"
+                  }
+                ]
+              },
+              "target": 3
+            },
+            {
+              "text": {
+                "kind": "localized",
+                "entries": [
+                  {
+                    "language": "ko_kr",
+                    "value": "그만두기"
+                  },
+                  {
+                    "language": "en_us",
+                    "value": "Cancel"
+                  }
+                ]
+              },
+              "target": 17
+            }
+          ],
+          "await": true
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">=",
+            "left": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "money"
+              },
+              "arguments": []
+            },
+            "right": {
+              "kind": "literal",
+              "type": "int",
+              "value": 100
+            }
+          },
+          "then": 4,
+          "else": 15
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s0",
+          "op": "let",
+          "name": "current_money",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "money"
+            },
+            "arguments": []
+          },
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s1",
+          "op": "let",
+          "name": "affordable_chips",
+          "value": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "floor_div"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "name",
+                  "name": "current_money"
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "int",
+                  "value": 100
+                }
+              }
+            ]
+          },
+          "next": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s2",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "카지노 칩 수량을 입력해 주세요. 칩 1개는 100 코블달러입니다."
+              },
+              {
+                "language": "en_us",
+                "value": "Enter the number of casino chips. One chip costs 100 CobbleDollars."
+              }
+            ]
+          },
+          "next": 7,
+          "await": true,
+          "resume": 7
+        },
+        {
+          "address": 7,
+          "instruction_id": "exchange/amount",
+          "op": "command",
+          "command": "number_input",
+          "arguments": [],
+          "properties": [
+            {
+              "name": "min",
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 1
+              }
+            },
+            {
+              "name": "max",
+              "value": {
+                "kind": "name",
+                "name": "affordable_chips"
+              }
+            },
+            {
+              "name": "current",
+              "value": {
+                "kind": "name",
+                "name": "current_money"
+              }
+            },
+            {
+              "name": "unit_price",
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 100
+              }
+            }
+          ],
+          "await": true,
+          "await_explicit": true,
+          "result": "amount",
+          "next": 8,
+          "resume": 8
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s4",
+          "op": "let",
+          "name": "exchange_cost",
+          "value": {
+            "kind": "binary",
+            "operator": "*",
+            "left": {
+              "kind": "name",
+              "name": "amount"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "int",
+              "value": 100
+            }
+          },
+          "next": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "exchange/perform",
+          "op": "command",
+          "command": "server_command",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cvcasino exchange"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "amount"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": "exchanged",
+          "next": 10
+        },
+        {
+          "address": 10,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s6",
+          "op": "branch",
+          "condition": {
+            "kind": "name",
+            "name": "exchanged"
+          },
+          "then": 11,
+          "else": 13
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s6/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "${exchange_cost} 코블달러로 카지노 칩 ${amount}개를 충전했습니다. 즐거운 시간 보내세요."
+              },
+              {
+                "language": "en_us",
+                "value": "${exchange_cost} CobbleDollars were exchanged for ${amount} casino chips. Enjoy."
+              }
+            ]
+          },
+          "next": 12,
+          "await": true,
+          "resume": 12
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s6/then_end",
+          "op": "jump",
+          "target": 14
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s6/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "환전하지 못했습니다. 현재 잔액과 환전 한도를 확인해 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "The exchange failed. Check your current balance and casino balance limit."
+              }
+            ]
+          },
+          "next": 14,
+          "await": true,
+          "resume": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then_end",
+          "op": "jump",
+          "target": 16
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "카지노 칩 1개를 환전하려면 최소 100 코블달러가 필요합니다."
+              },
+              {
+                "language": "en_us",
+                "value": "You need at least 100 CobbleDollars to exchange one casino chip."
+              }
+            ]
+          },
+          "next": 16,
+          "await": true,
+          "resume": 16
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p0/s1/then/s0/option0_end",
+          "op": "jump",
+          "target": 19
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "필요할 때 다시 말씀해 주세요."
+              },
+              {
+                "language": "en_us",
+                "value": "Come back whenever you need me."
+              }
+            ]
+          },
+          "next": 18,
+          "await": true,
+          "resume": 18
+        },
+        {
+          "address": 18,
+          "instruction_id": "e0/p0/s1/then/s0/option1_end",
+          "op": "jump",
+          "target": 19
+        },
+        {
+          "address": 19,
+          "instruction_id": "e0/p0/s1/then_end",
+          "op": "jump",
+          "target": 21
+        },
+        {
+          "address": 20,
+          "instruction_id": "e0/p0/s1/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "먼저 동전케이스를 준비해 주세요. 동전케이스가 있어야 환전을 이용할 수 있습니다."
+              },
+              {
+                "language": "en_us",
+                "value": "Please bring a Coin Case first. It is required to use the exchange."
+              }
+            ]
+          },
+          "next": 21,
+          "await": true,
+          "resume": 21
+        },
+        {
+          "address": 21,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 48,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 212,
+              "line": 6,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 217,
+              "line": 7,
+              "column": 5
+            },
+            "end": {
+              "offset": 2265,
+              "line": 64,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p0/s1/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 274,
+              "line": 8,
+              "column": 7
+            },
+            "end": {
+              "offset": 2074,
+              "line": 58,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 494,
+              "line": 16,
+              "column": 11
+            },
+            "end": {
+              "offset": 1850,
+              "line": 47,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 526,
+              "line": 17,
+              "column": 13
+            },
+            "end": {
+              "offset": 553,
+              "line": 17,
+              "column": 40
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 566,
+              "line": 18,
+              "column": 13
+            },
+            "end": {
+              "offset": 618,
+              "line": 18,
+              "column": 65
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 631,
+              "line": 19,
+              "column": 13
+            },
+            "end": {
+              "offset": 806,
+              "line": 22,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "exchange/amount",
+          "stable_id": "exchange/amount",
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 819,
+              "line": 23,
+              "column": 13
+            },
+            "end": {
+              "offset": 1008,
+              "line": 28,
+              "column": 24
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 1021,
+              "line": 29,
+              "column": 13
+            },
+            "end": {
+              "offset": 1053,
+              "line": 29,
+              "column": 45
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "exchange/perform",
+          "stable_id": "exchange/perform",
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 1066,
+              "line": 30,
+              "column": 13
+            },
+            "end": {
+              "offset": 1142,
+              "line": 30,
+              "column": 89
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s6",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 1155,
+              "line": 31,
+              "column": 13
+            },
+            "end": {
+              "offset": 1636,
+              "line": 41,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s6/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 1184,
+              "line": 32,
+              "column": 15
+            },
+            "end": {
+              "offset": 1402,
+              "line": 35,
+              "column": 16
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s6/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 1168,
+              "line": 31,
+              "column": 26
+            },
+            "end": {
+              "offset": 1416,
+              "line": 36,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then/s6/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 1438,
+              "line": 37,
+              "column": 15
+            },
+            "end": {
+              "offset": 1622,
+              "line": 40,
+              "column": 16
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 512,
+              "line": 16,
+              "column": 29
+            },
+            "end": {
+              "offset": 1648,
+              "line": 42,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e0/p0/s1/then/s0/option0/s0/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 1668,
+              "line": 43,
+              "column": 13
+            },
+            "end": {
+              "offset": 1838,
+              "line": 46,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "e0/p0/s1/then/s0/option0_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 482,
+              "line": 15,
+              "column": 11
+            },
+            "end": {
+              "offset": 1860,
+              "line": 48,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 17,
+          "instruction_id": "e0/p0/s1/then/s0/option1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 1943,
+              "line": 53,
+              "column": 11
+            },
+            "end": {
+              "offset": 2056,
+              "line": 56,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 18,
+          "instruction_id": "e0/p0/s1/then/s0/option1_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 1931,
+              "line": 52,
+              "column": 11
+            },
+            "end": {
+              "offset": 2066,
+              "line": 57,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 19,
+          "instruction_id": "e0/p0/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 266,
+              "line": 7,
+              "column": 54
+            },
+            "end": {
+              "offset": 2080,
+              "line": 59,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 20,
+          "instruction_id": "e0/p0/s1/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 2094,
+              "line": 60,
+              "column": 7
+            },
+            "end": {
+              "offset": 2259,
+              "line": 63,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 21,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/facilities/casino_cashier.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 2269,
+              "line": 65,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "dhelmise-1",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "structures": [
+          "#minecraft:shipwreck"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "dhelmise",
+      "level": "27-52",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "dhelmise-2",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "structures": [
+          "#minecraft:shipwreck"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "dhelmise",
+      "level": "27-52",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "dhelmise-3",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": true,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "dhelmise",
+      "level": "27-52",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "dhelmise-4",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#minecraft:shipwreck"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "dhelmise",
+      "level": "27-52",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "dhelmise-5",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 10,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "structures": [
+          "#minecraft:shipwreck"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "dhelmise",
+      "level": "27-52",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "dhelmise-7",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "rare",
+      "weight": 6,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "canSeeSky": false,
+        "maxSkyLight": 15,
+        "minSkyLight": 8,
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "dhelmise",
+      "level": "27-52",
+      "spawnablePositionType": "fishing"
+    },
+    {
+      "id": "dhelmise-8",
+      "presets": [
+        "water"
+      ],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 20,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "maxY": 13,
+        "minY": -60,
+        "structures": [
+          "#cobblemon:shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "dhelmise",
+      "level": "27-52",
+      "spawnablePositionType": "submerged"
+    },
+    {
+      "id": "dhelmise-9",
+      "presets": [],
+      "type": "pokemon",
+      "bucket": "common",
+      "weight": 20,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_ocean"
+        ],
+        "maxY": 13,
+        "minY": -60,
+        "structures": [
+          "#cobblemon:shipwreck_cove"
+        ],
+        "dimensions": [
+          "cobbleventure:generation_7"
+        ]
+      },
+      "pokemon": "dhelmise",
+      "level": "27-52",
+      "spawnablePositionType": "fishing"
+    }
+  ]
+}

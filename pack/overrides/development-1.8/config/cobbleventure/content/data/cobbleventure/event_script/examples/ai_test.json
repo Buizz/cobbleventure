@@ -1,0 +1,2224 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/examples/ai_test",
+  "source_digest": "19f83c517dd5c140e83a61260070834373ede94b421bb66110ff5255daf89e2d",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "proximity_enter",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 9
+            }
+          },
+          {
+            "name": "group",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "trainer_battle"
+            }
+          },
+          {
+            "name": "stage",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "warning"
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "unary",
+            "operator": "!",
+            "operand": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "flag"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "cobbleventure:runtime/npc_instance_defeated"
+                  }
+                }
+              ]
+            }
+          },
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "command",
+          "command": "encounter_warning",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "encounter.trainer_boy"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 148,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 189,
+              "line": 3,
+              "column": 46
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 79,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 193,
+              "line": 4,
+              "column": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "trigger": {
+        "name": "proximity_enter",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 6
+            }
+          },
+          {
+            "name": "group",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "trainer_battle"
+            }
+          },
+          {
+            "name": "after",
+            "value": {
+              "kind": "literal",
+              "type": "string",
+              "value": "warning"
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "unary",
+            "operator": "!",
+            "operand": {
+              "kind": "call",
+              "callee": {
+                "kind": "name",
+                "name": "flag"
+              },
+              "arguments": [
+                {
+                  "name": null,
+                  "value": {
+                    "kind": "literal",
+                    "type": "string",
+                    "value": "cobbleventure:runtime/npc_instance_defeated"
+                  }
+                }
+              ]
+            }
+          },
+          "entry": 0
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e1/p0/s0",
+          "op": "branch",
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "has_item"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobblemon:potion"
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "int",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "then": 1,
+          "else": 3
+        },
+        {
+          "address": 1,
+          "instruction_id": "e1/p0/s0/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "상처약까지 챙겼구나! 준비가 철저한데? 바로 승부하자!"
+          },
+          "next": 2,
+          "await": true,
+          "resume": 2
+        },
+        {
+          "address": 2,
+          "instruction_id": "e1/p0/s0/then_end",
+          "op": "jump",
+          "target": 4
+        },
+        {
+          "address": 3,
+          "instruction_id": "e1/p0/s0/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "잠깐! 나는 배틀 연습 중인 AI 맨이야. 나와 승부하자!"
+          },
+          "next": 4,
+          "await": true,
+          "resume": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "proximity/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/ai_test"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "battle_result",
+          "operation_id": "cobbleventure:event_script/examples/ai_test/proximity/battle",
+          "next": 5,
+          "resume": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e1/p0/s2",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "battle_result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 6,
+          "else": 15
+        },
+        {
+          "address": 6,
+          "instruction_id": "proximity/give_loot",
+          "op": "command",
+          "command": "give_loot",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:trainer/ai_test_rewards"
+              }
+            },
+            {
+              "name": "count",
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 1
+              }
+            },
+            {
+              "name": "notify",
+              "value": null
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": false,
+          "result": "reward",
+          "operation_id": "cobbleventure:event_script/examples/ai_test/proximity/give_loot",
+          "next": 7,
+          "resume": 7
+        },
+        {
+          "address": 7,
+          "instruction_id": "e1/p0/s2/then/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "reward"
+              },
+              "member": "remaining_count"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "int",
+              "value": 0
+            }
+          },
+          "then": 8,
+          "else": 11
+        },
+        {
+          "address": 8,
+          "instruction_id": "e1/p0/s2/then/s1/then/s0",
+          "op": "narrate",
+          "text": {
+            "kind": "literal",
+            "value": "가방에 빈 공간이 없어 승리 보상을 모두 받을 수 없습니다."
+          },
+          "next": 9,
+          "await": true,
+          "resume": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "e1/p0/s2/then/s1/then/s1",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 10,
+          "instruction_id": "e1/p0/s2/then/s1/then_end",
+          "op": "jump",
+          "target": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "proximity/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/examples/ai_test/proximity/set_instance_defeated",
+          "next": 12
+        },
+        {
+          "address": 12,
+          "instruction_id": "proximity/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/trainer/ai_test/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/examples/ai_test/proximity/set_defeated",
+          "next": 13
+        },
+        {
+          "address": 13,
+          "instruction_id": "e1/p0/s2/then/s4",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "졌지만 좋은 승부였어! 다음에도 다시 상대해 줘."
+          },
+          "next": 14,
+          "await": true,
+          "resume": 14
+        },
+        {
+          "address": 14,
+          "instruction_id": "e1/p0/s2/then_end",
+          "op": "jump",
+          "target": 16
+        },
+        {
+          "address": 15,
+          "instruction_id": "e1/p0/s2/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "좋은 승부였어. 준비가 되면 다시 도전해 줘!"
+          },
+          "next": 16,
+          "await": true,
+          "resume": 16
+        },
+        {
+          "address": 16,
+          "instruction_id": "e1/p0/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e1/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 345,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 496,
+              "line": 13,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e1/p0/s0/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 388,
+              "line": 10,
+              "column": 7
+            },
+            "end": {
+              "offset": 428,
+              "line": 10,
+              "column": 47
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e1/p0/s0/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 380,
+              "line": 9,
+              "column": 40
+            },
+            "end": {
+              "offset": 434,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e1/p0/s0/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 448,
+              "line": 12,
+              "column": 7
+            },
+            "end": {
+              "offset": 490,
+              "line": 12,
+              "column": 49
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "proximity/battle",
+          "stable_id": "proximity/battle",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 501,
+              "line": 14,
+              "column": 5
+            },
+            "end": {
+              "offset": 583,
+              "line": 14,
+              "column": 87
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e1/p0/s2",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 588,
+              "line": 15,
+              "column": 5
+            },
+            "end": {
+              "offset": 1142,
+              "line": 26,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "proximity/give_loot",
+          "stable_id": "proximity/give_loot",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 630,
+              "line": 16,
+              "column": 7
+            },
+            "end": {
+              "offset": 729,
+              "line": 16,
+              "column": 106
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e1/p0/s2/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 736,
+              "line": 17,
+              "column": 7
+            },
+            "end": {
+              "offset": 840,
+              "line": 20,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "e1/p0/s2/then/s1/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 776,
+              "line": 18,
+              "column": 9
+            },
+            "end": {
+              "offset": 819,
+              "line": 18,
+              "column": 52
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "e1/p0/s2/then/s1/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 828,
+              "line": 19,
+              "column": 9
+            },
+            "end": {
+              "offset": 832,
+              "line": 19,
+              "column": 13
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "e1/p0/s2/then/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 766,
+              "line": 17,
+              "column": 37
+            },
+            "end": {
+              "offset": 840,
+              "line": 20,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "proximity/set_instance_defeated",
+          "stable_id": "proximity/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 847,
+              "line": 21,
+              "column": 7
+            },
+            "end": {
+              "offset": 943,
+              "line": 21,
+              "column": 103
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "proximity/set_defeated",
+          "stable_id": "proximity/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 950,
+              "line": 22,
+              "column": 7
+            },
+            "end": {
+              "offset": 1037,
+              "line": 22,
+              "column": 94
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e1/p0/s2/then/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1044,
+              "line": 23,
+              "column": 7
+            },
+            "end": {
+              "offset": 1081,
+              "line": 23,
+              "column": 44
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e1/p0/s2/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 622,
+              "line": 15,
+              "column": 39
+            },
+            "end": {
+              "offset": 1087,
+              "line": 24,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "e1/p0/s2/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1101,
+              "line": 25,
+              "column": 7
+            },
+            "end": {
+              "offset": 1136,
+              "line": 25,
+              "column": 42
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "e1/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 276,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 1146,
+              "line": 27,
+              "column": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:runtime/npc_instance_defeated"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 5
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e2/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "졌지만 좋은 승부였어! 다음에도 다시 상대해 줘."
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e2/p0/s1",
+          "op": "choice",
+          "prompt": {
+            "kind": "literal",
+            "value": ""
+          },
+          "result": null,
+          "options": [
+            {
+              "text": {
+                "kind": "literal",
+                "value": "다음에 또 보자"
+              },
+              "target": 2
+            }
+          ],
+          "await": true
+        },
+        {
+          "address": 2,
+          "instruction_id": "e2/p0/s1/option0/s0",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 3,
+          "instruction_id": "e2/p0/s1/option0_end",
+          "op": "jump",
+          "target": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "e2/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 5,
+          "instruction_id": "e2/p1/s0",
+          "op": "branch",
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "has_item"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobblemon:potion"
+                }
+              },
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "int",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "then": 6,
+          "else": 22
+        },
+        {
+          "address": 6,
+          "instruction_id": "e2/p1/s0/then/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "상처약까지 챙겼구나! 준비가 철저한데? 바로 승부하자!"
+          },
+          "next": 7,
+          "await": true,
+          "resume": 7
+        },
+        {
+          "address": 7,
+          "instruction_id": "e2/p1/s0/then/s1",
+          "op": "choice",
+          "prompt": {
+            "kind": "literal",
+            "value": ""
+          },
+          "result": null,
+          "options": [
+            {
+              "text": {
+                "kind": "literal",
+                "value": "승부한다"
+              },
+              "target": 8
+            }
+          ],
+          "await": true
+        },
+        {
+          "address": 8,
+          "instruction_id": "prepared/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/ai_test"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "battle_result",
+          "operation_id": "cobbleventure:event_script/examples/ai_test/prepared/battle",
+          "next": 9,
+          "resume": 9
+        },
+        {
+          "address": 9,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "battle_result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 10,
+          "else": 19
+        },
+        {
+          "address": 10,
+          "instruction_id": "prepared/give_loot",
+          "op": "command",
+          "command": "give_loot",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:trainer/ai_test_rewards"
+              }
+            },
+            {
+              "name": "count",
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 1
+              }
+            },
+            {
+              "name": "notify",
+              "value": null
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": false,
+          "result": "reward",
+          "operation_id": "cobbleventure:event_script/examples/ai_test/prepared/give_loot",
+          "next": 11,
+          "resume": 11
+        },
+        {
+          "address": 11,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "reward"
+              },
+              "member": "remaining_count"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "int",
+              "value": 0
+            }
+          },
+          "then": 12,
+          "else": 15
+        },
+        {
+          "address": 12,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s1/then/s0",
+          "op": "narrate",
+          "text": {
+            "kind": "literal",
+            "value": "가방에 빈 공간이 없어 승리 보상을 모두 받을 수 없습니다."
+          },
+          "next": 13,
+          "await": true,
+          "resume": 13
+        },
+        {
+          "address": 13,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s1/then/s1",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 14,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s1/then_end",
+          "op": "jump",
+          "target": 15
+        },
+        {
+          "address": 15,
+          "instruction_id": "prepared/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/examples/ai_test/prepared/set_instance_defeated",
+          "next": 16
+        },
+        {
+          "address": 16,
+          "instruction_id": "prepared/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/trainer/ai_test/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/examples/ai_test/prepared/set_defeated",
+          "next": 17
+        },
+        {
+          "address": 17,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s4",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "졌지만 좋은 승부였어! 다음에도 다시 상대해 줘."
+          },
+          "next": 18,
+          "await": true,
+          "resume": 18
+        },
+        {
+          "address": 18,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then_end",
+          "op": "jump",
+          "target": 20
+        },
+        {
+          "address": 19,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "좋은 승부였어. 준비가 되면 다시 도전해 줘!"
+          },
+          "next": 20,
+          "await": true,
+          "resume": 20
+        },
+        {
+          "address": 20,
+          "instruction_id": "e2/p1/s0/then/s1/option0_end",
+          "op": "jump",
+          "target": 21
+        },
+        {
+          "address": 21,
+          "instruction_id": "e2/p1/s0/then_end",
+          "op": "jump",
+          "target": 39
+        },
+        {
+          "address": 22,
+          "instruction_id": "e2/p1/s0/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "잠깐! 나는 배틀 연습 중인 AI 맨이야. 준비가 됐다면 나와 승부하자!"
+          },
+          "next": 23,
+          "await": true,
+          "resume": 23
+        },
+        {
+          "address": 23,
+          "instruction_id": "e2/p1/s0/else/s1",
+          "op": "choice",
+          "prompt": {
+            "kind": "literal",
+            "value": ""
+          },
+          "result": null,
+          "options": [
+            {
+              "text": {
+                "kind": "literal",
+                "value": "승부한다"
+              },
+              "target": 24
+            },
+            {
+              "text": {
+                "kind": "literal",
+                "value": "다음에"
+              },
+              "target": 37
+            }
+          ],
+          "await": true
+        },
+        {
+          "address": 24,
+          "instruction_id": "default/battle",
+          "op": "command",
+          "command": "battle",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:battle/ai_test"
+              }
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": true,
+          "result": "battle_result",
+          "operation_id": "cobbleventure:event_script/examples/ai_test/default/battle",
+          "next": 25,
+          "resume": 25
+        },
+        {
+          "address": 25,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": "==",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "battle_result"
+              },
+              "member": "outcome"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "string",
+              "value": "win"
+            }
+          },
+          "then": 26,
+          "else": 35
+        },
+        {
+          "address": 26,
+          "instruction_id": "default/give_loot",
+          "op": "command",
+          "command": "give_loot",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:trainer/ai_test_rewards"
+              }
+            },
+            {
+              "name": "count",
+              "value": {
+                "kind": "literal",
+                "type": "int",
+                "value": 1
+              }
+            },
+            {
+              "name": "notify",
+              "value": null
+            }
+          ],
+          "properties": [],
+          "await": true,
+          "await_explicit": false,
+          "result": "reward",
+          "operation_id": "cobbleventure:event_script/examples/ai_test/default/give_loot",
+          "next": 27,
+          "resume": 27
+        },
+        {
+          "address": 27,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s1",
+          "op": "branch",
+          "condition": {
+            "kind": "binary",
+            "operator": ">",
+            "left": {
+              "kind": "member",
+              "target": {
+                "kind": "name",
+                "name": "reward"
+              },
+              "member": "remaining_count"
+            },
+            "right": {
+              "kind": "literal",
+              "type": "int",
+              "value": 0
+            }
+          },
+          "then": 28,
+          "else": 31
+        },
+        {
+          "address": 28,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s1/then/s0",
+          "op": "narrate",
+          "text": {
+            "kind": "literal",
+            "value": "가방에 빈 공간이 없어 승리 보상을 모두 받을 수 없습니다."
+          },
+          "next": 29,
+          "await": true,
+          "resume": 29
+        },
+        {
+          "address": 29,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s1/then/s1",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 30,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s1/then_end",
+          "op": "jump",
+          "target": 31
+        },
+        {
+          "address": 31,
+          "instruction_id": "default/set_instance_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:runtime/npc_instance_defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/examples/ai_test/default/set_instance_defeated",
+          "next": 32
+        },
+        {
+          "address": 32,
+          "instruction_id": "default/set_defeated",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/trainer/ai_test/defeated"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/examples/ai_test/default/set_defeated",
+          "next": 33
+        },
+        {
+          "address": 33,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s4",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "졌지만 좋은 승부였어! 다음에도 다시 상대해 줘."
+          },
+          "next": 34,
+          "await": true,
+          "resume": 34
+        },
+        {
+          "address": 34,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then_end",
+          "op": "jump",
+          "target": 36
+        },
+        {
+          "address": 35,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/else/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "literal",
+            "value": "좋은 승부였어. 준비가 되면 다시 도전해 줘!"
+          },
+          "next": 36,
+          "await": true,
+          "resume": 36
+        },
+        {
+          "address": 36,
+          "instruction_id": "e2/p1/s0/else/s1/option0_end",
+          "op": "jump",
+          "target": 39
+        },
+        {
+          "address": 37,
+          "instruction_id": "e2/p1/s0/else/s1/option1/s0",
+          "op": "command",
+          "command": "stop",
+          "arguments": [],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "next": null
+        },
+        {
+          "address": 38,
+          "instruction_id": "e2/p1/s0/else/s1/option1_end",
+          "op": "jump",
+          "target": 39
+        },
+        {
+          "address": 39,
+          "instruction_id": "e2/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e2/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1247,
+              "line": 32,
+              "column": 5
+            },
+            "end": {
+              "offset": 1284,
+              "line": 32,
+              "column": 42
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e2/p0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1289,
+              "line": 33,
+              "column": 5
+            },
+            "end": {
+              "offset": 1346,
+              "line": 37,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e2/p0/s1/option0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1328,
+              "line": 35,
+              "column": 9
+            },
+            "end": {
+              "offset": 1332,
+              "line": 35,
+              "column": 13
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "e2/p0/s1/option0_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1318,
+              "line": 34,
+              "column": 18
+            },
+            "end": {
+              "offset": 1340,
+              "line": 36,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "e2/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1179,
+              "line": 31,
+              "column": 3
+            },
+            "end": {
+              "offset": 1350,
+              "line": 38,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e2/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1373,
+              "line": 41,
+              "column": 5
+            },
+            "end": {
+              "offset": 3115,
+              "line": 82,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e2/p1/s0/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1416,
+              "line": 42,
+              "column": 7
+            },
+            "end": {
+              "offset": 1456,
+              "line": 42,
+              "column": 47
+            }
+          }
+        },
+        {
+          "address": 7,
+          "instruction_id": "e2/p1/s0/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1463,
+              "line": 43,
+              "column": 7
+            },
+            "end": {
+              "offset": 2229,
+              "line": 59,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 8,
+          "instruction_id": "prepared/battle",
+          "stable_id": "prepared/battle",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1502,
+              "line": 45,
+              "column": 11
+            },
+            "end": {
+              "offset": 1583,
+              "line": 45,
+              "column": 92
+            }
+          }
+        },
+        {
+          "address": 9,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1594,
+              "line": 46,
+              "column": 11
+            },
+            "end": {
+              "offset": 2211,
+              "line": 57,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 10,
+          "instruction_id": "prepared/give_loot",
+          "stable_id": "prepared/give_loot",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1642,
+              "line": 47,
+              "column": 13
+            },
+            "end": {
+              "offset": 1740,
+              "line": 47,
+              "column": 111
+            }
+          }
+        },
+        {
+          "address": 11,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1753,
+              "line": 48,
+              "column": 13
+            },
+            "end": {
+              "offset": 1875,
+              "line": 51,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 12,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s1/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1799,
+              "line": 49,
+              "column": 15
+            },
+            "end": {
+              "offset": 1842,
+              "line": 49,
+              "column": 58
+            }
+          }
+        },
+        {
+          "address": 13,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s1/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1857,
+              "line": 50,
+              "column": 15
+            },
+            "end": {
+              "offset": 1861,
+              "line": 50,
+              "column": 19
+            }
+          }
+        },
+        {
+          "address": 14,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1783,
+              "line": 48,
+              "column": 43
+            },
+            "end": {
+              "offset": 1875,
+              "line": 51,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 15,
+          "instruction_id": "prepared/set_instance_defeated",
+          "stable_id": "prepared/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1888,
+              "line": 52,
+              "column": 13
+            },
+            "end": {
+              "offset": 1983,
+              "line": 52,
+              "column": 108
+            }
+          }
+        },
+        {
+          "address": 16,
+          "instruction_id": "prepared/set_defeated",
+          "stable_id": "prepared/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1996,
+              "line": 53,
+              "column": 13
+            },
+            "end": {
+              "offset": 2082,
+              "line": 53,
+              "column": 99
+            }
+          }
+        },
+        {
+          "address": 17,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2095,
+              "line": 54,
+              "column": 13
+            },
+            "end": {
+              "offset": 2132,
+              "line": 54,
+              "column": 50
+            }
+          }
+        },
+        {
+          "address": 18,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1628,
+              "line": 46,
+              "column": 45
+            },
+            "end": {
+              "offset": 2144,
+              "line": 55,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 19,
+          "instruction_id": "e2/p1/s0/then/s1/option0/s1/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2164,
+              "line": 56,
+              "column": 13
+            },
+            "end": {
+              "offset": 2199,
+              "line": 56,
+              "column": 48
+            }
+          }
+        },
+        {
+          "address": 20,
+          "instruction_id": "e2/p1/s0/then/s1/option0_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1490,
+              "line": 44,
+              "column": 16
+            },
+            "end": {
+              "offset": 2221,
+              "line": 58,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 21,
+          "instruction_id": "e2/p1/s0/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1408,
+              "line": 41,
+              "column": 40
+            },
+            "end": {
+              "offset": 2235,
+              "line": 60,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 22,
+          "instruction_id": "e2/p1/s0/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2249,
+              "line": 61,
+              "column": 7
+            },
+            "end": {
+              "offset": 2299,
+              "line": 61,
+              "column": 57
+            }
+          }
+        },
+        {
+          "address": 23,
+          "instruction_id": "e2/p1/s0/else/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2306,
+              "line": 62,
+              "column": 7
+            },
+            "end": {
+              "offset": 3109,
+              "line": 81,
+              "column": 8
+            }
+          }
+        },
+        {
+          "address": 24,
+          "instruction_id": "default/battle",
+          "stable_id": "default/battle",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2345,
+              "line": 64,
+              "column": 11
+            },
+            "end": {
+              "offset": 2425,
+              "line": 64,
+              "column": 91
+            }
+          }
+        },
+        {
+          "address": 25,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2436,
+              "line": 65,
+              "column": 11
+            },
+            "end": {
+              "offset": 3050,
+              "line": 76,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 26,
+          "instruction_id": "default/give_loot",
+          "stable_id": "default/give_loot",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2484,
+              "line": 66,
+              "column": 13
+            },
+            "end": {
+              "offset": 2581,
+              "line": 66,
+              "column": 110
+            }
+          }
+        },
+        {
+          "address": 27,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2594,
+              "line": 67,
+              "column": 13
+            },
+            "end": {
+              "offset": 2716,
+              "line": 70,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 28,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s1/then/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2640,
+              "line": 68,
+              "column": 15
+            },
+            "end": {
+              "offset": 2683,
+              "line": 68,
+              "column": 58
+            }
+          }
+        },
+        {
+          "address": 29,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s1/then/s1",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2698,
+              "line": 69,
+              "column": 15
+            },
+            "end": {
+              "offset": 2702,
+              "line": 69,
+              "column": 19
+            }
+          }
+        },
+        {
+          "address": 30,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2624,
+              "line": 67,
+              "column": 43
+            },
+            "end": {
+              "offset": 2716,
+              "line": 70,
+              "column": 14
+            }
+          }
+        },
+        {
+          "address": 31,
+          "instruction_id": "default/set_instance_defeated",
+          "stable_id": "default/set_instance_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2729,
+              "line": 71,
+              "column": 13
+            },
+            "end": {
+              "offset": 2823,
+              "line": 71,
+              "column": 107
+            }
+          }
+        },
+        {
+          "address": 32,
+          "instruction_id": "default/set_defeated",
+          "stable_id": "default/set_defeated",
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2836,
+              "line": 72,
+              "column": 13
+            },
+            "end": {
+              "offset": 2921,
+              "line": 72,
+              "column": 98
+            }
+          }
+        },
+        {
+          "address": 33,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then/s4",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2934,
+              "line": 73,
+              "column": 13
+            },
+            "end": {
+              "offset": 2971,
+              "line": 73,
+              "column": 50
+            }
+          }
+        },
+        {
+          "address": 34,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/then_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2470,
+              "line": 65,
+              "column": 45
+            },
+            "end": {
+              "offset": 2983,
+              "line": 74,
+              "column": 12
+            }
+          }
+        },
+        {
+          "address": 35,
+          "instruction_id": "e2/p1/s0/else/s1/option0/s1/else/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 3003,
+              "line": 75,
+              "column": 13
+            },
+            "end": {
+              "offset": 3038,
+              "line": 75,
+              "column": 48
+            }
+          }
+        },
+        {
+          "address": 36,
+          "instruction_id": "e2/p1/s0/else/s1/option0_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 2333,
+              "line": 63,
+              "column": 16
+            },
+            "end": {
+              "offset": 3060,
+              "line": 77,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 37,
+          "instruction_id": "e2/p1/s0/else/s1/option1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 3087,
+              "line": 79,
+              "column": 11
+            },
+            "end": {
+              "offset": 3091,
+              "line": 79,
+              "column": 15
+            }
+          }
+        },
+        {
+          "address": 38,
+          "instruction_id": "e2/p1/s0/else/s1/option1_end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 3075,
+              "line": 78,
+              "column": 15
+            },
+            "end": {
+              "offset": 3101,
+              "line": 80,
+              "column": 10
+            }
+          }
+        },
+        {
+          "address": 39,
+          "instruction_id": "e2/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/examples/ai_test.cves",
+            "start": {
+              "offset": 1354,
+              "line": 40,
+              "column": 3
+            },
+            "end": {
+              "offset": 3119,
+              "line": 83,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

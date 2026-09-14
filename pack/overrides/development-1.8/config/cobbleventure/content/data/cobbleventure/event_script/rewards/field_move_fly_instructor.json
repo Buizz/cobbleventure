@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "script_id": "cobbleventure:event_script/rewards/field_move_fly_instructor",
+  "source_digest": "dcfe49aa266c87b3389a5efe29d5635861c4030f4871a055def3f14e6d7f6906",
+  "events": [
+    {
+      "index": 0,
+      "trigger": {
+        "name": "interact",
+        "arguments": [
+          {
+            "name": "range",
+            "value": {
+              "kind": "literal",
+              "type": "int",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "pages": [
+        {
+          "index": 0,
+          "condition": {
+            "kind": "call",
+            "callee": {
+              "kind": "name",
+              "name": "flag"
+            },
+            "arguments": [
+              {
+                "name": null,
+                "value": {
+                  "kind": "literal",
+                  "type": "string",
+                  "value": "cobbleventure:flag/rewards/field_move/fly"
+                }
+              }
+            ]
+          },
+          "entry": 0
+        },
+        {
+          "index": 1,
+          "condition": null,
+          "entry": 2
+        }
+      ],
+      "instructions": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "석영고원까지 올라온 트레이너라면 공중날기를 맡겨도 안심이야."
+              }
+            ]
+          },
+          "next": 1,
+          "await": true,
+          "resume": 1
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "op": "page_end"
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "석영고원 로비까지 잘 찾아왔구나. 먼 길을 다시 걸어 내려갈 필요가 없도록 공중날기를 허가해 줄게."
+              }
+            ]
+          },
+          "next": 3,
+          "await": true,
+          "resume": 3
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/field_move",
+          "op": "command",
+          "command": "grant_field_move",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "name",
+                "name": "fly"
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": "granted",
+          "operation_id": "cobbleventure:event_script/rewards/field_move_fly_instructor/grant/field_move",
+          "next": 4
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "op": "command",
+          "command": "set_flag",
+          "arguments": [
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "string",
+                "value": "cobbleventure:flag/rewards/field_move/fly"
+              }
+            },
+            {
+              "name": null,
+              "value": {
+                "kind": "literal",
+                "type": "bool",
+                "value": true
+              }
+            }
+          ],
+          "properties": [],
+          "await": false,
+          "await_explicit": false,
+          "result": null,
+          "operation_id": "cobbleventure:event_script/rewards/field_move_fly_instructor/grant/state",
+          "next": 5
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "op": "say",
+          "speaker": "npc",
+          "text": {
+            "kind": "localized",
+            "entries": [
+              {
+                "language": "ko_kr",
+                "value": "이제 방문한 장소를 오갈 때 공중날기를 이용할 수 있어."
+              }
+            ]
+          },
+          "next": 6,
+          "await": true,
+          "resume": 6
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "op": "page_end"
+        }
+      ],
+      "source_map": [
+        {
+          "address": 0,
+          "instruction_id": "e0/p0/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_fly_instructor.cves",
+            "start": {
+              "offset": 95,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 159,
+              "line": 5,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 1,
+          "instruction_id": "e0/p0/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_fly_instructor.cves",
+            "start": {
+              "offset": 29,
+              "line": 2,
+              "column": 3
+            },
+            "end": {
+              "offset": 163,
+              "line": 6,
+              "column": 4
+            }
+          }
+        },
+        {
+          "address": 2,
+          "instruction_id": "e0/p1/s0",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_fly_instructor.cves",
+            "start": {
+              "offset": 186,
+              "line": 9,
+              "column": 5
+            },
+            "end": {
+              "offset": 272,
+              "line": 11,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 3,
+          "instruction_id": "grant/field_move",
+          "stable_id": "grant/field_move",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_fly_instructor.cves",
+            "start": {
+              "offset": 277,
+              "line": 12,
+              "column": 5
+            },
+            "end": {
+              "offset": 330,
+              "line": 12,
+              "column": 58
+            }
+          }
+        },
+        {
+          "address": 4,
+          "instruction_id": "grant/state",
+          "stable_id": "grant/state",
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_fly_instructor.cves",
+            "start": {
+              "offset": 335,
+              "line": 13,
+              "column": 5
+            },
+            "end": {
+              "offset": 409,
+              "line": 13,
+              "column": 79
+            }
+          }
+        },
+        {
+          "address": 5,
+          "instruction_id": "e0/p1/s3",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_fly_instructor.cves",
+            "start": {
+              "offset": 414,
+              "line": 14,
+              "column": 5
+            },
+            "end": {
+              "offset": 476,
+              "line": 16,
+              "column": 6
+            }
+          }
+        },
+        {
+          "address": 6,
+          "instruction_id": "e0/p1/end",
+          "stable_id": null,
+          "span": {
+            "source": "content/events/cobbleventure/rewards/field_move_fly_instructor.cves",
+            "start": {
+              "offset": 167,
+              "line": 8,
+              "column": 3
+            },
+            "end": {
+              "offset": 480,
+              "line": 17,
+              "column": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "../../schemas/route.schema.json",
+  "schema_version": 1,
+  "id": "cobbleventure:route/route_custom_03",
+  "display_name": {
+    "ko_kr": "태초마을 - 상록시티 길",
+    "en_us": "태초마을 - 상록시티 길"
+  },
+  "auto_name": true,
+  "enabled": true,
+  "route_type": "road",
+  "corridor": {
+    "width_blocks": 12,
+    "edge_noise": 0
+  },
+  "level_scaling": {
+    "mode": "world",
+    "offset": 0
+  },
+  "pokemon_spawns": {
+    "inherit_biome": false,
+    "excluded_species": [],
+    "additions": [
+      {
+        "species": "cobblemon:pidgey",
+        "min_level": 2,
+        "max_level": 5
+      },
+      {
+        "species": "cobblemon:rattata",
+        "min_level": 2,
+        "max_level": 4
+      }
+    ],
+    "level_overrides": [
+      {
+        "species": "cobblemon:pidgey",
+        "min_level": 2,
+        "max_level": 5,
+        "level_weights": {
+          "2": 10,
+          "3": 35,
+          "4": 4,
+          "5": 1
+        }
+      },
+      {
+        "species": "cobblemon:rattata",
+        "min_level": 2,
+        "max_level": 4,
+        "level_weights": {
+          "2": 10,
+          "3": 35,
+          "4": 5
+        }
+      }
+    ]
+  },
+  "npc_placements": [],
+  "automatic_npc_placement": {
+    "enabled": false,
+    "count": 0,
+    "use_biome_defaults": false,
+    "direct_trainers": [],
+    "trigger_override": "proximity"
+  }
+}
