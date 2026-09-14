@@ -18,6 +18,10 @@ final class AIBattleTestCommandTest {
         UUID opponentId = UUID.fromString("22222222-2222-2222-2222-222222222222");
         String runtimeId = AIBattleTestCommand.runtimeTrainerId(playerId, opponentId);
 
+        assertEquals(
+                "tbcs battle GEN_9_SINGLES " + playerId
+                        + " vs " + opponentId + " as " + runtimeId,
+                AIBattleTestCommand.battleCommand(playerId, opponentId, runtimeId));
         assertTrue(runtimeId.startsWith("cobbleventure_battle_ai:test/lorelei/"));
         assertEquals("expert_search", AIBattleTestCommand.TEST_DIFFICULTY);
     }

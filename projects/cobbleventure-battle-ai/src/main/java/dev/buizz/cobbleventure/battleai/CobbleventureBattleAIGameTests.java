@@ -54,6 +54,10 @@ public final class CobbleventureBattleAIGameTests {
                 "Missing /" + AIBattleTestCommand.PRIMARY_COMMAND);
         helper.assertTrue(root.getChild(AIBattleTestCommand.ALIAS_COMMAND) != null,
                 "Missing /" + AIBattleTestCommand.ALIAS_COMMAND);
+        helper.assertTrue(root.getChild(AIBattleTestTeamCommand.PRIMARY_COMMAND) != null,
+                "Missing /" + AIBattleTestTeamCommand.PRIMARY_COMMAND);
+        helper.assertTrue(root.getChild(AIBattleTestTeamCommand.ALIAS_COMMAND) != null,
+                "Missing /" + AIBattleTestTeamCommand.ALIAS_COMMAND);
         helper.succeed();
     }
 

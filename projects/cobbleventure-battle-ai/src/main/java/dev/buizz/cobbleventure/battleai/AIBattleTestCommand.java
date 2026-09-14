@@ -1,14 +1,13 @@
 package dev.buizz.cobbleventure.battleai;
 
+import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.battles.BattleRegistry;
 import com.gitlab.srcmc.rctapi.api.RCTApi;
-import com.gitlab.srcmc.rctapi.api.battle.BattleFormat;
 import com.gitlab.srcmc.rctapi.api.battle.BattleState;
 import com.gitlab.srcmc.rctapi.api.events.Events;
 import com.gitlab.srcmc.rctapi.api.trainer.Trainer;
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerNPC;
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerRegistry;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,7 +23,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-/** Starts the fixed web-lab entry against Lorelei without changing the owned party. */
+/** Starts the fixed Lorelei AI test against the executing player's current party. */
 final class AIBattleTestCommand {
     static final String PRIMARY_COMMAND = "ai_battle_test";
     static final String ALIAS_COMMAND = "aibattletest";
@@ -48,6 +47,7 @@ final class AIBattleTestCommand {
     }
 
     private static void registerCommands(RegisterCommandsEvent event) {
+        AIBattleTestTeamCommand.register(event);
         event.getDispatcher().register(
                 Commands.literal(PRIMARY_COMMAND)
                         .requires(source -> source.hasPermission(2))
@@ -77,6 +77,10 @@ final class AIBattleTestCommand {
             source.sendFailure(Component.literal("이미 AI 배틀 테스트를 시작하고 있습니다."));
             return 0;
         }
+        if (Cobblemon.INSTANCE.getStorage().getParty(player).occupied() == 0) {
+            source.sendFailure(Component.literal("왼쪽 엔트리로 사용할 현재 파티가 비어 있습니다."));
+            return 0;
+        }
         RCTApi api = RCTApi.getInstance(TBCS_REGISTRY);
         if (api == null) {
             source.sendFailure(Component.literal("TBCS 트레이너 레지스트리를 찾을 수 없습니다."));
@@ -104,14 +108,6 @@ final class AIBattleTestCommand {
 
         TrainerNPC runtimeTrainer = AIBattleTestTrainerFactory.create(
                 authored, authoredAI, opponent, TEST_DIFFICULTY);
-        AIBattleTestPlayerPreset playerPreset;
-        try {
-            playerPreset = AIBattleTestPlayerPreset.load(api, player);
-        } catch (RuntimeException error) {
-            opponent.discard();
-            source.sendFailure(Component.literal("왼쪽 웹 엔트리를 만들지 못했습니다: " + error.getMessage()));
-            return 0;
-        }
         String runtimeId = runtimeTrainerId(player.getUUID(), opponent.getUUID());
         ensureBattleListener(api);
         registry.registerNPC(runtimeId, runtimeTrainer);
@@ -124,28 +120,12 @@ final class AIBattleTestCommand {
         );
         PENDING.put(runtimeId, pending);
 
-        boolean started;
-        try {
-            started = api.getBattleManager().start(
-                    List.of(playerPreset),
-                    List.of(runtimeTrainer),
-                    BattleFormat.GEN_9_SINGLES,
-                    api.getBattleManager().getDefaultRules());
-        } catch (RuntimeException error) {
-            PENDING.remove(runtimeId, pending);
-            cleanup(pending);
-            source.sendFailure(Component.literal("AI 배틀 테스트를 시작하지 못했습니다: " + error.getMessage()));
-            return 0;
-        }
-        if (!started) {
-            PENDING.remove(runtimeId, pending);
-            cleanup(pending);
-            source.sendFailure(Component.literal("AI 배틀 테스트 생성이 거부되었습니다."));
-            return 0;
-        }
+        String command = battleCommand(player.getUUID(), opponent.getUUID(), runtimeId);
+        source.getServer().getCommands().performPrefixedCommand(
+                source.getServer().createCommandSourceStack().withPermission(2), command);
 
         source.sendSuccess(() -> Component.literal(
-                "AI 배틀 테스트를 시작합니다: DBingsu 공식 엔트리(왼쪽) vs 칸나(오른쪽), AI="
+                "AI 배틀 테스트를 시작합니다: 현재 파티(왼쪽) vs 칸나(오른쪽), AI="
                         + TEST_DIFFICULTY), false);
         return 1;
     }
@@ -180,6 +160,11 @@ final class AIBattleTestCommand {
         return CobbleventureBattleAIMod.MOD_ID + ":test/lorelei/"
                 + playerId.toString().replace("-", "") + "/"
                 + opponentId.toString().replace("-", "");
+    }
+
+    static String battleCommand(UUID playerId, UUID opponentId, String runtimeTrainerId) {
+        return "tbcs battle GEN_9_SINGLES " + playerId
+                + " vs " + opponentId + " as " + runtimeTrainerId;
     }
 
     private static void ensureBattleListener(RCTApi api) {

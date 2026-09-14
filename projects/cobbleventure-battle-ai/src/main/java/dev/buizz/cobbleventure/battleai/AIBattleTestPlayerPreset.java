@@ -5,26 +5,24 @@ import com.gitlab.srcmc.rctapi.api.RCTApi;
 import com.gitlab.srcmc.rctapi.api.errors.RCTErrors;
 import com.gitlab.srcmc.rctapi.api.models.TrainerModel;
 import com.gitlab.srcmc.rctapi.api.models.converter.PokemonModelConverter;
-import com.gitlab.srcmc.rctapi.api.trainer.TrainerPlayer;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import net.minecraft.server.level.ServerPlayer;
 
-/** Supplies the web battle lab's official left entry without changing the owned party. */
-final class AIBattleTestPlayerPreset extends TrainerPlayer {
+/** Creates the web battle lab's official player entry at a requested test level. */
+final class AIBattleTestPlayerPreset {
     static final String TEAM_RESOURCE =
             "/data/cobbleventure_battle_ai/test-presets/dbingsu-server-party.json";
 
-    private final Pokemon[] team;
+    private AIBattleTestPlayerPreset() {}
 
-    private AIBattleTestPlayerPreset(ServerPlayer player, Pokemon[] team) {
-        super(player);
-        this.team = team;
-    }
-
-    static AIBattleTestPlayerPreset load(RCTApi api, ServerPlayer player) {
+    static List<Pokemon> load(RCTApi api, ServerPlayer player, int level) {
+        if (level < 1 || level > 100) {
+            throw new IllegalArgumentException("레벨은 1~100이어야 합니다.");
+        }
         TrainerModel model;
         try (var stream = AIBattleTestPlayerPreset.class.getResourceAsStream(TEAM_RESOURCE)) {
             if (stream == null) {
@@ -44,19 +42,15 @@ final class AIBattleTestPlayerPreset extends TrainerPlayer {
 
         var errors = RCTErrors.create();
         var converter = new PokemonModelConverter();
-        Pokemon[] team = model.getTeam().stream()
+        List<Pokemon> team = model.getTeam().stream()
                 .map(entry -> converter.toTarget(entry, errors))
-                .toArray(Pokemon[]::new);
+                .toList();
         errors.check();
         for (Pokemon pokemon : team) {
             pokemon.setOriginalTrainer(player.getUUID());
+            pokemon.setLevel(level);
             pokemon.heal();
         }
-        return new AIBattleTestPlayerPreset(player, team);
-    }
-
-    @Override
-    public Pokemon[] getTeam() {
         return team;
     }
 }
