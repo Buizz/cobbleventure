@@ -17,6 +17,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -128,8 +129,9 @@ final class AIBattleTestCommand {
     }
 
     private static ArmorStand createOpponent(ServerPlayer player) {
+        Vec3 position = opponentPosition(player.position(), player.getYRot());
         ArmorStand opponent = new ArmorStand(
-                player.serverLevel(), player.getX(), player.getY(), player.getZ());
+                player.serverLevel(), position.x(), position.y(), position.z());
         opponent.setInvisible(true);
         byte flags = opponent.getEntityData().get(ArmorStand.DATA_CLIENT_FLAGS);
         opponent.getEntityData().set(
@@ -141,6 +143,15 @@ final class AIBattleTestCommand {
         opponent.setCustomName(Component.literal("AI Battle Test - Lorelei"));
         opponent.addTag("cobbleventure_ai_battle_test");
         return opponent;
+    }
+
+    static Vec3 opponentPosition(Vec3 playerPosition, float yawDegrees) {
+        double yawRadians = Math.toRadians(yawDegrees);
+        return playerPosition.add(
+                -Math.sin(yawRadians) * 4.0D,
+                0.0D,
+                Math.cos(yawRadians) * 4.0D
+        );
     }
 
     static String runtimeTrainerId(UUID playerId, UUID opponentId) {
