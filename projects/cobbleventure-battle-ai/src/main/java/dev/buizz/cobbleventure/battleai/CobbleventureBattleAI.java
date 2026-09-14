@@ -12,9 +12,13 @@ import com.gitlab.srcmc.rctapi.api.ai.RCTBattleAI;
 import com.gitlab.srcmc.rctapi.api.ai.config.RCTBattleAIConfig;
 import com.gitlab.srcmc.rctapi.api.models.Gimmicks;
 import com.gitlab.srcmc.rctapi.api.trainer.TrainerNPC;
+import com.mojang.logging.LogUtils;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
 
 /**
  * In-game adapter for Cobbleventure AI profiles.
@@ -24,7 +28,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * gives the independent decision engine a stable Minecraft boundary for later scoring ports.</p>
  */
 public final class CobbleventureBattleAI extends RCTBattleAI {
+    private static final Logger LOGGER = LogUtils.getLogger();
     private final CobbleventureBattleAIConfig profile;
+    private final boolean decisionLogging;
     private final Map<UUID, PendingBatonPass> pendingBatonPassTargets = new ConcurrentHashMap<>();
     private volatile String lastDecisionSource = "rct_fallback";
     private volatile String lastSearchFailure;
@@ -34,8 +40,17 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
             CobbleventureBattleAIConfig profile,
             RCTBattleAIConfig rctConfig
     ) {
+        this(profile, rctConfig, false);
+    }
+
+    private CobbleventureBattleAI(
+            CobbleventureBattleAIConfig profile,
+            RCTBattleAIConfig rctConfig,
+            boolean decisionLogging
+    ) {
         super(rctConfig);
         this.profile = profile;
+        this.decisionLogging = decisionLogging;
     }
 
     @Override
@@ -53,19 +68,23 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
         }
         UUID battleId = battle.getBattleId();
         BattleProjectionLogCapture.capture(battleId, battle.getBattleLog());
+        lastSearchFailure = null;
+        lastSearchReplayTrace = null;
         if (forceSwitch) {
             PendingBatonPass pending = pendingBatonPassTargets.remove(battleId);
             if (pending != null && ShowdownBattleLogObservation.hasMoveSince(
                     battle.getBattleLog(), pending.logCursor(), pending.position(), "batonpass")) {
                 SwitchActionResponse response = new SwitchActionResponse(pending.target());
-                if (response.isValid(active, moveset, true)) return response;
+                if (response.isValid(active, moveset, true)) {
+                    lastDecisionSource = "baton_pass_switch";
+                    logDecision(active, battle, moveset, true, response, null);
+                    return response;
+                }
             }
         } else {
             pendingBatonPassTargets.remove(battleId);
         }
         if (usesIndependentDecisionEngine() && moveset != null) {
-            lastSearchFailure = null;
-            lastSearchReplayTrace = null;
             try {
                 CobblemonBattleSearch.PlannedResponse planned = CobblemonBattleSearch.plan(
                         active,
@@ -75,18 +94,23 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
                         profile.strategy(),
                         forceSwitch
                 );
+                if (planned != null) {
+                    lastSearchReplayTrace = planned.replayTrace();
+                }
                 if (planned != null && planned.response().isValid(active, moveset, forceSwitch)) {
                     if (planned.batonPassTarget() != null) {
                         pendingBatonPassTargets.put(battleId, new PendingBatonPass(
                                 planned.batonPassTarget(), battle.getBattleLog().size(), active.getPNX()));
                     }
-                    lastSearchReplayTrace = planned.replayTrace();
                     lastDecisionSource = "jvm_search";
+                    logDecision(active, battle, moveset, forceSwitch,
+                            planned.response(), planned.replayTrace());
                     return planned.response();
                 }
                 lastSearchFailure = planned == null
                         ? "search returned no plan"
-                        : "search returned an invalid response";
+                        : "search returned an invalid response: "
+                                + responseText(active, moveset, planned.response());
             } catch (RuntimeException exception) {
                 lastSearchFailure = exception.getClass().getName() + ": " + exception.getMessage();
                 // 불완전한 타 모드 전투 상태에서는 RCT의 검증된 기본 선택기로 안전 복귀한다.
@@ -100,6 +124,8 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
                 if (screenPlan != null
                         && screenPlan.response().isValid(active, moveset, false)) {
                     lastDecisionSource = "shared_screen_policy";
+                    logDecision(active, battle, moveset, false,
+                            screenPlan.response(), screenPlan.replayTrace());
                     return screenPlan.response();
                 }
                 if (screenPlan != null) {
@@ -111,7 +137,9 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
             }
         }
         lastDecisionSource = "rct_fallback";
-        return super.choose(active, battle, side, moveset, forceSwitch);
+        ShowdownActionResponse response = super.choose(active, battle, side, moveset, forceSwitch);
+        logDecision(active, battle, moveset, forceSwitch, response, lastSearchReplayTrace);
+        return response;
     }
 
     String lastDecisionSource() {
@@ -134,11 +162,68 @@ public final class CobbleventureBattleAI extends RCTBattleAI {
                 profile.teraTarget(),
                 profile.mechanics()
         );
-        return new CobbleventureBattleAI(overridden, overridden.rctConfig());
+        return new CobbleventureBattleAI(overridden, overridden.rctConfig(), true);
     }
 
     private boolean usesIndependentDecisionEngine() {
         return CobbleventureBattleAIConfig.usesIndependentDecisionEngine(profile.difficulty());
+    }
+
+    private void logDecision(
+            ActiveBattlePokemon active,
+            PokemonBattle battle,
+            ShowdownMoveset moveset,
+            boolean forceSwitch,
+            ShowdownActionResponse response,
+            CobblemonBattleSearch.SearchReplayTrace replayTrace
+    ) {
+        if (!decisionLogging) return;
+        String species = active.hasPokemon()
+                ? active.getBattlePokemon().getOriginalPokemon().getSpecies()
+                        .getResourceIdentifier().toString()
+                : "none";
+        String algorithm = usesIndependentDecisionEngine()
+                ? CobbleventureBattleAIConfig.decisionAlgorithm(profile.difficulty())
+                : "rct";
+        LOGGER.info(
+                "[AI battle test decision] battle={}, turn={}, actor={}, species={}, "
+                        + "difficulty={}, algorithm={}, source={}, forcedSwitch={}, response={}, "
+                        + "failure={}, candidates={}",
+                battle.getBattleId(),
+                battle.getTurn(),
+                active.getPNX(),
+                species,
+                profile.difficulty(),
+                algorithm,
+                lastDecisionSource,
+                forceSwitch,
+                responseText(active, moveset, response),
+                lastSearchFailure == null ? "none" : lastSearchFailure,
+                candidateSummary(replayTrace)
+        );
+    }
+
+    private static String responseText(
+            ActiveBattlePokemon active,
+            ShowdownMoveset moveset,
+            ShowdownActionResponse response
+    ) {
+        if (response == null) return "null";
+        try {
+            return response.toShowdownString(active, moveset);
+        } catch (RuntimeException exception) {
+            return response.getType().name() + "(serialization_failed="
+                    + exception.getClass().getSimpleName() + ')';
+        }
+    }
+
+    private static String candidateSummary(CobblemonBattleSearch.SearchReplayTrace replayTrace) {
+        if (replayTrace == null || replayTrace.candidates().isEmpty()) return "none";
+        return replayTrace.candidates().getFirst().actions().stream()
+                .map(action -> String.format(Locale.ROOT, "%s[%s]=%.3f(p=%.3f)",
+                        action.getId(), action.getKind(), action.getScore(),
+                        action.getSuccessProbability()))
+                .collect(Collectors.joining(",", "[", "]"));
     }
 
     private void applyMechanicPolicy(
